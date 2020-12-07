@@ -1,0 +1,1 @@
+json-server --watch mock-server.json --routes routes.json --port 3000

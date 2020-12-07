@@ -1,0 +1,19 @@
+{
+  "start": {
+    "start": "json-server --watch mock-server.json --routes routes.json --port 3000"
+  },
+  "eventDetails": {
+    "return": {
+      "eventDetails": [
+        {
+          "title": "Prima configurazione mock-server",
+          "description": "Configurazione progetto jkdfhgasjiklgafksdjgasdfg"
+        },
+        {
+          "title": "Assegnazione task trello",
+          "description": "ksdfjghsdfljkghsdfjklghsldfjkghsdfkjg"
+        }
+      ]
+    }
+  }
+}
