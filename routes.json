@@ -1,3 +1,8 @@
 {
-  "/event/:endpoint": "/event:endpoint"
+  "/event/:endpoint": "/event:endpoint",
+  "/category/:endpoint": "/category:endpoint",
+  "/subcategory/:endpoint": "/subcategory:endpoint",
+  "/user/:endpoint": "/user:endpoint",
+  "/list/:endpoint": "/list:endpoint",
+  "/modelList/:endpoint": "/modelList:endpoint"
 }
