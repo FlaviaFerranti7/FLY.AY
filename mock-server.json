@@ -92,13 +92,20 @@
         },
         {
           "id": 3,
-          "name": "overRangeTime",
+          "name": "startingOverRangeTime",
           "labelName": "",
           "fieldType": "TIME",
           "mandatory": false
         },
         {
           "id": 4,
+          "name": "endingOverRangeTime",
+          "labelName": "",
+          "fieldType": "TIME",
+          "mandatory": false
+        },
+        {
+          "id": 5,
           "name": "minStudyHours",
           "labelName": "Min study hours per days",
           "fieldType": "DECIMAL",
@@ -107,7 +114,7 @@
           "mandatory": false
         },
         {
-          "id": 5,
+          "id": 6,
           "name": "minBreakHours",
           "labelName": "Min break hours per days",
           "fieldType": "DECIMAL",
@@ -116,7 +123,7 @@
           "mandatory": false
         },
         {
-          "id": 6,
+          "id": 7,
           "name": "safeDays",
           "labelName": "Flexibility days",
           "fieldType": "INTEGER",
@@ -125,7 +132,7 @@
           "mandatory": false
         },
         {
-          "id": 7,
+          "id": 8,
           "name": "examDif",
           "labelName": "Exam difficulty",
           "fieldType": "EXAMDIFF",
@@ -134,7 +141,7 @@
           "mandatory": true
         },
         {
-          "id": 8,
+          "id": 9,
           "name": "examType",
           "labelName": "Exam typology",
           "fieldType": "EXAMTYPE",
@@ -143,7 +150,7 @@
           "mandatory": true
         },
         {
-          "id": 9,
+          "id": 10,
           "name": "organizeStudyT",
           "labelName": "Organize study",
           "fieldType": "ORGANIZESTUDY",
@@ -153,7 +160,7 @@
           "parentId": 8
         },
         {
-          "id": 10,
+          "id": 11,
           "name": "totalPagesT",
           "labelName": "Total pages",
           "fieldType": "INTEGER",
@@ -163,7 +170,7 @@
           "parentId": 8
         },
         {
-          "id": 11,
+          "id": 12,
           "name": "minPageT",
           "labelName": "Min pages per days",
           "fieldType": "INTEGER",
@@ -173,7 +180,7 @@
           "parentId": 8
         },
         {
-          "id": 12,
+          "id": 13,
           "name": "maxPageT",
           "labelName": "Max pages per days",
           "fieldType": "INTEGER",
@@ -245,6 +252,34 @@
     "return": {
       "state": "KO",
       "message": "Deletion failed"
+    }
+  },
+  "event": {
+    "return": {
+      "id": 1,
+      "title": "HCI exam",
+      "category": "STUDY",
+      "subcategory": "EXAM",
+      "date": "21/01/2021",
+      "startingTime": "10.00 AM",
+      "endTime": "12.00 AM",
+      "place": "DIAG",
+      "room": "B2",
+      "profInfo": false,
+      "studyPlanner": true,
+      "endingStudy": "14/01/2021",
+      "studyingDays": "Mon, Tue, Wed, Thu, Fri",
+      "overRange": "afternoon",
+      "startingOverRangeTime": "3.00 PM",
+      "endingOverRangeTime": "7.00 PM",
+      "minStudyHours": "1.30",
+      "minBreakHours": "1.00",
+      "safeDays": "7",
+      "examDifficulty": "medium",
+      "examTypology": "theory, project",
+      "organizeStudyT": "pages",
+      "parentId": null,
+      "note": ""
     }
   },
   "eventAdd1": {
@@ -353,81 +388,54 @@
           "id": 1,
           "name": "item1",
           "title": "Bread",
-          "fieldType": "TEXT",
-          "min": "1",
-          "max": "40",
           "checked": false
         },
         {
           "id": 2,
           "name": "item2",
-          "title": "Yogourt",
-          "fieldType": "TEXT",
-          "min": "1",
-          "max": "40",
+          "title": "Yogurt",
           "checked": true
         },
         {
           "id": 3,
           "name": "item3",
           "title": "Milk",
-          "fieldType": "TEXT",
-          "min": "1",
-          "max": "40",
           "checked": true
         },
         {
           "id": 4,
           "name": "item4",
           "title": "Chicken",
-          "fieldType": "TEXT",
-          "min": "1",
-          "max": "40",
           "checked": false
         },
         {
           "id": 5,
           "name": "item5",
           "title": "Salad",
-          "fieldType": "TEXT",
-          "min": "1",
-          "max": "40",
           "checked": true
         },
         {
           "id": 6,
           "name": "item6",
           "title": "Tuna",
-          "fieldType": "TEXT",
-          "min": "1",
-          "max": "40",
           "checked": true
         },
         {
           "id": 7,
           "name": "item7",
           "title": "Pasta",
-          "fieldType": "TEXT",
-          "min": "1",
-          "max": "40",
           "checked": false
         },
         {
           "id": 8,
           "name": "item8",
           "title": "Apple",
-          "fieldType": "TEXT",
-          "min": "1",
-          "max": "40",
           "checked": false
         },
         {
           "id": 9,
           "name": "item9",
           "title": "Chocolate",
-          "fieldType": "TEXT",
-          "min": "1",
-          "max": "40",
           "checked": true
         }
       ]
@@ -450,42 +458,27 @@
         {
           "id": 1,
           "name": "item1",
-          "title": "Bread",
-          "fieldType": "TEXT",
-          "min": "1",
-          "max": "40"
+          "title": "Bread"
         },
         {
           "id": 2,
           "name": "item2",
-          "title": "Yogourt",
-          "fieldType": "TEXT",
-          "min": "1",
-          "max": "40"
+          "title": "Yogurt"
         },
         {
           "id": 3,
           "name": "item3",
-          "title": "Milk",
-          "fieldType": "TEXT",
-          "min": "1",
-          "max": "40"
+          "title": "Milk"
         },
         {
           "id": 4,
           "name": "item4",
-          "title": "Chicken",
-          "fieldType": "TEXT",
-          "min": "1",
-          "max": "40"
+          "title": "Chicken"
         },
         {
           "id": 5,
           "name": "item5",
-          "title": "Apple",
-          "fieldType": "TEXT",
-          "min": "1",
-          "max": "40"
+          "title": "Apple"
         }
       ]
     }
