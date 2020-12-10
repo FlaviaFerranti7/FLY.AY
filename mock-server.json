@@ -285,5 +285,217 @@
       "state": "KO",
       "message": "Event not deleted"
     }
+  },
+  "listAdd1": {
+    "return": {
+      "state": "OK"
+    }
+  },
+  "listAdd2": {
+    "return": {
+      "state": "KO",
+      "message": "List not created"
+    }
+  },
+  "listUpdate1": {
+    "return": {
+      "state": "OK"
+    }
+  },
+  "listUpdate2": {
+    "return": {
+      "state": "KO",
+      "message": "List not updated"
+    }
+  },
+  "listDelete1": {
+    "return": {
+      "state": "OK"
+    }
+  },
+  "listDelete2": {
+    "return": {
+      "state": "KO",
+      "message": "List not deleted"
+    }
+  },
+  "list": {
+    "return": {
+      "lists": [
+        {
+          "id": 1,
+          "title": "Film",
+          "color": "red",
+          "lifetimer": "TIME",
+          "checked": "BOOLEAN",
+          "linkedToEvent": "BOOLEAN"
+        },
+        {
+          "id": 2,
+          "title": "Shopping list",
+          "color": "yellow",
+          "lifetimer": "TIME",
+          "checked": "BOOLEAN",
+          "linkedToEvent": "BOOLEAN"
+        },
+        {
+          "id": 3,
+          "title": "Books",
+          "color": "red",
+          "lifetimer": "TIME",
+          "checked": "BOOLEAN",
+          "linkedToEvent": "BOOLEAN"
+        }
+      ]
+    }
+  },
+  "listItem": {
+    "return": {
+      "itemsByList": [
+        {
+          "id": 1,
+          "name": "item1",
+          "title": "Bread",
+          "fieldType": "TEXT",
+          "min": "1",
+          "max": "40",
+          "checked": "BOOLEAN"
+        },
+        {
+          "id": 2,
+          "name": "item2",
+          "title": "Yogourt",
+          "fieldType": "TEXT",
+          "min": "1",
+          "max": "40",
+          "checked": "BOOLEAN"
+        },
+        {
+          "id": 3,
+          "name": "item3",
+          "title": "Milk",
+          "fieldType": "TEXT",
+          "min": "1",
+          "max": "40",
+          "checked": "BOOLEAN"
+        },
+        {
+          "id": 4,
+          "name": "item4",
+          "title": "Chicken",
+          "fieldType": "TEXT",
+          "min": "1",
+          "max": "40",
+          "checked": "BOOLEAN"
+        },
+        {
+          "id": 5,
+          "name": "item5",
+          "title": "Salad",
+          "fieldType": "TEXT",
+          "min": "1",
+          "max": "40",
+          "checked": "BOOLEAN"
+        },
+        {
+          "id": 6,
+          "name": "item6",
+          "title": "Tuna",
+          "fieldType": "TEXT",
+          "min": "1",
+          "max": "40",
+          "checked": "BOOLEAN"
+        },
+        {
+          "id": 7,
+          "name": "item7",
+          "title": "Pasta",
+          "fieldType": "TEXT",
+          "min": "1",
+          "max": "40",
+          "checked": "BOOLEAN"
+        },
+        {
+          "id": 8,
+          "name": "item8",
+          "title": "Apple",
+          "fieldType": "TEXT",
+          "min": "1",
+          "max": "40",
+          "checked": "BOOLEAN"
+        },
+        {
+          "id": 9,
+          "name": "item9",
+          "title": "Chocolate",
+          "fieldType": "TEXT",
+          "min": "1",
+          "max": "40",
+          "checked": "BOOLEAN"
+        }
+      ]
+    }
+  },
+  "modelList": {
+    "return": {
+      "modelLists": [
+        {
+          "id": 1,
+          "title": "Shopping list",
+          "color": "yellow"
+        }
+      ]
+    }
+  },
+  "modelListItem": {
+    "return": {
+      "itemsByModel": [
+        {
+          "id": 1,
+          "name": "item1",
+          "title": "Bread",
+          "fieldType": "TEXT",
+          "min": "1",
+          "max": "40",
+          "checked": "BOOLEAN"
+        },
+        {
+          "id": 2,
+          "name": "item2",
+          "title": "Yogourt",
+          "fieldType": "TEXT",
+          "min": "1",
+          "max": "40",
+          "checked": "BOOLEAN"
+        },
+        {
+          "id": 3,
+          "name": "item3",
+          "title": "Milk",
+          "fieldType": "TEXT",
+          "min": "1",
+          "max": "40",
+          "checked": "BOOLEAN"
+        },
+        {
+          "id": 4,
+          "name": "item4",
+          "title": "Chicken",
+          "fieldType": "TEXT",
+          "min": "1",
+          "max": "40",
+          "checked": "BOOLEAN"
+        },
+        {
+          "id": 5,
+          "name": "item5",
+          "title": "Apple",
+          "fieldType": "TEXT",
+          "min": "1",
+          "max": "40",
+          "checked": "BOOLEAN"
+        }
+      ]
+    }
   }
 }
