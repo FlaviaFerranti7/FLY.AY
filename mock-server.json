@@ -214,7 +214,7 @@
   },
   "user": {
     "return": {
-      "id": "1",
+      "id": 1,
       "username": "dombianchi",
       "firstName": "Domenico",
       "lastName": "Bianchi",
@@ -245,6 +245,45 @@
     "return": {
       "state": "KO",
       "message": "Deletion failed"
+    }
+  },
+  "eventAdd1": {
+    "return": {
+      "id": 1,
+      "state": "OK"
+    }
+  },
+  "eventAdd2": {
+    "return": {
+      "id": 1,
+      "state": "KO",
+      "message": "Event not created"
+    }
+  },
+  "eventUpdate1": {
+    "return": {
+      "id": 1,
+      "state": "OK"
+    }
+  },
+  "eventUpdate2": {
+    "return": {
+      "id": 1,
+      "state": "KO",
+      "message": "Event not updated"
+    }
+  },
+  "eventDelete1": {
+    "return": {
+      "id": 1,
+      "state": "OK"
+    }
+  },
+  "eventDelete2": {
+    "return": {
+      "id": 1,
+      "state": "KO",
+      "message": "Event not deleted"
     }
   }
 }
