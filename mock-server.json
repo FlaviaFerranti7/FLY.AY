@@ -185,7 +185,7 @@
       ]
     }
   },
-  "userSignin": {
+  "userSignin1": {
     "return": {
       "state": "OK"
     }
@@ -194,6 +194,57 @@
     "return": {
       "state": "KO",
       "message": "Email already exists"
+    }
+  },
+  "userSignUp1": {
+    "return": {
+      "state": "OK"
+    }
+  },
+  "userSignUp2": {
+    "return": {
+      "state": "KO",
+      "message": "Sign up failed"
+    }
+  },
+  "userLogOut": {
+    "return": {
+      "state": "OK"
+    }
+  },
+  "user": {
+    "return": {
+      "id": "1",
+      "username": "dombianchi",
+      "firstName": "Domenico",
+      "lastName": "Bianchi",
+      "email": "domenico.bianchi@gmail.com",
+      "password": "FrancescoTotti10",
+      "birthday": "10/12/1998",
+      "country": "Italy",
+      "religion": "Catholic"
+    }
+  },
+  "userUpdate1": {
+    "return": {
+      "state": "OK"
+    }
+  },
+  "userUpdate2": {
+    "return": {
+      "state": "KO",
+      "message": "Update failed"
+    }
+  },
+  "userDelete1": {
+    "return": {
+      "state": "OK"
+    }
+  },
+  "userDelete2": {
+    "return": {
+      "state": "KO",
+      "message": "Deletion failed"
     }
   }
 }
