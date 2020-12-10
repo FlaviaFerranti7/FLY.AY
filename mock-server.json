@@ -326,25 +326,22 @@
           "id": 1,
           "title": "Film",
           "color": "red",
-          "lifetimer": "TIME",
-          "checked": "BOOLEAN",
-          "linkedToEvent": "BOOLEAN"
+          "lifetimer": null,
+          "checked": false
         },
         {
           "id": 2,
           "title": "Shopping list",
           "color": "yellow",
-          "lifetimer": "TIME",
-          "checked": "BOOLEAN",
-          "linkedToEvent": "BOOLEAN"
+          "lifetimer": null,
+          "checked": false
         },
         {
           "id": 3,
           "title": "Books",
           "color": "red",
-          "lifetimer": "TIME",
-          "checked": "BOOLEAN",
-          "linkedToEvent": "BOOLEAN"
+          "lifetimer": null,
+          "checked": true
         }
       ]
     }
@@ -359,7 +356,7 @@
           "fieldType": "TEXT",
           "min": "1",
           "max": "40",
-          "checked": "BOOLEAN"
+          "checked": false
         },
         {
           "id": 2,
@@ -368,7 +365,7 @@
           "fieldType": "TEXT",
           "min": "1",
           "max": "40",
-          "checked": "BOOLEAN"
+          "checked": true
         },
         {
           "id": 3,
@@ -377,7 +374,7 @@
           "fieldType": "TEXT",
           "min": "1",
           "max": "40",
-          "checked": "BOOLEAN"
+          "checked": true
         },
         {
           "id": 4,
@@ -386,7 +383,7 @@
           "fieldType": "TEXT",
           "min": "1",
           "max": "40",
-          "checked": "BOOLEAN"
+          "checked": false
         },
         {
           "id": 5,
@@ -395,7 +392,7 @@
           "fieldType": "TEXT",
           "min": "1",
           "max": "40",
-          "checked": "BOOLEAN"
+          "checked": true
         },
         {
           "id": 6,
@@ -404,7 +401,7 @@
           "fieldType": "TEXT",
           "min": "1",
           "max": "40",
-          "checked": "BOOLEAN"
+          "checked": true
         },
         {
           "id": 7,
@@ -413,7 +410,7 @@
           "fieldType": "TEXT",
           "min": "1",
           "max": "40",
-          "checked": "BOOLEAN"
+          "checked": false
         },
         {
           "id": 8,
@@ -422,7 +419,7 @@
           "fieldType": "TEXT",
           "min": "1",
           "max": "40",
-          "checked": "BOOLEAN"
+          "checked": false
         },
         {
           "id": 9,
@@ -431,7 +428,7 @@
           "fieldType": "TEXT",
           "min": "1",
           "max": "40",
-          "checked": "BOOLEAN"
+          "checked": true
         }
       ]
     }
@@ -456,8 +453,7 @@
           "title": "Bread",
           "fieldType": "TEXT",
           "min": "1",
-          "max": "40",
-          "checked": "BOOLEAN"
+          "max": "40"
         },
         {
           "id": 2,
@@ -465,8 +461,7 @@
           "title": "Yogourt",
           "fieldType": "TEXT",
           "min": "1",
-          "max": "40",
-          "checked": "BOOLEAN"
+          "max": "40"
         },
         {
           "id": 3,
@@ -474,8 +469,7 @@
           "title": "Milk",
           "fieldType": "TEXT",
           "min": "1",
-          "max": "40",
-          "checked": "BOOLEAN"
+          "max": "40"
         },
         {
           "id": 4,
@@ -483,8 +477,7 @@
           "title": "Chicken",
           "fieldType": "TEXT",
           "min": "1",
-          "max": "40",
-          "checked": "BOOLEAN"
+          "max": "40"
         },
         {
           "id": 5,
@@ -492,8 +485,7 @@
           "title": "Apple",
           "fieldType": "TEXT",
           "min": "1",
-          "max": "40",
-          "checked": "BOOLEAN"
+          "max": "40"
         }
       ]
     }
