@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">FLYAY</string>
+    <string name="title_app">FLY.AY</string>
+    <string name="subtitle_app">Fully Live Your Academic Year</string>
+    <string name="input_username">Username</string>
+    <string name="input_password">Password</string>
+    <string name="login">login</string>
+    <string name="rememberMe">Remember me</string>
 </resources>
