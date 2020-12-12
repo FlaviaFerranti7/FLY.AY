@@ -94,26 +94,18 @@
         },
         {
           "id": 47,
-          "name": "teacherReceiptDate1",
-          "labelName": "first receipt",
+          "name": "teacherReceiptDate",
+          "labelName": "date receipt",
           "fieldType": "DATE",
           "fieldOrderId": 3,
           "mandatory": false
         },
         {
           "id": 48,
-          "name": "teacherReceiptDate2",
-          "labelName": "second receipt",
-          "fieldType": "DATE",
+          "name": "teacherRoom",
+          "labelName": "teacher room",
+          "fieldType": "STRING",
           "fieldOrderId": 4,
-          "mandatory": false
-        },
-        {
-          "id": 49,
-          "name": "teacherReceiptDate3",
-          "labelName": "third receipt",
-          "fieldType": "DATE",
-          "fieldOrderId": 5,
           "mandatory": false
         },
         {
@@ -146,7 +138,7 @@
         },
         {
           "id": 3,
-          "name": "startingOverRangeTime",
+          "name": "startingOverRangeTimeM",
           "labelName": "",
           "fieldType": "TIME",
           "fieldOrderId": 9,
@@ -154,7 +146,39 @@
         },
         {
           "id": 4,
-          "name": "endingOverRangeTime",
+          "name": "endingOverRangeTimeM",
+          "labelName": "",
+          "fieldType": "TIME",
+          "fieldOrderId": 10,
+          "mandatory": false
+        },
+        {
+          "id": 3,
+          "name": "startingOverRangeTimeA",
+          "labelName": "",
+          "fieldType": "TIME",
+          "fieldOrderId": 9,
+          "mandatory": false
+        },
+        {
+          "id": 4,
+          "name": "endingOverRangeTimeA",
+          "labelName": "",
+          "fieldType": "TIME",
+          "fieldOrderId": 10,
+          "mandatory": false
+        },
+        {
+          "id": 3,
+          "name": "startingOverRangeTimeE",
+          "labelName": "",
+          "fieldType": "TIME",
+          "fieldOrderId": 9,
+          "mandatory": false
+        },
+        {
+          "id": 4,
+          "name": "endingOverRangeTimeE",
           "labelName": "",
           "fieldType": "TIME",
           "fieldOrderId": 10,
@@ -172,10 +196,20 @@
         },
         {
           "id": 6,
-          "name": "minBreakHours",
-          "labelName": "Min break hours per days",
+          "name": "minStudyForBreak",
+          "labelName": "Min study hours before break",
           "fieldType": "DECIMAL",
           "fieldOrderId": 12,
+          "min": "1",
+          "max": "5",
+          "mandatory": false
+        },
+        {
+          "id": 58,
+          "name": "breakTime",
+          "labelName": "Minute per break",
+          "fieldType": "DECIMAL",
+          "fieldOrderId": 13,
           "min": "1",
           "max": "5",
           "mandatory": false
@@ -201,18 +235,8 @@
           "mandatory": true
         },
         {
-          "id": 9,
-          "name": "examType",
-          "labelName": "Exam typology",
-          "fieldType": "EXAMTYPE",
-          "fieldOrderId": 15,
-          "min": "1",
-          "max": "3",
-          "mandatory": true
-        },
-        {
           "id": 10,
-          "name": "totalPagesTP",
+          "name": "totalPages",
           "labelName": "Total pages",
           "fieldType": "INTEGER",
           "fieldOrderId": 16,
@@ -222,7 +246,7 @@
         },
         {
           "id": 11,
-          "name": "minPagesTP",
+          "name": "minPages",
           "labelName": "Min pages per days",
           "fieldType": "INTEGER",
           "fieldOrderId": 17,
@@ -232,7 +256,7 @@
         },
         {
           "id": 12,
-          "name": "maxPagesTP",
+          "name": "maxPages",
           "labelName": "Max pages per days",
           "fieldType": "INTEGER",
           "fieldOrderId": 18,
@@ -240,9 +264,10 @@
           "max": "300",
           "mandatory": false
         },
+
         {
           "id": 13,
-          "name": "intervalPagesRecapTP",
+          "name": "intervalPagesRecapT",
           "labelName": "Interval pages recap",
           "fieldType": "INTEGER",
           "fieldOrderId": 19,
@@ -251,40 +276,35 @@
           "mandatory": false
         },
         {
+          "id": 15,
+          "name": "topics",
+          "labelName": "Topics",
+          "fieldType": "TOPIC",
+          "fieldOrderId": 22,
+          "mandatory": false
+        },
+        {
           "id": 13,
-          "name": "startTotalRecapTP",
+          "name": "startTotalRecapT",
           "labelName": "Start total recap",
           "fieldType": "DATE",
           "fieldOrderId": 20,
           "mandatory": false
         },
         {
-          "id": 14,
-          "name": "listTP",
-          "labelName": "Max pages per days",
-          "fieldType": "INTEGER",
-          "fieldOrderId": 21,
-          "min": "1",
-          "max": "300",
-          "mandatory": false,
-          "parentId": 8
-        },
-        {
-          "id": 15,
-          "name": "recapTT",
-          "labelName": "Recap per",
-          "fieldType": "INTEGER",
-          "fieldOrderId": 22,
-          "min": "1",
-          "max": "2",
+          "id": 59,
+          "name": "startTotalRecapT",
+          "labelName": "Start total recap",
+          "fieldType": "DATE",
+          "fieldOrderId": 20,
           "mandatory": false
         },
         {
-          "id": 16,
-          "name": "startTotalRecapTP",
+          "id": 60,
+          "name": "startTotalE",
           "labelName": "Start total recap",
           "fieldType": "DATE",
-          "fieldOrderId": 23,
+          "fieldOrderId": 20,
           "mandatory": false
         }
       ]
