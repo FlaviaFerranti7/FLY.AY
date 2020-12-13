@@ -6,21 +6,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
-    <TextView
-            android:text="@string/title_app"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/titleApp"
-            android:textColor="#64C261" android:layout_centerHorizontal="true" android:textSize="36sp"
-            android:layout_marginTop="60dp" android:textStyle="bold"/>
 
-    <TextView
-            android:text="@string/subtitle_app"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/subtitleApp"
-            android:textColor="#BF61C2" android:layout_centerHorizontal="true" android:textSize="24sp"
-            android:layout_marginTop="110dp"/>
+    <include
+            layout="@layout/title_bar"
+            android:id="@+id/includedLayout"
+            />
+
     <EditText
             android:layout_width="250dp"
             android:layout_height="wrap_content"
