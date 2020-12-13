@@ -12,14 +12,18 @@
             android:id="@+id/titleApp"
             android:textAppearance="@style/TitleApp"
             android:layout_gravity="center_horizontal"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:shadowColor="#000000"
+            android:shadowRadius="1"/>
     <TextView
             android:text="@string/subtitle_app"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/subtitleApp"
-            android:textColor="#BF61C2"
+            android:textAppearance="@style/TitleApp"
             android:layout_gravity="center_horizontal"
-            android:textSize="24sp"/>
+            android:textSize="24sp"
+            android:shadowColor="#000000"
+            android:shadowRadius="1"/>
 
 </LinearLayout>

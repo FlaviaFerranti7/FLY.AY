@@ -34,12 +34,13 @@
             android:layout_marginTop="290dp"
             android:ems="10"
             android:id="@+id/password"/>
-    <CheckBox android:id="@+id/rememberMe"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="@string/rememberMe"
-              android:layout_marginTop="370dp"
-              android:layout_marginLeft="80dp"
+    <CheckBox
+            android:id="@+id/rememberMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rememberMe"
+            android:layout_marginTop="370dp"
+            android:layout_marginLeft="80dp"
     />
     <Button
             android:text="@string/login"
@@ -48,5 +49,9 @@
             android:layout_centerHorizontal="true"
             android:id="@+id/buttonLogin"
             android:layout_marginTop="440dp"
-            android:background="#BF61C2" android:textColor="#64C261" android:textSize="18sp"/>
+            android:background="@color/greenApp"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:shadowColor="#000000"
+            android:shadowRadius="1"/>
 </RelativeLayout>
