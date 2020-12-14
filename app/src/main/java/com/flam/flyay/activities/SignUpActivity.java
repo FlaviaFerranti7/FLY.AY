@@ -1,37 +1,34 @@
-package com.flam.flyay;
+package com.flam.flyay.activities;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.flam.flyay.activities.SignUpActivity;
+import com.flam.flyay.R;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
+    private EditText name, username, email, password, confirmPassword;
+    private Button signUpButton;
 
-    private EditText username, password;
-    private CheckBox rememberMe;
-    private Button loginButton, signUpButton;
-
-    private final String loginUrl = "http://localhost:3000/user/signin1";
-
+    private final String signUpUrl = "http://localhost:3000/user/signup1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_signup);
 
         //initialize the instance variables
         initializationLayout();
@@ -39,41 +36,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initializationLayout() {
+        this.name = findViewById(R.id.name);
         this.username = findViewById(R.id.username);
+        this.email = findViewById(R.id.email);
         this.password = findViewById(R.id.password);
-        this.rememberMe = findViewById(R.id.rememberMe);
-        this.loginButton = findViewById(R.id.buttonLogin);
+        this.confirmPassword = findViewById(R.id.confirm_password);
         this.signUpButton = findViewById(R.id.buttonSignUp);
-
-        this.loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("MainActivity", "event: login");
-
-                String nickname = username.getText().toString();
-                String pass = password.getText().toString();
-
-                Log.d("MainActivity","username: " + nickname + " password: " + pass);
-
-                if(rememberMe.isChecked()) {
-                    Log.d("MainActivity", "remember username and password");
-                }
-
-                doLogin(loginUrl, nickname, pass);
-            }
-        });
 
         this.signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("SignUpActivity", "event: sign_up");
-                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-                startActivity(intent);
+
+                String firstname = name.getText().toString();
+                String nickname = username.getText().toString();
+                String mail = email.getText().toString();
+                String pass = password.getText().toString();
+                String confpass = confirmPassword.getText().toString();
+
+                Log.d("SignUpActivity", "name: " + firstname + " username: " + nickname + " email: " + mail + " password: " + pass + " confirm password: " + confpass);
+
+                doSignUp(signUpUrl, firstname, nickname, mail, pass, confpass);
             }
         });
     }
 
-    public void doLogin(String url, final String usernameInput, final String passwordInput) {
+    public void doSignUp(String url, final String firstnameInput, final String usernameInput, final String emailInput, final String passwordInput, final String confPasswordInput) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>()
@@ -99,8 +87,11 @@ public class MainActivity extends AppCompatActivity {
             protected Map<String, String> getParams()
             {
                 Map<String, String>  params = new HashMap<>();
+                params.put("name", firstnameInput);
                 params.put("username", usernameInput);
+                params.put("email", emailInput);
                 params.put("password", passwordInput);
+                params.put("confirm password", confPasswordInput);
 
                 return params;
             }
@@ -108,3 +99,4 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(postRequest);
     }
 }
+
