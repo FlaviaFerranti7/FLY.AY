@@ -264,7 +264,6 @@
           "max": "300",
           "mandatory": false
         },
-
         {
           "id": 13,
           "name": "intervalPagesRecapT",

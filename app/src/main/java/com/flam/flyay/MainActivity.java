@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox rememberMe;
     private Button loginButton, signUpButton;
 
-    private final String loginUrl = "http://localhost:3000/user/signin1";
+    private final String loginUrl = "http://10.0.2.2:3000/user/signin1";
 
 
     @Override
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("Error.Response", error.getMessage());
+                        Log.e("Error.Response", error.toString());
 
                         //TODO: manage error (popup or alert text?)
                     }
