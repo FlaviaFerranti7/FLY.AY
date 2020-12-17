@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -41,6 +42,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.plus:
                 fragment = new AddEventFragment();
+                break;
+
+            case R.id.list:
+                fragment = new ListFragment();
                 break;
 
             case R.id.profile:
