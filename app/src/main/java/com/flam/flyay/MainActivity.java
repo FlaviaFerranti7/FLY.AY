@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import com.flam.flyay.ui.addevent.AddEventFragment;
 import com.flam.flyay.ui.home.HomeFragment;
 import com.flam.flyay.ui.profile.ProfileFragment;
+import com.flam.flyay.ui.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.home:
                 fragment = new HomeFragment();
+                break;
+
+            case R.id.lens:
+                fragment = new SearchFragment();
                 break;
 
             case R.id.plus:
