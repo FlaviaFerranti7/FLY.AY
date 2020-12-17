@@ -11,4 +11,9 @@
     <string name="sign_up">Sign up</string>
     <string name="rememberMe">Remember me</string>
     <string name="go_to_signup">I am new here!</string>
+    <string name="home_icon">Home</string>
+    <string name="search_icon">Search</string>
+    <string name="list_icon">To do</string>
+    <string name="add_event_icon">Add Event</string>
+    <string name="profile_icon">Profile</string>
 </resources>
