@@ -11,11 +11,22 @@ import com.flam.flyay.ui.todo.ToDoFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+    private Toolbar toolbar;
+    private ActionBar ab;
+    private Calendar c;
+    private SimpleDateFormat df;
+    private String currentDate;
 
 
     @Override
@@ -26,6 +37,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         loadFragment(new HomeFragment());
         navView.setOnNavigationItemSelectedListener(this);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ab = getSupportActionBar();
+        //ab.setDisplayHomeAsUpEnabled(true);  toglie la freccia che torna indietro
+
+        c = Calendar.getInstance(TimeZone.getTimeZone("GMT"),Locale.getDefault());
+        df = new SimpleDateFormat("dd/MM/yyyy");
+        currentDate = df.format(c.getTime());
+        ab.setTitle(currentDate);
+        ab.setIcon(R.drawable.ic_home_page);
     }
 
     @Override
@@ -35,22 +56,32 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.home:
                 fragment = new HomeFragment();
+                ab.setTitle(currentDate);
+                ab.setIcon(R.drawable.ic_home_page);
                 break;
 
             case R.id.lens:
                 fragment = new SearchFragment();
+                ab.setTitle("Search");
+                ab.setIcon(R.drawable.ic_search);
                 break;
 
             case R.id.plus:
                 fragment = new AddEventFragment();
+                ab.setTitle("Add event");
+                ab.setIcon(R.drawable.ic_add_event);
                 break;
 
             case R.id.list:
                 fragment = new ToDoFragment();
+                ab.setTitle("To do");
+                ab.setIcon(R.drawable.ic_to_do);
                 break;
 
             case R.id.profile:
                 fragment = new ProfileFragment();
+                ab.setTitle("Profile");
+                ab.setIcon(R.drawable.ic_profile);
                 break;
         }
 
