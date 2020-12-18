@@ -16,4 +16,7 @@
     <string name="list_icon">To do</string>
     <string name="add_event_icon">Add Event</string>
     <string name="profile_icon">Profile</string>
+    <string name="action_options">Options</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
 </resources>

@@ -1,8 +1,11 @@
 package com.flam.flyay;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
+import com.flam.flyay.activities.SignUpActivity;
 import com.flam.flyay.ui.addevent.AddEventFragment;
 import com.flam.flyay.ui.home.HomeFragment;
 import com.flam.flyay.ui.profile.ProfileFragment;
@@ -87,6 +90,33 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         return loadFragment(fragment);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.actions_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_options:
+                return true;
+            case R.id.settings:
+                //goToSettings();
+                return true;
+            case R.id.logout:
+                Intent intent = new Intent(MainActivity.this, LogInActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
     private boolean loadFragment(Fragment fragment) {
         //switching fragment
         if (fragment != null) {
