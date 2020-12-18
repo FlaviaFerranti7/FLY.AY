@@ -7,11 +7,13 @@ import com.flam.flyay.ui.addevent.AddEventFragment;
 import com.flam.flyay.ui.home.HomeFragment;
 import com.flam.flyay.ui.profile.ProfileFragment;
 import com.flam.flyay.ui.search.SearchFragment;
+import com.flam.flyay.ui.todo.ToDoFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -41,6 +43,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.plus:
                 fragment = new AddEventFragment();
+                break;
+
+            case R.id.list:
+                fragment = new ToDoFragment();
                 break;
 
             case R.id.profile:
