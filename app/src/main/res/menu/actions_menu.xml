@@ -20,6 +20,11 @@
                 app:showAsAction="ifRoom" />
         </menu>
     </item>
+    <item
+        android:id="@+id/home_options"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/home_options"
+        app:showAsAction="always"/>
 
 
 </menu>

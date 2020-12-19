@@ -2,10 +2,10 @@ package com.flam.flyay;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.flam.flyay.activities.SignUpActivity;
 import com.flam.flyay.ui.addevent.AddEventFragment;
 import com.flam.flyay.ui.home.HomeFragment;
 import com.flam.flyay.ui.profile.ProfileFragment;
@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private Calendar c;
     private SimpleDateFormat df;
     private String currentDate;
+    private Boolean ifhome, ifprofile;
 
 
     @Override
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         currentDate = df.format(c.getTime());
         ab.setTitle(currentDate);
         ab.setIcon(R.drawable.ic_home_page);
+        ifhome = true;
+        ifprofile = false;
     }
 
     @Override
@@ -61,30 +64,37 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 fragment = new HomeFragment();
                 ab.setTitle(currentDate);
                 ab.setIcon(R.drawable.ic_home_page);
+                ifhome = true;
+                invalidateOptionsMenu();
                 break;
 
             case R.id.lens:
                 fragment = new SearchFragment();
                 ab.setTitle("Search");
                 ab.setIcon(R.drawable.ic_search);
+                invalidateOptionsMenu();
                 break;
 
             case R.id.plus:
                 fragment = new AddEventFragment();
                 ab.setTitle("Add event");
                 ab.setIcon(R.drawable.ic_add_event);
+                invalidateOptionsMenu();
                 break;
 
             case R.id.list:
                 fragment = new ToDoFragment();
                 ab.setTitle("To do");
                 ab.setIcon(R.drawable.ic_to_do);
+                invalidateOptionsMenu();
                 break;
 
             case R.id.profile:
                 fragment = new ProfileFragment();
                 ab.setTitle("Profile");
                 ab.setIcon(R.drawable.ic_profile);
+                ifprofile = true;
+                invalidateOptionsMenu();
                 break;
         }
 
@@ -95,6 +105,28 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.actions_menu, menu);
+
+        if(ifhome){
+            for (int i = 0; i < menu.size(); i++) {
+                menu.getItem(i).setVisible(false);
+                if(menu.getItem(i).getItemId() == R.id.home_options)
+                    menu.getItem(i).setVisible(true);
+            }
+            ifhome = false;
+            return true;
+        }
+        if(ifprofile){
+            for (int i = 0; i < menu.size(); i++) {
+                menu.getItem(i).setVisible(false);
+                if(menu.getItem(i).getItemId() == R.id.action_options)
+                    menu.getItem(i).setVisible(true);
+            }
+            ifprofile = false;
+            return true;
+        }
+        for (int i = 0; i < menu.size(); i++) {
+            menu.getItem(i).setVisible(false);
+        }
         return true;
     }
 
@@ -128,5 +160,4 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         return false;
     }
-
 }
