@@ -7,17 +7,36 @@
         android:icon="@drawable/ic_action_settings"
         android:title="@string/action_options"
         app:showAsAction="always">
+
         <menu>
             <item
                 android:id="@+id/settings"
                 android:icon="@drawable/ic_settings"
-                android:title="@string/settings"
-                app:showAsAction="ifRoom" />
+                android:title="@string/settings"/>
             <item
                 android:id="@+id/logout"
                 android:icon="@drawable/ic_logout"
-                android:title="@string/logout"
-                app:showAsAction="ifRoom" />
+                android:title="@string/logout"/>
+            <item
+                android:id="@+id/alph_sort"
+                android:icon="@drawable/ic_alphsort"
+                android:title="@string/alph_sort"/>
+            <item
+                android:id="@+id/check_all"
+                android:icon="@drawable/ic_checkall"
+                android:title="@string/check_all"/>
+            <item
+                android:id="@+id/save_as_model"
+                android:icon="@drawable/ic_save"
+                android:title="@string/save_as_model"/>
+            <item
+                android:id="@+id/delete_after"
+                android:icon="@drawable/ic_deleteafter"
+                android:title="@string/delete_after"/>
+            <item
+                android:id="@+id/delete"
+                android:icon="@drawable/ic_delete"
+                android:title="@string/delete"/>
         </menu>
     </item>
     <item
@@ -30,8 +49,6 @@
         android:icon="@drawable/ic_newlist"
         android:title="@string/new_list"
         app:showAsAction="always"/>
-
-
 
 </menu>
 

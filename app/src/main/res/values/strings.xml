@@ -21,4 +21,9 @@
     <string name="new_list">New list</string>
     <string name="settings">Settings</string>
     <string name="logout">Logout</string>
+    <string name="alph_sort">Alphabetical order</string>
+    <string name="check_all">(Un)Check all</string>
+    <string name="save_as_model">Save as model</string>
+    <string name="delete_after">Delete after</string>
+    <string name="delete">Delete</string>
 </resources>

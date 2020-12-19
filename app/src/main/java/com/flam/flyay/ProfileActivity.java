@@ -1,5 +1,10 @@
 package com.flam.flyay;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,82 +12,49 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+public class ProfileActivity extends AppCompatActivity {
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.TimeZone;
-
-public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBar ab;
-    private Calendar c;
-    private SimpleDateFormat df;
-    private String currentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_profile);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ab = getSupportActionBar();
-        // To remove the arrow that goes back
-        // ab.setDisplayHomeAsUpEnabled(true);
-
-        c = Calendar.getInstance(TimeZone.getTimeZone("GMT"),Locale.getDefault());
-        df = new SimpleDateFormat("dd/MM/yyyy");
-        currentDate = df.format(c.getTime());
-        ab.setTitle(currentDate);
-        ab.setIcon(R.drawable.ic_home_page);
+        ab.setTitle("Profile");
+        ab.setIcon(R.drawable.ic_profile);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        navView.setSelectedItemId(R.id.home);
+        navView.setSelectedItemId(R.id.profile);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){
                 switch (menuItem.getItemId()){
                     case R.id.home:
-                        ab.setTitle(currentDate);
-                        ab.setIcon(R.drawable.ic_home_page);
-                        invalidateOptionsMenu();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0,0);
                         return true;
 
                     case R.id.lens:
                         startActivity(new Intent(getApplicationContext(), SearchActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("Search");
-                        ab.setIcon(R.drawable.ic_search);
-                        invalidateOptionsMenu();
                         return true;
 
                     case R.id.plus:
                         startActivity(new Intent(getApplicationContext(), AddEventActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("Add event");
-                        ab.setIcon(R.drawable.ic_add_event);
-                        invalidateOptionsMenu();
                         return true;
 
                     case R.id.list:
                         startActivity(new Intent(getApplicationContext(), ToDoActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("To do");
-                        ab.setIcon(R.drawable.ic_to_do);
-                        invalidateOptionsMenu();
                         return true;
 
                     case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                        overridePendingTransition(0,0);
-                        ab.setTitle("Profile");
-                        ab.setIcon(R.drawable.ic_profile);
-                        invalidateOptionsMenu();
                         return true;
                 }
                 return false;
@@ -96,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.actions_menu, menu);
         for (int i = 0; i < menu.size(); i++) {
             menu.getItem(i).setVisible(false);
-            if(menu.getItem(i).getItemId() == R.id.home_options)
+            if(menu.getItem(i).getItemId() == R.id.action_options || menu.getItem(i).getItemId() == R.id.logout || menu.getItem(i).getItemId() == R.id.settings)
                 menu.getItem(i).setVisible(true);
         }
         return true;
@@ -106,12 +78,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
-            case R.id.home_options:
-                //goToCalendar(); // TO DO
+            case R.id.logout:
+                Intent intent = new Intent(ProfileActivity.this, LogInActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

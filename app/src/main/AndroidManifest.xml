@@ -12,8 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".MainActivity">
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ToDoActivity" />
+        <activity android:name=".AddEventActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
