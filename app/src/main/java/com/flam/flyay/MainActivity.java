@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.home:
                         ab.setTitle(currentDate);
                         ab.setIcon(R.drawable.ic_home_page);
-                        invalidateOptionsMenu();
                         return true;
 
                     case R.id.lens:
@@ -58,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         ab.setTitle("Search");
                         ab.setIcon(R.drawable.ic_search);
-                        invalidateOptionsMenu();
                         return true;
 
                     case R.id.plus:
@@ -66,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         ab.setTitle("Add event");
                         ab.setIcon(R.drawable.ic_add_event);
-                        invalidateOptionsMenu();
                         return true;
 
                     case R.id.list:
@@ -74,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         ab.setTitle("To do");
                         ab.setIcon(R.drawable.ic_to_do);
-                        invalidateOptionsMenu();
                         return true;
 
                     case R.id.profile:
@@ -82,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         ab.setTitle("Profile");
                         ab.setIcon(R.drawable.ic_profile);
-                        invalidateOptionsMenu();
                         return true;
                 }
                 return false;
@@ -96,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.actions_menu, menu);
         for (int i = 0; i < menu.size(); i++) {
             menu.getItem(i).setVisible(false);
-            if(menu.getItem(i).getItemId() == R.id.home_options)
+            if(menu.getItem(i).getItemId() == R.id.home_calendar)
                 menu.getItem(i).setVisible(true);
         }
         return true;
@@ -106,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
-            case R.id.home_options:
+            case R.id.home_calendar:
                 //goToCalendar(); // TO DO
                 return true;
             default:

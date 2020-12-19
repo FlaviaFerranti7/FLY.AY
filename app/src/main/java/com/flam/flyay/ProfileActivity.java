@@ -68,7 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.actions_menu, menu);
         for (int i = 0; i < menu.size(); i++) {
             menu.getItem(i).setVisible(false);
-            if(menu.getItem(i).getItemId() == R.id.action_options || menu.getItem(i).getItemId() == R.id.logout || menu.getItem(i).getItemId() == R.id.settings)
+            if(menu.getItem(i).getItemId() == R.id.action_options_profile)
                 menu.getItem(i).setVisible(true);
         }
         return true;

@@ -3,11 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_options"
+        android:id="@+id/action_options_profile"
         android:icon="@drawable/ic_action_settings"
         android:title="@string/action_options"
         app:showAsAction="always">
-
         <menu>
             <item
                 android:id="@+id/settings"
@@ -17,6 +16,14 @@
                 android:id="@+id/logout"
                 android:icon="@drawable/ic_logout"
                 android:title="@string/logout"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/action_options_list"
+        android:icon="@drawable/ic_action_settings"
+        android:title="@string/action_options"
+        app:showAsAction="always">
+        <menu>
             <item
                 android:id="@+id/alph_sort"
                 android:icon="@drawable/ic_alphsort"
@@ -40,7 +47,7 @@
         </menu>
     </item>
     <item
-        android:id="@+id/home_options"
+        android:id="@+id/home_calendar"
         android:icon="@drawable/ic_calendar"
         android:title="@string/home_options"
         app:showAsAction="always"/>
