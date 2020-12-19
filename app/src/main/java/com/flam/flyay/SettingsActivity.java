@@ -2,111 +2,90 @@ package com.flam.flyay;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NavUtils;
+import androidx.preference.PreferenceFragmentCompat;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.TimeZone;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+
+public class SettingsActivity extends AppCompatActivity {
+
     private Toolbar toolbar;
     private ActionBar ab;
-    private Calendar c;
-    private SimpleDateFormat df;
-    private String currentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_settings);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ab = getSupportActionBar();
-        // To display the arrow that goes back
-        // ab.setDisplayHomeAsUpEnabled(true);
-
-        c = Calendar.getInstance(TimeZone.getTimeZone("GMT"),Locale.getDefault());
-        df = new SimpleDateFormat("dd/MM/yyyy");
-        currentDate = df.format(c.getTime());
-        ab.setTitle(currentDate);
-        ab.setIcon(R.drawable.ic_home_page);
+        ab.setTitle("Settings");
+        ab.setDisplayHomeAsUpEnabled(true);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        navView.setSelectedItemId(R.id.home);
+        navView.setSelectedItemId(R.id.profile);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){
                 switch (menuItem.getItemId()){
                     case R.id.home:
-                        ab.setTitle(currentDate);
-                        ab.setIcon(R.drawable.ic_home_page);
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0,0);
                         return true;
 
                     case R.id.lens:
                         startActivity(new Intent(getApplicationContext(), SearchActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("Search");
-                        ab.setIcon(R.drawable.ic_search);
                         return true;
 
                     case R.id.plus:
                         startActivity(new Intent(getApplicationContext(), AddEventActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("Add event");
-                        ab.setIcon(R.drawable.ic_add_event);
                         return true;
 
                     case R.id.list:
                         startActivity(new Intent(getApplicationContext(), ToDoActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("To do");
-                        ab.setIcon(R.drawable.ic_to_do);
                         return true;
 
                     case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                        overridePendingTransition(0,0);
-                        ab.setTitle("Profile");
-                        ab.setIcon(R.drawable.ic_profile);
                         return true;
                 }
                 return false;
             }
         });
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.actions_menu, menu);
-        for (int i = 0; i < menu.size(); i++) {
-            menu.getItem(i).setVisible(false);
-            if(menu.getItem(i).getItemId() == R.id.home_calendar)
-                menu.getItem(i).setVisible(true);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.settings, new SettingsFragment())
+                    .commit();
         }
-        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
         switch (item.getItemId()) {
-            case R.id.home_calendar:
-                //goToCalendar(); // TO DO
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    public static class SettingsFragment extends PreferenceFragmentCompat {
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        }
+    }
 }

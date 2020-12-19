@@ -79,8 +79,12 @@ public class ProfileActivity extends AppCompatActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.logout:
-                Intent intent = new Intent(ProfileActivity.this, LogInActivity.class);
-                startActivity(intent);
+                Intent intentL = new Intent(ProfileActivity.this, LogInActivity.class);
+                startActivity(intentL);
+                return true;
+            case R.id.settings:
+                Intent intentS = new Intent(ProfileActivity.this, SettingsActivity.class);
+                startActivity(intentS);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
