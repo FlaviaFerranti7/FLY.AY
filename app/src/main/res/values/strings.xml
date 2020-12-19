@@ -18,6 +18,7 @@
     <string name="profile_icon">Profile</string>
     <string name="action_options">Options</string>
     <string name="home_options">Calendar</string>
+    <string name="new_list">New list</string>
     <string name="settings">Settings</string>
     <string name="logout">Logout</string>
 </resources>

@@ -25,6 +25,12 @@
         android:icon="@drawable/ic_calendar"
         android:title="@string/home_options"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/new_todo"
+        android:icon="@drawable/ic_newlist"
+        android:title="@string/new_list"
+        app:showAsAction="always"/>
+
 
 
 </menu>

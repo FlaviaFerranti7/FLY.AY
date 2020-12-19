@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private Calendar c;
     private SimpleDateFormat df;
     private String currentDate;
-    private Boolean ifhome, ifprofile;
+    private Boolean ifhome, ifprofile, iflist;
 
 
     @Override
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         ab.setIcon(R.drawable.ic_home_page);
         ifhome = true;
         ifprofile = false;
+        iflist = false;
     }
 
     @Override
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 fragment = new ToDoFragment();
                 ab.setTitle("To do");
                 ab.setIcon(R.drawable.ic_to_do);
+                iflist = true;
                 invalidateOptionsMenu();
                 break;
 
@@ -124,6 +126,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             ifprofile = false;
             return true;
         }
+        if(iflist){
+            for (int i = 0; i < menu.size(); i++) {
+                menu.getItem(i).setVisible(false);
+                if(menu.getItem(i).getItemId() == R.id.new_todo)
+                    menu.getItem(i).setVisible(true);
+            }
+            iflist = false;
+            return true;
+        }
         for (int i = 0; i < menu.size(); i++) {
             menu.getItem(i).setVisible(false);
         }
@@ -142,6 +153,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.logout:
                 Intent intent = new Intent(MainActivity.this, LogInActivity.class);
                 startActivity(intent);
+                return true;
+            case R.id.new_todo:
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
