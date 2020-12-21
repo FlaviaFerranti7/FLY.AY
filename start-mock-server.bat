@@ -1,1 +1,1 @@
-json-server --watch mock-server.json --routes routes.json --port 3000
+json-server --watch mock-server.json --routes routes.json --middlewares middlewares.ts --port 3000

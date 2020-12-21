@@ -309,31 +309,31 @@
       ]
     }
   },
-  "userSignin1": {
+  "userSigninOK": {
     "return": {
-      "state": "OK"
+      "status": "OK"
     }
   },
-  "userSignin2": {
+  "userSigninKO": {
     "return": {
-      "state": "KO",
-      "message": "Email already exists"
+      "status": "KO",
+      "message": "bad credentials"
     }
   },
   "userSignUp1": {
     "return": {
-      "state": "OK"
+      "status": "OK"
     }
   },
   "userSignUp2": {
     "return": {
-      "state": "KO",
+      "status": "KO",
       "message": "Sign up failed"
     }
   },
   "userLogOut": {
     "return": {
-      "state": "OK"
+      "status": "OK"
     }
   },
   "user": {
@@ -349,9 +349,15 @@
       "religion": "Catholic"
     }
   },
-  "userUpdate1": {
+  "userUpdateOK": {
     "return": {
       "state": "OK"
+    }
+  },
+  "userUpdateKO": {
+    "return": {
+      "state": "KO",
+      "message": "bad credentials"
     }
   },
   "userUpdate2": {
