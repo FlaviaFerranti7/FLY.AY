@@ -6,13 +6,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class Event {
     private int id;
-    private CategoryEnum category;
+    private String category;
     private String title;
     private String note;
 
     public Event() {}
 
-    public Event(int id, CategoryEnum category, String title, String note) {
+    public Event(int id, String category, String title, String note) {
         this.id = id;
         this.category = category;
         this.title = title;
@@ -53,11 +53,11 @@ public class Event {
         return "note: " + this.note;
     }
 
-    public CategoryEnum getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryEnum category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 }

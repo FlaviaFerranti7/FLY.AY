@@ -14,6 +14,7 @@ import com.flam.flyay.model.EventWellness;
 import com.flam.flyay.services.EventService;
 import com.flam.flyay.services.ServerCallback;
 import com.flam.flyay.util.CategoryEnum;
+import com.flam.flyay.util.ConverterFromJsonToModel;
 import com.flam.flyay.util.MockServerUrl;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout eventsList;
 
     private EventService service;
+    private ConverterFromJsonToModel converterFromJsonToClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeMainActivity() throws  JSONException{
         service = new EventService(this);
+        converterFromJsonToClass = new ConverterFromJsonToModel();
         eventsList = findViewById(R.id.eventsList);
 
         JSONObject params = new JSONObject();
@@ -157,27 +160,11 @@ public class MainActivity extends AppCompatActivity {
                 for(int i = 0; i < containerResponse.length(); i ++) {
                     JSONObject currentJSONObject = new JSONObject();
                     Button btn = new Button(getApplicationContext());
-                    Gson gson = new GsonBuilder()
-                            .setDateFormat("dd/MM/yyyy").create();
                     btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 300));
+
                     try {
                         currentJSONObject = containerResponse.getJSONObject(i);
-                        Event event = new Event();
-                        switch (currentJSONObject.getString("category")) {
-                            case "FESTIVITY":
-                                break;
-                            case "WELLNESS":
-                                event = gson.fromJson(currentJSONObject.toString(), EventWellness.class);
-                                break;
-                            case "STUDY":
-                                break;
-                            case "FINANCES":
-                                event = gson.fromJson(currentJSONObject.toString(), EventFinances.class);
-                                break;
-                            case "FREE_TIME":
-                                break;
-
-                        }
+                        Event event = converterFromJsonToClass.converterFromJsonToEvent(currentJSONObject);
 
                         Log.d(".MainActivity", event.toString());
                         btn.setText(currentJSONObject.getString("title"));

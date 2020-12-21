@@ -13,7 +13,7 @@ public class EventFinances extends Event{
 
 
     public EventFinances(int id, String title, String note, Date date, Date deadLine, double price) {
-        super(id, CategoryEnum.FINANCES, title, note);
+        super(id, CategoryEnum.FINANCES.name, title, note);
         this.date = date;
         this.deadLine = deadLine;
         this.price = price;

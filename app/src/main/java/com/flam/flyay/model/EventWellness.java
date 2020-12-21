@@ -21,7 +21,7 @@ public class EventWellness extends Event{
             double endTime,
             String place
     ) {
-        super(id, CategoryEnum.WELLNESS,title, note);
+        super(id, CategoryEnum.WELLNESS.name,title, note);
 
         this.date = date;
         this.startingTime = startingTime;
