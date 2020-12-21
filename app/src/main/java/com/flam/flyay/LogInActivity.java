@@ -1,13 +1,18 @@
 package com.flam.flyay;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
+
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -17,16 +22,29 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.flam.flyay.activities.SignUpActivity;
+import com.flam.flyay.services.ServerCallback;
+import com.flam.flyay.services.UserService;
 import com.flam.flyay.util.MockServerUrl;
+import com.flam.flyay.util.TouchInterceptor;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 public class LogInActivity extends AppCompatActivity {
 
-    private EditText usernameTextField, passwordTextField;
+    private TextInputLayout usernameLayout;
+    private TextInputEditText usernameTextField;
+    private TextInputLayout passwordLayout;
+    private TextInputEditText passwordTextField;
     private CheckBox rememberMeCheckBox;
-    private Button signInButton, signUpButton;
+    private Button signInButton;
+    private Button signUpButton;
+
+    private UserService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,23 +56,46 @@ public class LogInActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public void initializeLayout() {
-        this.usernameTextField = findViewById(R.id.username);
-        this.passwordTextField = findViewById(R.id.password);
+
+        service = new UserService(this);
+
+        RelativeLayout touchInterceptor = (RelativeLayout) findViewById(R.id.touchInterceptor);
+        touchInterceptor.setOnTouchListener(new TouchInterceptor(this));
+
+        this.usernameLayout = (TextInputLayout) findViewById(R.id.usernameLayout);
+        this.usernameTextField = (TextInputEditText) findViewById(R.id.username);
+        this.passwordLayout = (TextInputLayout) findViewById(R.id.passwordLayout);
+        this.passwordTextField = (TextInputEditText) findViewById(R.id.password);
         this.rememberMeCheckBox = findViewById(R.id.rememberMe);
         this.signInButton = findViewById(R.id.buttonLogin);
         this.signUpButton = findViewById(R.id.buttonSignUp);
 
         this.signInButton.setOnClickListener(new View.OnClickListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 Log.d("LogInActivity", "event: login");
 
-                String username = usernameTextField.getText().toString();
-                String password = passwordTextField.getText().toString();
+                String username = Objects.requireNonNull(usernameTextField.getText()).toString();
+                String password = Objects.requireNonNull(passwordTextField.getText()).toString();
 
                 Log.d("LogInActivity","username: " + username + " password: " + password);
+
+                if(username.length() == 0) {
+                    usernameLayout.setErrorEnabled(true);
+                    usernameLayout.setError(getString(R.string.username_null_error));
+                    passwordLayout.clearFocus();
+                    return;
+                }
+                if(password.length() == 0) {
+                    passwordLayout.setErrorEnabled(true);
+                    passwordLayout.setError(getString(R.string.password_null_error));
+                    usernameLayout.clearFocus();
+                    return;
+                }
 
                 JSONObject params = new JSONObject();
                 try {
@@ -65,32 +106,13 @@ public class LogInActivity extends AppCompatActivity {
                     Log.getStackTraceString(e);
                 }
 
-                executeRequestPOST(MockServerUrl.LOGIN_OK.url, params);
-            }
-        });
-
-        this.signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("SignUpActivity", "event: sign_up");
-                Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    public void executeRequestPOST(String url, JSONObject params) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, params,
-                new Response.Listener<JSONObject>()
-                {
+                service.signin(MockServerUrl.SIGNIN_OK.url, params, new ServerCallback() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onSuccess(JSONObject result) {
                         JSONObject containerResponse = new JSONObject();
                         String status = "";
                         try {
-                            containerResponse = response.getJSONObject("return");
+                            containerResponse = result.getJSONObject("return");
                             status = containerResponse.getString("status");
 
                             Log.d("response: ", status);
@@ -112,17 +134,33 @@ public class LogInActivity extends AppCompatActivity {
                             }
                         }
                     }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Error.Response", error.toString());
-                        Toast.makeText(getApplicationContext(),"Error server connection",Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
+                });
+            }
+        });
 
-        requestQueue.add(postRequest);
+        this.signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("SignUpActivity", "event: sign_up");
+                Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        this.usernameTextField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!usernameTextField.getText().toString().isEmpty())
+                    usernameLayout.setErrorEnabled(false);
+            }
+        });
+
+        this.passwordTextField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!passwordTextField.getText().toString().isEmpty())
+                    passwordLayout.setErrorEnabled(false);
+            }
+        });
     }
 }
