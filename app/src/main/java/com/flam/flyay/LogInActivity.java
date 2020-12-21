@@ -1,14 +1,10 @@
 package com.flam.flyay;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Build;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 
@@ -26,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.flam.flyay.activities.SignUpActivity;
+import com.flam.flyay.services.UserService;
 import com.flam.flyay.util.MockServerUrl;
 import com.flam.flyay.util.TouchInterceptor;
 import com.google.android.material.textfield.TextInputEditText;
@@ -33,7 +30,6 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.Objects;
 
@@ -44,7 +40,10 @@ public class LogInActivity extends AppCompatActivity {
     private TextInputLayout passwordLayout;
     private TextInputEditText passwordTextField;
     private CheckBox rememberMeCheckBox;
-    private Button signInButton, signUpButton;
+    private Button signInButton;
+    private Button signUpButton;
+
+    private UserService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +57,8 @@ public class LogInActivity extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     public void initializeLayout() {
+
+        service = new UserService(this);
 
         RelativeLayout touchInterceptor = (RelativeLayout) findViewById(R.id.touchInterceptor);
         touchInterceptor.setOnTouchListener(new TouchInterceptor(this));
@@ -104,7 +105,7 @@ public class LogInActivity extends AppCompatActivity {
                     Log.getStackTraceString(e);
                 }
 
-                signin(MockServerUrl.SIGNIN_OK.url, params);
+                service.signin(MockServerUrl.SIGNIN_OK.url, params);
             }
         });
 
@@ -132,52 +133,5 @@ public class LogInActivity extends AppCompatActivity {
                     passwordLayout.setErrorEnabled(false);
             }
         });
-    }
-
-    public void signin(String url, JSONObject params) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, params,
-                new Response.Listener<JSONObject>()
-                {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        JSONObject containerResponse = new JSONObject();
-                        String status = "";
-                        try {
-                            containerResponse = response.getJSONObject("return");
-                            status = containerResponse.getString("status");
-
-                            Log.d("response: ", status);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        if(status.equalsIgnoreCase("OK")) {
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        }
-                        else {
-                            try {
-                                Toast.makeText(getApplicationContext(),
-                                        containerResponse.getString("message"),
-                                        Toast.LENGTH_SHORT)
-                                        .show();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Error.Response", error.toString());
-                        Toast.makeText(getApplicationContext(),"Error server connection",Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-
-        requestQueue.add(postRequest);
     }
 }
