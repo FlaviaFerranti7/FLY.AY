@@ -377,6 +377,57 @@
       "message": "Deletion failed"
     }
   },
+  "eventDay": {
+    "return": [
+      {
+        "id": 1,
+        "title": "HCI exam",
+        "category": "STUDY",
+        "subcategory": "EXAM",
+        "date": "21/01/2021",
+        "startingTime": "10.00 AM",
+        "endTime": "12.00 AM",
+        "place": "DIAG",
+        "room": "B2",
+        "profInfo": false,
+        "studyPlanner": true,
+        "endingStudy": "14/01/2021",
+        "studyingDays": "Mon, Tue, Wed, Thu, Fri",
+        "overRange": "afternoon",
+        "startingOverRangeTime": "3.00 PM",
+        "endingOverRangeTime": "7.00 PM",
+        "minStudyHours": "1.30",
+        "minBreakHours": "1.00",
+        "safeDays": 7,
+        "examDifficulty": "medium",
+        "examTypology": "theory, project",
+        "organizeStudyT": "pages",
+        "parentId": null,
+        "note": ""
+      },
+      {
+        "id": 2,
+        "title": "Barber",
+        "category": "WELLNESS",
+        "subcategory": "BARBER",
+        "date": "30/01/2021",
+        "startingTime": "10.00 AM",
+        "endTime": "10.30 AM",
+        "place": "Via Asdrubale 45",
+        "note": ""
+      },
+      {
+        "id": 3,
+        "title": "University tax",
+        "category": "FINANCES",
+        "subcategory": "TAX",
+        "date": "30/01/2021",
+        "deadline": "31/01/2021",
+        "price": 294,
+        "note": "Sbrigateee"
+      }
+    ]
+  },
   "event": {
     "return": {
       "id": 1,

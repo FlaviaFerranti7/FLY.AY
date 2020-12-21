@@ -2,15 +2,23 @@ package com.flam.flyay;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.flam.flyay.services.EventService;
+import com.flam.flyay.services.ServerCallback;
+import com.flam.flyay.util.MockServerUrl;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,10 +32,18 @@ public class MainActivity extends AppCompatActivity {
     private SimpleDateFormat df;
     private String currentDate;
 
+    private EventService service;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try {
+            initializeMainActivity();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -107,6 +123,35 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void initializeMainActivity() throws  JSONException{
+        service = new EventService(this);
+
+        JSONObject params = new JSONObject();
+        params.put("currentDay", currentDate);
+
+        service.getEventsByDay(MockServerUrl.EVENT_DAY.url, params, new ServerCallback() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                JSONArray containerResponse = new JSONArray();
+                try {
+                    containerResponse = result.getJSONArray("return");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                for(int i = 0; i < containerResponse.length(); i ++) {
+                    JSONObject currentJSONObject = new JSONObject();
+                    try {
+                        currentJSONObject = containerResponse.getJSONObject(i);
+                        Log.d(".MainActivity", "Event: " + (i + 1) + " title: " + currentJSONObject.getString("title"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
 }

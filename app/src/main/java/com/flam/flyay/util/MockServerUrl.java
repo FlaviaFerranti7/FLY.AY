@@ -3,7 +3,8 @@ package com.flam.flyay.util;
 public enum MockServerUrl {
 
     SIGNIN_OK("http://10.0.2.2:3000/user/signinOK"),
-    SIGNIN_KO("http://10.0.2.2:3000/user/signinKO");
+    SIGNIN_KO("http://10.0.2.2:3000/user/signinKO"),
+    EVENT_DAY("http://10.0.2.2:3000/event/day");
 
     public final String url;
 
