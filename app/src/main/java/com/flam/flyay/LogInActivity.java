@@ -27,6 +27,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.flam.flyay.activities.SignUpActivity;
 import com.flam.flyay.util.MockServerUrl;
+import com.flam.flyay.util.TouchInterceptor;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -59,26 +60,7 @@ public class LogInActivity extends AppCompatActivity {
     public void initializeLayout() {
 
         RelativeLayout touchInterceptor = (RelativeLayout) findViewById(R.id.touchInterceptor);
-        touchInterceptor.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    View currentViewFocused = getCurrentFocus();
-                    System.out.println(currentViewFocused);
-                    if (currentViewFocused instanceof TextInputEditText) {
-                        Rect outRect = new Rect();
-                        currentViewFocused.getGlobalVisibleRect(outRect);
-                        if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
-
-                            v.clearFocus();
-                            InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                        }
-                    }
-                }
-                return false;
-            }
-        });
+        touchInterceptor.setOnTouchListener(new TouchInterceptor(this));
 
         this.usernameLayout = (TextInputLayout) findViewById(R.id.usernameLayout);
         this.usernameTextField = (TextInputEditText) findViewById(R.id.username);
