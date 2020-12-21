@@ -21,7 +21,7 @@ public class TouchInterceptor implements View.OnTouchListener {
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             View currentViewFocused = activity.getCurrentFocus();
-            System.out.println(currentViewFocused);
+
             if (currentViewFocused instanceof TextInputEditText) {
                 Rect outRect = new Rect();
                 currentViewFocused.getGlobalVisibleRect(outRect);
