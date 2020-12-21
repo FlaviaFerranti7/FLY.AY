@@ -5,11 +5,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.flam.flyay.model.Event;
+import com.flam.flyay.model.EventFinances;
+import com.flam.flyay.model.EventWellness;
 import com.flam.flyay.services.EventService;
 import com.flam.flyay.services.ServerCallback;
+import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.MockServerUrl;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -25,12 +33,16 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static com.flam.flyay.util.CategoryEnum.*;
+
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBar ab;
     private Calendar c;
     private SimpleDateFormat df;
     private String currentDate;
+
+    private LinearLayout eventsList;
 
     private EventService service;
 
@@ -127,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeMainActivity() throws  JSONException{
         service = new EventService(this);
+        eventsList = findViewById(R.id.eventsList);
 
         JSONObject params = new JSONObject();
         params.put("currentDay", currentDate);
@@ -143,9 +156,32 @@ public class MainActivity extends AppCompatActivity {
 
                 for(int i = 0; i < containerResponse.length(); i ++) {
                     JSONObject currentJSONObject = new JSONObject();
+                    Button btn = new Button(getApplicationContext());
+                    Gson gson = new GsonBuilder()
+                            .setDateFormat("dd/MM/yyyy").create();
+                    btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 300));
                     try {
                         currentJSONObject = containerResponse.getJSONObject(i);
-                        Log.d(".MainActivity", "Event: " + (i + 1) + " title: " + currentJSONObject.getString("title"));
+                        Event event = new Event();
+                        switch (currentJSONObject.getString("category")) {
+                            case "FESTIVITY":
+                                break;
+                            case "WELLNESS":
+                                event = gson.fromJson(currentJSONObject.toString(), EventWellness.class);
+                                break;
+                            case "STUDY":
+                                break;
+                            case "FINANCES":
+                                event = gson.fromJson(currentJSONObject.toString(), EventFinances.class);
+                                break;
+                            case "FREE_TIME":
+                                break;
+
+                        }
+
+                        Log.d(".MainActivity", event.toString());
+                        btn.setText(currentJSONObject.getString("title"));
+                        eventsList.addView(btn);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
