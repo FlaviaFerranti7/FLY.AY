@@ -9,9 +9,8 @@
     </style>
 
     <style name="NavigationTheme" parent="AppTheme">
-        <item name="itemIconTint">@color/greenApp</item>
-        <item name="itemTextColor">@color/greenApp</item>
-        <item name="android:background">@android:color/white</item>
+        <item name="itemIconTint">@drawable/selector</item>
+        <item name="itemTextColor">@drawable/selector</item>
     </style>
 
     <style name="TitleApp">

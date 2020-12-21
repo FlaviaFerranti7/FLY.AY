@@ -14,7 +14,7 @@
     <item
         android:title="@string/add_event_icon"
         android:id="@+id/plus"
-        android:icon="@drawable/ic_add_event"/>
+        android:icon="@drawable/ic_add_event" />
     <item
         android:title="@string/list_icon"
         android:id="@+id/list"

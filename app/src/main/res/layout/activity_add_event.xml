@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav_menu"
-        app:itemTextColor="@drawable/selector"
-        app:itemIconTint="@drawable/selector"/>
+        android:background="@android:color/white"
+        android:theme="@style/NavigationTheme"/>
 
 </RelativeLayout>
