@@ -8,6 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="NavigationTheme" parent="AppTheme">
+        <item name="itemIconTint">@color/greenApp</item>
+        <item name="itemTextColor">@color/greenApp</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
     <style name="TitleApp">
         <item name="android:textSize">34sp</item>
         <item name="android:textColor">@color/greenApp</item>

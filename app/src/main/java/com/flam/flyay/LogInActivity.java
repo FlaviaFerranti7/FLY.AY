@@ -1,13 +1,22 @@
 package com.flam.flyay;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
+import android.os.Build;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
+
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -18,13 +27,21 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.flam.flyay.activities.SignUpActivity;
 import com.flam.flyay.util.MockServerUrl;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.util.Objects;
 
 public class LogInActivity extends AppCompatActivity {
 
-    private EditText usernameTextField, passwordTextField;
+    private TextInputLayout usernameLayout;
+    private TextInputEditText usernameTextField;
+    private TextInputLayout passwordLayout;
+    private TextInputEditText passwordTextField;
     private CheckBox rememberMeCheckBox;
     private Button signInButton, signUpButton;
 
@@ -38,23 +55,63 @@ public class LogInActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public void initializeLayout() {
-        this.usernameTextField = findViewById(R.id.username);
-        this.passwordTextField = findViewById(R.id.password);
+
+        RelativeLayout touchInterceptor = (RelativeLayout) findViewById(R.id.touchInterceptor);
+        touchInterceptor.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    View currentViewFocused = getCurrentFocus();
+                    System.out.println(currentViewFocused);
+                    if (currentViewFocused instanceof TextInputEditText) {
+                        Rect outRect = new Rect();
+                        currentViewFocused.getGlobalVisibleRect(outRect);
+                        if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+
+                            v.clearFocus();
+                            InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+
+        this.usernameLayout = (TextInputLayout) findViewById(R.id.usernameLayout);
+        this.usernameTextField = (TextInputEditText) findViewById(R.id.username);
+        this.passwordLayout = (TextInputLayout) findViewById(R.id.passwordLayout);
+        this.passwordTextField = (TextInputEditText) findViewById(R.id.password);
         this.rememberMeCheckBox = findViewById(R.id.rememberMe);
         this.signInButton = findViewById(R.id.buttonLogin);
         this.signUpButton = findViewById(R.id.buttonSignUp);
 
         this.signInButton.setOnClickListener(new View.OnClickListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 Log.d("LogInActivity", "event: login");
 
-                String username = usernameTextField.getText().toString();
-                String password = passwordTextField.getText().toString();
+                String username = Objects.requireNonNull(usernameTextField.getText()).toString();
+                String password = Objects.requireNonNull(passwordTextField.getText()).toString();
 
                 Log.d("LogInActivity","username: " + username + " password: " + password);
+
+                if(username.length() == 0) {
+                    usernameLayout.setErrorEnabled(true);
+                    usernameLayout.setError(getString(R.string.username_null_error));
+                    passwordLayout.clearFocus();
+                    return;
+                }
+                if(password.length() == 0) {
+                    passwordLayout.setErrorEnabled(true);
+                    passwordLayout.setError(getString(R.string.password_null_error));
+                    usernameLayout.clearFocus();
+                    return;
+                }
 
                 JSONObject params = new JSONObject();
                 try {
@@ -65,7 +122,7 @@ public class LogInActivity extends AppCompatActivity {
                     Log.getStackTraceString(e);
                 }
 
-                executeRequestPOST(MockServerUrl.LOGIN_OK.url, params);
+                signin(MockServerUrl.SIGNIN_OK.url, params);
             }
         });
 
@@ -77,9 +134,25 @@ public class LogInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        this.usernameTextField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!usernameTextField.getText().toString().isEmpty())
+                    usernameLayout.setErrorEnabled(false);
+            }
+        });
+
+        this.passwordTextField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!passwordTextField.getText().toString().isEmpty())
+                    passwordLayout.setErrorEnabled(false);
+            }
+        });
     }
 
-    public void executeRequestPOST(String url, JSONObject params) {
+    public void signin(String url, JSONObject params) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, params,

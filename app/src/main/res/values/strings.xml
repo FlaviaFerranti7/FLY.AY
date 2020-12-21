@@ -41,4 +41,9 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+
+    <!-- Errors -->
+    <string name="username_null_error">username cannot be empty</string>
+    <string name="password_null_error">password cannot be empty</string>
 </resources>
