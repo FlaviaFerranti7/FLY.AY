@@ -24,7 +24,7 @@ public class UserService {
         this.activity = activity;
     }
 
-    public void signin(String url, JSONObject params) {
+    public void signin(String url, JSONObject params, final ServerCallback callback) {
         RequestQueue requestQueue = Volley.newRequestQueue(activity);
 
         JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, params,
@@ -32,30 +32,7 @@ public class UserService {
                 {
                     @Override
                     public void onResponse(JSONObject response) {
-                        JSONObject containerResponse = new JSONObject();
-                        String status = "";
-                        try {
-                            containerResponse = response.getJSONObject("return");
-                            status = containerResponse.getString("status");
-
-                            Log.d("response: ", status);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        if(status.equalsIgnoreCase("OK")) {
-                            activity.startActivity(new Intent(activity.getApplicationContext(), MainActivity.class));
-                        }
-                        else {
-                            try {
-                                Toast.makeText(activity.getApplicationContext(),
-                                        containerResponse.getString("message"),
-                                        Toast.LENGTH_SHORT)
-                                        .show();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                        callback.onSuccess(response);
                     }
                 },
                 new Response.ErrorListener()

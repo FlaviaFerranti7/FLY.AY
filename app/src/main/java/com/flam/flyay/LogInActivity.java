@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.flam.flyay.activities.SignUpActivity;
+import com.flam.flyay.services.ServerCallback;
 import com.flam.flyay.services.UserService;
 import com.flam.flyay.util.MockServerUrl;
 import com.flam.flyay.util.TouchInterceptor;
@@ -105,7 +106,35 @@ public class LogInActivity extends AppCompatActivity {
                     Log.getStackTraceString(e);
                 }
 
-                service.signin(MockServerUrl.SIGNIN_OK.url, params);
+                service.signin(MockServerUrl.SIGNIN_OK.url, params, new ServerCallback() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        JSONObject containerResponse = new JSONObject();
+                        String status = "";
+                        try {
+                            containerResponse = result.getJSONObject("return");
+                            status = containerResponse.getString("status");
+
+                            Log.d("response: ", status);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        if(status.equalsIgnoreCase("OK")) {
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        }
+                        else {
+                            try {
+                                Toast.makeText(getApplicationContext(),
+                                        containerResponse.getString("message"),
+                                        Toast.LENGTH_SHORT)
+                                        .show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
             }
         });
 
