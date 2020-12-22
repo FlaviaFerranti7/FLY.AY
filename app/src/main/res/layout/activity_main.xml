@@ -25,13 +25,11 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </FrameLayout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:name="com.flam.flyay.fragments.EventsListFragment"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/eventsListFragment"
-        android:layout_marginTop="200dp"
-        tools:layout="@layout/fragment_events_list"/>
+        android:id="@+id/events_list_anchor"
+        android:layout_marginTop="200dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
