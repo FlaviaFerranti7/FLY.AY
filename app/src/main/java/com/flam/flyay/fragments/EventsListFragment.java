@@ -1,12 +1,16 @@
 package com.flam.flyay.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.ListFragment;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 import com.flam.flyay.model.Event;
 import com.flam.flyay.services.EventService;
 import com.flam.flyay.services.ServerCallback;
@@ -28,8 +32,23 @@ public class EventsListFragment extends ListFragment {
     private EventService service;
     private ConverterFromJsonToModel converterFromJsonToModel;
     private List<String> events;
+    private OnEventsListListener onEventsListListener;
+
+    public interface OnEventsListListener {
+        void onEventSelected(int index);
+    }
 
     public EventsListFragment() {}
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try{
+            onEventsListListener = (OnEventsListListener) context;
+        } catch(ClassCastException e) {
+            throw new ClassCastException("OnEventsListListener interface must be implemented");
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +92,12 @@ public class EventsListFragment extends ListFragment {
                 setListAdapter(adapter);
             }
         });
+    }
+
+    @Override
+    public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        onEventsListListener.onEventSelected(position);
     }
 
     @Override
