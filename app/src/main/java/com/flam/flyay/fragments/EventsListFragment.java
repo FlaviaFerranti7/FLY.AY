@@ -5,14 +5,20 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.flam.flyay.R;
 import com.flam.flyay.model.Event;
+import com.flam.flyay.model.EventWellness;
 import com.flam.flyay.services.EventService;
 import com.flam.flyay.services.ServerCallback;
 import com.flam.flyay.util.ConverterFromJsonToModel;
@@ -26,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EventsListFragment extends ListFragment {
+public class EventsListFragment extends Fragment {
     private EventService service;
     private ConverterFromJsonToModel converterFromJsonToModel;
     private List<Event> events;
@@ -48,10 +54,11 @@ public class EventsListFragment extends ListFragment {
         }
     }
 
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        Log.d(".EventsListFragment", "create view...");
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.home_fragment, container, false);
+        final ListView listView = view.findViewById(R.id.events_list);
         Bundle arguments = getArguments();
 
         this.service = new EventService(this.getContext());
@@ -61,6 +68,13 @@ public class EventsListFragment extends ListFragment {
 
         JSONObject params = getParams(currentDate);
         Log.d(".EventsListFragment", "parameters: [currentDate = '" + currentDate + "']");
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onEventsListListener.onEventSelected(events.get(position));
+            }
+        });
 
         service.getEventsByDay(MockServerUrl.EVENT_DAY.url, params, new ServerCallback() {
             @Override
@@ -73,22 +87,41 @@ public class EventsListFragment extends ListFragment {
                     for(int i = 0; i < containerResponse.length(); i ++) {
                         Event event = converterFromJsonToModel.converterFromJsonToEvent(containerResponse.getJSONObject(i));
                         events.add(event);
-                        eventsTitle.add(event.getTitle());
+                        String entry = "";
+                        if(event instanceof EventWellness) {
+                            EventWellness eventWellness = (EventWellness) event;
+                            String startingTime = Double.toString(eventWellness.getStartingTime());
+                            String endTime = Double.toString(eventWellness.getEndTime());
+
+                            if(startingTime.length() > 0) {
+                                if(startingTime.length() == 4)
+                                    startingTime += "0";
+                                entry += startingTime + " -";
+                            }
+                            if(endTime.length() > 0) {
+                                if(endTime.length() == 4)
+                                    endTime += "0";
+                                entry += "" + endTime;
+                            }
+
+                            if(entry.length() > 0) {
+                                entry += " | ";
+                            }
+                        }
+                        entry += event.getTitle() + " event";
+                        eventsTitle.add(entry);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 Log.d(".EventsListFragment",events.toString());
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, eventsTitle);
-                setListAdapter(adapter);
+                listView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         });
-    }
 
-    @Override
-    public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        onEventsListListener.onEventSelected(events.get(position));
+        return view;
     }
 
     @Override

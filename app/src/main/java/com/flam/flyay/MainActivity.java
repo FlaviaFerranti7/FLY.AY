@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements EventsListFragmen
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         EventsListFragment eventsListFragment = new EventsListFragment();
         eventsListFragment.setArguments(createParamsEventsFragment());
-        fragmentTransaction.add(R.id.events_list_anchor, eventsListFragment);
+        fragmentTransaction.add(R.id.fragment_events, eventsListFragment);
         fragmentTransaction.commit();
     }
 
