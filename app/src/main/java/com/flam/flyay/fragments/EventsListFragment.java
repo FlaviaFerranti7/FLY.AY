@@ -1,24 +1,15 @@
 package com.flam.flyay.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.ListFragment;
 
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-
-import com.flam.flyay.R;
+import android.widget.ArrayAdapter;
 import com.flam.flyay.model.Event;
 import com.flam.flyay.services.EventService;
 import com.flam.flyay.services.ServerCallback;
-import com.flam.flyay.services.UserService;
 import com.flam.flyay.util.ConverterFromJsonToModel;
 import com.flam.flyay.util.MockServerUrl;
 
@@ -26,33 +17,54 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class EventsListFragment extends Fragment {
+
+public class EventsListFragment extends ListFragment {
     private EventService service;
     private ConverterFromJsonToModel converterFromJsonToModel;
+    private List<String> events;
 
-    public EventsListFragment() {
-        // Required empty public constructor
-    }
-
+    public EventsListFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d(".EventsListFragment", "create view...");
         super.onCreate(savedInstanceState);
+
+        this.service = new EventService(this.getContext());
+        this.converterFromJsonToModel = new ConverterFromJsonToModel();
+        this.events = new ArrayList<>();
+        JSONObject params = getParams();
+
+        service.getEventsByDay(MockServerUrl.EVENT_DAY.url, params, new ServerCallback() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                JSONArray containerResponse;
+                try {
+                    containerResponse = result.getJSONArray("return");
+
+                    for(int i = 0; i < containerResponse.length(); i ++) {
+                        Event event = converterFromJsonToModel.converterFromJsonToEvent(containerResponse.getJSONObject(i));
+                        events.add(event.getTitle());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.d(".EventsListFragment",events.toString());
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, events);
+                setListAdapter(adapter);
+            }
+        });
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        Log.d(".EventsListFragment", "create view...");
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 
-        final View view = inflater.inflate(R.layout.fragment_events_list, container, false);
-
-        this.service = new EventService(view.getContext());
-        converterFromJsonToModel = new ConverterFromJsonToModel();
-        final LinearLayout eventsList = view.findViewById(R.id.eventsList);
-
+    private JSONObject getParams() {
         JSONObject params = new JSONObject();
         try {
             params.put("currentDay", "30/01/2021");
@@ -60,35 +72,6 @@ public class EventsListFragment extends Fragment {
             e.printStackTrace();
         }
 
-        service.getEventsByDay(MockServerUrl.EVENT_DAY.url, params, new ServerCallback() {
-            @Override
-            public void onSuccess(JSONObject result) {
-                JSONArray containerResponse = new JSONArray();
-                try {
-                    containerResponse = result.getJSONArray("return");
-
-                    for(int i = 0; i < containerResponse.length(); i ++) {
-                        JSONObject currentJSONObject = containerResponse.getJSONObject(i);
-                        Button btn = new Button(view.getContext());
-                        Event event = converterFromJsonToModel.converterFromJsonToEvent(currentJSONObject);
-                        Log.d(".EventsListFragment", event.toString());
-
-
-                        btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200));
-                        btn.setText(event.getTitle());
-                        eventsList.addView(btn);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        return view;
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
+        return params;
     }
 }
