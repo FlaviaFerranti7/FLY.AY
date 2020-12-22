@@ -1,7 +1,9 @@
 package com.flam.flyay.services;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -13,16 +15,22 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
-public class EventService {
-    private Activity activity;
+public class EventService<T> {
+    private T object;
 
-    public EventService(Activity activity) {
-        this.activity = activity;
+    public EventService(T object) {
+        this.object = object;
     }
 
     public void getEventsByDay(String url, JSONObject params, final ServerCallback callback) {
+        final Context context;
+        if(object instanceof Activity) {
+            context = (Activity) object;
+        } else {
+            context = ((View) object).getContext();
+        }
         Log.d(".EventService", "Starting getEventsByDay");
-        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, params,
                 new Response.Listener<JSONObject>() {
@@ -36,7 +44,7 @@ public class EventService {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Error.Response", error.toString());
-                        Toast.makeText(activity.getApplicationContext(),"Error server connection",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context.getApplicationContext(),"Error server connection",Toast.LENGTH_SHORT).show();
                     }
                 });
 

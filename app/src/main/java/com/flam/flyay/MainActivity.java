@@ -2,39 +2,20 @@ package com.flam.flyay;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.LinearLayout;
-
-import com.flam.flyay.model.Event;
-import com.flam.flyay.model.EventFinances;
-import com.flam.flyay.model.EventWellness;
-import com.flam.flyay.services.EventService;
-import com.flam.flyay.services.ServerCallback;
-import com.flam.flyay.util.CategoryEnum;
-import com.flam.flyay.util.ConverterFromJsonToModel;
-import com.flam.flyay.util.MockServerUrl;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import static com.flam.flyay.util.CategoryEnum.*;
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -43,21 +24,10 @@ public class MainActivity extends AppCompatActivity {
     private SimpleDateFormat df;
     private String currentDate;
 
-    private LinearLayout eventsList;
-
-    private EventService service;
-    private ConverterFromJsonToModel converterFromJsonToClass;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        try {
-            initializeMainActivity();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -72,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         ab.setIcon(R.drawable.ic_home_page);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.getMenu().getItem(2).setEnabled(false);
         navView.setSelectedItemId(R.id.home);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
@@ -137,44 +108,6 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void initializeMainActivity() throws  JSONException{
-        service = new EventService(this);
-        converterFromJsonToClass = new ConverterFromJsonToModel();
-        eventsList = findViewById(R.id.eventsList);
-
-        JSONObject params = new JSONObject();
-        params.put("currentDay", currentDate);
-
-        service.getEventsByDay(MockServerUrl.EVENT_DAY.url, params, new ServerCallback() {
-            @Override
-            public void onSuccess(JSONObject result) {
-                JSONArray containerResponse = new JSONArray();
-                try {
-                    containerResponse = result.getJSONArray("return");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                for(int i = 0; i < containerResponse.length(); i ++) {
-                    JSONObject currentJSONObject = new JSONObject();
-                    Button btn = new Button(getApplicationContext());
-                    btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 300));
-
-                    try {
-                        currentJSONObject = containerResponse.getJSONObject(i);
-                        Event event = converterFromJsonToClass.converterFromJsonToEvent(currentJSONObject);
-
-                        Log.d(".MainActivity", event.toString());
-                        btn.setText(currentJSONObject.getString("title"));
-                        eventsList.addView(btn);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
     }
 
 }

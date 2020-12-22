@@ -409,6 +409,28 @@
         "deadline": "31/01/2021",
         "price": 236.0,
         "note": "Sbrigateee2"
+      },
+      {
+        "id": 108,
+        "title": "Fitness",
+        "category": "WELLNESS",
+        "subcategory": "FITNESS",
+        "date": "30/01/2021",
+        "startingTime": 11.00,
+        "endTime": 13.00,
+        "place": "Via mi alleno 145",
+        "note": ""
+      },
+      {
+        "id": 108,
+        "title": "Massage",
+        "category": "WELLNESS",
+        "subcategory": "WELFARE",
+        "date": "30/01/2021",
+        "startingTime": 16.00,
+        "endTime": 17.00,
+        "place": "Via spa 2",
+        "note": ""
       }
     ]
   },
