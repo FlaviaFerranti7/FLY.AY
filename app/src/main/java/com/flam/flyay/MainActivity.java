@@ -3,8 +3,10 @@ package com.flam.flyay;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.flam.flyay.fragments.EventsListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,7 +23,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EventsListFragment.OnEventsListListener{
     private Toolbar toolbar;
     private ActionBar ab;
     private Calendar c;
@@ -125,5 +127,11 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.events_list_anchor, new EventsListFragment());
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onEventSelected(int index) {
+        Log.d(".MainActivity", "selected event with index equals to " + index);
+        Toast.makeText(getApplicationContext(), "selected item " + index, Toast.LENGTH_SHORT).show();
     }
 }
