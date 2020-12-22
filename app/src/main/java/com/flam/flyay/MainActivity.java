@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.flam.flyay.fragments.EventsListFragment;
+import com.flam.flyay.model.Event;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -35,8 +36,6 @@ public class MainActivity extends AppCompatActivity implements EventsListFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initializeFragments();
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ab = getSupportActionBar();
@@ -48,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements EventsListFragmen
         currentDate = df.format(c.getTime());
         ab.setTitle(currentDate);
         ab.setIcon(R.drawable.ic_home_page);
+
+        initializeFragments();
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.getMenu().getItem(2).setEnabled(false);
@@ -125,13 +126,22 @@ public class MainActivity extends AppCompatActivity implements EventsListFragmen
 
     private void initializeFragments() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.events_list_anchor, new EventsListFragment());
+        EventsListFragment eventsListFragment = new EventsListFragment();
+        eventsListFragment.setArguments(createParamsEventsFragment());
+        fragmentTransaction.add(R.id.events_list_anchor, eventsListFragment);
         fragmentTransaction.commit();
     }
 
+    private Bundle createParamsEventsFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putString("currentDate", this.currentDate);
+
+        return bundle;
+    }
+
     @Override
-    public void onEventSelected(int index) {
-        Log.d(".MainActivity", "selected event with index equals to " + index);
-        Toast.makeText(getApplicationContext(), "selected item " + index, Toast.LENGTH_SHORT).show();
+    public void onEventSelected(Event e) {
+        Log.d(".MainActivity", e.toString());
+        Toast.makeText(getApplicationContext(), e.getTitle() + " event", Toast.LENGTH_SHORT).show();
     }
 }
