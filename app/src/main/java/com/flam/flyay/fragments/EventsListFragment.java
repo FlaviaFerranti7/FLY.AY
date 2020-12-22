@@ -1,5 +1,6 @@
 package com.flam.flyay.fragments;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -109,6 +110,9 @@ public class EventsListFragment extends Fragment {
 
                 Log.d(".EventsListFragment", events.toString());
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, eventsTitle);
+                for(int j = 0; j < adapter.getCount(); j ++) {
+                    System.out.println(adapter.getItem(j));
+                }
                 listView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
