@@ -31,11 +31,9 @@ public class Utils {
     public static String getTimeToString(double startingTimeInput, double endTimeInput) {
         String startingTime = Double.toString(startingTimeInput);
         String endTime = Double.toString(endTimeInput);
-
-        System.out.println(startingTime + " " + endTime);
-
         String startingTimeInt = startingTime.substring(0,2);
         String startingTimeDecimal = startingTime.substring(3);
+
         if(startingTimeDecimal.length() == 1)
             startingTimeDecimal += "0";
 

@@ -8,9 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -63,7 +65,8 @@ public class EventsListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_fragment, container, false);
-        final ListView listView = view.findViewById(R.id.events_list);
+        final RecyclerView listRecyclerView = view.findViewById(R.id.events_recycler);
+        listRecyclerView.setNestedScrollingEnabled(false);
         Bundle arguments = getArguments();
 
         this.service = new EventService(this.getContext());
@@ -74,22 +77,14 @@ public class EventsListFragment extends Fragment {
         JSONObject params = getParams(currentDate);
         Log.d(".EventsListFragment", "parameters: [currentDate = '" + currentDate + "']");
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onEventsListListener.onEventSelected(events.get(position));
-            }
-        });
-
         service.getEventsByDay(params, new ServerCallback() {
             @Override
             public void onSuccess(Object result) {
                 events = (List<Event>) result;
-                List<String> eventsTitle = new ArrayList<>();
                 Log.d(".EventsListFragment", events.toString());
 
-                EventAdapter eventAdapter = new EventAdapter(getActivity(), R.layout.event_list_adapter_layout, events);
-                listView.setAdapter(eventAdapter);
+                EventAdapter eventAdapter = new EventAdapter(events, onEventsListListener);
+                listRecyclerView.setAdapter(eventAdapter);
                 eventAdapter.notifyDataSetChanged();
             }
         });
