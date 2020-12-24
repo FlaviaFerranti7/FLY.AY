@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.flam.flyay.R;
+import com.flam.flyay.adapter.EventAdapter;
 import com.flam.flyay.model.Event;
 import com.flam.flyay.model.EventWellness;
 import com.flam.flyay.services.EventService;
@@ -85,39 +86,11 @@ public class EventsListFragment extends Fragment {
             public void onSuccess(Object result) {
                 events = (List<Event>) result;
                 List<String> eventsTitle = new ArrayList<>();
-                for (Event event : events) {
-                    String entry = "";
-                    if (event instanceof EventWellness) {
-                        EventWellness eventWellness = (EventWellness) event;
-                        String startingTime = Double.toString(eventWellness.getStartingTime());
-                        String endTime = Double.toString(eventWellness.getEndTime());
-
-                        if (startingTime.length() > 0) {
-                            if (startingTime.length() == 4)
-                                startingTime += "0";
-                            entry += startingTime + " -";
-                        }
-                        if (endTime.length() > 0) {
-                            if (endTime.length() == 4)
-                                endTime += "0";
-                            entry += "" + endTime;
-                        }
-
-                        if (entry.length() > 0) {
-                            entry += " | ";
-                        }
-                    }
-                    entry += event.getTitle() + " event";
-                    eventsTitle.add(entry);
-                }
-
                 Log.d(".EventsListFragment", events.toString());
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, eventsTitle);
-                for(int j = 0; j < adapter.getCount(); j ++) {
-                    System.out.println(adapter.getItem(j));
-                }
-                listView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+
+                EventAdapter eventAdapter = new EventAdapter(getActivity(), R.layout.event_list_adapter_layout, events);
+                listView.setAdapter(eventAdapter);
+                eventAdapter.notifyDataSetChanged();
             }
         });
 
