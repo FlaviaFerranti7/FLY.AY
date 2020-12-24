@@ -21,7 +21,6 @@ import com.flam.flyay.util.MockServerUrl;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +60,7 @@ public class EventService {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
     }
 
 

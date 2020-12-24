@@ -3,10 +3,13 @@ package com.flam.flyay;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.flam.flyay.fragments.EventsListFragment;
+import com.flam.flyay.model.Event;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -21,7 +24,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EventsListFragment.OnEventsListListener{
     private Toolbar toolbar;
     private ActionBar ab;
     private Calendar c;
@@ -32,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        initializeFragments();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         currentDate = df.format(c.getTime());
         ab.setTitle(currentDate);
         ab.setIcon(R.drawable.ic_home_page);
+
+        initializeFragments();
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.getMenu().getItem(2).setEnabled(false);
@@ -123,7 +126,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeFragments() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.events_list_anchor, new EventsListFragment());
+        EventsListFragment eventsListFragment = new EventsListFragment();
+        eventsListFragment.setArguments(createParamsEventsFragment());
+        fragmentTransaction.add(R.id.fragment_events, eventsListFragment);
         fragmentTransaction.commit();
+    }
+
+    private Bundle createParamsEventsFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putString("currentDate", this.currentDate);
+
+        return bundle;
+    }
+
+    @Override
+    public void onEventSelected(Event e) {
+        Log.d(".MainActivity", e.toString());
+        Toast.makeText(getApplicationContext(), e.getTitle() + " event", Toast.LENGTH_SHORT).show();
     }
 }
