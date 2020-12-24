@@ -26,6 +26,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 
 public class EventsListFragment extends Fragment {
     private EventService service;
@@ -60,26 +62,18 @@ public class EventsListFragment extends Fragment {
             e.printStackTrace();
         }
 
-        service.getEventsByDay(MockServerUrl.EVENT_DAY.url, params, new ServerCallback() {
+        service.getEventsByDay(params, new ServerCallback() {
             @Override
-            public void onSuccess(JSONObject result) {
-                JSONArray containerResponse = new JSONArray();
-                try {
-                    containerResponse = result.getJSONArray("return");
+            public void onSuccess(Object result) {
+                List<Event> events = (List<Event>) result;
+                for(int i = 0; i < events.size(); i ++) {
+                    Event event = events.get(i);
+                    Log.d(".EventsListFragment", event.toString());
 
-                    for(int i = 0; i < containerResponse.length(); i ++) {
-                        JSONObject currentJSONObject = containerResponse.getJSONObject(i);
-                        Button btn = new Button(view.getContext());
-                        Event event = converterFromJsonToModel.converterFromJsonToEvent(currentJSONObject);
-                        Log.d(".EventsListFragment", event.toString());
-
-
-                        btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200));
-                        btn.setText(event.getTitle());
-                        eventsList.addView(btn);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    Button btn = new Button(view.getContext());
+                    btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200));
+                    btn.setText(event.getTitle());
+                    eventsList.addView(btn);
                 }
             }
         });

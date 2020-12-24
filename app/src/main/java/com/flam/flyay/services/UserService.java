@@ -1,6 +1,7 @@
 package com.flam.flyay.services;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
@@ -13,38 +14,28 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.flam.flyay.MainActivity;
 import com.flam.flyay.util.MockServerUrl;
+import com.flam.flyay.util.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class UserService {
-    private Activity activity;
+    private Context context;
+    private AppRequest appRequest;
 
-    public UserService(Activity activity) {
-        this.activity = activity;
+    public UserService(Context context) {
+        this.context = context;
+        this.appRequest = new AppRequest();
     }
 
-    public void signin(String url, JSONObject params, final ServerCallback callback) {
-        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+    public void signin(JSONObject params, final ServerCallback callback) {
+        Log.d(".UserService", "POST - signin");
 
-        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, params,
-                new Response.Listener<JSONObject>()
-                {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        callback.onSuccess(response);
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Error.Response", error.toString());
-                        Toast.makeText(activity.getApplicationContext(),"Error server connection",Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-
-        requestQueue.add(postRequest);
+        appRequest.jsonObjectPOSTRequest(context, MockServerUrl.SIGNIN_OK.url, params, new ServerCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                Utils.getStatusResponse((JSONObject) result, callback);
+            }
+        });
     }
 }

@@ -10,25 +10,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ConverterFromJsonToModel {
-    private Gson gson;
 
-    public ConverterFromJsonToModel() {
-        this.gson = new GsonBuilder()
-                .setDateFormat("dd/MM/yyyy").create();
-    }
-
-    public Event converterFromJsonToEvent(JSONObject jsonToConvert) throws JSONException {
+    public static Event converterFromJsonToEvent(JSONObject jsonToConvert) throws JSONException {
         Event event = new Event();
+        Gson gson = new GsonBuilder()
+                .setDateFormat("dd/MM/yyyy").create();
         switch (jsonToConvert.getString("category")) {
             case "FESTIVITY":
                 break;
             case "WELLNESS":
-                event = this.gson.fromJson(jsonToConvert.toString(), EventWellness.class);
+                event = gson.fromJson(jsonToConvert.toString(), EventWellness.class);
                 break;
             case "STUDY":
                 break;
             case "FINANCES":
-                event = this.gson.fromJson(jsonToConvert.toString(), EventFinances.class);
+                event = gson.fromJson(jsonToConvert.toString(), EventFinances.class);
                 break;
             case "FREE_TIME":
                 break;
