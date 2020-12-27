@@ -3,6 +3,7 @@ package com.flam.flyay.util;
 import com.flam.flyay.model.Event;
 import com.flam.flyay.model.EventFinances;
 import com.flam.flyay.model.EventWellness;
+import com.flam.flyay.model.ToDo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -31,5 +32,11 @@ public class ConverterFromJsonToModel {
         }
 
         return event;
+    }
+
+    public static ToDo converterFromJsonToList(JSONObject jsonToConvert) {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("dd/MM/yyyy").create();
+        return gson.fromJson(jsonToConvert.toString(), ToDo.class);
     }
 }

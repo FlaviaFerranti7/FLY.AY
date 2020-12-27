@@ -568,31 +568,29 @@
     }
   },
   "list": {
-    "return": {
-      "lists": [
-        {
-          "id": 1,
-          "title": "Film",
-          "color": "red",
-          "lifetimer": null,
-          "checked": false
-        },
-        {
-          "id": 2,
-          "title": "Shopping list",
-          "color": "yellow",
-          "lifetimer": null,
-          "checked": false
-        },
-        {
-          "id": 3,
-          "title": "Books",
-          "color": "red",
-          "lifetimer": null,
-          "checked": true
-        }
-      ]
-    }
+    "return": [
+      {
+        "id": 1,
+        "title": "Film",
+        "color": "red",
+        "lifetimer": null,
+        "checked": false
+      },
+      {
+        "id": 2,
+        "title": "Shopping list",
+        "color": "yellow",
+        "lifetimer": null,
+        "checked": false
+      },
+      {
+        "id": 3,
+        "title": "Books",
+        "color": "red",
+        "lifetimer": null,
+        "checked": true
+      }
+    ]
   },
   "listItem": {
     "return": {
