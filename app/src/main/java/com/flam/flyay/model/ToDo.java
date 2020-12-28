@@ -59,8 +59,8 @@ public class ToDo {
 
     @NotNull
     public String toString() {
-        return "List => id: " + this.id + ";title: " + this.title + ";color" + this.color + ";lifetimer: " + this.lifetimer +
-                ";checked" + this.checked;
+        return "List => id: " + this.id + "; title: " + this.title + "; color: " + this.color + "; lifetimer: " + this.lifetimer +
+                "; checked: " + this.checked;
     }
 
 }

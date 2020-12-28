@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.flam.flyay.R;
+import com.flam.flyay.adapter.ToDoAdapter;
 import com.flam.flyay.model.ToDo;
 import com.flam.flyay.services.ServerCallback;
 import com.flam.flyay.services.ToDoService;
@@ -36,7 +39,11 @@ public class ToDoListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.home_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_to_do_list, container, false);
+
+        final RecyclerView listRecyclerView = view.findViewById(R.id.to_do_list_recycler);
+        //listRecyclerView.setLayoutManager(new LinearLayoutManager((getActivity().getApplicationContext())));
+        listRecyclerView.setNestedScrollingEnabled(false);
 
         this.service = new ToDoService(this.getContext());
         this.converterFromJsonToModel = new ConverterFromJsonToModel();
@@ -51,6 +58,11 @@ public class ToDoListFragment extends Fragment {
             @Override
             public void onSuccess(Object result) {
                 toDoList = (List<ToDo>) result;
+                Log.d(".TodoListFragment", toDoList.toString());
+                ToDoAdapter toDoAdapter = new ToDoAdapter(toDoList);
+                listRecyclerView.setAdapter(toDoAdapter);
+                toDoAdapter.notifyDataSetChanged();
+
             }
         });
         return view;

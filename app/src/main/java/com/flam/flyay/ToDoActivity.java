@@ -87,7 +87,7 @@ public class ToDoActivity extends AppCompatActivity {
 
     private void initializeFragments() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.todo_list_fragment, new ToDoListFragment());
+        fragmentTransaction.add(R.id.display_todo_list_fragment, new ToDoListFragment());
         fragmentTransaction.commit();
     }
 }
