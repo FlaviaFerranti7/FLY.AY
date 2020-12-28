@@ -2,11 +2,13 @@ package com.flam.flyay.model;
 
 import androidx.annotation.Nullable;
 
+import org.jetbrains.annotations.NotNull;
+
 public class User {
     private int id;
     private String username;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
 
     @Nullable
     private String password;
@@ -18,8 +20,8 @@ public class User {
     public User(int id, String username, String first_name, String last_name) {
         this.id = id;
         this.username = username;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.firstName = first_name;
+        this.lastName = last_name;
     }
 
 
@@ -40,19 +42,24 @@ public class User {
     }
 
     public String getFirst_name() {
-        return first_name;
+        return firstName;
     }
 
     public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+        this.firstName = first_name;
     }
 
     public String getLast_name() {
-        return last_name;
+        return lastName;
     }
 
     public void setLast_name(String last_name) {
-        this.last_name = last_name;
+        this.lastName = last_name;
+    }
+
+    @NotNull
+    public String startToString() {
+        return "User=> id: " + this.id + ";username: " + this.username + "; first_name: " + this.firstName + "; last_name: " + this.lastName +  ";";
     }
 
 }

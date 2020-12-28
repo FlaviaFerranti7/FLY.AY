@@ -46,7 +46,7 @@ public class UserService {
         });
     }
     public void getUserById(JSONObject params, final ServerCallback callback) {
-        Log.d(".UserService", "GET - UserByUsename");
+        Log.d(".UserService", "GET - UserById");
         appRequest.jsonObjectGETRequest(context, MockServerUrl.PROFILE_USER.url, params, new ServerCallback() {
             @Override
             public void onSuccess(Object result) {
@@ -56,15 +56,11 @@ public class UserService {
     }
     public void getDetailsUser(JSONObject requestResult, final ServerCallback callback) {
         User user = new User();
-        JSONArray containerResponse = new JSONArray();
+        JSONObject containerResponse = new JSONObject();
         try {
-            containerResponse = requestResult.getJSONArray("return");
-
-            for (int i = 0; i < containerResponse.length(); i++) {
-                JSONObject currentJSONObject = containerResponse.getJSONObject(i);
-                user = ConverterFromJsonToModel.converterFromJsonToUser(currentJSONObject);
-                Log.d(".ProfileFragment", user.toString());
-            }
+            containerResponse = requestResult.getJSONObject("return");
+            user = ConverterFromJsonToModel.converterFromJsonToUser(containerResponse);
+            Log.d(".ProfileFragment", user.startToString());
             callback.onSuccess(user);
         } catch (JSONException e) {
             e.printStackTrace();
