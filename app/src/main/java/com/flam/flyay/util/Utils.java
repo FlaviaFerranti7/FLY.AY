@@ -1,28 +1,19 @@
 package com.flam.flyay.util;
 
-import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.flam.flyay.MainActivity;
 import com.flam.flyay.model.Event;
-import com.flam.flyay.model.EventWellness;
 import com.flam.flyay.model.StatusResponse;
 import com.flam.flyay.services.ServerCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Utils {
 
     public static String getTimeToString(Event e) {
-        if(e instanceof EventWellness) {
-            EventWellness eventWellness = (EventWellness) e;
-
-            return getTimeToString(eventWellness.getStartingTime(), eventWellness.getEndTime());
+        if(e.getStartingTime() != null && e.getEndTime() != null) {
+            return getTimeToString(e.getStartingTime(), e.getEndTime());
         }
 
         return "all day";

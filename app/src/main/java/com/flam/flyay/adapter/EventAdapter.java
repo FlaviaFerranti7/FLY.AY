@@ -19,11 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.flam.flyay.R;
 import com.flam.flyay.fragments.EventsListFragment;
 import com.flam.flyay.model.Event;
-import com.flam.flyay.model.EventFinances;
-import com.flam.flyay.model.EventWellness;
+import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.Utils;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -87,18 +84,15 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.eventTime.setText(Utils.getTimeToString(event));
         holder.eventTitle.setText(event.getTitle());
 
-        if(event instanceof EventWellness) {
-            holder.eventPosition.setText(((EventWellness) event).getPlace());
+        if(event.getPlace() != null) {
+            holder.eventPosition.setText(event.getPlace());
             holder.eventPosition.setVisibility(View.VISIBLE);
             holder.iconPosition.setVisibility(View.VISIBLE);
         }
 
         LayerDrawable shape = (LayerDrawable) holder.leftBorder.getBackground().mutate();
+        setColorShape(shape, event);
 
-        if(event instanceof EventWellness)
-            shape.setColorFilter(Color.parseColor("#5905FF"), PorterDuff.Mode.SRC_IN);
-        if(event instanceof EventFinances)
-            shape.setColorFilter(Color.parseColor("#FFCF05"), PorterDuff.Mode.SRC_IN);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +101,19 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             }
         });
 
+    }
+
+    private void setColorShape (LayerDrawable shape, Event event) {
+        if(event.getCategory().equals(CategoryEnum.WELLNESS.name))
+            shape.setColorFilter(Color.parseColor(CategoryEnum.WELLNESS.color), PorterDuff.Mode.SRC_IN);
+        else if(event.getCategory().equals(CategoryEnum.FINANCES.name))
+            shape.setColorFilter(Color.parseColor(CategoryEnum.FINANCES.color), PorterDuff.Mode.SRC_IN);
+        else if(event.getCategory().equals(CategoryEnum.STUDY.name))
+            shape.setColorFilter(Color.parseColor(CategoryEnum.STUDY.color), PorterDuff.Mode.SRC_IN);
+        else if(event.getCategory().equals(CategoryEnum.FREE_TIME.name))
+            shape.setColorFilter(Color.parseColor(CategoryEnum.FREE_TIME.color), PorterDuff.Mode.SRC_IN);
+        else
+            shape.setColorFilter(Color.parseColor(CategoryEnum.FESTIVITY.color), PorterDuff.Mode.SRC_IN);
     }
 
     @Override

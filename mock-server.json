@@ -413,7 +413,7 @@
       {
         "id": 108,
         "title": "Fitness",
-        "category": "WELLNESS",
+        "category": "FREE_TIME",
         "subcategory": "FITNESS",
         "date": "30/01/2021",
         "startingTime": 11.00,
@@ -435,7 +435,7 @@
       {
         "id": 108,
         "title": "Massage",
-        "category": "WELLNESS",
+        "category": "FESTIVITY",
         "subcategory": "WELFARE",
         "date": "30/01/2021",
         "startingTime": 16.00,
@@ -446,7 +446,7 @@
       {
         "id": 108,
         "title": "Massage",
-        "category": "WELLNESS",
+        "category": "FREE_TIME",
         "subcategory": "WELFARE",
         "date": "30/01/2021",
         "startingTime": 16.00,
@@ -457,7 +457,7 @@
       {
         "id": 108,
         "title": "Massage",
-        "category": "WELLNESS",
+        "category": "FESTIVITY",
         "subcategory": "WELFARE",
         "date": "30/01/2021",
         "startingTime": 16.00,
