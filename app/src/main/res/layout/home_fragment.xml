@@ -5,7 +5,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="226dp"
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="200dp"
         android:background="@color/colorAccent">
 
     </RelativeLayout>
@@ -15,7 +15,7 @@
         android:id="@+id/events_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:padding="5dp"
         />
 
 </LinearLayout>

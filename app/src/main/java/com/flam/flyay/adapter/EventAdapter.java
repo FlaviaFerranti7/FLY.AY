@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.flam.flyay.R;
 import com.flam.flyay.fragments.EventsListFragment;
 import com.flam.flyay.model.Event;
+import com.flam.flyay.model.EventWellness;
 import com.flam.flyay.util.Utils;
 
 import java.util.List;
@@ -34,6 +36,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         // for any view that will be set as you render a row
         public TextView eventTime;
         public TextView eventTitle;
+        public TextView eventPosition;
+
+        public ImageView iconPosition;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -44,6 +49,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
             eventTime = (TextView) itemView.findViewById(R.id.event_time);
             eventTitle = (TextView) itemView.findViewById(R.id.event_title);
+            eventPosition = (TextView) itemView.findViewById(R.id.event_position);
+
+            iconPosition = (ImageView) itemView.findViewById(R.id.icon_position_events_layout);
         }
     }
 
@@ -67,6 +75,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         // Set item views based on your views and data model
         holder.eventTime.setText(Utils.getTimeToString(event));
         holder.eventTitle.setText(event.getTitle());
+
+        if(event instanceof EventWellness) {
+            holder.eventPosition.setText(((EventWellness) event).getPlace());
+            holder.eventPosition.setVisibility(View.VISIBLE);
+            holder.iconPosition.setVisibility(View.VISIBLE);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

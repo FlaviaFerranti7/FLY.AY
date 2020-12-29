@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -64,7 +66,7 @@ public class EventsListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.home_fragment, container, false);
+        final View view = inflater.inflate(R.layout.home_fragment, container, false);
         final RecyclerView listRecyclerView = view.findViewById(R.id.events_recycler);
         listRecyclerView.setNestedScrollingEnabled(false);
         Bundle arguments = getArguments();
@@ -85,6 +87,7 @@ public class EventsListFragment extends Fragment {
 
                 EventAdapter eventAdapter = new EventAdapter(events, onEventsListListener);
                 listRecyclerView.setAdapter(eventAdapter);
+                listRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 eventAdapter.notifyDataSetChanged();
             }
         });
