@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingBottom="2dp"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
     >
 
     <TextView
@@ -15,6 +16,14 @@
         android:padding="9dp"
         android:gravity="center"
         android:text="10:00 - 11:00"/>
+
+    <TextView
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:id="@+id/left_border"
+        android:background="@drawable/left_border">
+
+    </TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +39,8 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginBottom="2dp"
-            android:text="Title event"/>
+            android:text="Title event"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"

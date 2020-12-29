@@ -25,7 +25,7 @@ public class Utils {
             return getTimeToString(eventWellness.getStartingTime(), eventWellness.getEndTime());
         }
 
-        return "";
+        return "all day";
     }
 
     public static String getTimeToString(double startingTimeInput, double endTimeInput) {

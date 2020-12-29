@@ -6,6 +6,7 @@ import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.flam.flyay.fragments.EventsListFragment;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.text.SimpleDateFormat;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements EventsListFragmen
     private Calendar c;
     private SimpleDateFormat df;
     private String currentDate;
+    private BottomNavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +51,7 @@ public class MainActivity extends AppCompatActivity implements EventsListFragmen
         ab.setTitle(currentDate);
         ab.setIcon(R.drawable.ic_home_page);
 
-        initializeFragments();
-
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView = findViewById(R.id.nav_view);
         navView.getMenu().getItem(2).setEnabled(false);
         navView.setSelectedItemId(R.id.home);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
@@ -93,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements EventsListFragmen
                 return false;
             }
         });
+
+        initializeFragments();
     }
 
     @Override
@@ -127,8 +130,9 @@ public class MainActivity extends AppCompatActivity implements EventsListFragmen
     private void initializeFragments() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         EventsListFragment eventsListFragment = new EventsListFragment();
+        setFragmentMarginBottom(R.id.fragment_container);
         eventsListFragment.setArguments(createParamsEventsFragment());
-        fragmentTransaction.add(R.id.fragment_events, eventsListFragment);
+        fragmentTransaction.add(R.id.fragment_container, eventsListFragment);
         fragmentTransaction.commit();
     }
 
@@ -137,6 +141,23 @@ public class MainActivity extends AppCompatActivity implements EventsListFragmen
         bundle.putString("currentDate", this.currentDate);
 
         return bundle;
+    }
+
+    private int getNavigationBarHeight() {
+        int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            return getResources().getDimensionPixelSize(resourceId);
+        }
+        return 0;
+    }
+
+    private void setFragmentMarginBottom(int id) {
+        final FrameLayout frameLayout = findViewById(id);
+
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) frameLayout.getLayoutParams();
+        params.setMargins(0, 0, 0, getNavigationBarHeight());
+        frameLayout.setLayoutParams(params);
+
     }
 
     @Override
