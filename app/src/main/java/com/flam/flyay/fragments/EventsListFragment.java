@@ -86,8 +86,12 @@ public class EventsListFragment extends Fragment {
                 Log.d(".EventsListFragment", events.toString());
 
                 EventAdapter eventAdapter = new EventAdapter(events, onEventsListListener);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 listRecyclerView.setAdapter(eventAdapter);
-                listRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                listRecyclerView.setLayoutManager(layoutManager);
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listRecyclerView.getContext(),
+                        layoutManager.getOrientation());
+                listRecyclerView.addItemDecoration(dividerItemDecoration);
                 eventAdapter.notifyDataSetChanged();
             }
         });
