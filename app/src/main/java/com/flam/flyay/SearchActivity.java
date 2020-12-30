@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.SearchView;
 
 import com.flam.flyay.fragments.EventsListFragment;
+import com.flam.flyay.fragments.SearchResultsFragment;
 import com.flam.flyay.util.TouchInterceptor;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -62,10 +63,12 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Intent intent = new Intent(searchView.getContext(), SearchActivity.class);
+                /*Intent intent = new Intent(searchView.getContext(), SearchActivity.class);
                 intent.setAction(Intent.ACTION_SEARCH);
                 intent.putExtra(SearchManager.QUERY, query);
-                startActivity(intent);
+                startActivity(intent);*/
+                initializeFragments();
+                searchView.setQuery("", false);
                 return false;
             }
 
@@ -85,6 +88,13 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    private void initializeFragments() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        SearchResultsFragment eventsListFragment = new SearchResultsFragment();
+        fragmentTransaction.add(R.id.search_results_fragment, eventsListFragment);
+        fragmentTransaction.commit();
     }
 
 }
