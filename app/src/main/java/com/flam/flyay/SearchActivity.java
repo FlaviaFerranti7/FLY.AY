@@ -1,32 +1,29 @@
 package com.flam.flyay;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.widget.RelativeLayout;
+import android.widget.SearchView;
 
+import com.flam.flyay.fragments.EventsListFragment;
+import com.flam.flyay.util.TouchInterceptor;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class SearchActivity extends AppCompatActivity {
-
-    private Toolbar toolbar;
-    private ActionBar ab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ab = getSupportActionBar();
-        ab.setTitle("Search");
-        ab.setIcon(R.drawable.ic_search);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setSelectedItemId(R.id.lens);
@@ -60,6 +57,23 @@ public class SearchActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        final SearchView searchView = (SearchView)findViewById(R.id.searchTB);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(searchView.getContext(), SearchActivity.class);
+                intent.setAction(Intent.ACTION_SEARCH);
+                intent.putExtra(SearchManager.QUERY, query);
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
     }
 
     @Override
@@ -69,6 +83,8 @@ public class SearchActivity extends AppCompatActivity {
         for (int i = 0; i < menu.size(); i++) {
             menu.getItem(i).setVisible(false);
         }
+
         return true;
     }
+
 }

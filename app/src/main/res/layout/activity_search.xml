@@ -7,23 +7,23 @@
     android:layout_height="match_parent"
     tools:context=".SearchActivity">
 
+    <SearchView
+        android:layout_width="fill_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:iconifiedByDefault="false"
+        android:background="@color/colorPrimary"
+        android:queryHint="@string/search_hint"
+        android:id="@+id/searchTB"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
     <FrameLayout
-        android:id="@+id/fragment_container"
+        android:id="@+id/search_results_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="56dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginTop="?attr/actionBarSize"/>
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-    </FrameLayout>
+    <include layout="@layout/filter_chip"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
@@ -35,3 +35,4 @@
         android:background="@android:color/white"/>
 
 </RelativeLayout>
+

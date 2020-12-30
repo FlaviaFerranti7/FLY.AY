@@ -26,6 +26,8 @@
     <string name="save_as_model">Save as model</string>
     <string name="delete_after">Delete after</string>
     <string name="delete">Delete</string>
+    <string name="app_label">Search</string>
+    <string name="search_hint">Write here to search</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>

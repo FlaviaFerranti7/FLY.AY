@@ -31,7 +31,13 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".ToDoActivity" />
         <activity android:name=".AddEventActivity" />
-        <activity android:name=".SearchActivity" />
+        <activity android:name=".SearchActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
         <activity android:name=".MainActivity" />
         <activity
             android:name=".activities.SignUpActivity"
