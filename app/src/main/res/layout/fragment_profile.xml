@@ -8,20 +8,22 @@
     android:orientation="vertical"
     android:id="@+id/profile_container">
 
-    <ImageView
-        android:id="@+id/profile_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/ic_image_profile"
-        />
 
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="226dp">
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_image_profile"
+            />
+
+    </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/user_details_recycler"
+        android:id="@+id/profile_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
-
 
 </LinearLayout>

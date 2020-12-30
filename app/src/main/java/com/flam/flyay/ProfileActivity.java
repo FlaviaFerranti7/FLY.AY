@@ -5,12 +5,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.flam.flyay.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -95,14 +94,15 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    /*@Override
+    @Override
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-    }*/
+    }
 
     private void initializeFragments() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.profile_image_anchor, new ProfileFragment());
+        fragmentTransaction.add(R.id.fragment_profile_details, new ProfileFragment());
         fragmentTransaction.commit();
     }
+
 }

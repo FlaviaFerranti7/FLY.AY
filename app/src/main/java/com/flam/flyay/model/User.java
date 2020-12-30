@@ -58,7 +58,7 @@ public class User {
     }
 
     @NotNull
-    public String startToString() {
+    public String toString() {
         return "User=> id: " + this.id + ";username: " + this.username + "; first_name: " + this.firstName + "; last_name: " + this.lastName +  ";";
     }
 

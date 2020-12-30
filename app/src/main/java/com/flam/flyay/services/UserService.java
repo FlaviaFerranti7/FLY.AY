@@ -55,17 +55,25 @@ public class UserService {
         });
     }
     public void getDetailsUser(JSONObject requestResult, final ServerCallback callback) {
-        User user = new User();
-        JSONObject containerResponse = new JSONObject();
+        List<User> users = new ArrayList<>();
+        JSONArray containerResponse = new JSONArray();
         try {
-            containerResponse = requestResult.getJSONObject("return");
-            user = ConverterFromJsonToModel.converterFromJsonToUser(containerResponse);
-            Log.d(".ProfileFragment", user.startToString());
-            callback.onSuccess(user);
+            containerResponse = requestResult.getJSONArray("return");
+
+            for(int i = 0; i < containerResponse.length()-1; i ++) {
+                JSONObject currentJSONObject = containerResponse.getJSONObject(i);
+                User user = ConverterFromJsonToModel.converterFromJsonToUser(currentJSONObject);
+                Log.d(".ProfileFragment", user.toString());
+
+                users.add(user);
+            }
+            callback.onSuccess(users);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+
 
 
 }
