@@ -1,6 +1,7 @@
 package com.flam.flyay.model.subevent;
 
 import com.flam.flyay.model.Event;
+import com.flam.flyay.util.CategoryEnum;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -11,8 +12,8 @@ public class FestivityEvent extends Event {
     @Nullable
     private Double startingTime;
 
-    public FestivityEvent(int id, String category, String subcategory, String title, Date date, String note, @Nullable Double startingTime) {
-        super(id, category, subcategory, title, date, note);
+    public FestivityEvent(int id, String subcategory, String title, Date date, String note, @Nullable Double startingTime) {
+        super(id, CategoryEnum.FESTIVITY.name, subcategory, title, date, note);
         this.startingTime = startingTime;
     }
 

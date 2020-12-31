@@ -1,6 +1,7 @@
 package com.flam.flyay.model.subevent;
 
 import com.flam.flyay.model.Event;
+import com.flam.flyay.util.CategoryEnum;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,8 +19,8 @@ public class FreeTimeEvent extends Event {
     @Nullable
     private String place;
 
-    public FreeTimeEvent(int id, String category, String subcategory, String title, Date date, String note, @Nullable Double startingTime, @Nullable Double endTime, @Nullable String place) {
-        super(id, category, subcategory, title, date, note);
+    public FreeTimeEvent(int id, String subcategory, String title, Date date, String note, @Nullable Double startingTime, @Nullable Double endTime, @Nullable String place) {
+        super(id, CategoryEnum.FREE_TIME.name, subcategory, title, date, note);
         this.startingTime = startingTime;
         this.endTime = endTime;
         this.place = place;

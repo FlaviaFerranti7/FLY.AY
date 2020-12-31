@@ -1,5 +1,8 @@
 package com.flam.flyay.model.subevent;
 
+import com.flam.flyay.model.Event;
+import com.flam.flyay.util.CategoryEnum;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Date;
@@ -7,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StudyPlan {
+public class StudyPlan extends Event {
     @Nullable
     private Date endingStudy;
 
@@ -33,7 +36,8 @@ public class StudyPlan {
     private Integer safeDays;
 
 
-    public StudyPlan(@Nullable Date endingStudy, @Nullable List<String> studyingDays, @Nullable String overRange, @Nullable Double startingOverRangeTime, @Nullable Double endingOverRangeTime, @Nullable Double minStudyHours, @Nullable Double minBreakHours, @Nullable Integer safeDays) {
+    public StudyPlan(int id, String title, Date date, String note, @Nullable Date endingStudy, @Nullable List<String> studyingDays, @Nullable String overRange, @Nullable Double startingOverRangeTime, @Nullable Double endingOverRangeTime, @Nullable Double minStudyHours, @Nullable Double minBreakHours, @Nullable Integer safeDays) {
+        super(id, CategoryEnum.STUDY.name, "STUDY-PLANNER", title, date, note);
         this.endingStudy = endingStudy;
         this.studyingDays = studyingDays;
         this.overRange = overRange;
@@ -116,6 +120,7 @@ public class StudyPlan {
         this.safeDays = safeDays;
     }
 
+    @Override
     public Map<String, Object> getValueEvent() {
         Map<String, Object> valueEvent = new HashMap<>();
 
