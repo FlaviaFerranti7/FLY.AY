@@ -450,6 +450,31 @@
         "endTime": 23.00,
         "place": "Via spa 2",
         "note": ""
+      },
+      {
+        "id": 1,
+        "title": "HCI exam",
+        "category": "STUDY",
+        "subcategory": "EXAM",
+        "date": "21/01/2021",
+        "startingTime": 10.00,
+        "endTime": 13.00,
+        "place": "Via scarpa 1",
+        "room": "DIAG B2",
+        "teacherName": "Beraldi",
+        "teacherEmail": "Beraldi@uniroma1.docenti.it",
+        "teacherReceiptDate": "MON 11.00",
+        "studyPlan": {
+          "endingStudy": "14/01/2021",
+          "studyingDays": ["Mon","Tue","Wed","Thu","Fri"],
+          "overRange": "afternoon",
+          "startingOverRangeTime": 14.00,
+          "endingOverRangeTime": 17.00,
+          "minStudyHours": 1.30,
+          "minBreakHours": 1.00,
+          "safeDays": "7"
+        },
+        "note": ""
       }
     ]
   },
