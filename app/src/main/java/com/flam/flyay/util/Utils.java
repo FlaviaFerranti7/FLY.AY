@@ -18,7 +18,7 @@ public class Utils {
         Map<String, Object> valueEvent = e.getValueEvent();
 
         if(valueEvent.get("startingTime") != null && valueEvent.get("endTime") != null) {
-            return getTimeToString((Double) valueEvent.get("startingDate"), (Double) valueEvent.get("endDate"));
+            return getTimeToString((Double) valueEvent.get("startingTime"), (Double) valueEvent.get("endTime"));
         }
 
         return "all day";
@@ -55,7 +55,6 @@ public class Utils {
             if(status.equalsIgnoreCase("KO")) {
                 response.setMessage(containerResponse.getString("message"));
             }
-
 
             Log.d("response: ", status);
         } catch (JSONException e) {
