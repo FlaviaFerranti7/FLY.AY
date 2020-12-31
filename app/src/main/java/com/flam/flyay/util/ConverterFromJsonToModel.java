@@ -1,6 +1,11 @@
 package com.flam.flyay.util;
 
 import com.flam.flyay.model.Event;
+import com.flam.flyay.model.subevent.FestivityEvent;
+import com.flam.flyay.model.subevent.FinancesEvent;
+import com.flam.flyay.model.subevent.FreeTimeEvent;
+import com.flam.flyay.model.subevent.StudyEvent;
+import com.flam.flyay.model.subevent.WellnessEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -10,10 +15,28 @@ import org.json.JSONObject;
 public class ConverterFromJsonToModel {
 
     public static Event converterFromJsonToEvent(JSONObject jsonToConvert) throws JSONException {
-        Event event = new Event();
+        Event event = null;
         Gson gson = new GsonBuilder()
                 .setDateFormat("dd/MM/yyyy").create();
 
-        return gson.fromJson(jsonToConvert.toString(), Event.class);
+        switch (jsonToConvert.getString("category")) {
+            case "FESTIVITY":
+                event = gson.fromJson(jsonToConvert.toString(), FestivityEvent.class);
+                break;
+            case "STUDY":
+                event = gson.fromJson(jsonToConvert.toString(), StudyEvent.class);
+                break;
+            case "WELLNESS":
+                event = gson.fromJson(jsonToConvert.toString(), WellnessEvent.class);
+                break;
+            case "FINANCES":
+                event = gson.fromJson(jsonToConvert.toString(), FinancesEvent.class);
+                break;
+            case "FREE_TIME":
+                event = gson.fromJson(jsonToConvert.toString(), FreeTimeEvent.class);
+                break;
+        }
+
+        return event;
     }
 }

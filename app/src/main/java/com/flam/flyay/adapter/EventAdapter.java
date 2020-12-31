@@ -84,8 +84,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.eventTime.setText(Utils.getTimeToString(event));
         holder.eventTitle.setText(event.getTitle());
 
-        if(event.getPlace() != null) {
-            holder.eventPosition.setText(event.getPlace());
+        String place = (String) event.getValueEvent().get("place");
+
+        if(place != null) {
+            holder.eventPosition.setText(place);
             holder.eventPosition.setVisibility(View.VISIBLE);
             holder.iconPosition.setVisibility(View.VISIBLE);
         }

@@ -4,55 +4,31 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Event {
+public abstract class Event {
     private int id;
 
     private String category;
 
+    private String subcategory;
+
     private String title;
 
-    @Nullable
     private Date date;
-
-    @Nullable
-    private Double startingTime;
-
-    @Nullable
-    private Double endTime;
-
-    @Nullable
-    private String place;
-
-    @Nullable
-    private Date deadLine;
-
-    @Nullable
-    private Double price;
 
     private String note;
 
     public Event() {}
 
-    public Event(int id, String category, String title, String note, @Nullable Date date, @Nullable Double startingTime, @Nullable Double endTime, @Nullable String place, @Nullable Date deadLine, @Nullable Double price) {
+    public Event(int id, String category, String subcategory, String title, Date date, String note) {
         this.id = id;
         this.category = category;
+        this.subcategory = subcategory;
         this.title = title;
         this.note = note;
         this.date = date;
-        this.startingTime = startingTime;
-        this.endTime = endTime;
-        this.place = place;
-        this.deadLine = deadLine;
-        this.price = price;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public int getId() {
@@ -63,14 +39,6 @@ public class Event {
         this.id = id;
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
     public String getCategory() {
         return category;
     }
@@ -79,28 +47,28 @@ public class Event {
         this.category = category;
     }
 
-    public String getPlace() {
-        return place;
+    public String getSubcategory() {
+        return this.subcategory;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setSubcategory(String subcategory) {
+        this.subcategory = subcategory;
     }
 
-    public Double getEndTime() {
-        return endTime;
+    public String getTitle() {
+        return title;
     }
 
-    public void setEndTime(double endTime) {
-        this.endTime = endTime;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Double getStartingTime() {
-        return startingTime;
+    public String getNote() {
+        return note;
     }
 
-    public void setStartingTime(double startingTime) {
-        this.startingTime = startingTime;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public Date getDate() {
@@ -112,18 +80,23 @@ public class Event {
     }
 
     @NotNull
-    public String startToString() {
-        return "Event => id: " + this.id + ";name: " + this.title + ";";
-    }
-
-    @NotNull
-    public String endToString() {
-        return "note: " + this.note;
-    }
-
-    @NotNull
     public String toString() {
-        return this.startToString() + "date: " + this.date + ";starting time: " + this.startingTime +
-                ";end time: " + this.endTime + ";place: " + this.place + ";" + this.endToString();
+        return "Event => id: " + this.id + " category: " + this.category
+                + " subcategory: " + this.subcategory + " date"
+                + this.date + " title: " + this.title + "note: " + this.note;
     }
+
+    public Map<String, Object> getValueEvent() {
+        Map<String, Object> valueEvent = new HashMap<>();
+
+        valueEvent.put("id", this.id);
+        valueEvent.put("category", this.category);
+        valueEvent.put("subcategory", this.subcategory);
+        valueEvent.put("title", this.title);
+        valueEvent.put("date", this.date);
+        valueEvent.put("note", this.note);
+
+        return valueEvent;
+    };
+
 }

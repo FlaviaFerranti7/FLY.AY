@@ -9,11 +9,16 @@ import com.flam.flyay.services.ServerCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Map;
+
 public class Utils {
 
     public static String getTimeToString(Event e) {
-        if(e.getStartingTime() != null && e.getEndTime() != null) {
-            return getTimeToString(e.getStartingTime(), e.getEndTime());
+
+        Map<String, Object> valueEvent = e.getValueEvent();
+
+        if(valueEvent.get("startingTime") != null && valueEvent.get("endTime") != null) {
+            return getTimeToString((Double) valueEvent.get("startingDate"), (Double) valueEvent.get("endDate"));
         }
 
         return "all day";

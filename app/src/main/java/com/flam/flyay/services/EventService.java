@@ -60,7 +60,6 @@ public class EventService {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
 

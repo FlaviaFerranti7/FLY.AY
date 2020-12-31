@@ -411,7 +411,7 @@
         "note": "Sbrigateee2"
       },
       {
-        "id": 108,
+        "id": 298,
         "title": "Fitness",
         "category": "FREE_TIME",
         "subcategory": "FITNESS",
@@ -422,7 +422,7 @@
         "note": ""
       },
       {
-        "id": 108,
+        "id": 167,
         "title": "Massage",
         "category": "WELLNESS",
         "subcategory": "WELFARE",
@@ -433,35 +433,21 @@
         "note": ""
       },
       {
-        "id": 108,
-        "title": "Massage",
+        "id": 253,
+        "title": "San Gennaro da monte Bianco",
         "category": "FESTIVITY",
-        "subcategory": "WELFARE",
+        "subcategory": "HOLY",
         "date": "30/01/2021",
-        "startingTime": 16.00,
-        "endTime": 17.00,
-        "place": "Via spa 2",
-        "note": ""
+        "note": "Onomastico Gennaro"
       },
       {
-        "id": 108,
-        "title": "Massage",
+        "id": 234,
+        "title": "Dinner with friends",
         "category": "FREE_TIME",
         "subcategory": "WELFARE",
         "date": "30/01/2021",
-        "startingTime": 16.00,
-        "endTime": 17.00,
-        "place": "Via spa 2",
-        "note": ""
-      },
-      {
-        "id": 108,
-        "title": "Massage",
-        "category": "FESTIVITY",
-        "subcategory": "WELFARE",
-        "date": "30/01/2021",
-        "startingTime": 16.00,
-        "endTime": 17.00,
+        "startingTime": 21.00,
+        "endTime": 23.00,
         "place": "Via spa 2",
         "note": ""
       }
