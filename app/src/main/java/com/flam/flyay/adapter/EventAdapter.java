@@ -17,7 +17,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flam.flyay.R;
-import com.flam.flyay.fragments.EventsListFragment;
+import com.flam.flyay.fragments.HomeFragment;
 import com.flam.flyay.model.Event;
 import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.Utils;
@@ -27,9 +27,9 @@ import java.util.List;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
     private List<Event> events;
-    private EventsListFragment.OnEventsListListener onEventsListListener;
+    private HomeFragment.OnEventsListListener onEventsListListener;
 
-    public EventAdapter(List<Event> events, EventsListFragment.OnEventsListListener onEventsListListener) {
+    public EventAdapter(List<Event> events, HomeFragment.OnEventsListListener onEventsListListener) {
         this.events = events;
         this.onEventsListListener = onEventsListListener;
     }

@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.flam.flyay.fragments.EventsListFragment;
+import com.flam.flyay.fragments.HomeFragment;
 import com.flam.flyay.model.Event;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.text.SimpleDateFormat;
@@ -26,7 +25,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 
-public class MainActivity extends AppCompatActivity implements EventsListFragment.OnEventsListListener{
+public class MainActivity extends AppCompatActivity implements HomeFragment.OnEventsListListener{
     private Toolbar toolbar;
     private ActionBar ab;
     private Calendar c;
@@ -129,10 +128,10 @@ public class MainActivity extends AppCompatActivity implements EventsListFragmen
 
     private void initializeFragments() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        EventsListFragment eventsListFragment = new EventsListFragment();
+        HomeFragment homeFragment = new HomeFragment();
         setFragmentMarginBottom(R.id.fragment_container);
-        eventsListFragment.setArguments(createParamsEventsFragment());
-        fragmentTransaction.add(R.id.fragment_container, eventsListFragment);
+        homeFragment.setArguments(createParamsEventsFragment());
+        fragmentTransaction.add(R.id.fragment_container, homeFragment);
         fragmentTransaction.commit();
     }
 

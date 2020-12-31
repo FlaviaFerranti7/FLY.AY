@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EventsListFragment extends Fragment {
+public class HomeFragment extends Fragment {
     private EventService service;
     private ConverterFromJsonToModel converterFromJsonToModel;
     private List<Event> events;
@@ -39,7 +39,7 @@ public class EventsListFragment extends Fragment {
         void onEventSelected(Event e);
     }
 
-    public EventsListFragment() {}
+    public HomeFragment() {}
 
     @Override
     public void onAttach(@NonNull Context context) {
