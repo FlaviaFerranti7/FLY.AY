@@ -20,6 +20,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -100,8 +101,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
                 return false;
             }
         });
-
-        initializeFragments();
+        setFragmentMarginBottom(R.id.fragment_container);
+        addFragment(new HomeFragment(), createParamsEventsFragment());
     }
 
     @Override
@@ -131,15 +132,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-    }
-
-    private void initializeFragments() {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        HomeFragment homeFragment = new HomeFragment();
-        setFragmentMarginBottom(R.id.fragment_container);
-        homeFragment.setArguments(createParamsEventsFragment());
-        fragmentTransaction.replace(R.id.fragment_container, homeFragment, "home_fragment");
-        fragmentTransaction.commit();
     }
 
     private Bundle createParamsEventsFragment() {
@@ -179,11 +171,13 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
     public void onEventSelected(Event e) {
         Log.d(".MainActivity", e.toString());
 
-        EventDetailsFragment eventDetailsFragment = new EventDetailsFragment();
+        addFragment(new EventDetailsFragment(), createParamsFragment(e));
+    }
+
+    public void addFragment(Fragment fragment, Bundle params) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        eventDetailsFragment.setArguments(createParamsFragment(e));
-        transaction.setCustomAnimations(R.anim.nav_default_enter_anim, R.anim.nav_default_exit_anim);
-        transaction.replace(R.id.fragment_container, eventDetailsFragment, "events_details_fragment");
+        fragment.setArguments(params);
+        transaction.replace(R.id.fragment_container, fragment, fragment.getClass().getName());
         transaction.addToBackStack(null);
         transaction.commit();
     }

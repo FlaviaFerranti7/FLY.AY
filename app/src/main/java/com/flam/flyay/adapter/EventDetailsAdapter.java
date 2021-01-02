@@ -52,10 +52,8 @@ public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapte
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if(valueList.get(position) != null) {
-            holder.propertyName.setText(keyList.get(position));
-            holder.propertyValue.setText(valueList.get(position).toString());
-        }
+        holder.propertyName.setText(keyList.get(position));
+        holder.propertyValue.setText(valueList.get(position) != null ? valueList.get(position).toString(): "");
     }
 
     @Override

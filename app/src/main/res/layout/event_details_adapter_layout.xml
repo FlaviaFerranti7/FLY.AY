@@ -15,15 +15,15 @@
         android:textSize="14sp"
         android:padding="3dp"
         android:gravity="start"
-        android:text="name:"/>
+        />
 
     <TextView
         android:id="@+id/property_value_event_details"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:textSize="14sp"
         android:padding="3dp"
-        android:text="Barber event"/>
+        />
 
 
 </LinearLayout>
