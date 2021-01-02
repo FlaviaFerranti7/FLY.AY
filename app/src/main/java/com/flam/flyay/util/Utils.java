@@ -1,6 +1,11 @@
 package com.flam.flyay.util;
 
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.flam.flyay.model.Event;
 import com.flam.flyay.model.StatusResponse;

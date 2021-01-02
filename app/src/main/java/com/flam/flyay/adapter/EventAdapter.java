@@ -53,12 +53,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             // to access the context from any ViewHolder instance.
             super(itemView);
 
-            eventTime = (TextView) itemView.findViewById(R.id.event_time);
-            leftBorder = (TextView) itemView.findViewById(R.id.left_border);
-            eventTitle = (TextView) itemView.findViewById(R.id.event_title);
-            eventPosition = (TextView) itemView.findViewById(R.id.event_position);
+            eventTime = itemView.findViewById(R.id.event_time);
+            leftBorder = itemView.findViewById(R.id.left_border);
+            eventTitle = itemView.findViewById(R.id.event_title);
+            eventPosition = itemView.findViewById(R.id.event_position);
 
-            iconPosition = (ImageView) itemView.findViewById(R.id.icon_position_events_layout);
+            iconPosition = itemView.findViewById(R.id.icon_position_events_layout);
         }
     }
 

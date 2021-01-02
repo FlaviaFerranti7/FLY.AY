@@ -1,6 +1,7 @@
 package com.flam.flyay;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
@@ -9,19 +10,25 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.flam.flyay.fragments.EventDetailsFragment;
 import com.flam.flyay.fragments.HomeFragment;
 import com.flam.flyay.model.Event;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
 
 
@@ -131,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         HomeFragment homeFragment = new HomeFragment();
         setFragmentMarginBottom(R.id.fragment_container);
         homeFragment.setArguments(createParamsEventsFragment());
-        fragmentTransaction.add(R.id.fragment_container, homeFragment);
+        fragmentTransaction.replace(R.id.fragment_container, homeFragment, "home_fragment");
         fragmentTransaction.commit();
     }
 
@@ -150,6 +157,14 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         return 0;
     }
 
+    private Bundle createParamsFragment(Event event) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("event", event);
+
+        return bundle;
+    }
+
+
     private void setFragmentMarginBottom(int id) {
         final FrameLayout frameLayout = findViewById(id);
 
@@ -159,9 +174,17 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onEventSelected(Event e) {
         Log.d(".MainActivity", e.toString());
-        Toast.makeText(getApplicationContext(), e.getTitle() + " event", Toast.LENGTH_SHORT).show();
+
+        EventDetailsFragment eventDetailsFragment = new EventDetailsFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        eventDetailsFragment.setArguments(createParamsFragment(e));
+        transaction.setCustomAnimations(R.anim.nav_default_enter_anim, R.anim.nav_default_exit_anim);
+        transaction.replace(R.id.fragment_container, eventDetailsFragment, "events_details_fragment");
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

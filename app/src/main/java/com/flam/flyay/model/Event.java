@@ -3,11 +3,12 @@ package com.flam.flyay.model;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Event {
+public abstract class Event implements Serializable {
     private int id;
 
     private String category;
