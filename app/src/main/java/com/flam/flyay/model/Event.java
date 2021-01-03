@@ -4,8 +4,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Event implements Serializable {
@@ -98,6 +100,16 @@ public abstract class Event implements Serializable {
         valueEvent.put("note", this.note);
 
         return valueEvent;
-    };
+    }
+
+    public List<String> getKeySetSorted() {
+        List<String> keySetSorted = new ArrayList<>();
+        keySetSorted.add("title");
+        keySetSorted.add("category");
+        keySetSorted.add("subcategory");
+        keySetSorted.add("date");
+
+        return keySetSorted;
+    }
 
 }

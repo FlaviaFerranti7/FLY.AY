@@ -135,4 +135,21 @@ public class StudyPlan extends Event {
 
         return valueEvent;
     }
+
+    @Override
+    public List<String> getKeySetSorted() {
+        List<String> keySetSorted = super.getKeySetSorted();
+        keySetSorted.add("endingStudy");
+        keySetSorted.add("studyingDays");
+        keySetSorted.add("overRange");
+        keySetSorted.add("startingOverRangeTime");
+        keySetSorted.add("endingOverRangeTime");
+        keySetSorted.add("minStudyHours");
+        keySetSorted.add("minBreakHours");
+        keySetSorted.add("safeDays");
+
+        keySetSorted.add("note");
+
+        return keySetSorted;
+    }
 }

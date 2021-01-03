@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class StudyEvent extends Event {
@@ -141,6 +142,27 @@ public class StudyEvent extends Event {
         valueEvent.putAll(this.studyPlan.getValueEvent());
 
         return valueEvent;
+    }
+
+    @Override
+    public List<String> getKeySetSorted() {
+        List<String> keySetSorted = super.getKeySetSorted();
+        keySetSorted.add("startingTime");
+        keySetSorted.add("endTime");
+        keySetSorted.add("place");
+        keySetSorted.add("room");
+        keySetSorted.add("teacherName");
+        keySetSorted.add("teacherEmail");
+        keySetSorted.add("teacherReceiptDate");
+        keySetSorted.add("teacherReceiptRoom");
+
+        if(studyPlan == null)
+            keySetSorted.add("note");
+        else {
+            keySetSorted.addAll(studyPlan.getKeySetSorted());
+        }
+
+        return keySetSorted;
     }
 
     @Override

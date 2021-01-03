@@ -6,6 +6,7 @@ import com.flam.flyay.util.CategoryEnum;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class FestivityEvent extends Event {
@@ -37,5 +38,14 @@ public class FestivityEvent extends Event {
 
     public String toString() {
         return super.toString() + " starting time: " + startingTime;
+    }
+
+    @Override
+    public List<String> getKeySetSorted() {
+        List<String> keySetSorted = super.getKeySetSorted();
+        keySetSorted.add("startingTime");
+
+        keySetSorted.add("note");
+        return keySetSorted;
     }
 }

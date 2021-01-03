@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class WellnessEvent extends Event {
@@ -69,5 +70,17 @@ public class WellnessEvent extends Event {
     @NotNull
     public String toString() {
         return super.toString() + " starting time: " + startingTime + " end time: " + endTime + " place: " + place;
+    }
+
+    @Override
+    public List<String> getKeySetSorted() {
+        List<String> keySetSorted = super.getKeySetSorted();
+        keySetSorted.add("startingTime");
+        keySetSorted.add("endTime");
+        keySetSorted.add("place");
+
+
+        keySetSorted.add("note");
+        return keySetSorted;
     }
 }

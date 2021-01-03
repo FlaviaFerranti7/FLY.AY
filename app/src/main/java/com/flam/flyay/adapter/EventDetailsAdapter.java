@@ -16,13 +16,14 @@ import com.flam.flyay.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapter.ViewHolder> {
 
     private List<String> keyList;
-    private List<Object> valueList;
+    private Map<String, Object> valueList;
 
-    public EventDetailsAdapter(List<String> keyList, List<Object> valueList) {
+    public EventDetailsAdapter(List<String> keyList, Map<String, Object> valueList) {
         this.keyList = keyList;
         this.valueList = valueList;
         notifyDataSetChanged();
@@ -53,7 +54,7 @@ public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.propertyName.setText(keyList.get(position));
-        holder.propertyValue.setText(valueList.get(position) != null ? valueList.get(position).toString(): "");
+        holder.propertyValue.setText(valueList.get(keyList.get(position)) != null ? valueList.get(keyList.get(position)).toString(): "");
     }
 
     @Override
