@@ -1,30 +1,35 @@
 package com.flam.flyay.model;
 
-import com.flam.flyay.util.CategoryEnum;
-
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class Event {
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+public abstract class Event implements Serializable {
     private int id;
+
     private String category;
+
+    private String subcategory;
+
     private String title;
+
+    private Date date;
+
     private String note;
 
     public Event() {}
 
-    public Event(int id, String category, String title, String note) {
+    public Event(int id, String category, String subcategory, String title, Date date, String note) {
         this.id = id;
         this.category = category;
+        this.subcategory = subcategory;
         this.title = title;
         this.note = note;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+        this.date = date;
     }
 
     public int getId() {
@@ -35,6 +40,30 @@ public class Event {
         this.id = id;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getSubcategory() {
+        return this.subcategory;
+    }
+
+    public void setSubcategory(String subcategory) {
+        this.subcategory = subcategory;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getNote() {
         return note;
     }
@@ -43,21 +72,32 @@ public class Event {
         this.note = note;
     }
 
-    @NotNull
-    public String startToString() {
-        return "Event => id: " + this.id + ";name: " + this.title + ";";
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @NotNull
-    public String endToString() {
-        return "note: " + this.note;
+    public String toString() {
+        return "Event => id: " + this.id + " category: " + this.category
+                + " subcategory: " + this.subcategory + " date"
+                + this.date + " title: " + this.title + "note: " + this.note;
     }
 
-    public String getCategory() {
-        return category;
-    }
+    public Map<String, Object> getValueEvent() {
+        Map<String, Object> valueEvent = new HashMap<>();
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+        valueEvent.put("id", this.id);
+        valueEvent.put("category", this.category);
+        valueEvent.put("subcategory", this.subcategory);
+        valueEvent.put("title", this.title);
+        valueEvent.put("date", this.date);
+        valueEvent.put("note", this.note);
+
+        return valueEvent;
+    };
+
 }

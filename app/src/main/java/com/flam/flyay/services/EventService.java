@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 import com.flam.flyay.model.Event;
 import com.flam.flyay.util.ConverterFromJsonToModel;
 import com.flam.flyay.util.MockServerUrl;
+import com.flam.flyay.util.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,11 +57,12 @@ public class EventService {
 
                 events.add(event);
             }
+            Utils.orderEventListBy(events, "startingTime");
+            System.out.println("AFTER ORDER:\n" + events);
             callback.onSuccess(events);
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.getStackTraceString(e);
         }
-
     }
 
 
