@@ -23,12 +23,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>  {
         TextView username;
         TextView firstName;
         TextView lastName;
+        TextView birthday;
+        TextView email;
+        TextView country;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             username = itemView.findViewById(R.id.user_username);
             firstName = itemView.findViewById(R.id.user_firstName);
             lastName = itemView.findViewById(R.id.user_lastName);
+            birthday = itemView.findViewById(R.id.user_birthday);
+            email = itemView.findViewById(R.id.user_email);
+            country = itemView.findViewById(R.id.user_country);
 
         }
     }
@@ -49,6 +55,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>  {
         holder.username.setText(user.getUsername());
         holder.firstName.setText(user.getFirst_name());
         holder.lastName.setText(user.getLast_name());
+        holder.birthday.setText(user.getBirthday());
+        holder.email.setText(user.getEmail());
+        holder.country.setText(user.getCountry());
     }
 
     @Override
