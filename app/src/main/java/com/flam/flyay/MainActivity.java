@@ -1,35 +1,45 @@
 package com.flam.flyay;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.flam.flyay.fragments.EventsListFragment;
+import com.flam.flyay.fragments.EventDetailsFragment;
+import com.flam.flyay.fragments.HomeFragment;
 import com.flam.flyay.model.Event;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
 
 
-public class MainActivity extends AppCompatActivity implements EventsListFragment.OnEventsListListener{
+public class MainActivity extends AppCompatActivity implements HomeFragment.OnEventsListListener{
     private Toolbar toolbar;
     private ActionBar ab;
     private Calendar c;
     private SimpleDateFormat df;
     private String currentDate;
+    private BottomNavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +58,7 @@ public class MainActivity extends AppCompatActivity implements EventsListFragmen
         ab.setTitle(currentDate);
         ab.setIcon(R.drawable.ic_home_page);
 
-        initializeFragments();
-
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView = findViewById(R.id.nav_view);
         navView.getMenu().getItem(2).setEnabled(false);
         navView.setSelectedItemId(R.id.home);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
@@ -93,6 +101,8 @@ public class MainActivity extends AppCompatActivity implements EventsListFragmen
                 return false;
             }
         });
+        setFragmentMarginBottom(R.id.fragment_container);
+        addFragment(new HomeFragment(), createParamsEventsFragment());
     }
 
     @Override
@@ -124,14 +134,6 @@ public class MainActivity extends AppCompatActivity implements EventsListFragmen
         super.onSaveInstanceState(outState, outPersistentState);
     }
 
-    private void initializeFragments() {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        EventsListFragment eventsListFragment = new EventsListFragment();
-        eventsListFragment.setArguments(createParamsEventsFragment());
-        fragmentTransaction.add(R.id.fragment_events, eventsListFragment);
-        fragmentTransaction.commit();
-    }
-
     private Bundle createParamsEventsFragment() {
         Bundle bundle = new Bundle();
         bundle.putString("currentDate", this.currentDate);
@@ -139,9 +141,44 @@ public class MainActivity extends AppCompatActivity implements EventsListFragmen
         return bundle;
     }
 
+    private int getNavigationBarHeight() {
+        int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            return getResources().getDimensionPixelSize(resourceId);
+        }
+        return 0;
+    }
+
+    private Bundle createParamsFragment(Event event) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("event", event);
+
+        return bundle;
+    }
+
+
+    private void setFragmentMarginBottom(int id) {
+        final FrameLayout frameLayout = findViewById(id);
+
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) frameLayout.getLayoutParams();
+        params.setMargins(0, 0, 0, getNavigationBarHeight());
+        frameLayout.setLayoutParams(params);
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onEventSelected(Event e) {
         Log.d(".MainActivity", e.toString());
-        Toast.makeText(getApplicationContext(), e.getTitle() + " event", Toast.LENGTH_SHORT).show();
+
+        addFragment(new EventDetailsFragment(), createParamsFragment(e));
+    }
+
+    public void addFragment(Fragment fragment, Bundle params) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        fragment.setArguments(params);
+        transaction.replace(R.id.fragment_container, fragment, fragment.getClass().getName());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

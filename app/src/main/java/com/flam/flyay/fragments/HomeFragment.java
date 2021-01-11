@@ -1,45 +1,35 @@
 package com.flam.flyay.fragments;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.flam.flyay.R;
 import com.flam.flyay.adapter.EventAdapter;
 import com.flam.flyay.model.Event;
-import com.flam.flyay.model.EventWellness;
 import com.flam.flyay.services.EventService;
 import com.flam.flyay.services.ServerCallback;
 import com.flam.flyay.util.ConverterFromJsonToModel;
-import com.flam.flyay.util.MockServerUrl;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
 import java.util.List;
 
-import java.util.ArrayList;
-import java.util.List;
 
-
-public class EventsListFragment extends Fragment {
+public class HomeFragment extends Fragment {
     private EventService service;
     private ConverterFromJsonToModel converterFromJsonToModel;
     private List<Event> events;
@@ -49,7 +39,7 @@ public class EventsListFragment extends Fragment {
         void onEventSelected(Event e);
     }
 
-    public EventsListFragment() {}
+    public HomeFragment() {}
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -64,7 +54,7 @@ public class EventsListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.home_fragment, container, false);
+        final View view = inflater.inflate(R.layout.home_fragment, container, false);
         final RecyclerView listRecyclerView = view.findViewById(R.id.events_recycler);
         listRecyclerView.setNestedScrollingEnabled(false);
         Bundle arguments = getArguments();
@@ -84,7 +74,12 @@ public class EventsListFragment extends Fragment {
                 Log.d(".EventsListFragment", events.toString());
 
                 EventAdapter eventAdapter = new EventAdapter(events, onEventsListListener);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 listRecyclerView.setAdapter(eventAdapter);
+                listRecyclerView.setLayoutManager(layoutManager);
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listRecyclerView.getContext(),
+                        layoutManager.getOrientation());
+                listRecyclerView.addItemDecoration(dividerItemDecoration);
                 eventAdapter.notifyDataSetChanged();
             }
         });
