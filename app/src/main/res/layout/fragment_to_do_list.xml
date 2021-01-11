@@ -9,15 +9,11 @@
     android:id="@+id/todoList"
     android:orientation="vertical">
 
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="226dp"
-        android:background="@color/colorAccent">
-
-    </RelativeLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/to_do_list_recycler"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
 

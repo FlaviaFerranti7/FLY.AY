@@ -42,7 +42,7 @@ public class ToDoListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_to_do_list, container, false);
 
         final RecyclerView listRecyclerView = view.findViewById(R.id.to_do_list_recycler);
-        //listRecyclerView.setLayoutManager(new LinearLayoutManager((getActivity().getApplicationContext())));
+        listRecyclerView.setLayoutManager(new LinearLayoutManager((getActivity().getApplicationContext())));
         listRecyclerView.setNestedScrollingEnabled(false);
 
         this.service = new ToDoService(this.getContext());

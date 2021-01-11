@@ -5,8 +5,17 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="226dp"
-        android:background="@color/colorAccent">
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="220dp"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="#BDFAB9"
+        >
+
+        <ImageView
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:src="@drawable/ic_butterfly"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
 
     </RelativeLayout>
 
@@ -15,7 +24,7 @@
         android:id="@+id/events_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:padding="5dp"
         />
 
 </LinearLayout>

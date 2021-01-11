@@ -411,9 +411,9 @@
         "note": "Sbrigateee2"
       },
       {
-        "id": 108,
+        "id": 298,
         "title": "Fitness",
-        "category": "WELLNESS",
+        "category": "FREE_TIME",
         "subcategory": "FITNESS",
         "date": "30/01/2021",
         "startingTime": 11.00,
@@ -422,7 +422,7 @@
         "note": ""
       },
       {
-        "id": 108,
+        "id": 167,
         "title": "Massage",
         "category": "WELLNESS",
         "subcategory": "WELFARE",
@@ -433,36 +433,47 @@
         "note": ""
       },
       {
-        "id": 108,
-        "title": "Massage",
-        "category": "WELLNESS",
+        "id": 253,
+        "title": "San Gennaro da monte Bianco",
+        "category": "FESTIVITY",
+        "subcategory": "HOLY",
+        "date": "30/01/2021",
+        "note": "Onomastico Gennaro"
+      },
+      {
+        "id": 234,
+        "title": "Dinner with friends",
+        "category": "FREE_TIME",
         "subcategory": "WELFARE",
         "date": "30/01/2021",
-        "startingTime": 16.00,
-        "endTime": 17.00,
+        "startingTime": 21.00,
+        "endTime": 23.00,
         "place": "Via spa 2",
         "note": ""
       },
       {
-        "id": 108,
-        "title": "Massage",
-        "category": "WELLNESS",
-        "subcategory": "WELFARE",
-        "date": "30/01/2021",
-        "startingTime": 16.00,
-        "endTime": 17.00,
-        "place": "Via spa 2",
-        "note": ""
-      },
-      {
-        "id": 108,
-        "title": "Massage",
-        "category": "WELLNESS",
-        "subcategory": "WELFARE",
-        "date": "30/01/2021",
-        "startingTime": 16.00,
-        "endTime": 17.00,
-        "place": "Via spa 2",
+        "id": 1,
+        "title": "HCI exam",
+        "category": "STUDY",
+        "subcategory": "EXAM",
+        "date": "21/01/2021",
+        "startingTime": 10.00,
+        "endTime": 13.00,
+        "place": "Via scarpa 1",
+        "room": "DIAG B2",
+        "teacherName": "Beraldi",
+        "teacherEmail": "Beraldi@uniroma1.docenti.it",
+        "teacherReceiptDate": "MON 11.00",
+        "studyPlan": {
+          "endingStudy": "14/01/2021",
+          "studyingDays": ["Mon","Tue","Wed","Thu","Fri"],
+          "overRange": "afternoon",
+          "startingOverRangeTime": 14.00,
+          "endingOverRangeTime": 17.00,
+          "minStudyHours": 1.30,
+          "minBreakHours": 1.00,
+          "safeDays": "7"
+        },
         "note": ""
       }
     ]
