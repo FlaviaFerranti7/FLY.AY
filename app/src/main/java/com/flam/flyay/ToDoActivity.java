@@ -12,7 +12,6 @@ import android.os.PersistableBundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.flam.flyay.fragments.EventsListFragment;
 import com.flam.flyay.fragments.ToDoListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
