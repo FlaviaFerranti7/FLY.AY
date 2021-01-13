@@ -1,20 +1,25 @@
 package com.flam.flyay.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flam.flyay.R;
-import com.flam.flyay.fragments.EventsListFragment;
+import com.flam.flyay.fragments.HomeFragment;
 import com.flam.flyay.model.Event;
+import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.Utils;
 
 import java.util.List;
@@ -22,9 +27,9 @@ import java.util.List;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
     private List<Event> events;
-    private EventsListFragment.OnEventsListListener onEventsListListener;
+    private HomeFragment.OnEventsListListener onEventsListListener;
 
-    public EventAdapter(List<Event> events, EventsListFragment.OnEventsListListener onEventsListListener) {
+    public EventAdapter(List<Event> events, HomeFragment.OnEventsListListener onEventsListListener) {
         this.events = events;
         this.onEventsListListener = onEventsListListener;
 
@@ -34,7 +39,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView eventTime;
+        public TextView leftBorder;
         public TextView eventTitle;
+        public TextView eventPosition;
+
+
+
+        public ImageView iconPosition;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -43,8 +54,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             // to access the context from any ViewHolder instance.
             super(itemView);
 
-            eventTime = (TextView) itemView.findViewById(R.id.event_time);
-            eventTitle = (TextView) itemView.findViewById(R.id.event_title);
+            eventTime = itemView.findViewById(R.id.event_time);
+            leftBorder = itemView.findViewById(R.id.left_border);
+            eventTitle = itemView.findViewById(R.id.event_title);
+            eventPosition = itemView.findViewById(R.id.event_position);
+
+            iconPosition = itemView.findViewById(R.id.icon_position_events_layout);
         }
     }
 
@@ -59,6 +74,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         return new ViewHolder(contactView);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
@@ -69,12 +85,38 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.eventTime.setText(Utils.getTimeToString(event));
         holder.eventTitle.setText(event.getTitle());
 
+        String place = (String) event.getValueEvent().get("place");
+
+        if(place != null) {
+            holder.eventPosition.setText(place);
+            holder.eventPosition.setVisibility(View.VISIBLE);
+            holder.iconPosition.setVisibility(View.VISIBLE);
+        }
+
+        LayerDrawable shape = (LayerDrawable) holder.leftBorder.getBackground().mutate();
+        setColorShape(shape, event);
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onEventsListListener.onEventSelected(event);
             }
         });
+
+    }
+
+    private void setColorShape (LayerDrawable shape, Event event) {
+        if(event.getCategory().equals(CategoryEnum.WELLNESS.name))
+            shape.setColorFilter(Color.parseColor(CategoryEnum.WELLNESS.color), PorterDuff.Mode.SRC_IN);
+        else if(event.getCategory().equals(CategoryEnum.FINANCES.name))
+            shape.setColorFilter(Color.parseColor(CategoryEnum.FINANCES.color), PorterDuff.Mode.SRC_IN);
+        else if(event.getCategory().equals(CategoryEnum.STUDY.name))
+            shape.setColorFilter(Color.parseColor(CategoryEnum.STUDY.color), PorterDuff.Mode.SRC_IN);
+        else if(event.getCategory().equals(CategoryEnum.FREE_TIME.name))
+            shape.setColorFilter(Color.parseColor(CategoryEnum.FREE_TIME.color), PorterDuff.Mode.SRC_IN);
+        else
+            shape.setColorFilter(Color.parseColor(CategoryEnum.FESTIVITY.color), PorterDuff.Mode.SRC_IN);
     }
 
     @Override
