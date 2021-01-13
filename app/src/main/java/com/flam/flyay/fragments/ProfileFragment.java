@@ -53,7 +53,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onSuccess(Object result) {
                 users = (List<User>) result;
-                Log.d(".ProfileFragment", users.toString());
+               // Log.d(".ProfileFragment", users.toString());
                 UserAdapter userAdapter = new UserAdapter(users);
                 listRecyclerView.setAdapter(userAdapter);
                 userAdapter.notifyDataSetChanged();
