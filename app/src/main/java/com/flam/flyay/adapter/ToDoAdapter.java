@@ -1,6 +1,7 @@
 package com.flam.flyay.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.flam.flyay.R;
 import com.flam.flyay.model.ToDo;
+import com.flam.flyay.util.ItemMoveCallback;
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.Collections;
 import java.util.List;
 
-public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
+public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> implements ItemMoveCallback.ItemTouchHelperContract{
 
     private List<ToDo> toDoList;
 
@@ -48,15 +51,43 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final ToDoAdapter.ViewHolder holder, int position) {
         final ToDo toDo = toDoList.get(position);
-        Log.d(".TodoList", toDo.toString());
+
         holder.textView.setText(toDo.getTitle());
-        holder.card.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                holder.card.setChecked(!holder.card.isChecked());
-                return true;
+
+        setCheckedList(holder.card, toDo);
+    }
+
+    private void setCheckedList (MaterialCardView card, ToDo toDo) {
+        if(toDo.isChecked())
+            card.setChecked(true);
+        else
+            card.setChecked(false);
+    }
+
+    @Override
+    public void onRowMoved(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(toDoList, i, i + 1);
             }
-        });
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(toDoList, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    @Override
+    public void onRowSelected(ViewHolder viewHolder) {
+        viewHolder.card.setCardBackgroundColor(Color.GRAY);
+
+    }
+
+    @Override
+    public void onRowClear(ViewHolder viewHolder) {
+        viewHolder.card.setCardBackgroundColor(Color.WHITE);
+
     }
 
 

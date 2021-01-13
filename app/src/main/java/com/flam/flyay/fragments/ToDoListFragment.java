@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,11 +19,13 @@ import com.flam.flyay.model.ToDo;
 import com.flam.flyay.services.ServerCallback;
 import com.flam.flyay.services.ToDoService;
 import com.flam.flyay.util.ConverterFromJsonToModel;
+import com.flam.flyay.util.ItemMoveCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ToDoListFragment extends Fragment {
@@ -45,6 +48,7 @@ public class ToDoListFragment extends Fragment {
         listRecyclerView.setLayoutManager(new LinearLayoutManager((getActivity().getApplicationContext())));
         listRecyclerView.setNestedScrollingEnabled(false);
 
+
         this.service = new ToDoService(this.getContext());
         this.converterFromJsonToModel = new ConverterFromJsonToModel();
         this.toDoList = new ArrayList<>();
@@ -60,11 +64,16 @@ public class ToDoListFragment extends Fragment {
                 toDoList = (List<ToDo>) result;
                 Log.d(".TodoListFragment", toDoList.toString());
                 ToDoAdapter toDoAdapter = new ToDoAdapter(toDoList);
+                ItemTouchHelper.Callback callback =
+                        new ItemMoveCallback(toDoAdapter);
+                ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+                touchHelper.attachToRecyclerView(listRecyclerView);
                 listRecyclerView.setAdapter(toDoAdapter);
                 toDoAdapter.notifyDataSetChanged();
 
             }
         });
+
         return view;
     }
 
