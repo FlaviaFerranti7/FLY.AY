@@ -17,4 +17,9 @@
     <color name="greenApp">#6CC86C</color>
     <color name="white">#FFFFFF</color>
 
+    <color name="blueStudy">#0C49B6</color>
+    <color name="redFreeTime">#FF0000</color>
+    <color name="violetWellness">#9400D3</color>
+    <color name="orangeFestivity">#FF8C00</color>
+    <color name="yellowFinances">#FFD700</color>
 </resources>
