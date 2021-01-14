@@ -20,6 +20,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            app:titleMarginStart="45dp"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -33,7 +34,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="75dp"
         android:focusable="true"
         android:focusableInTouchMode ="true"
         app:endIconMode="custom"
@@ -53,7 +54,7 @@
     <TextView
         android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="150dp"
         android:layout_centerHorizontal="true"
         android:text="In which category?"
         android:textSize="18dp"/>
@@ -62,7 +63,7 @@
         android:id="@+id/toggleButtonCategories"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="230dp"
+        android:layout_marginTop="185dp"
         android:layout_marginLeft="30dp">
 
         <com.google.android.material.button.MaterialButton
@@ -71,7 +72,8 @@
             android:layout_centerHorizontal="true"
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            app:icon="@drawable/ic_category_study"/>
+            app:icon="@drawable/ic_category_study"
+            app:iconTint="@color/blueStudy"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/freeTimeCategoryButton"
@@ -79,7 +81,8 @@
             android:layout_centerHorizontal="true"
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            app:icon="@drawable/ic_category_freetime"/>
+            app:icon="@drawable/ic_category_freetime"
+            app:iconTint="@color/redFreeTime"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/wellnessCategoryButton"
@@ -87,7 +90,8 @@
             android:layout_centerHorizontal="true"
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            app:icon="@drawable/ic_category_wellness"/>
+            app:icon="@drawable/ic_category_wellness"
+            app:iconTint="@color/violetWellness"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/festivityCategoryButton"
@@ -95,7 +99,8 @@
             android:layout_centerHorizontal="true"
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            app:icon="@drawable/ic_category_festivity"/>
+            app:icon="@drawable/ic_category_festivity"
+            app:iconTint="@color/orangeFestivity"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/financesCategoryButton"
@@ -103,14 +108,15 @@
             android:layout_centerHorizontal="true"
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            app:icon="@drawable/ic_category_finances"/>
+            app:icon="@drawable/ic_category_finances"
+            app:iconTint="@color/yellowFinances"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
 
-    <!--<TextView
+    <TextView
         android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="270dp"
         android:layout_centerHorizontal="true"
         android:text="In which day?"
         android:textSize="18dp"/>
@@ -119,17 +125,17 @@
         android:id="@+id/datePicker"
         android:layout_width="wrap_content"
         android:layout_height="150dp"
-        android:layout_marginTop="190dp"
+        android:layout_marginTop="280dp"
         android:layout_marginLeft="60dp"
         android:calendarViewShown="false"
-        android:datePickerMode="spinner" />-->
+        android:datePickerMode="spinner" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/whereEventLayout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="330dp"
+        android:layout_marginTop="420dp"
         android:focusable="true"
         android:focusableInTouchMode ="true"
         app:endIconMode="custom"
@@ -152,7 +158,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:id="@+id/buttonSearch"
-        android:layout_marginTop="430dp"
+        android:layout_marginTop="500dp"
         android:background="@color/colorPrimaryDark"
         android:textColor="@android:color/white"
         android:textSize="18sp"

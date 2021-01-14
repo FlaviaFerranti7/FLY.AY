@@ -2,7 +2,6 @@ package com.flam.flyay;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -23,6 +22,7 @@ public class SearchResults extends AppCompatActivity {
     private String searchPlace;
 
     private String checkedCategory;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

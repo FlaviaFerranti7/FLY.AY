@@ -24,6 +24,9 @@ import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.flam.flyay.util.CategoryEnum.FESTIVITY;
 import static com.flam.flyay.util.CategoryEnum.FINANCES;
 import static com.flam.flyay.util.CategoryEnum.FREE_TIME;
@@ -44,6 +47,7 @@ public class SearchActivity extends AppCompatActivity {
     private String searchPlace;
 
     private String checkedCategory;
+    private List<String> checkedCategoryList;
 
     private Toolbar toolbar;
     private ActionBar ab;
@@ -98,6 +102,8 @@ public class SearchActivity extends AppCompatActivity {
 
     public void initializeLayout() {
 
+        this.checkedCategoryList = new ArrayList<>();
+
         RelativeLayout touchInterceptor = (RelativeLayout) findViewById(R.id.touchInterceptor);
         touchInterceptor.setOnTouchListener(new TouchInterceptor(this));
 
@@ -125,25 +131,35 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        toggleCategories.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+        this.toggleCategories.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
             @Override
             public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
                 if (isChecked) {
                     if(checkedId == R.id.festivityCategoryButton) {
                         checkedCategory = FESTIVITY.name;
+                        checkedCategoryList.add(checkedCategory);
                         Log.d(".SearchActivity", "selected category: " + checkedCategory);
+                        Log.d(".SearchActivity", "selected category: " + checkedCategoryList);
                     } else if(checkedId == R.id.financesCategoryButton) {
                         checkedCategory = FINANCES.name;
+                        checkedCategoryList.add(checkedCategory);
                         Log.d(".SearchActivity", "selected category: " + checkedCategory);
+                        Log.d(".SearchActivity", "selected category: " + checkedCategoryList);
                     } else if(checkedId == R.id.freeTimeCategoryButton) {
                         checkedCategory = FREE_TIME.name;
+                        checkedCategoryList.add(checkedCategory);
                         Log.d(".SearchActivity", "selected category: " + checkedCategory);
+                        Log.d(".SearchActivity", "selected category: " + checkedCategoryList);
                     } else if(checkedId == R.id.studyCategoryButton) {
                         checkedCategory = STUDY.name;
+                        checkedCategoryList.add(checkedCategory);
                         Log.d(".SearchActivity", "selected category: " + checkedCategory);
+                        Log.d(".SearchActivity", "selected category: " + checkedCategoryList);
                     } else if(checkedId == R.id.wellnessCategoryButton) {
                         checkedCategory = WELLNESS.name;
+                        checkedCategoryList.add(checkedCategory);
                         Log.d(".SearchActivity", "selected category: " + checkedCategory);
+                        Log.d(".SearchActivity", "selected category: " + checkedCategoryList);
                     }
                 }
                 Intent intent = new Intent(SearchActivity.this, SearchResults.class);
@@ -166,7 +182,7 @@ public class SearchActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString("searchParamsName", searchName);
         bundle.putString("searchParamsPlace", searchPlace);
-        bundle.putString("checkedCategory", String.valueOf(checkedCategory));
+        bundle.putString("checkedCategory", String.valueOf(checkedCategoryList));
         return bundle;
     }
 }

@@ -62,7 +62,7 @@ public class SearchResultsFragment extends Fragment {
 
         JSONObject params = getParams(searchName, searchPlace, checkedCategory);
 
-        Log.d(".SearchResultsFragment", "parameters: " + searchName + searchPlace);
+        Log.d(".SearchResultsFragment", "parameters: " + searchName + searchPlace + checkedCategory);
 
         service.getEventsByFilter(params, new ServerCallback() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -81,7 +81,7 @@ public class SearchResultsFragment extends Fragment {
                         Log.d(".SearchResultsFragment",  " eventsFiltered: " + eventsFiltered.toString());
                         eventsFiltered.add(e);
                     }
-                    if (e.getCategory().equals(checkedCategory)){
+                    if (checkedCategory.contains(e.getCategory())){
                         Log.d(".SearchResultsFragment", e.toString());
                         Log.d(".SearchResultsFragment",  " eventsFilteredPerCategories: " + eventsFiltered.toString());
                         eventsFiltered.add(e);
@@ -104,12 +104,12 @@ public class SearchResultsFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    private JSONObject getParams(String sName, String sPlace, String ckeckCat) {
+    private JSONObject getParams(String sName, String sPlace, String checkCat) {
         JSONObject params = new JSONObject();
         try {
             params.put("searchParamsName", sName);
             params.put("searchParamsPlace", sPlace);
-            params.put("checkedCategory", ckeckCat);
+            params.put("checkedCategory", checkCat);
         } catch (JSONException e) {
             e.printStackTrace();
         }
