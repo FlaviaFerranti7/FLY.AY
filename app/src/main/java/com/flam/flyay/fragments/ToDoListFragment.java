@@ -25,7 +25,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ToDoListFragment extends Fragment {
@@ -63,7 +62,7 @@ public class ToDoListFragment extends Fragment {
             public void onSuccess(Object result) {
                 toDoList = (List<ToDo>) result;
                 Log.d(".TodoListFragment", toDoList.toString());
-                ToDoAdapter toDoAdapter = new ToDoAdapter(toDoList);
+                ToDoAdapter toDoAdapter = new ToDoAdapter(toDoList, getContext());
                 ItemTouchHelper.Callback callback =
                         new ItemMoveCallback(toDoAdapter);
                 ItemTouchHelper touchHelper = new ItemTouchHelper(callback);

@@ -5,14 +5,16 @@ import org.jetbrains.annotations.NotNull;
 public class ToDo {
     private int id;
     private String title;
-    private String color;
+    private String image;
     private double lifetimer;
     private boolean checked;
 
-    public ToDo(int id, String title, String color, double lifetimer, boolean checked){
+
+
+    public ToDo(int id, String title, String image, double lifetimer, boolean checked){
         this.id = id;
         this.title = title;
-        this.color = color;
+        this.image = image;
         this.lifetimer = lifetimer;
         this.checked = checked;
     }
@@ -33,14 +35,6 @@ public class ToDo {
         this.title = title;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     public double getLifetimer() {
         return lifetimer;
     }
@@ -57,10 +51,17 @@ public class ToDo {
         this.checked = checked;
     }
 
-    @NotNull
-    public String toString() {
-        return "List => id: " + this.id + "; title: " + this.title + "; color: " + this.color + "; lifetimer: " + this.lifetimer +
-                "; checked: " + this.checked;
+    public String getImage() {
+        return image;
     }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    @NotNull
+    public String toString() {
+        return "List => id: " + this.id + "; title: " + this.title + "; image: " + this.image + "; lifetimer: " + this.lifetimer +
+                "; checked: " + this.checked;
+    }
 }
