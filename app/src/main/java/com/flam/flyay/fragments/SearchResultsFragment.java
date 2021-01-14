@@ -28,6 +28,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.flam.flyay.util.CategoryEnum.WELLNESS;
+
 public class SearchResultsFragment extends Fragment {
     private EventService service;
     private ConverterFromJsonToModel converterFromJsonToModel;
@@ -36,6 +38,7 @@ public class SearchResultsFragment extends Fragment {
 
     String searchName;
     String searchPlace;
+    String checkedCategory;
 
     public SearchResultsFragment(){}
 
@@ -48,16 +51,16 @@ public class SearchResultsFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
 
-
         searchName = intent.getStringExtra("searchParamsName");
         searchPlace = intent.getStringExtra("searchParamsPlace");
+        checkedCategory = intent.getStringExtra("checkedCategory");
 
         this.service = new EventService(this.getContext());
         this.converterFromJsonToModel = new ConverterFromJsonToModel();
         this.events = new ArrayList<>();
         this.eventsFiltered = new ArrayList<>();
 
-        JSONObject params = getParams(searchName, searchPlace);
+        JSONObject params = getParams(searchName, searchPlace, checkedCategory);
 
         Log.d(".SearchResultsFragment", "parameters: " + searchName + searchPlace);
 
@@ -78,6 +81,12 @@ public class SearchResultsFragment extends Fragment {
                         Log.d(".SearchResultsFragment",  " eventsFiltered: " + eventsFiltered.toString());
                         eventsFiltered.add(e);
                     }
+                    if (e.getCategory().equals(checkedCategory)){
+                        Log.d(".SearchResultsFragment", e.toString());
+                        Log.d(".SearchResultsFragment",  " eventsFilteredPerCategories: " + eventsFiltered.toString());
+                        eventsFiltered.add(e);
+                    }
+
                 }
 
                 Log.d(".SearchResultsFragment",  " eventsFiltered: " + eventsFiltered.toString());
@@ -95,15 +104,15 @@ public class SearchResultsFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    private JSONObject getParams(String sName, String sPlace) {
+    private JSONObject getParams(String sName, String sPlace, String ckeckCat) {
         JSONObject params = new JSONObject();
         try {
             params.put("searchParamsName", sName);
             params.put("searchParamsPlace", sPlace);
+            params.put("checkedCategory", ckeckCat);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return params;
     }
 

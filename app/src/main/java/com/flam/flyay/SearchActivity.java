@@ -5,10 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,32 +13,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.SearchView;
-import android.widget.Toast;
+import android.widget.ToggleButton;
 
-import com.flam.flyay.activities.SignUpActivity;
-import com.flam.flyay.adapter.EventAdapter;
-import com.flam.flyay.fragments.EventsListFragment;
-import com.flam.flyay.fragments.SearchResultsFragment;
-import com.flam.flyay.model.Event;
-import com.flam.flyay.model.StatusResponse;
-import com.flam.flyay.services.EventService;
-import com.flam.flyay.services.ServerCallback;
-import com.flam.flyay.services.UserService;
+import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.TouchInterceptor;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import static com.flam.flyay.util.CategoryEnum.FESTIVITY;
+import static com.flam.flyay.util.CategoryEnum.FINANCES;
+import static com.flam.flyay.util.CategoryEnum.FREE_TIME;
+import static com.flam.flyay.util.CategoryEnum.STUDY;
+import static com.flam.flyay.util.CategoryEnum.WELLNESS;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -51,8 +38,12 @@ public class SearchActivity extends AppCompatActivity {
     private TextInputEditText eventPlaceTextField;
     private Button searchButton;
 
+    private MaterialButtonToggleGroup toggleCategories;
+
     private String searchName;
     private String searchPlace;
+
+    private String checkedCategory;
 
     private Toolbar toolbar;
     private ActionBar ab;
@@ -117,6 +108,7 @@ public class SearchActivity extends AppCompatActivity {
         this.eventPlaceTextField = (TextInputEditText) findViewById(R.id.whereEvent);
 
         this.searchButton = findViewById(R.id.buttonSearch);
+        this.toggleCategories = findViewById(R.id.toggleButtonCategories);
 
         this.searchButton.setOnClickListener(new View.OnClickListener() {
 
@@ -132,6 +124,32 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        toggleCategories.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+                if (isChecked) {
+                    if(checkedId == R.id.festivityCategoryButton) {
+                        checkedCategory = FESTIVITY.name;
+                        Log.d(".SearchActivity", "selected category: " + checkedCategory);
+                    } else if(checkedId == R.id.financesCategoryButton) {
+                        checkedCategory = FINANCES.name;
+                        Log.d(".SearchActivity", "selected category: " + checkedCategory);
+                    } else if(checkedId == R.id.freeTimeCategoryButton) {
+                        checkedCategory = FREE_TIME.name;
+                        Log.d(".SearchActivity", "selected category: " + checkedCategory);
+                    } else if(checkedId == R.id.studyCategoryButton) {
+                        checkedCategory = STUDY.name;
+                        Log.d(".SearchActivity", "selected category: " + checkedCategory);
+                    } else if(checkedId == R.id.wellnessCategoryButton) {
+                        checkedCategory = WELLNESS.name;
+                        Log.d(".SearchActivity", "selected category: " + checkedCategory);
+                    }
+                }
+                Intent intent = new Intent(SearchActivity.this, SearchResults.class);
+                intent.putExtras(createParamsEventsFragment());
+            }
+        });
     }
 
     @Override
@@ -144,13 +162,11 @@ public class SearchActivity extends AppCompatActivity {
         return true;
     }
 
-
-
     private Bundle createParamsEventsFragment() {
         Bundle bundle = new Bundle();
         bundle.putString("searchParamsName", searchName);
         bundle.putString("searchParamsPlace", searchPlace);
+        bundle.putString("checkedCategory", String.valueOf(checkedCategory));
         return bundle;
     }
-
 }

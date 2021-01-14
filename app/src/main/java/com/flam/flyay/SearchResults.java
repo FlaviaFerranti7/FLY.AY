@@ -15,10 +15,14 @@ import com.flam.flyay.fragments.SearchResultsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class SearchResults extends AppCompatActivity {
+
     private Toolbar toolbar;
     private ActionBar ab;
+
     private String searchName;
     private String searchPlace;
+
+    private String checkedCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,7 @@ public class SearchResults extends AppCompatActivity {
 
         searchName = intent.getStringExtra("searchParamsName");
         searchPlace = intent.getStringExtra("searchParamsPlace");
+        checkedCategory = intent.getStringExtra("checkedCategory");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,9 +78,9 @@ public class SearchResults extends AppCompatActivity {
 
     private void initializeFragments() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        SearchResultsFragment searchListFragment = new SearchResultsFragment();
-        searchListFragment.setArguments(createParamsEventsFragment());
-        fragmentTransaction.add(R.id.search_results_fragment, searchListFragment);
+        SearchResultsFragment filteredEventListFragment = new SearchResultsFragment();
+        filteredEventListFragment.setArguments(createParamsEventsFragment());
+        fragmentTransaction.add(R.id.search_results_fragment, filteredEventListFragment);
         fragmentTransaction.commit();
     }
 
@@ -83,6 +88,7 @@ public class SearchResults extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString("searchParamsName", searchName);
         bundle.putString("searchParamsPlace", searchPlace);
+        bundle.putString("checkedCategory", checkedCategory);
         return bundle;
     }
 
