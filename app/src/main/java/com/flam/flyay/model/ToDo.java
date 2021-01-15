@@ -8,6 +8,7 @@ public class ToDo {
     private String image;
     private double lifetimer;
     private boolean checked;
+    private int image_pos;
 
 
 
@@ -55,9 +56,9 @@ public class ToDo {
         return image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
+    public void setImagePos(int pos) { image_pos = pos; }
+
+    public int getImagePos(){ return image_pos;  }
 
     @NotNull
     public String toString() {
