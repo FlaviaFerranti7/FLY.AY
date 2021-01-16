@@ -55,8 +55,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         c = Calendar.getInstance(TimeZone.getTimeZone("GMT"),Locale.getDefault());
         df = new SimpleDateFormat("dd/MM/yyyy");
         currentDate = df.format(c.getTime());
-        ab.setTitle(currentDate);
-        ab.setIcon(R.drawable.ic_home_page);
 
         navView = findViewById(R.id.nav_view);
         navView.getMenu().getItem(2).setEnabled(false);
@@ -153,6 +151,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         Bundle bundle = new Bundle();
         bundle.putSerializable("event", event);
 
+        getSupportActionBar().setTitle("Details");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setIcon(null);
+
         return bundle;
     }
 
@@ -181,4 +183,16 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    @Override
+    public void onBackPressed() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 1) {
+            fragmentManager.popBackStackImmediate();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 }

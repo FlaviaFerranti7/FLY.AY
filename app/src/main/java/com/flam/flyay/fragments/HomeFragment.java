@@ -15,7 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.flam.flyay.MainActivity;
 import com.flam.flyay.R;
+import com.flam.flyay.SearchActivity;
 import com.flam.flyay.adapter.EventAdapter;
 import com.flam.flyay.model.Event;
 import com.flam.flyay.services.EventService;
@@ -63,6 +65,10 @@ public class HomeFragment extends Fragment {
         this.converterFromJsonToModel = new ConverterFromJsonToModel();
         this.events = new ArrayList<>();
         String currentDate = arguments.getString("currentDate");
+
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle("      " + currentDate);
+        ((MainActivity) getActivity()).getSupportActionBar().setIcon(R.drawable.ic_home_page);
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         JSONObject params = getParams(currentDate);
         Log.d(".EventsListFragment", "parameters: [currentDate = '" + currentDate + "']");

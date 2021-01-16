@@ -18,32 +18,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.flam.flyay.R;
 import com.flam.flyay.fragments.HomeFragment;
+import com.flam.flyay.fragments.SearchResultsFragment;
 import com.flam.flyay.model.Event;
 import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.Utils;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
+public class EventFilteredAdapter extends RecyclerView.Adapter<EventFilteredAdapter.ViewHolder> {
 
     private List<Event> events;
-    private HomeFragment.OnEventsListListener onEventsListListener;
+    private SearchResultsFragment.OnEventsListListener onEventsListListener;
 
-    public EventAdapter(List<Event> events, HomeFragment.OnEventsListListener onEventsListListener) {
+    public EventFilteredAdapter(List<Event> events, SearchResultsFragment.OnEventsListListener onEventsListListener) {
         this.events = events;
         this.onEventsListListener = onEventsListListener;
-
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
+        public TextView eventDate;
         public TextView eventTime;
         public TextView leftBorder;
         public TextView eventTitle;
         public TextView eventPosition;
-
-
 
         public ImageView iconPosition;
 
@@ -54,6 +54,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             // to access the context from any ViewHolder instance.
             super(itemView);
 
+            eventDate = itemView.findViewById(R.id.event_date);
             eventTime = itemView.findViewById(R.id.event_time);
             leftBorder = itemView.findViewById(R.id.left_border);
             eventTitle = itemView.findViewById(R.id.event_title);
@@ -68,8 +69,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        Log.d(".EventAdapter",events.toString());
-        final View contactView = inflater.inflate(R.layout.event_list_adapter_layout, parent, false);
+        Log.d(".EventFilteredAdapter",events.toString());
+        final View contactView = inflater.inflate(R.layout.event_list_filtered_adapter_layout, parent, false);
 
         return new ViewHolder(contactView);
     }
@@ -82,6 +83,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         final Event event = events.get(position);
 
         // Set item views based on your views and data model
+        final SimpleDateFormat df;
+        df = new SimpleDateFormat("dd/MM/yyyy");
+        holder.eventDate.setText(df.format(event.getDate()));
         holder.eventTime.setText(Utils.getTimeToString(event));
         holder.eventTitle.setText(event.getTitle());
 
@@ -95,7 +99,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
         LayerDrawable shape = (LayerDrawable) holder.leftBorder.getBackground().mutate();
         setColorShape(shape, event);
-
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
