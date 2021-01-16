@@ -1,11 +1,11 @@
 package com.flam.flyay.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,11 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flam.flyay.R;
-import com.flam.flyay.adapter.EventAdapter;
+import com.flam.flyay.SearchActivity;
 import com.flam.flyay.adapter.EventFilteredAdapter;
 import com.flam.flyay.model.Event;
-import com.flam.flyay.model.subevent.FestivityEvent;
-import com.flam.flyay.model.subevent.FinancesEvent;
 import com.flam.flyay.model.subevent.FreeTimeEvent;
 import com.flam.flyay.model.subevent.StudyEvent;
 import com.flam.flyay.model.subevent.WellnessEvent;
@@ -37,9 +35,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.flam.flyay.util.CategoryEnum.WELLNESS;
 
 public class SearchResultsFragment extends Fragment {
+
     private EventService service;
     private ConverterFromJsonToModel converterFromJsonToModel;
 
@@ -68,12 +66,22 @@ public class SearchResultsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.search_results_fragment, container, false);
         final RecyclerView listRecyclerView = view.findViewById(R.id.events_recycler);
         listRecyclerView.setNestedScrollingEnabled(false);
+
+        ((SearchActivity) getActivity()).getSupportActionBar().setTitle("Results");
+        ((SearchActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((SearchActivity) getActivity()).getSupportActionBar().setIcon(null);
 
         this.service = new EventService(this.getContext());
         this.converterFromJsonToModel = new ConverterFromJsonToModel();
@@ -100,27 +108,37 @@ public class SearchResultsFragment extends Fragment {
                     if (!Utils.isEmptyOrBlank(searchName) && e.getTitle().toLowerCase().contains(searchName)) {
                         Log.d(".SearchResultsFragment", e.toString());
                         Log.d(".SearchResultsFragment",  " eventsFiltered: " + eventsFiltered.toString());
-                        eventsFiltered.add(e);
+                        if (!(eventsFiltered.contains(e))) {
+                            eventsFiltered.add(e);
+                        }
                     }
                     if (checkedCategory.contains(e.getCategory())){
                         Log.d(".SearchResultsFragment", e.toString());
                         Log.d(".SearchResultsFragment",  " eventsFilteredPerCategories: " + eventsFiltered.toString());
-                        eventsFiltered.add(e);
+                        if (!(eventsFiltered.contains(e))) {
+                            eventsFiltered.add(e);
+                        }
                     }
                     if(e.getClass() == FreeTimeEvent.class && !Utils.isEmptyOrBlank(searchPlace) && ((FreeTimeEvent) e).getPlace().toLowerCase().contains(searchPlace)){
                         Log.d(".SearchResultsFragment", e.toString());
                         Log.d(".SearchResultsFragment",  " eventsFiltered: " + eventsFiltered.toString());
-                        eventsFiltered.add(e);
+                        if (!(eventsFiltered.contains(e))) {
+                            eventsFiltered.add(e);
+                        }
                     }
                     else if(e.getClass() == WellnessEvent.class && !Utils.isEmptyOrBlank(searchPlace) && ((WellnessEvent) e).getPlace().toLowerCase().contains(searchPlace)){
                         Log.d(".SearchResultsFragment", e.toString());
                         Log.d(".SearchResultsFragment",  " eventsFiltered: " + eventsFiltered.toString());
-                        eventsFiltered.add(e);
+                        if (!(eventsFiltered.contains(e))) {
+                            eventsFiltered.add(e);
+                        }
                     }
                     else if(e.getClass() == StudyEvent.class && !Utils.isEmptyOrBlank(searchPlace) && ((StudyEvent) e).getPlace().toLowerCase().contains(searchPlace)){
                         Log.d(".SearchResultsFragment", e.toString());
                         Log.d(".SearchResultsFragment",  " eventsFiltered: " + eventsFiltered.toString());
-                        eventsFiltered.add(e);
+                        if (!(eventsFiltered.contains(e))) {
+                            eventsFiltered.add(e);
+                        }
                     }
                 }
 
@@ -154,6 +172,17 @@ public class SearchResultsFragment extends Fragment {
             e.printStackTrace();
         }
         return params;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

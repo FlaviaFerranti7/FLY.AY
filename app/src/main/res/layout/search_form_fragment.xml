@@ -13,7 +13,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:focusable="true"
         android:focusableInTouchMode ="true"
         app:endIconMode="custom"
@@ -33,7 +33,7 @@
     <TextView
         android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="110dp"
         android:layout_centerHorizontal="true"
         android:hint="@string/search_hint_category"
         android:textSize="16dp"/>
@@ -42,7 +42,7 @@
         android:id="@+id/toggleButtonCategories"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="140dp"
         android:layout_marginLeft="30dp">
 
         <com.google.android.material.button.MaterialButton
@@ -91,31 +91,13 @@
             app:iconTint="@color/yellowFinances"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
-
-    <TextView
-        android:layout_width="290dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="195dp"
-        android:layout_centerHorizontal="true"
-        android:text="In which day?"
-        android:textSize="16dp"/>
-
-    <DatePicker
-        android:id="@+id/datePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="60dp"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/whereEventLayout"
         android:textSize="16sp"
         android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="325dp"
+        android:layout_marginTop="220dp"
         android:focusable="true"
         android:focusableInTouchMode ="true"
         app:endIconMode="custom"
@@ -138,7 +120,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:id="@+id/buttonSearch"
-        android:layout_marginTop="395dp"
+        android:layout_marginTop="320dp"
         android:background="@color/colorPrimaryDark"
         android:textColor="@android:color/white"
         android:textSize="18sp"

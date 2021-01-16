@@ -6,6 +6,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
@@ -14,32 +15,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import android.widget.ToggleButton;
 
 import com.flam.flyay.fragments.EventDetailsFragment;
-import com.flam.flyay.fragments.HomeFragment;
 import com.flam.flyay.fragments.SearchFormFragment;
 import com.flam.flyay.fragments.SearchResultsFragment;
 import com.flam.flyay.model.Event;
-import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.TouchInterceptor;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.button.MaterialButtonToggleGroup;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.flam.flyay.util.CategoryEnum.FESTIVITY;
-import static com.flam.flyay.util.CategoryEnum.FINANCES;
-import static com.flam.flyay.util.CategoryEnum.FREE_TIME;
-import static com.flam.flyay.util.CategoryEnum.STUDY;
-import static com.flam.flyay.util.CategoryEnum.WELLNESS;
 
 public class SearchActivity extends AppCompatActivity implements SearchResultsFragment.OnEventsListListener {
 
@@ -51,13 +35,12 @@ public class SearchActivity extends AppCompatActivity implements SearchResultsFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        initializeLayout();
+        RelativeLayout touchInterceptor = (RelativeLayout) findViewById(R.id.touchInterceptor);
+        touchInterceptor.setOnTouchListener(new TouchInterceptor(this));
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ab = getSupportActionBar();
-        ab.setTitle("Search");
-        ab.setIcon(R.drawable.ic_search);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setSelectedItemId(R.id.lens);
@@ -95,13 +78,6 @@ public class SearchActivity extends AppCompatActivity implements SearchResultsFr
         addFragment(new SearchFormFragment(), null);
     }
 
-    public void initializeLayout() {
-
-        RelativeLayout touchInterceptor = (RelativeLayout) findViewById(R.id.touchInterceptor);
-        touchInterceptor.setOnTouchListener(new TouchInterceptor(this));
-
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -115,6 +91,11 @@ public class SearchActivity extends AppCompatActivity implements SearchResultsFr
     private Bundle createParamsFragment(Event event) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("event", event);
+
+        getSupportActionBar().setTitle("Details");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setIcon(null);
+
         return bundle;
     }
 
@@ -132,4 +113,16 @@ public class SearchActivity extends AppCompatActivity implements SearchResultsFr
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    @Override
+    public void onBackPressed() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 1) {
+            fragmentManager.popBackStackImmediate();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 }

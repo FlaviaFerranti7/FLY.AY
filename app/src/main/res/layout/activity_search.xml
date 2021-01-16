@@ -18,8 +18,8 @@
         android:layout_alignParentTop="true"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleMarginStart="45dp"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        <!--app:titleMarginStart="45dp"-->
 
     <FrameLayout
         android:id="@+id/fragment_container"

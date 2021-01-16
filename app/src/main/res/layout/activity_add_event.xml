@@ -25,6 +25,15 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </FrameLayout>
 
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="60dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="match_parent"

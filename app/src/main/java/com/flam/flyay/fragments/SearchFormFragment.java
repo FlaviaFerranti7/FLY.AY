@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.flam.flyay.R;
+import com.flam.flyay.SearchActivity;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -27,6 +28,7 @@ import static com.flam.flyay.util.CategoryEnum.FINANCES;
 import static com.flam.flyay.util.CategoryEnum.FREE_TIME;
 import static com.flam.flyay.util.CategoryEnum.STUDY;
 import static com.flam.flyay.util.CategoryEnum.WELLNESS;
+
 
 public class SearchFormFragment extends Fragment {
 
@@ -51,6 +53,10 @@ public class SearchFormFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.search_form_fragment, container, false);
+
+        ((SearchActivity) getActivity()).getSupportActionBar().setTitle("      Search");
+        ((SearchActivity) getActivity()).getSupportActionBar().setIcon(R.drawable.ic_search);
+        ((SearchActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         this.checkedCategoryList = new ArrayList<>();
 
@@ -129,7 +135,7 @@ public class SearchFormFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString("searchParamsName", searchName);
         bundle.putString("searchParamsPlace", searchPlace);
-        bundle.putString("checkedCategory", checkedCategory);
+        bundle.putString("checkedCategory", checkedCategoryList.toString());
         return bundle;
     }
 
