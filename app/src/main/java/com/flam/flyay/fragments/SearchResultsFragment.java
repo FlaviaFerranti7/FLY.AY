@@ -57,16 +57,16 @@ public class SearchResultsFragment extends Fragment {
         final RecyclerView listRecyclerView = view.findViewById(R.id.events_recycler);
         listRecyclerView.setNestedScrollingEnabled(false);
 
-        Intent intent = getActivity().getIntent();
-
-        searchName = intent.getStringExtra("searchParamsName");
-        searchPlace = intent.getStringExtra("searchParamsPlace");
-        checkedCategory = intent.getStringExtra("checkedCategory");
-
         this.service = new EventService(this.getContext());
         this.converterFromJsonToModel = new ConverterFromJsonToModel();
         this.events = new ArrayList<>();
         this.eventsFiltered = new ArrayList<>();
+
+        Bundle arguments = getArguments();
+
+        searchName = arguments.getString("searchParamsName");
+        searchPlace = arguments.getString("searchParamsPlace");
+        checkedCategory = arguments.getString("checkedCategory");
 
         JSONObject params = getParams(searchName, searchPlace, checkedCategory);
 

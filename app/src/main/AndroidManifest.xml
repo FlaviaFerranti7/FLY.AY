@@ -32,12 +32,6 @@
         <activity android:name=".ToDoActivity" />
         <activity android:name=".AddEventActivity" />
         <activity android:name=".SearchActivity" />
-        <activity android:name=".SearchResults">
-            android:parentActivityName=".SearchActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".SearchActivity" />
-        </activity>
         <activity android:name=".MainActivity" />
         <activity
             android:name=".activities.SignUpActivity"

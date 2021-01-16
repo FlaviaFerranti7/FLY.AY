@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchResults"
+    android:id="@+id/search_form">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/whichEventLayout"
+        android:textSize="16sp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:focusable="true"
+        android:focusableInTouchMode ="true"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/ic_search">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/whichEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/search_hint_name"
+            android:textSize="16sp"
+            android:layout_marginBottom="-8dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
+        android:text="In which category?"
+        android:textSize="16dp"/>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleButtonCategories"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="30dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/studyCategoryButton"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_centerHorizontal="true"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:icon="@drawable/ic_category_study"
+            app:iconTint="@color/blueStudy"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/freeTimeCategoryButton"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_centerHorizontal="true"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:icon="@drawable/ic_category_freetime"
+            app:iconTint="@color/redFreeTime"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/wellnessCategoryButton"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_centerHorizontal="true"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:icon="@drawable/ic_category_wellness"
+            app:iconTint="@color/violetWellness"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/festivityCategoryButton"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_centerHorizontal="true"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:icon="@drawable/ic_category_festivity"
+            app:iconTint="@color/orangeFestivity"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/financesCategoryButton"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_centerHorizontal="true"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:icon="@drawable/ic_category_finances"
+            app:iconTint="@color/yellowFinances"/>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+    <TextView
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="195dp"
+        android:layout_centerHorizontal="true"
+        android:text="In which day?"
+        android:textSize="16dp"/>
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_marginTop="165dp"
+        android:layout_marginLeft="60dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/whereEventLayout"
+        android:textSize="16sp"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="325dp"
+        android:focusable="true"
+        android:focusableInTouchMode ="true"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/ic_search">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/whereEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/search_hint_place"
+            android:textSize="16sp"
+            android:layout_marginBottom="-8dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:text="Search"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/buttonSearch"
+        android:layout_marginTop="395dp"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:shadowColor="#000000"
+        android:shadowRadius="1"/>
+
+</RelativeLayout>
+
