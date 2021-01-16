@@ -1,21 +1,30 @@
 package com.flam.flyay;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.flam.flyay.fragments.EventDetailsFragment;
+import com.flam.flyay.fragments.ToDoItemsFragment;
 import com.flam.flyay.fragments.ToDoListFragment;
+import com.flam.flyay.model.Event;
+import com.flam.flyay.model.ToDo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class ToDoActivity extends AppCompatActivity {
+public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.OnToDoListListener {
 
     private Toolbar toolbar;
     private ActionBar ab;
@@ -25,7 +34,7 @@ public class ToDoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do);
 
-        initializeFragments();
+        initializeFragments(new ToDoListFragment(),null);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -84,9 +93,25 @@ public class ToDoActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState, outPersistentState);
     }
 
-    private void initializeFragments() {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onToDoListSelected(ToDo toDo) {
+        Log.d(".ToDoActivity", toDo.toString());
+        initializeFragments(new ToDoItemsFragment(), createParamsItems(toDo));
+    }
+
+    private Bundle createParamsItems(ToDo toDo) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("ToDo", toDo);
+
+        return bundle;
+    }
+
+    private void initializeFragments(Fragment fragment, Bundle params) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.display_todo_list_fragment, new ToDoListFragment());
+        fragment.setArguments(params);
+        fragmentTransaction.replace(R.id.display_todo_list_fragment, fragment, fragment.getClass().getName());
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 }

@@ -2,7 +2,9 @@ package com.flam.flyay.model;
 
 import org.jetbrains.annotations.NotNull;
 
-public class ToDo {
+import java.io.Serializable;
+
+public class ToDo implements Serializable {
     private int id;
     private String title;
     private String image;

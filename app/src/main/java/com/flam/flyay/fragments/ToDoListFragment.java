@@ -1,5 +1,6 @@
 package com.flam.flyay.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.flam.flyay.R;
 import com.flam.flyay.adapter.ToDoAdapter;
+import com.flam.flyay.model.Event;
 import com.flam.flyay.model.ToDo;
 import com.flam.flyay.services.ServerCallback;
 import com.flam.flyay.services.ToDoService;
@@ -31,10 +33,25 @@ public class ToDoListFragment extends Fragment {
     private ToDoService service;
     private ConverterFromJsonToModel converterFromJsonToModel;
     private List<ToDo> toDoList;
+    private OnToDoListListener onToDoListListener;
+
+    public interface OnToDoListListener {
+        void onToDoListSelected(ToDo toDo);
+    }
 
     public ToDoListFragment(){
         //empty constructor
     }
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try{
+            onToDoListListener = (OnToDoListListener) context;
+        } catch(ClassCastException e) {
+            throw new ClassCastException("OnToDoListListener interface must be implemented");
+        }
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -62,7 +79,7 @@ public class ToDoListFragment extends Fragment {
             public void onSuccess(Object result) {
                 toDoList = (List<ToDo>) result;
                 Log.d(".TodoListFragment", toDoList.toString());
-                ToDoAdapter toDoAdapter = new ToDoAdapter(toDoList, getContext());
+                ToDoAdapter toDoAdapter = new ToDoAdapter(toDoList, onToDoListListener, getContext());
                 ItemTouchHelper.Callback callback =
                         new ItemMoveCallback(toDoAdapter);
                 ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
