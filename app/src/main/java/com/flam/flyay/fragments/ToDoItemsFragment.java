@@ -3,6 +3,8 @@ package com.flam.flyay.fragments;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +63,18 @@ public class ToDoItemsFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflator) {
+        menu.clear();
+        inflator.inflate(R.menu.actions_menu, menu);
+        for (int i = 0; i < menu.size(); i++) {
+            menu.getItem(i).setVisible(false);
+            if(menu.getItem(i).getItemId() == R.id.action_options_list)
+                menu.getItem(i).setVisible(true);
+        }
+        super.onCreateOptionsMenu(menu, inflator);
     }
 
 }

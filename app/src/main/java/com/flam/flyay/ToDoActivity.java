@@ -72,7 +72,7 @@ public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.
             }
         });
         initializeFragments(new ToDoListFragment(),null);
-        invalidateOptionsMenu();
+        //invalidateOptionsMenu();
     }
 
     @Override

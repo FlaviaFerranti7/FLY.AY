@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         currentDate = df.format(c.getTime());
 
         navView = findViewById(R.id.nav_view);
-        navView.getMenu().getItem(2).setEnabled(false);
+        //navView.getMenu().getItem(2).setEnabled(false);
         navView.setSelectedItemId(R.id.home);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
