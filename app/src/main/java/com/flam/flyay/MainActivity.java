@@ -71,29 +71,21 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
                     case R.id.lens:
                         startActivity(new Intent(getApplicationContext(), SearchActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("Search");
-                        ab.setIcon(R.drawable.ic_search);
                         return true;
 
                     case R.id.plus:
                         startActivity(new Intent(getApplicationContext(), AddEventActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("Add event");
-                        ab.setIcon(R.drawable.ic_add_event);
                         return true;
 
                     case R.id.list:
                         startActivity(new Intent(getApplicationContext(), ToDoActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("To do");
-                        ab.setIcon(R.drawable.ic_to_do);
                         return true;
 
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("Profile");
-                        ab.setIcon(R.drawable.ic_profile);
                         return true;
                 }
                 return false;
