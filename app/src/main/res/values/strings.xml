@@ -30,6 +30,10 @@
     <string name="search_hint_name">Which event are you looking for?</string>
     <string name="search_hint_place">In which place?</string>
     <string name="search_hint_category">In which category?</string>
+    <string name="title_add_event">Insert the title</string>
+    <string name="category_add_event">Choose the category:</string>
+    <string name="date_add_event">Choose the date:</string>
+
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
