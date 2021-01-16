@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.flam.flyay.R;
 import com.flam.flyay.adapter.EventAdapter;
+import com.flam.flyay.adapter.EventFilteredAdapter;
 import com.flam.flyay.model.Event;
 import com.flam.flyay.model.subevent.FestivityEvent;
 import com.flam.flyay.model.subevent.FinancesEvent;
@@ -106,14 +107,14 @@ public class SearchResultsFragment extends Fragment {
                 }
 
                 Log.d(".SearchResultsFragment",  " eventsFiltered: " + eventsFiltered.toString());
-                EventAdapter filteredEventAdapter = new EventAdapter(eventsFiltered, null);
+                EventFilteredAdapter eventFilteredAdapter = new EventFilteredAdapter(eventsFiltered, null);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                listRecyclerView.setAdapter(filteredEventAdapter);
+                listRecyclerView.setAdapter(eventFilteredAdapter);
                 listRecyclerView.setLayoutManager(layoutManager);
                 DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listRecyclerView.getContext(),
                         layoutManager.getOrientation());
                 listRecyclerView.addItemDecoration(dividerItemDecoration);
-                filteredEventAdapter.notifyDataSetChanged();
+                eventFilteredAdapter.notifyDataSetChanged();
             }
         });
 
