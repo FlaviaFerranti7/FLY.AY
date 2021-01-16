@@ -55,11 +55,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         c = Calendar.getInstance(TimeZone.getTimeZone("GMT"),Locale.getDefault());
         df = new SimpleDateFormat("dd/MM/yyyy");
         currentDate = df.format(c.getTime());
-        ab.setTitle(currentDate);
-        ab.setIcon(R.drawable.ic_home_page);
 
         navView = findViewById(R.id.nav_view);
-        navView.getMenu().getItem(2).setEnabled(false);
+        //navView.getMenu().getItem(2).setEnabled(false);
         navView.setSelectedItemId(R.id.home);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
@@ -73,29 +71,21 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
                     case R.id.lens:
                         startActivity(new Intent(getApplicationContext(), SearchActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("Search");
-                        ab.setIcon(R.drawable.ic_search);
                         return true;
 
                     case R.id.plus:
                         startActivity(new Intent(getApplicationContext(), AddEventActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("Add event");
-                        ab.setIcon(R.drawable.ic_add_event);
                         return true;
 
                     case R.id.list:
                         startActivity(new Intent(getApplicationContext(), ToDoActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("To do");
-                        ab.setIcon(R.drawable.ic_to_do);
                         return true;
 
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("Profile");
-                        ab.setIcon(R.drawable.ic_profile);
                         return true;
                 }
                 return false;
@@ -153,6 +143,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         Bundle bundle = new Bundle();
         bundle.putSerializable("event", event);
 
+        getSupportActionBar().setTitle("Details");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setIcon(null);
+
         return bundle;
     }
 
@@ -181,4 +175,16 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    @Override
+    public void onBackPressed() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 1) {
+            fragmentManager.popBackStackImmediate();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 }

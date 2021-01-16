@@ -44,6 +44,16 @@ public class EventService {
         });
     }
 
+    public void getEventsByFilter(JSONObject params, final ServerCallback callback) {
+        Log.d(".EventService", "POST - EventsByFilter");
+        appRequest.jsonObjectPOSTRequest(context, MockServerUrl.EVENT_DAY.url, params, new ServerCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                getEventsList((JSONObject) result, callback);
+            }
+        });
+    }
+
     public void getEventsList(JSONObject requestResult, final ServerCallback callback) {
         List<Event> events = new ArrayList<>();
         JSONArray containerResponse = new JSONArray();

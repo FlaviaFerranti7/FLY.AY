@@ -1,9 +1,15 @@
 package com.flam.flyay.util;
 
+import android.content.Intent;
+import android.icu.number.NumberRangeFormatter;
+import android.os.Build;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+
+import com.flam.flyay.MainActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -18,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Utils {
 
@@ -147,5 +154,13 @@ public class Utils {
         }
 
         callback.onSuccess(response);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static boolean isEmptyOrBlank(String s){
+        if (Objects.isNull(s) || s.length() == 0){
+            return true;
+        }
+        return false;
     }
 }
