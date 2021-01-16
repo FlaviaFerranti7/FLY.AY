@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flam.flyay.R;
+import com.flam.flyay.ToDoActivity;
 import com.flam.flyay.adapter.ToDoAdapter;
 import com.flam.flyay.model.Event;
 import com.flam.flyay.model.ToDo;
@@ -59,6 +61,10 @@ public class ToDoListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_to_do_list, container, false);
+
+        ((ToDoActivity) getActivity()).getSupportActionBar().setTitle("      To do");
+        ((ToDoActivity) getActivity()).getSupportActionBar().setIcon(R.drawable.ic_to_do);
+        ((ToDoActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         final RecyclerView listRecyclerView = view.findViewById(R.id.to_do_list_recycler);
         listRecyclerView.setLayoutManager(new LinearLayoutManager((getActivity().getApplicationContext())));

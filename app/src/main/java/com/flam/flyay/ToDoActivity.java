@@ -6,6 +6,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
@@ -15,12 +16,9 @@ import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.flam.flyay.fragments.EventDetailsFragment;
 import com.flam.flyay.fragments.ToDoItemsFragment;
 import com.flam.flyay.fragments.ToDoListFragment;
-import com.flam.flyay.model.Event;
 import com.flam.flyay.model.ToDo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -34,13 +32,12 @@ public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do);
 
-        initializeFragments(new ToDoListFragment(),null);
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ab = getSupportActionBar();
-        ab.setTitle("To do");
+        /*ab.setTitle("To do");
         ab.setIcon(R.drawable.ic_to_do);
+        invalidateOptionsMenu();*/
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setSelectedItemId(R.id.list);
@@ -74,6 +71,8 @@ public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.
                 return false;
             }
         });
+        initializeFragments(new ToDoListFragment(),null);
+        invalidateOptionsMenu();
     }
 
     @Override
@@ -102,7 +101,7 @@ public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.
 
     private Bundle createParamsItems(ToDo toDo) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("ToDo", toDo);
+        bundle.putSerializable("toDo", toDo);
 
         return bundle;
     }
@@ -113,5 +112,15 @@ public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.
         fragmentTransaction.replace(R.id.display_todo_list_fragment, fragment, fragment.getClass().getName());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+    @Override
+    public void onBackPressed() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 1) {
+            fragmentManager.popBackStackImmediate();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
