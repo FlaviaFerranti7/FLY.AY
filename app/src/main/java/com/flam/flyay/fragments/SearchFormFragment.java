@@ -34,6 +34,7 @@ public class SearchFormFragment extends Fragment {
     private TextInputEditText eventNameTextField;
     private TextInputLayout eventPlaceLayout;
     private TextInputEditText eventPlaceTextField;
+
     private Button searchButton;
 
     private MaterialButtonToggleGroup toggleCategories;
@@ -44,14 +45,12 @@ public class SearchFormFragment extends Fragment {
     private String checkedCategory;
     private List<String> checkedCategoryList;
 
-    public SearchFormFragment() {
-    }
-
+    public SearchFormFragment() {}
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.search_form, container, false);
+        final View view = inflater.inflate(R.layout.search_form_fragment, container, false);
 
         this.checkedCategoryList = new ArrayList<>();
 
@@ -115,7 +114,6 @@ public class SearchFormFragment extends Fragment {
         });
 
         return view;
-
     }
 
     public void substituteFragment(Fragment fragment){

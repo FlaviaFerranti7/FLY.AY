@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchResults"
     android:id="@+id/search_form">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -14,6 +13,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:focusable="true"
         android:focusableInTouchMode ="true"
         app:endIconMode="custom"
@@ -33,16 +33,16 @@
     <TextView
         android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="80dp"
         android:layout_centerHorizontal="true"
-        android:text="In which category?"
+        android:hint="@string/search_hint_category"
         android:textSize="16dp"/>
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleButtonCategories"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="110dp"
         android:layout_marginLeft="30dp">
 
         <com.google.android.material.button.MaterialButton
@@ -104,7 +104,7 @@
         android:id="@+id/datePicker"
         android:layout_width="wrap_content"
         android:layout_height="150dp"
-        android:layout_marginTop="165dp"
+        android:layout_marginTop="200dp"
         android:layout_marginLeft="60dp"
         android:calendarViewShown="false"
         android:datePickerMode="spinner" />

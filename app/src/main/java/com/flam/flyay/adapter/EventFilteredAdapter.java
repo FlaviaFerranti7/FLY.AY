@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.flam.flyay.R;
 import com.flam.flyay.fragments.HomeFragment;
+import com.flam.flyay.fragments.SearchResultsFragment;
 import com.flam.flyay.model.Event;
 import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.Utils;
@@ -28,12 +29,11 @@ import java.util.List;
 public class EventFilteredAdapter extends RecyclerView.Adapter<EventFilteredAdapter.ViewHolder> {
 
     private List<Event> events;
-    private HomeFragment.OnEventsListListener onEventsListListener;
+    private SearchResultsFragment.OnEventsListListener onEventsListListener;
 
-    public EventFilteredAdapter(List<Event> events, HomeFragment.OnEventsListListener onEventsListListener) {
+    public EventFilteredAdapter(List<Event> events, SearchResultsFragment.OnEventsListListener onEventsListListener) {
         this.events = events;
         this.onEventsListListener = onEventsListListener;
-
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -99,7 +99,6 @@ public class EventFilteredAdapter extends RecyclerView.Adapter<EventFilteredAdap
 
         LayerDrawable shape = (LayerDrawable) holder.leftBorder.getBackground().mutate();
         setColorShape(shape, event);
-
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

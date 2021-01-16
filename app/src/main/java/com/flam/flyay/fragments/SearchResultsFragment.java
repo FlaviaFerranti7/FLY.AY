@@ -1,5 +1,6 @@
 package com.flam.flyay.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,14 +42,31 @@ import static com.flam.flyay.util.CategoryEnum.WELLNESS;
 public class SearchResultsFragment extends Fragment {
     private EventService service;
     private ConverterFromJsonToModel converterFromJsonToModel;
+
     private List<Event> events;
     private List<Event> eventsFiltered;
 
-    String searchName;
-    String searchPlace;
-    String checkedCategory;
+    private String searchName;
+    private String searchPlace;
+    private String checkedCategory;
+
+    private SearchResultsFragment.OnEventsListListener onEventsListListener;
+
+    public interface OnEventsListListener {
+        void onEventSelected(Event e);
+    }
 
     public SearchResultsFragment(){}
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try{
+            onEventsListListener = (SearchResultsFragment.OnEventsListListener) context;
+        } catch(ClassCastException e) {
+            throw new ClassCastException("OnEventsListListener interface must be implemented");
+        }
+    }
 
     @Nullable
     @Override
@@ -107,7 +125,7 @@ public class SearchResultsFragment extends Fragment {
                 }
 
                 Log.d(".SearchResultsFragment",  " eventsFiltered: " + eventsFiltered.toString());
-                EventFilteredAdapter eventFilteredAdapter = new EventFilteredAdapter(eventsFiltered, null);
+                EventFilteredAdapter eventFilteredAdapter = new EventFilteredAdapter(eventsFiltered, onEventsListListener);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 listRecyclerView.setAdapter(eventFilteredAdapter);
                 listRecyclerView.setLayoutManager(layoutManager);

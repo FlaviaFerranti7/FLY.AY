@@ -29,6 +29,7 @@
     <string name="app_label">Search</string>
     <string name="search_hint_name">Which event are you looking for?</string>
     <string name="search_hint_place">In which place?</string>
+    <string name="search_hint_category">In which category?</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>

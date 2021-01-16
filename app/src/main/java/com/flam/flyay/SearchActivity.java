@@ -21,7 +21,9 @@ import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
 
 import com.flam.flyay.fragments.EventDetailsFragment;
+import com.flam.flyay.fragments.HomeFragment;
 import com.flam.flyay.fragments.SearchFormFragment;
+import com.flam.flyay.fragments.SearchResultsFragment;
 import com.flam.flyay.model.Event;
 import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.TouchInterceptor;
@@ -39,7 +41,7 @@ import static com.flam.flyay.util.CategoryEnum.FREE_TIME;
 import static com.flam.flyay.util.CategoryEnum.STUDY;
 import static com.flam.flyay.util.CategoryEnum.WELLNESS;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements SearchResultsFragment.OnEventsListListener {
 
     private Toolbar toolbar;
     private ActionBar ab;
@@ -50,7 +52,6 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         initializeLayout();
-        addFragment(new SearchFormFragment(), null);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -91,6 +92,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        addFragment(new SearchFormFragment(), null);
     }
 
     public void initializeLayout() {
@@ -110,29 +112,18 @@ public class SearchActivity extends AppCompatActivity {
         return true;
     }
 
-    /*private Bundle createParamsEventsFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putString("searchParamsName", searchName);
-        bundle.putString("searchParamsPlace", searchPlace);
-        bundle.putString("checkedCategory", String.valueOf(checkedCategoryList));
-        return bundle;
-    }*/
-
     private Bundle createParamsFragment(Event event) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("event", event);
-
         return bundle;
     }
 
-
-    /*@RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onEventSelected(Event e) {
-        Log.d(".MainActivity", e.toString());
-
+        Log.d(".SearchActivity", e.toString());
         addFragment(new EventDetailsFragment(), createParamsFragment(e));
-    }*/
+    }
 
     public void addFragment(Fragment fragment, Bundle params) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
