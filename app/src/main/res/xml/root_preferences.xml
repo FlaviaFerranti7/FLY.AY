@@ -5,7 +5,7 @@
     android:layout_marginBottom="?attr/actionBarSize">
 
     <PreferenceCategory
-        app:title="Geleral">
+        app:title="General">
 
         <EditTextPreference
             app:key="psw"
@@ -21,31 +21,33 @@
     <PreferenceCategory app:title="Notification">
 
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="day_plan"
             android:title="Plan of the day?" />
 
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="done"
             android:title="What have you done so far?" />
 
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="tomorrow_plan"
             android:title="Tomorrow plan" />
 
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="mark"
             android:title="Did you mark everything?" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="Visualization mode">
 
-        <SwitchPreferenceCompat
-            app:key="light_dark_view"
-            app:title="Dark mode" />
+        <SwitchPreference
+            app:key="switch_theme"
+            app:title="Dark theme"
+            app:defaultValue="false"
+            android:id="@+id/changeThemeBtn"/>
 
     </PreferenceCategory>
 
