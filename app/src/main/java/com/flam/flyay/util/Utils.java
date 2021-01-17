@@ -1,10 +1,12 @@
 package com.flam.flyay.util;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.icu.number.NumberRangeFormatter;
 import android.os.Build;
 import android.app.Activity;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
@@ -163,4 +165,11 @@ public class Utils {
         }
         return false;
     }
+
+    public static int convertDpToPixel(float dp) {
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        float px = dp * (metrics.densityDpi / 160f);
+        return Math.round(px);
+    }
+
 }
