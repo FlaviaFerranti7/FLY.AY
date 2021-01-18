@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.flam.flyay.AddEventActivity;
@@ -103,6 +104,8 @@ public class AddEventFormFragment extends Fragment {
         addTextViewAndEditText("Title: ", "Insert here");
         addTextViewAndButtons("Which category?", 64, categoryList);
         //addCheckBoxes("Over range", overRangeList);
+        addDatePickerDialog();
+        addTimePickerDialog();
 
         return view;
     }
@@ -135,7 +138,7 @@ public class AddEventFormFragment extends Fragment {
         textLayout.addView(textView);
         textLayout.addView(editText);
 
-        addLineSeperator();
+        addLineSeparator();
     }
 
     private void addTextView(LinearLayout layout, String text, Integer marginTop) {
@@ -226,7 +229,7 @@ public class AddEventFormFragment extends Fragment {
                 });
             }
         }
-        addLineSeperator();
+        addLineSeparator();
     }
 
 
@@ -240,7 +243,7 @@ public class AddEventFormFragment extends Fragment {
         addButtons(textAndButtons, categoryList);
 
 
-        addLineSeperator();
+        addLineSeparator();
     }
 
 
@@ -277,18 +280,59 @@ public class AddEventFormFragment extends Fragment {
             checkBoxLayout.addView(checkBox);
         }
 
-        addLineSeperator();
+        addLineSeparator();
     }
 
-    private void addLineSeperator() {
+    private void addLineSeparator() {
         LinearLayout lineLayout = new LinearLayout(this.getContext());
-        lineLayout.setBackgroundColor(Color.GRAY);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                2);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,2);
         params.setMargins(0, Utils.convertDpToPixel(10), 0, Utils.convertDpToPixel(10));
         lineLayout.setLayoutParams(params);
         relativeLayout.addView(lineLayout);
     }
+
+    public void addDatePickerDialog() {
+
+        Button btn = new Button(this.getContext());
+        btn.setText("Choose the date");
+        LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        btnparams.setMargins(Utils.convertDpToPixel(160), Utils.convertDpToPixel(160),0, 0);
+        btn.setLayoutParams(btnparams);
+        relativeLayout.addView(btn);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+
+            }
+        });
+    }
+
+    public void addTimePickerDialog() {
+
+        Button btn = new Button(this.getContext());
+        btn.setText("Choose the time");
+        LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        btnparams.setMargins(Utils.convertDpToPixel(16), Utils.convertDpToPixel(160),0, 0);
+        btn.setLayoutParams(btnparams);
+        relativeLayout.addView(btn);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                DialogFragment newFragment = new TimePickerFragment();
+                newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
+
+            }
+        });
+    }
+
+
 
 }
