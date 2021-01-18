@@ -1,22 +1,20 @@
 package com.flam.flyay.fragments;
 
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
+import android.text.DynamicLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -25,11 +23,9 @@ import androidx.fragment.app.Fragment;
 
 import com.flam.flyay.AddEventActivity;
 import com.flam.flyay.R;
-import com.flam.flyay.model.Event;
 import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.Utils;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +33,7 @@ public class AddEventFormFragment extends Fragment {
 
     RelativeLayout relativeLayout;
     List<String> categoryList;
+    List<String> subCategoryList;
     List<String> overRangeList;
 
     public AddEventFormFragment() {}
@@ -65,8 +62,8 @@ public class AddEventFormFragment extends Fragment {
         relativeLayout = view.findViewById(R.id.add_event_form);
 
         addTextViewAndEditText("Title: ", "Insert here");
-        addToggleButtons("Which category?", categoryList);
-        addCheckBoxes("Over range", overRangeList);
+        addTextViewAndButtons("Which category?", 64, categoryList);
+        //addCheckBoxes("Over range", overRangeList);
 
         return view;
     }
@@ -102,11 +99,7 @@ public class AddEventFormFragment extends Fragment {
         addLineSeperator();
     }
 
-    private void addToggleButtons(String text, List<String> categoryList) {
-
-        LinearLayout textAndToggleLayout = new LinearLayout(this.getContext());
-        textAndToggleLayout.setOrientation(LinearLayout.VERTICAL);
-        relativeLayout.addView(textAndToggleLayout);
+    private void addTextView(LinearLayout layout, String text, Integer marginTop) {
 
         TextView textView = new TextView(this.getContext());
         textView.setText(text);
@@ -114,43 +107,73 @@ public class AddEventFormFragment extends Fragment {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
         );
-        textParams.setMargins(Utils.convertDpToPixel(16), Utils.convertDpToPixel(64),0, 0);
+        textParams.setMargins(Utils.convertDpToPixel(16), Utils.convertDpToPixel(marginTop),0, 0);
         textView.setTextColor(Color.BLACK);
         textView.setLayoutParams(textParams);
 
+        layout.addView(textView);
+
+    }
+
+    private void horizontalScrollView(LinearLayout mainLayout, LinearLayout scrollableLayout){
         HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this.getContext());
         LinearLayout.LayoutParams scrollParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
         );
         horizontalScrollView.setLayoutParams(scrollParams);
+        horizontalScrollView.addView(scrollableLayout);
+        mainLayout.addView(horizontalScrollView);
 
-        LinearLayout toggleButtonsLayout = new LinearLayout(this.getContext());
-        LinearLayout.LayoutParams toggleButtonsParams = new LinearLayout.LayoutParams(
+    }
+
+    private void addButtons(final LinearLayout layout, final List<String> categoryList) {
+
+        LinearLayout buttonsLayout = new LinearLayout(this.getContext());
+        LinearLayout.LayoutParams buttonsParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
         );
-        toggleButtonsLayout.setOrientation(LinearLayout.HORIZONTAL);
-        toggleButtonsLayout.setLayoutParams(toggleButtonsParams);
+        buttonsLayout.setOrientation(LinearLayout.HORIZONTAL);
+        buttonsLayout.setLayoutParams(buttonsParams);
 
-        horizontalScrollView.addView(toggleButtonsLayout);
-
-        textAndToggleLayout.addView(textView);
-        textAndToggleLayout.addView(horizontalScrollView);
+        horizontalScrollView(layout, buttonsLayout);
 
         for (Object i : categoryList) {
-            ToggleButton toggleButton = new ToggleButton(this.getContext());
-            toggleButton.setText(String.valueOf(i));
-            LinearLayout.LayoutParams toggleButtonparams = new LinearLayout.LayoutParams(
+            Button btn = new Button(this.getContext());
+            btn.setText(String.valueOf(i));
+            LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            toggleButtonparams.setMargins(Utils.convertDpToPixel(16), Utils.convertDpToPixel(8),0, 0);
-            toggleButton.setLayoutParams(toggleButtonparams);
-            toggleButtonsLayout.addView(toggleButton);
+            btnparams.setMargins(Utils.convertDpToPixel(16), Utils.convertDpToPixel(8),0, 0);
+            btn.setLayoutParams(btnparams);
+            buttonsLayout.addView(btn);
+            btn.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    addTextViewAndButtons("Subcategory",144, categoryList);
+                }
+            });
+
         }
         addLineSeperator();
     }
+
+
+    private void addTextViewAndButtons(String text, Integer marginTop, final List<String> categoryList) {
+
+        LinearLayout textAndButtons = new LinearLayout(this.getContext());
+        textAndButtons.setOrientation(LinearLayout.VERTICAL);
+        relativeLayout.addView(textAndButtons);
+
+        addTextView(textAndButtons, text, marginTop);
+        addButtons(textAndButtons, categoryList);
+
+
+        addLineSeperator();
+    }
+
+
 
     private void addCheckBoxes(String text, List<String> overRangeList) {
 
