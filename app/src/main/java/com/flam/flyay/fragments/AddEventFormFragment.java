@@ -2,7 +2,6 @@ package com.flam.flyay.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.DynamicLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +13,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,17 +21,24 @@ import androidx.fragment.app.Fragment;
 import com.flam.flyay.AddEventActivity;
 import com.flam.flyay.R;
 import com.flam.flyay.util.CategoryEnum;
+import com.flam.flyay.util.SubCategoryEnum;
 import com.flam.flyay.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class AddEventFormFragment extends Fragment {
 
-    RelativeLayout relativeLayout;
-    List<String> categoryList;
-    List<String> subCategoryList;
-    List<String> overRangeList;
+    private RelativeLayout relativeLayout;
+    private List<String> categoryList;
+    private List<String> wellnessSubCategoryList;
+    private List<String> financesSubCategoryList;
+    private List<String> freeTimeSubCategoryList;
+    private List<String> studySubCategoryList;
+    private List<String> festivitySubCategoryList;
+
+    private List<String> overRangeList;
 
     public AddEventFormFragment() {}
 
@@ -53,6 +57,41 @@ public class AddEventFormFragment extends Fragment {
         categoryList.add(CategoryEnum.WELLNESS.name);
         categoryList.add(CategoryEnum.FESTIVITY.name);
         categoryList.add(CategoryEnum.FINANCES.name);
+
+        wellnessSubCategoryList = new ArrayList();
+        wellnessSubCategoryList.add(SubCategoryEnum.BODY_CARE.name);
+        wellnessSubCategoryList.add(SubCategoryEnum.MEDICINES.name);
+        wellnessSubCategoryList.add(SubCategoryEnum.MED_APPOINTMENT.name);
+
+        financesSubCategoryList = new ArrayList();
+        financesSubCategoryList.add(SubCategoryEnum.REVENUE.name);
+        financesSubCategoryList.add(SubCategoryEnum.OUTFLOW.name);
+
+        freeTimeSubCategoryList = new ArrayList();
+        freeTimeSubCategoryList.add(SubCategoryEnum.FRIENDS.name);
+        freeTimeSubCategoryList.add(SubCategoryEnum.FAMILY.name);
+        freeTimeSubCategoryList.add(SubCategoryEnum.HOBBY.name);
+        freeTimeSubCategoryList.add(SubCategoryEnum.TRAVELS.name);
+        freeTimeSubCategoryList.add(SubCategoryEnum.FILMS_TV_SERIES.name);
+        freeTimeSubCategoryList.add(SubCategoryEnum.THEATRE.name);
+        freeTimeSubCategoryList.add(SubCategoryEnum.MUSIC.name);
+        freeTimeSubCategoryList.add(SubCategoryEnum.SPORTIVE_EVENTS.name);
+        freeTimeSubCategoryList.add(SubCategoryEnum.SPORT.name);
+        freeTimeSubCategoryList.add(SubCategoryEnum.OTHER.name);
+
+        studySubCategoryList = new ArrayList();
+        studySubCategoryList.add(SubCategoryEnum.EXAM.name);
+        studySubCategoryList.add(SubCategoryEnum.STUDY_TIME.name);
+        studySubCategoryList.add(SubCategoryEnum.LESSONS.name);
+        studySubCategoryList.add(SubCategoryEnum.TEACHERS_OFFICE_HOURS.name);
+        studySubCategoryList.add(SubCategoryEnum.STUDY_GROUP.name);
+        studySubCategoryList.add(SubCategoryEnum.INTERSHIP.name);
+
+        festivitySubCategoryList  = new ArrayList();
+        festivitySubCategoryList.add(SubCategoryEnum.BIRTHDAY.name);
+        festivitySubCategoryList.add(SubCategoryEnum.LONG_WEEKEND.name);
+        festivitySubCategoryList.add(SubCategoryEnum.HOLIDAYS.name);
+
 
         overRangeList = new ArrayList();
         overRangeList.add("Morning");
@@ -127,9 +166,9 @@ public class AddEventFormFragment extends Fragment {
 
     }
 
-    private void addButtons(final LinearLayout layout, final List<String> categoryList) {
+    private void addButtons(final LinearLayout layout, List<String> categoryList) {
 
-        LinearLayout buttonsLayout = new LinearLayout(this.getContext());
+        final LinearLayout buttonsLayout = new LinearLayout(this.getContext());
         LinearLayout.LayoutParams buttonsParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
@@ -149,12 +188,43 @@ public class AddEventFormFragment extends Fragment {
             btnparams.setMargins(Utils.convertDpToPixel(16), Utils.convertDpToPixel(8),0, 0);
             btn.setLayoutParams(btnparams);
             buttonsLayout.addView(btn);
-            btn.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    addTextViewAndButtons("Subcategory",144, categoryList);
-                }
-            });
 
+            if (i.toString() == CategoryEnum.WELLNESS.name) {
+                btn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
+                        addTextViewAndButtons("Which subcategory?",144, wellnessSubCategoryList);
+
+                    }
+                });
+            }
+            if (i.toString() == CategoryEnum.FINANCES.name) {
+                btn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
+                        addTextViewAndButtons("Which subcategory?",144, financesSubCategoryList);
+                    }
+                });
+            }
+            if (i.toString() == CategoryEnum.FREE_TIME.name) {
+                btn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
+                        addTextViewAndButtons("Which subcategory?",144, freeTimeSubCategoryList);
+                    }
+                });
+            }
+            if (i.toString() == CategoryEnum.STUDY.name) {
+                btn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
+                        addTextViewAndButtons("Which subcategory?",144, studySubCategoryList);
+                    }
+                });
+            }
+            if (i.toString() == CategoryEnum.FESTIVITY.name) {
+                btn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
+                        addTextViewAndButtons("Subcategory",144, festivitySubCategoryList);
+                    }
+                });
+            }
         }
         addLineSeperator();
     }
@@ -172,7 +242,6 @@ public class AddEventFormFragment extends Fragment {
 
         addLineSeperator();
     }
-
 
 
     private void addCheckBoxes(String text, List<String> overRangeList) {
