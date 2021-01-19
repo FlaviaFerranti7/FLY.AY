@@ -38,7 +38,7 @@
             android:layout_height="30dp"
             android:layout_marginTop="40dp"
             android:layout_marginLeft="50dp"
-            android:text="Dark theme"
+            android:text="Light-Dark theme"
             android:textSize="18dp"/>
 
         <Button

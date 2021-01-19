@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 
 import com.flam.flyay.MainActivity;
 import com.flam.flyay.R;
-import com.flam.flyay.SearchActivity;
 import com.flam.flyay.adapter.EventAdapter;
 import com.flam.flyay.model.Event;
 import com.flam.flyay.services.EventService;
