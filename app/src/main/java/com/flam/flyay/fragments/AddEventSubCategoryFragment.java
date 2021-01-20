@@ -35,6 +35,7 @@ public class AddEventSubCategoryFragment extends Fragment {
     private List<String> festivitySubCategoryList;
     private List<String> financesSubCategoryList;
 
+
     public AddEventSubCategoryFragment() {}
 
     @SuppressLint("LongLogTag")
@@ -80,17 +81,6 @@ public class AddEventSubCategoryFragment extends Fragment {
     }
 
 
-    private void addTextViewAndButtons(String text, final List<String> categoryList) {
-
-        LinearLayout layout = new LinearLayout(this.getContext());
-        layout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.addView(layout);
-
-        addTextView(layout, text, 16, 16);
-        addButtons(layout, categoryList);
-
-    }
-
     private void addTextView(LinearLayout layout, String text, Integer marginLeft, Integer marginTop) {
 
         TextView textView = new TextView(this.getContext());
@@ -104,6 +94,19 @@ public class AddEventSubCategoryFragment extends Fragment {
         textView.setLayoutParams(textParams);
 
         layout.addView(textView);
+    }
+
+    private void horizontalScrollView(LinearLayout mainLayout, LinearLayout scrollableLayout) {
+
+        HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this.getContext());
+        LinearLayout.LayoutParams scrollParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        );
+        horizontalScrollView.setLayoutParams(scrollParams);
+        horizontalScrollView.addView(scrollableLayout);
+
+        mainLayout.addView(horizontalScrollView);
     }
 
     private void addButtons(LinearLayout layout, List<String> categoryList) {
@@ -132,18 +135,15 @@ public class AddEventSubCategoryFragment extends Fragment {
         }
     }
 
-    private void horizontalScrollView(LinearLayout mainLayout, LinearLayout scrollableLayout) {
+    private void addTextViewAndButtons(String text, final List<String> categoryList) {
 
-        HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this.getContext());
-        LinearLayout.LayoutParams scrollParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-        );
-        horizontalScrollView.setLayoutParams(scrollParams);
-        horizontalScrollView.addView(scrollableLayout);
+        LinearLayout layout = new LinearLayout(this.getContext());
+        layout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.addView(layout);
 
-        mainLayout.addView(horizontalScrollView);
+        addTextView(layout, text, 16, 16);
+        addButtons(layout, categoryList);
+
     }
-
 
 }

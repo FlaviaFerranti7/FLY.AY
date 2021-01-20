@@ -1,5 +1,7 @@
 package com.flam.flyay.fragments;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,10 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +31,7 @@ import com.flam.flyay.R;
 import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.Utils;
 
+import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -36,11 +42,13 @@ public class AddEventFormFragment extends Fragment {
     private String selectedDate;
     private String btnString;
     private Boolean clicked;
+    private Button btnDate;
+    private Button btnStartTime;
+    private Button btnEndTime;
 
     private LinearLayout linearLayout;
 
     private List<String> categoryList;
-    private List<String> overRangeList;
 
     public AddEventFormFragment() {
     }
@@ -58,16 +66,13 @@ public class AddEventFormFragment extends Fragment {
         ((AddEventActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         Bundle arguments = getArguments();
-        if (arguments != null) {
-            selectedDate = arguments.getString("selectedDate");
-            Log.d(".AddEventFormFragment", selectedDate);
-        }
+
+        //selectedDate = arguments.getString("selectedDate");
+        //Log.d(".AddEventFormFragment", selectedDate);
+
 
         categoryList = Arrays.asList(CategoryEnum.FREE_TIME.name, CategoryEnum.STUDY.name, CategoryEnum.WELLNESS.name,
                 CategoryEnum.FESTIVITY.name, CategoryEnum.FINANCES.name);
-
-        overRangeList = Arrays.asList("Morning", "Afternoon", "Evening");
-
 
         linearLayout = view.findViewById(R.id.add_event_form);
 
@@ -197,29 +202,29 @@ public class AddEventFormFragment extends Fragment {
         layout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.addView(layout);
 
-        Calendar cal = Calendar.getInstance();
-        final int bYear = cal.get(Calendar.YEAR);
-        final int bMonth = cal.get(Calendar.MONTH);
-        final int bDay = cal.get(Calendar.DAY_OF_MONTH);
+        Calendar calendar = Calendar.getInstance();
+        final int bYear = calendar.get(Calendar.YEAR);
+        final int bMonth = calendar.get(Calendar.MONTH);
+        final int bDay = calendar.get(Calendar.DAY_OF_MONTH);
 
         addTextView(layout, "When?", 16, 16);
 
-        Button btn = new Button(this.getContext());
-        btn.setText(new StringBuilder().append(bDay).append("/").append(bMonth + 1).append("/").append(bYear));
+        btnDate = new Button(this.getContext());
+        btnDate.setText(new StringBuilder().append(bDay).append("/").append(bMonth + 1).append("/").append(bYear));
         LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
         btnparams.setMargins(Utils.convertDpToPixel(64), Utils.convertDpToPixel(-33), 0, 0);
-        btn.setLayoutParams(btnparams);
-        btn.setBackgroundColor(000000);
-        layout.addView(btn);
+        btnDate.setLayoutParams(btnparams);
+        btnDate.setBackgroundColor(000000);
+        layout.addView(btnDate);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        btnDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-                //btn.setText(selectedDate);
+                DatePickerFragment dialogFragment = new DatePickerFragment().newInstance();
+                dialogFragment.setCallBack(onDate);
+                dialogFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
             }
         });
 
@@ -227,32 +232,102 @@ public class AddEventFormFragment extends Fragment {
 
     }
 
-    public void addTimePickerDialog(LinearLayout layout, StringBuilder time, String text, Integer marginLeft, Integer marginTop) {
+    private DatePickerDialog.OnDateSetListener onDate = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(final DatePicker view, final int year, final int month, final int dayOfMonth) {
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.YEAR, year);
+            c.set(Calendar.MONTH, month);
+            c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            selectedDate = (new StringBuilder().append(dayOfMonth).append("/").append(month + 1).append("/").append(year)).toString();
+            btnDate.setText(selectedDate);
+            Log.d(".AddEventFormFragment", selectedDate);
+        }
+    };
+
+    public void addStartTimePickerDialog(LinearLayout layout, Integer marginLeft, Integer marginTop) {
 
         layout = new LinearLayout(this.getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.addView(layout);
 
-        addTextView(layout, text, marginLeft, marginTop);
+        Calendar calendar = Calendar.getInstance();
+        final int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        final int minute = calendar.get(Calendar.MINUTE);
 
-        Button btn = new Button(this.getContext());
-        btn.setText(time);
+        addTextView(layout, "Starting time:", marginLeft, marginTop);
+
+        btnStartTime = new Button(this.getContext());
+        btnStartTime.setText(new StringBuilder().append(hour).append(":").append(minute));
         LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
         btnparams.setMargins(Utils.convertDpToPixel(marginLeft + 72), Utils.convertDpToPixel(-33), 0, 0);
-        btn.setLayoutParams(btnparams);
-        btn.setBackgroundColor(000000);
-        layout.addView(btn);
+        btnStartTime.setLayoutParams(btnparams);
+        btnStartTime.setBackgroundColor(000000);
+        layout.addView(btnStartTime);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        btnStartTime.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                DialogFragment newFragment = new TimePickerFragment();
-                newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
+                TimePickerFragment dialogFragment = new TimePickerFragment().newInstance();
+                dialogFragment.setCallBack(onTimeStart);
+                dialogFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
             }
         });
     }
+
+    private TimePickerDialog.OnTimeSetListener onTimeStart = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(final TimePicker view, final int hour, final int minute) {
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.HOUR_OF_DAY,hour);
+            c.set(Calendar.MINUTE, minute);
+            btnStartTime.setText((new StringBuilder().append(hour).append(":").append(minute)).toString());
+        }
+    };
+
+    public void addEndTimePickerDialog(LinearLayout layout, Integer marginLeft, Integer marginTop) {
+
+        layout = new LinearLayout(this.getContext());
+        layout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.addView(layout);
+
+        Calendar calendar = Calendar.getInstance();
+        final int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        final int minute = calendar.get(Calendar.MINUTE);
+
+        addTextView(layout, "Ending time:", marginLeft, marginTop);
+
+        btnEndTime = new Button(this.getContext());
+        btnEndTime.setText(new StringBuilder().append(hour + 1).append(":").append(minute));
+        LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        btnparams.setMargins(Utils.convertDpToPixel(marginLeft + 72), Utils.convertDpToPixel(-33), 0, 0);
+        btnEndTime.setLayoutParams(btnparams);
+        btnEndTime.setBackgroundColor(000000);
+        layout.addView(btnEndTime);
+
+        btnEndTime.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                TimePickerFragment dialogFragment = new TimePickerFragment().newInstance();
+                dialogFragment.setCallBack(onTimeEnd);
+                dialogFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
+            }
+        });
+    }
+
+    private TimePickerDialog.OnTimeSetListener onTimeEnd = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(final TimePicker view, final int hour, final int minute) {
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.HOUR_OF_DAY,hour);
+            c.set(Calendar.MINUTE, minute);
+            btnEndTime.setText((new StringBuilder().append(hour).append(":").append(minute)).toString());
+        }
+    };
 
     public void addTimePickersDialog() {
 
@@ -265,8 +340,8 @@ public class AddEventFormFragment extends Fragment {
         int minutes = calendar.get(Calendar.MINUTE);
 
         addTextView(layout, "At what time?", 16, 16);
-        addTimePickerDialog(layout, new StringBuilder().append(hour).append(":").append(minutes), "Starting time:", 24, 16);
-        addTimePickerDialog(layout, new StringBuilder().append(hour + 1).append(":").append(minutes), "Ending time:", 24, 16);
+        addStartTimePickerDialog(layout, 24, 16);
+        addEndTimePickerDialog(layout, 24, 16);
 
         addLineSeparator();
     }
@@ -277,14 +352,27 @@ public class AddEventFormFragment extends Fragment {
         checkBoxLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.addView(checkBoxLayout);
 
-        CheckBox checkBox = new CheckBox(this.getContext());
+        final CheckBox checkBox = new CheckBox(this.getContext());
         checkBox.setText(text);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+        final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(Utils.convertDpToPixel(16), Utils.convertDpToPixel(16), Utils.convertDpToPixel(16), 0);
         checkBox.setLayoutParams(params);
         checkBoxLayout.addView(checkBox);
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                AddEventPeriodicFragment fragment = new AddEventPeriodicFragment();
+                if (checkBox.isChecked()) {
+                    addFragment(fragment);
+                } else {
+                    fragment = (AddEventPeriodicFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                    removeFragment(fragment);
+                }
+            }
+        });
 
         addLineSeparator();
     }
@@ -301,13 +389,13 @@ public class AddEventFormFragment extends Fragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        btnparams.setMargins(Utils.convertDpToPixel(128), Utils.convertDpToPixel(448), 0, 0);
+        btnparams.setMargins(Utils.convertDpToPixel(128), Utils.convertDpToPixel(16), 0, 0);
         btn.setLayoutParams(btnparams);
         buttonLayout.addView(btn);
 
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                //
+                //add event
             }
         });
     }

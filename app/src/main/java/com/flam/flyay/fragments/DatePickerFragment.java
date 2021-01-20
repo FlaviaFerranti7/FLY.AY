@@ -2,16 +2,21 @@ package com.flam.flyay.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.DatePicker;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 
-public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+public class DatePickerFragment extends DialogFragment {
+
+    DatePickerDialog.OnDateSetListener onDateSet;
 
     private Calendar c;
     private int year;
@@ -19,36 +24,37 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     private int day;
     private StringBuilder str;
 
+    public static DatePickerFragment newInstance(){
+        DatePickerFragment frag = new DatePickerFragment();
+        return frag;
+    }
+
     public DatePickerFragment() {}
 
+    @Nullable
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Use the current date as the default date in the picker
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container,
+                             @Nullable final Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable final Bundle savedInstanceState) {
         c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
 
-        // Create a new instance of DatePickerDialog and return it
-        DatePickerDialog dialogDatePicker =  new DatePickerDialog(getActivity(), this, year, month, day); //android.R.style.Theme_Holo_Dialog
+        DatePickerDialog dialogDatePicker =  new DatePickerDialog(getActivity(), android.R.style.Theme_Holo_Light_Dialog, onDateSet, year, month, day);
         dialogDatePicker.getDatePicker().setSpinnersShown(true);
-        //dialogDatePicker.getDatePicker().setCalendarViewShown(false);
+        dialogDatePicker.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
         return dialogDatePicker;
     }
 
-
-    public void onDateSet(DatePicker view, int sYear, int sMonth, int sDay) {
-        year = sYear;
-        month = sMonth;
-        day = sDay;
-        str = new StringBuilder().append(day).append("/").append(month + 1).append("/").append(year);
-        createParamsEventsFragment();
+    public void setCallBack(DatePickerDialog.OnDateSetListener onDate) {
+        onDateSet = onDate;
     }
 
-    private Bundle createParamsEventsFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putString("selectedDate", str.toString());
-        Log.d(".DatePickerFragment", str.toString());
-        return bundle;
-    }
 }
