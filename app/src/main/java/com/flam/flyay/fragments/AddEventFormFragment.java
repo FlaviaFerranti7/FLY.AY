@@ -1,7 +1,6 @@
 package com.flam.flyay.fragments;
 
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,36 +19,27 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.flam.flyay.AddEventActivity;
 import com.flam.flyay.R;
 import com.flam.flyay.util.CategoryEnum;
-import com.flam.flyay.util.SubCategoryEnum;
 import com.flam.flyay.util.Utils;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 
 public class AddEventFormFragment extends Fragment {
 
     private String selectedDate;
+    private String btnString;
+    private Boolean clicked;
 
-    private RelativeLayout relativeLayout;
+    private LinearLayout linearLayout;
 
     private List<String> categoryList;
-    private List<String> wellnessSubCategoryList;
-    private List<String> financesSubCategoryList;
-    private List<String> freeTimeSubCategoryList;
-    private List<String> studySubCategoryList;
-    private List<String> festivitySubCategoryList;
-
     private List<String> overRangeList;
 
     public AddEventFormFragment() {
@@ -62,6 +51,8 @@ public class AddEventFormFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.add_event_form_fragment, container, false);
 
+        clicked = false;
+
         ((AddEventActivity) getActivity()).getSupportActionBar().setTitle("      Add event");
         ((AddEventActivity) getActivity()).getSupportActionBar().setIcon(R.drawable.ic_add_event);
         ((AddEventActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -72,35 +63,22 @@ public class AddEventFormFragment extends Fragment {
             Log.d(".AddEventFormFragment", selectedDate);
         }
 
-        categoryList = Arrays.asList(CategoryEnum.STUDY.name, CategoryEnum.FREE_TIME.name, CategoryEnum.WELLNESS.name,
+        categoryList = Arrays.asList(CategoryEnum.FREE_TIME.name, CategoryEnum.STUDY.name, CategoryEnum.WELLNESS.name,
                 CategoryEnum.FESTIVITY.name, CategoryEnum.FINANCES.name);
-
-        wellnessSubCategoryList = Arrays.asList(SubCategoryEnum.BODY_CARE.name, SubCategoryEnum.MEDICINES.name, SubCategoryEnum.MED_APPOINTMENT.name);
-
-        financesSubCategoryList = Arrays.asList(SubCategoryEnum.REVENUE.name, SubCategoryEnum.OUTFLOW.name);
-
-        freeTimeSubCategoryList = Arrays.asList(SubCategoryEnum.FRIENDS.name, SubCategoryEnum.FAMILY.name, SubCategoryEnum.HOBBY.name,
-                SubCategoryEnum.TRAVELS.name, SubCategoryEnum.FILMS_TV_SERIES.name, SubCategoryEnum.THEATRE.name, SubCategoryEnum.MUSIC.name,
-                SubCategoryEnum.SPORTIVE_EVENTS.name, SubCategoryEnum.SPORT.name, SubCategoryEnum.OTHER.name);
-
-        studySubCategoryList = Arrays.asList(SubCategoryEnum.EXAM.name, SubCategoryEnum.STUDY_TIME.name, SubCategoryEnum.LESSONS.name,
-                SubCategoryEnum.TEACHERS_OFFICE_HOURS.name, SubCategoryEnum.STUDY_GROUP.name, SubCategoryEnum.INTERSHIP.name);
-
-        festivitySubCategoryList = Arrays.asList(SubCategoryEnum.BIRTHDAY.name, SubCategoryEnum.LONG_WEEKEND.name, SubCategoryEnum.HOLIDAYS.name);
 
         overRangeList = Arrays.asList("Morning", "Afternoon", "Evening");
 
 
-        relativeLayout = view.findViewById(R.id.add_event_form);
+        linearLayout = view.findViewById(R.id.add_event_form);
 
-        addTextViewAndEditText("Title: ", "Insert here", 16);
-        addTextViewAndButtons("Which category?", 64, categoryList);
+        addTextViewAndEditText("Title: ", "Insert here");
+        addTextViewAndButtons("Which category?", categoryList);
         addDatePickerDialog();
         addTimePickersDialog();
-        addCheckBox("Periodic event", 288);
-        addTextViewAndEditText("Where?", "Insert here", 352);
-        addTextViewAndEditText("Note:", "Insert here", 400);
-        addButton();
+        addCheckBox("Periodic event");
+        addTextViewAndEditText("Where?", "Insert here");
+        addTextViewAndEditText("Note:", "Insert here");
+        addEventButton();
 
         return view;
     }
@@ -128,20 +106,20 @@ public class AddEventFormFragment extends Fragment {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
         );
-        editTextparams.setMargins(Utils.convertDpToPixel(marginLeft), Utils.convertDpToPixel(marginTop),0, 0);
+        editTextparams.setMargins(Utils.convertDpToPixel(marginLeft), Utils.convertDpToPixel(marginTop),Utils.convertDpToPixel(32), 0);
         editText.setLayoutParams(editTextparams);
         editText.setTextSize(16);
 
         layout.addView(editText);
     }
 
-    public void addTextViewAndEditText(String text, String hint, Integer marginTop) {
+    public void addTextViewAndEditText(String text, String hint) {
 
         LinearLayout layout = new LinearLayout(this.getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
-        relativeLayout.addView(layout);
+        linearLayout.addView(layout);
 
-        addTextView(layout, text, 16, marginTop);
+        addTextView(layout, text, 16, 16);
         addEditText(layout, hint, 64, -32);
 
         addLineSeparator();
@@ -161,7 +139,7 @@ public class AddEventFormFragment extends Fragment {
         mainLayout.addView(horizontalScrollView);
     }
 
-    private void addButtons(final LinearLayout layout, List<String> categoryList) {
+    private void addButtons(LinearLayout layout, List<String> categoryList) {
 
         final LinearLayout buttonsLayout = new LinearLayout(this.getContext());
         LinearLayout.LayoutParams buttonsParams = new LinearLayout.LayoutParams(
@@ -173,7 +151,7 @@ public class AddEventFormFragment extends Fragment {
 
         horizontalScrollView(layout, buttonsLayout);
 
-        for (Object i : categoryList) {
+        for (final Object i : categoryList) {
             Button btn = new Button(this.getContext());
             btn.setText(String.valueOf(i));
             LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
@@ -182,55 +160,32 @@ public class AddEventFormFragment extends Fragment {
             );
             btnparams.setMargins(Utils.convertDpToPixel(8), Utils.convertDpToPixel(8), 0, 0);
             btn.setLayoutParams(btnparams);
-            btn.setBackgroundColor(000000);
             buttonsLayout.addView(btn);
 
-            if (i.toString() == CategoryEnum.WELLNESS.name) {
-                btn.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View view) {
-                        addTextViewAndButtons("Which subcategory?", 144, wellnessSubCategoryList);
-
+            btn.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    AddEventSubCategoryFragment fragment = new AddEventSubCategoryFragment();
+                    btnString = String.valueOf(i);
+                    if (!clicked){
+                        addFragment(fragment);
+                        clicked = true;
+                    } else {
+                        fragment = (AddEventSubCategoryFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                        removeFragment(fragment);
+                        clicked = false;
                     }
-                });
-            }
-            if (i.toString() == CategoryEnum.FINANCES.name) {
-                btn.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View view) {
-                        addTextViewAndButtons("Which subcategory?", 144, financesSubCategoryList);
-                    }
-                });
-            }
-            if (i.toString() == CategoryEnum.FREE_TIME.name) {
-                btn.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View view) {
-                        addTextViewAndButtons("Which subcategory?", 144, freeTimeSubCategoryList);
-                    }
-                });
-            }
-            if (i.toString() == CategoryEnum.STUDY.name) {
-                btn.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View view) {
-                        addTextViewAndButtons("Which subcategory?", 144, studySubCategoryList);
-                    }
-                });
-            }
-            if (i.toString() == CategoryEnum.FESTIVITY.name) {
-                btn.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View view) {
-                        addTextViewAndButtons("Subcategory", 144, festivitySubCategoryList);
-                    }
-                });
-            }
+                }
+            });
         }
     }
 
-    private void addTextViewAndButtons(String text, Integer marginTop, final List<String> categoryList) {
+    private void addTextViewAndButtons(String text, final List<String> categoryList) {
 
         LinearLayout layout = new LinearLayout(this.getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
-        relativeLayout.addView(layout);
+        linearLayout.addView(layout);
 
-        addTextView(layout, text, 16, marginTop);
+        addTextView(layout, text, 16, 16);
         addButtons(layout, categoryList);
 
         addLineSeparator();
@@ -240,14 +195,14 @@ public class AddEventFormFragment extends Fragment {
 
         LinearLayout layout = new LinearLayout(this.getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
-        relativeLayout.addView(layout);
+        linearLayout.addView(layout);
 
         Calendar cal = Calendar.getInstance();
         final int bYear = cal.get(Calendar.YEAR);
         final int bMonth = cal.get(Calendar.MONTH);
         final int bDay = cal.get(Calendar.DAY_OF_MONTH);
 
-        addTextView(layout, "When?", 16, 176);
+        addTextView(layout, "When?", 16, 16);
 
         Button btn = new Button(this.getContext());
         btn.setText(new StringBuilder().append(bDay).append("/").append(bMonth + 1).append("/").append(bYear));
@@ -276,7 +231,7 @@ public class AddEventFormFragment extends Fragment {
 
         layout = new LinearLayout(this.getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
-        relativeLayout.addView(layout);
+        linearLayout.addView(layout);
 
         addTextView(layout, text, marginLeft, marginTop);
 
@@ -303,42 +258,42 @@ public class AddEventFormFragment extends Fragment {
 
         LinearLayout layout = new LinearLayout(this.getContext());
         layout.setOrientation(LinearLayout.HORIZONTAL);
-        relativeLayout.addView(layout);
+        linearLayout.addView(layout);
 
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minutes = calendar.get(Calendar.MINUTE);
 
-        addTextView(layout, "At what time?", 16, 224);
-        addTimePickerDialog(layout, new StringBuilder().append(hour).append(":").append(minutes), "Starting time:", 24, 256);
-        addTimePickerDialog(layout, new StringBuilder().append(hour + 1).append(":").append(minutes), "Ending time:", 184, 256);
+        addTextView(layout, "At what time?", 16, 16);
+        addTimePickerDialog(layout, new StringBuilder().append(hour).append(":").append(minutes), "Starting time:", 24, 16);
+        addTimePickerDialog(layout, new StringBuilder().append(hour + 1).append(":").append(minutes), "Ending time:", 24, 16);
 
         addLineSeparator();
     }
 
-    private void addCheckBox(String text, Integer marginTop) {
+    private void addCheckBox(String text) {
 
         LinearLayout checkBoxLayout = new LinearLayout(this.getContext());
         checkBoxLayout.setOrientation(LinearLayout.VERTICAL);
-        relativeLayout.addView(checkBoxLayout);
+        linearLayout.addView(checkBoxLayout);
 
         CheckBox checkBox = new CheckBox(this.getContext());
         checkBox.setText(text);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(Utils.convertDpToPixel(16), Utils.convertDpToPixel(marginTop), Utils.convertDpToPixel(16), 0);
+        params.setMargins(Utils.convertDpToPixel(16), Utils.convertDpToPixel(16), Utils.convertDpToPixel(16), 0);
         checkBox.setLayoutParams(params);
         checkBoxLayout.addView(checkBox);
 
         addLineSeparator();
     }
 
-    public void addButton(){
+    public void addEventButton(){
 
         LinearLayout buttonLayout = new LinearLayout(this.getContext());
         buttonLayout.setOrientation(LinearLayout.VERTICAL);
-        relativeLayout.addView(buttonLayout);
+        linearLayout.addView(buttonLayout);
 
         Button btn = new Button(this.getContext());
         btn.setText("Add event");
@@ -352,9 +307,7 @@ public class AddEventFormFragment extends Fragment {
 
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-                //btn.setText(selectedDate);
+                //
             }
         });
     }
@@ -364,7 +317,29 @@ public class AddEventFormFragment extends Fragment {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2);
         params.setMargins(0, Utils.convertDpToPixel(10), 0, Utils.convertDpToPixel(10));
         lineLayout.setLayoutParams(params);
-        relativeLayout.addView(lineLayout);
+        linearLayout.addView(lineLayout);
+    }
+
+    public void addFragment(Fragment fragment){
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragment.setArguments(createParamsEventsFragment());
+        transaction.add(R.id.fragment_container, fragment, fragment.getClass().getName());
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void removeFragment(Fragment fragment){
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.remove(fragment);
+        transaction.commit();
+    }
+
+    private Bundle createParamsEventsFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putString("btnString", btnString);
+        return bundle;
     }
 
 }
