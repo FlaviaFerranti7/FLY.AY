@@ -1,16 +1,11 @@
 package com.flam.flyay.fragments;
 
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,8 +20,6 @@ public class TimePickerFragment extends DialogFragment {
     private Calendar c;
     private int hour;
     private int minute;
-    private int am_pm;
-    private StringBuilder str;
 
     public static TimePickerFragment newInstance(){
         TimePickerFragment frag = new TimePickerFragment();

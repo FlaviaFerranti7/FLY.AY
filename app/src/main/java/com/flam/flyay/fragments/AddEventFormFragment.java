@@ -1,7 +1,9 @@
 package com.flam.flyay.fragments;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,8 +32,11 @@ import com.flam.flyay.R;
 import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.Utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -43,6 +48,9 @@ public class AddEventFormFragment extends Fragment {
     private Button btnDate;
     private Button btnStartTime;
     private Button btnEndTime;
+    private String startTime;
+    private String endTime;
+
 
     private LinearLayout linearLayout;
 
@@ -257,7 +265,7 @@ public class AddEventFormFragment extends Fragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        btnparams.setMargins(Utils.convertDpToPixel(marginLeft + 72), Utils.convertDpToPixel(-33), 0, 0);
+        btnparams.setMargins(Utils.convertDpToPixel(marginLeft + 88), Utils.convertDpToPixel(-33), 0, 0);
         btnStartTime.setLayoutParams(btnparams);
         btnStartTime.setBackgroundColor(000000);
         layout.addView(btnStartTime);
@@ -279,8 +287,8 @@ public class AddEventFormFragment extends Fragment {
             c.set(Calendar.HOUR_OF_DAY,hour);
             c.set(Calendar.MINUTE, minute);
 
-            String time =  ((hour > 12) ? hour % 12 : hour) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + ((hour >= 12) ? "PM" : "AM");
-            btnStartTime.setText(time);
+            startTime =  ((hour > 12) ? hour % 12 : hour) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + ((hour >= 12) ? "PM" : "AM");
+            btnStartTime.setText(startTime);
         }
     };
 
@@ -303,7 +311,7 @@ public class AddEventFormFragment extends Fragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        btnparams.setMargins(Utils.convertDpToPixel(marginLeft + 72), Utils.convertDpToPixel(-33), 0, 0);
+        btnparams.setMargins(Utils.convertDpToPixel(marginLeft + 88), Utils.convertDpToPixel(-33), 0, 0);
         btnEndTime.setLayoutParams(btnparams);
         btnEndTime.setBackgroundColor(000000);
         layout.addView(btnEndTime);
@@ -325,8 +333,30 @@ public class AddEventFormFragment extends Fragment {
             c.set(Calendar.HOUR_OF_DAY,hour);
             c.set(Calendar.MINUTE, minute);
 
-            String time =  ((hour > 12) ? hour % 12 : hour) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + ((hour >= 12) ? "PM" : "AM");
-            btnEndTime.setText(time);
+            endTime =  ((hour > 12) ? hour % 12 : hour) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + ((hour >= 12) ? "PM" : "AM");
+            btnEndTime.setText(endTime);
+
+            try {
+                Date timeS = new SimpleDateFormat("hh:mm a").parse(startTime);
+                Date timeE = new SimpleDateFormat("hh:mm a").parse(endTime);
+                Log.d(".AddEventFormFragment", timeS.toString());
+                Log.d(".AddEventFormFragment", timeE.toString());
+                if (timeE.getTime() < timeS.getTime()) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setMessage("Check your schedules! The end is expected before the start of your event");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id)
+                        {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            } catch (ParseException parseException) {
+                parseException.printStackTrace();
+            }
         }
     };
 

@@ -22,7 +22,6 @@ public class DatePickerFragment extends DialogFragment {
     private int year;
     private int month;
     private int day;
-    private StringBuilder str;
 
     public static DatePickerFragment newInstance(){
         DatePickerFragment frag = new DatePickerFragment();

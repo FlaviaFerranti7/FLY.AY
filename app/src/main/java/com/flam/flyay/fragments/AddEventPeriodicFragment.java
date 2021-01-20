@@ -1,9 +1,7 @@
 package com.flam.flyay.fragments;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +10,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.flam.flyay.R;
-import com.flam.flyay.util.CategoryEnum;
-import com.flam.flyay.util.SubCategoryEnum;
 import com.flam.flyay.util.Utils;
 
 import java.util.Arrays;
