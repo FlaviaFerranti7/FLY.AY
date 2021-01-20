@@ -22,7 +22,6 @@ import android.widget.TimePicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -31,7 +30,6 @@ import com.flam.flyay.R;
 import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.Utils;
 
-import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -65,12 +63,6 @@ public class AddEventFormFragment extends Fragment {
         ((AddEventActivity) getActivity()).getSupportActionBar().setIcon(R.drawable.ic_add_event);
         ((AddEventActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        Bundle arguments = getArguments();
-
-        //selectedDate = arguments.getString("selectedDate");
-        //Log.d(".AddEventFormFragment", selectedDate);
-
-
         categoryList = Arrays.asList(CategoryEnum.FREE_TIME.name, CategoryEnum.STUDY.name, CategoryEnum.WELLNESS.name,
                 CategoryEnum.FESTIVITY.name, CategoryEnum.FINANCES.name);
 
@@ -88,7 +80,7 @@ public class AddEventFormFragment extends Fragment {
         return view;
     }
 
-    private void addTextView(LinearLayout layout, String text, Integer marginLeft, Integer marginTop) {
+    public void addTextView(LinearLayout layout, String text, Integer marginLeft, Integer marginTop) {
 
         TextView textView = new TextView(this.getContext());
         textView.setText(text);
@@ -103,7 +95,7 @@ public class AddEventFormFragment extends Fragment {
         layout.addView(textView);
     }
 
-    private void addEditText(LinearLayout layout, String hint, Integer marginLeft, Integer marginTop) {
+    public void addEditText(LinearLayout layout, String hint, Integer marginLeft, Integer marginTop) {
 
         EditText editText = new EditText(this.getContext());
         editText.setHint(hint);
@@ -131,7 +123,7 @@ public class AddEventFormFragment extends Fragment {
 
     }
 
-    private void horizontalScrollView(LinearLayout mainLayout, LinearLayout scrollableLayout) {
+    public void horizontalScrollView(LinearLayout mainLayout, LinearLayout scrollableLayout) {
 
         HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this.getContext());
         LinearLayout.LayoutParams scrollParams = new LinearLayout.LayoutParams(
@@ -144,7 +136,7 @@ public class AddEventFormFragment extends Fragment {
         mainLayout.addView(horizontalScrollView);
     }
 
-    private void addButtons(LinearLayout layout, List<String> categoryList) {
+    public void addButtons(LinearLayout layout, List<String> categoryList) {
 
         final LinearLayout buttonsLayout = new LinearLayout(this.getContext());
         LinearLayout.LayoutParams buttonsParams = new LinearLayout.LayoutParams(
@@ -184,7 +176,7 @@ public class AddEventFormFragment extends Fragment {
         }
     }
 
-    private void addTextViewAndButtons(String text, final List<String> categoryList) {
+    public void addTextViewAndButtons(String text, final List<String> categoryList) {
 
         LinearLayout layout = new LinearLayout(this.getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -235,13 +227,14 @@ public class AddEventFormFragment extends Fragment {
     private DatePickerDialog.OnDateSetListener onDate = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(final DatePicker view, final int year, final int month, final int dayOfMonth) {
+
             Calendar c = Calendar.getInstance();
             c.set(Calendar.YEAR, year);
             c.set(Calendar.MONTH, month);
             c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
             selectedDate = (new StringBuilder().append(dayOfMonth).append("/").append(month + 1).append("/").append(year)).toString();
             btnDate.setText(selectedDate);
-            Log.d(".AddEventFormFragment", selectedDate);
         }
     };
 
@@ -252,13 +245,14 @@ public class AddEventFormFragment extends Fragment {
         linearLayout.addView(layout);
 
         Calendar calendar = Calendar.getInstance();
-        final int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        final int minute = calendar.get(Calendar.MINUTE);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        String time = ((hour > 12) ? hour % 12 : hour) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + ((hour >= 12) ? "PM" : "AM");
 
-        addTextView(layout, "Starting time:", marginLeft, marginTop);
+        addTextView(layout, "Starting time: ", marginLeft, marginTop);
 
         btnStartTime = new Button(this.getContext());
-        btnStartTime.setText(new StringBuilder().append(hour).append(":").append(minute));
+        btnStartTime.setText(time);
         LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -280,10 +274,13 @@ public class AddEventFormFragment extends Fragment {
     private TimePickerDialog.OnTimeSetListener onTimeStart = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(final TimePicker view, final int hour, final int minute) {
+
             Calendar c = Calendar.getInstance();
             c.set(Calendar.HOUR_OF_DAY,hour);
             c.set(Calendar.MINUTE, minute);
-            btnStartTime.setText((new StringBuilder().append(hour).append(":").append(minute)).toString());
+
+            String time =  ((hour > 12) ? hour % 12 : hour) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + ((hour >= 12) ? "PM" : "AM");
+            btnStartTime.setText(time);
         }
     };
 
@@ -294,13 +291,14 @@ public class AddEventFormFragment extends Fragment {
         linearLayout.addView(layout);
 
         Calendar calendar = Calendar.getInstance();
-        final int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        final int minute = calendar.get(Calendar.MINUTE);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        String time = (((hour+1) > 12) ? (hour+1) % 12 : (hour+1)) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + (((hour+1) >= 12) ? "PM" : "AM");
 
-        addTextView(layout, "Ending time:", marginLeft, marginTop);
+        addTextView(layout, "Ending time: ", marginLeft, marginTop);
 
         btnEndTime = new Button(this.getContext());
-        btnEndTime.setText(new StringBuilder().append(hour + 1).append(":").append(minute));
+        btnEndTime.setText(time);
         LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -322,10 +320,13 @@ public class AddEventFormFragment extends Fragment {
     private TimePickerDialog.OnTimeSetListener onTimeEnd = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(final TimePicker view, final int hour, final int minute) {
+
             Calendar c = Calendar.getInstance();
             c.set(Calendar.HOUR_OF_DAY,hour);
             c.set(Calendar.MINUTE, minute);
-            btnEndTime.setText((new StringBuilder().append(hour).append(":").append(minute)).toString());
+
+            String time =  ((hour > 12) ? hour % 12 : hour) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + ((hour >= 12) ? "PM" : "AM");
+            btnEndTime.setText(time);
         }
     };
 
@@ -335,10 +336,6 @@ public class AddEventFormFragment extends Fragment {
         layout.setOrientation(LinearLayout.HORIZONTAL);
         linearLayout.addView(layout);
 
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minutes = calendar.get(Calendar.MINUTE);
-
         addTextView(layout, "At what time?", 16, 16);
         addStartTimePickerDialog(layout, 24, 16);
         addEndTimePickerDialog(layout, 24, 16);
@@ -346,7 +343,7 @@ public class AddEventFormFragment extends Fragment {
         addLineSeparator();
     }
 
-    private void addCheckBox(String text) {
+    public void addCheckBox(String text) {
 
         LinearLayout checkBoxLayout = new LinearLayout(this.getContext());
         checkBoxLayout.setOrientation(LinearLayout.VERTICAL);
@@ -400,7 +397,7 @@ public class AddEventFormFragment extends Fragment {
         });
     }
 
-    private void addLineSeparator() {
+    public void addLineSeparator() {
         LinearLayout lineLayout = new LinearLayout(this.getContext());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2);
         params.setMargins(0, Utils.convertDpToPixel(10), 0, Utils.convertDpToPixel(10));

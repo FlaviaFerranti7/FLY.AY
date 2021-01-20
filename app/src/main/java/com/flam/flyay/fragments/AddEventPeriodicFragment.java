@@ -48,7 +48,7 @@ public class AddEventPeriodicFragment extends Fragment {
         return view;
     }
 
-    private void addCheckBox(List<String> list) {
+    public void addCheckBox(List<String> list) {
 
         LinearLayout checkBoxLayout = new LinearLayout(this.getContext());
         checkBoxLayout.setOrientation(LinearLayout.VERTICAL);
@@ -75,7 +75,7 @@ public class AddEventPeriodicFragment extends Fragment {
         }
     }
 
-    private void horizontalScrollView(LinearLayout mainLayout, LinearLayout scrollableLayout) {
+    public void horizontalScrollView(LinearLayout mainLayout, LinearLayout scrollableLayout) {
 
         HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this.getContext());
         LinearLayout.LayoutParams scrollParams = new LinearLayout.LayoutParams(
@@ -88,7 +88,7 @@ public class AddEventPeriodicFragment extends Fragment {
         mainLayout.addView(horizontalScrollView);
     }
 
-    private void addButtons(LinearLayout layout, List<String> list) {
+    public void addButtons(LinearLayout layout, List<String> list) {
 
         final LinearLayout buttonsLayout = new LinearLayout(this.getContext());
         LinearLayout.LayoutParams buttonsParams = new LinearLayout.LayoutParams(
@@ -113,6 +113,5 @@ public class AddEventPeriodicFragment extends Fragment {
 
         }
     }
-
 
 }

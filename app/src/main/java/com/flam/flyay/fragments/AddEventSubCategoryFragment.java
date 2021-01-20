@@ -81,7 +81,7 @@ public class AddEventSubCategoryFragment extends Fragment {
     }
 
 
-    private void addTextView(LinearLayout layout, String text, Integer marginLeft, Integer marginTop) {
+    public void addTextView(LinearLayout layout, String text, Integer marginLeft, Integer marginTop) {
 
         TextView textView = new TextView(this.getContext());
         textView.setText(text);
@@ -96,7 +96,7 @@ public class AddEventSubCategoryFragment extends Fragment {
         layout.addView(textView);
     }
 
-    private void horizontalScrollView(LinearLayout mainLayout, LinearLayout scrollableLayout) {
+    public void horizontalScrollView(LinearLayout mainLayout, LinearLayout scrollableLayout) {
 
         HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this.getContext());
         LinearLayout.LayoutParams scrollParams = new LinearLayout.LayoutParams(
@@ -109,7 +109,7 @@ public class AddEventSubCategoryFragment extends Fragment {
         mainLayout.addView(horizontalScrollView);
     }
 
-    private void addButtons(LinearLayout layout, List<String> categoryList) {
+    public void addButtons(LinearLayout layout, List<String> categoryList) {
 
         final LinearLayout buttonsLayout = new LinearLayout(this.getContext());
         LinearLayout.LayoutParams buttonsParams = new LinearLayout.LayoutParams(
@@ -135,7 +135,7 @@ public class AddEventSubCategoryFragment extends Fragment {
         }
     }
 
-    private void addTextViewAndButtons(String text, final List<String> categoryList) {
+    public void addTextViewAndButtons(String text, final List<String> categoryList) {
 
         LinearLayout layout = new LinearLayout(this.getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
