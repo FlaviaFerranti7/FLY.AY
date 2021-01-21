@@ -1,10 +1,13 @@
 package com.flam.flyay.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +20,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -42,13 +46,15 @@ import java.util.List;
 
 public class AddEventFormFragment extends Fragment {
 
-    private String selectedDate;
     private String btnString;
     private Boolean clicked;
+
     private Button btnDate;
+    private String selectedDate;
+
     private Button btnStartTime;
-    private Button btnEndTime;
     private String startTime;
+    private Button btnEndTime;
     private String endTime;
 
 
@@ -76,16 +82,31 @@ public class AddEventFormFragment extends Fragment {
 
         linearLayout = view.findViewById(R.id.add_event_form);
 
-        addTextViewAndEditText("Title: ", "Insert here");
-        addTextViewAndButtons("Which category?", categoryList);
+        addLineSeparator();
+        addIconAndEditText(R.drawable.ic_title,"Title");
+        addTextViewAndButtons(R.drawable.ic_category, "Which category?", categoryList);
         addDatePickerDialog();
         addTimePickersDialog();
+        addCheckBox("All day");
         addCheckBox("Periodic event");
-        addTextViewAndEditText("Where?", "Insert here");
-        addTextViewAndEditText("Note:", "Insert here");
+        addIconAndEditText(R.drawable.ic_position,"Where?");
+        addIconAndEditText(R.drawable.ic_notes,"Note");
         addEventButton();
-
         return view;
+    }
+
+    public void addIcon(LinearLayout layout, Integer obj, Integer marginLeft, Integer marginTop){
+        ImageView image = new ImageView(this.getContext());
+        image.setImageResource(obj);
+        LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        imageParams.setMargins(Utils.convertDpToPixel(marginLeft), Utils.convertDpToPixel(marginTop), 0, 0);
+        image.setBackgroundColor(Color.WHITE );
+        image.setLayoutParams(imageParams);
+
+        layout.addView(image);
     }
 
     public void addTextView(LinearLayout layout, String text, Integer marginLeft, Integer marginTop) {
@@ -93,8 +114,8 @@ public class AddEventFormFragment extends Fragment {
         TextView textView = new TextView(this.getContext());
         textView.setText(text);
         LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
         );
         textParams.setMargins(Utils.convertDpToPixel(marginLeft), Utils.convertDpToPixel(marginTop), 0, 0);
         textView.setTextColor(Color.BLACK);
@@ -118,14 +139,23 @@ public class AddEventFormFragment extends Fragment {
         layout.addView(editText);
     }
 
-    public void addTextViewAndEditText(String text, String hint) {
+    public void addIconAndTextView(LinearLayout layout, Integer obj, String text) {
+
+        addIcon(layout, obj, 16, 16);
+        addTextView(layout, text, 56, -19);
+
+        addLineSeparator();
+
+    }
+
+    public void addIconAndEditText(Integer obj, String hint) {
 
         LinearLayout layout = new LinearLayout(this.getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.addView(layout);
 
-        addTextView(layout, text, 16, 16);
-        addEditText(layout, hint, 64, -32);
+        addIcon(layout, obj, 16, 16);
+        addEditText(layout, hint, 48, -32);
 
         addLineSeparator();
 
@@ -165,6 +195,7 @@ public class AddEventFormFragment extends Fragment {
             );
             btnparams.setMargins(Utils.convertDpToPixel(8), Utils.convertDpToPixel(8), 0, 0);
             btn.setLayoutParams(btnparams);
+            btn.setBackgroundColor(Color.TRANSPARENT);
             buttonsLayout.addView(btn);
 
             btn.setOnClickListener(new View.OnClickListener() {
@@ -184,13 +215,13 @@ public class AddEventFormFragment extends Fragment {
         }
     }
 
-    public void addTextViewAndButtons(String text, final List<String> categoryList) {
+    public void addTextViewAndButtons(Integer obj, String text, final List<String> categoryList) {
 
         LinearLayout layout = new LinearLayout(this.getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.addView(layout);
 
-        addTextView(layout, text, 16, 16);
+        addIconAndTextView(layout, obj, text);
         addButtons(layout, categoryList);
 
         addLineSeparator();
@@ -207,7 +238,8 @@ public class AddEventFormFragment extends Fragment {
         final int bMonth = calendar.get(Calendar.MONTH);
         final int bDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-        addTextView(layout, "When?", 16, 16);
+        addIcon(layout, R.drawable.ic_calendar, 16, 16);
+        addTextView(layout, "When?", 56, -19);
 
         btnDate = new Button(this.getContext());
         btnDate.setText(new StringBuilder().append(bDay).append("/").append(bMonth + 1).append("/").append(bYear));
@@ -215,9 +247,9 @@ public class AddEventFormFragment extends Fragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        btnparams.setMargins(Utils.convertDpToPixel(64), Utils.convertDpToPixel(-33), 0, 0);
+        btnparams.setMargins(Utils.convertDpToPixel(104), Utils.convertDpToPixel(-33), 0, 0);
         btnDate.setLayoutParams(btnparams);
-        btnDate.setBackgroundColor(000000);
+        btnDate.setBackgroundColor(Color.TRANSPARENT);
         layout.addView(btnDate);
 
         btnDate.setOnClickListener(new View.OnClickListener() {
@@ -246,7 +278,7 @@ public class AddEventFormFragment extends Fragment {
         }
     };
 
-    public void addStartTimePickerDialog(LinearLayout layout, Integer marginLeft, Integer marginTop) {
+    public void addStartTimePickerDialog(LinearLayout layout) {
 
         layout = new LinearLayout(this.getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -257,7 +289,7 @@ public class AddEventFormFragment extends Fragment {
         int minute = calendar.get(Calendar.MINUTE);
         String time = ((hour > 12) ? hour % 12 : hour) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + ((hour >= 12) ? "PM" : "AM");
 
-        addTextView(layout, "Starting time: ", marginLeft, marginTop);
+        addTextView(layout, "Start:", 32, 16);
 
         btnStartTime = new Button(this.getContext());
         btnStartTime.setText(time);
@@ -265,9 +297,9 @@ public class AddEventFormFragment extends Fragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        btnparams.setMargins(Utils.convertDpToPixel(marginLeft + 88), Utils.convertDpToPixel(-33), 0, 0);
+        btnparams.setMargins(Utils.convertDpToPixel(72), Utils.convertDpToPixel(-33), 0, 0);
         btnStartTime.setLayoutParams(btnparams);
-        btnStartTime.setBackgroundColor(000000);
+        btnStartTime.setBackgroundColor(Color.TRANSPARENT);
         layout.addView(btnStartTime);
 
         btnStartTime.setOnClickListener(new View.OnClickListener() {
@@ -292,7 +324,7 @@ public class AddEventFormFragment extends Fragment {
         }
     };
 
-    public void addEndTimePickerDialog(LinearLayout layout, Integer marginLeft, Integer marginTop) {
+    public void addEndTimePickerDialog(LinearLayout layout) {
 
         layout = new LinearLayout(this.getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -303,7 +335,7 @@ public class AddEventFormFragment extends Fragment {
         int minute = calendar.get(Calendar.MINUTE);
         String time = (((hour+1) > 12) ? (hour+1) % 12 : (hour+1)) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + (((hour+1) >= 12) ? "PM" : "AM");
 
-        addTextView(layout, "Ending time: ", marginLeft, marginTop);
+        addTextView(layout, "End:", 32, 16);
 
         btnEndTime = new Button(this.getContext());
         btnEndTime.setText(time);
@@ -311,7 +343,7 @@ public class AddEventFormFragment extends Fragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        btnparams.setMargins(Utils.convertDpToPixel(marginLeft + 88), Utils.convertDpToPixel(-33), 0, 0);
+        btnparams.setMargins(Utils.convertDpToPixel(72), Utils.convertDpToPixel(-33), 0, 0);
         btnEndTime.setLayoutParams(btnparams);
         btnEndTime.setBackgroundColor(000000);
         layout.addView(btnEndTime);
@@ -343,7 +375,7 @@ public class AddEventFormFragment extends Fragment {
                 Log.d(".AddEventFormFragment", timeE.toString());
                 if (timeE.getTime() < timeS.getTime()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                    builder.setMessage("Check your schedules! The end is expected before the start of your event");
+                    builder.setMessage("Check your schedules!\nThe end is expected before the start of your event");
                     builder.setCancelable(false);
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id)
@@ -363,15 +395,20 @@ public class AddEventFormFragment extends Fragment {
     public void addTimePickersDialog() {
 
         LinearLayout layout = new LinearLayout(this.getContext());
-        layout.setOrientation(LinearLayout.HORIZONTAL);
+        layout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.addView(layout);
 
-        addTextView(layout, "At what time?", 16, 16);
-        addStartTimePickerDialog(layout, 24, 16);
-        addEndTimePickerDialog(layout, 24, 16);
+        LinearLayout internalLayout = new LinearLayout(this.getContext());
+        internalLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        addLineSeparator();
+        addStartTimePickerDialog(internalLayout);
+        addEndTimePickerDialog(internalLayout);
+
+        addIconAndTextView(layout, R.drawable.ic_clock, "At what time?");
+        layout.addView(internalLayout);
+
     }
+
 
     public void addCheckBox(String text) {
 
@@ -387,19 +424,20 @@ public class AddEventFormFragment extends Fragment {
         params.setMargins(Utils.convertDpToPixel(16), Utils.convertDpToPixel(16), Utils.convertDpToPixel(16), 0);
         checkBox.setLayoutParams(params);
         checkBoxLayout.addView(checkBox);
-
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                AddEventPeriodicFragment fragment = new AddEventPeriodicFragment();
-                if (checkBox.isChecked()) {
-                    addFragment(fragment);
-                } else {
-                    fragment = (AddEventPeriodicFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                    removeFragment(fragment);
+        if(checkBox.getText().equals("Periodic event")){
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    AddEventPeriodicFragment fragment = new AddEventPeriodicFragment();
+                    if (checkBox.isChecked()) {
+                        addFragment(fragment);
+                    } else {
+                        fragment = (AddEventPeriodicFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                        removeFragment(fragment);
+                    }
                 }
-            }
-        });
+            });
+        }
 
         addLineSeparator();
     }
@@ -430,7 +468,7 @@ public class AddEventFormFragment extends Fragment {
     public void addLineSeparator() {
         LinearLayout lineLayout = new LinearLayout(this.getContext());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2);
-        params.setMargins(0, Utils.convertDpToPixel(10), 0, Utils.convertDpToPixel(10));
+        params.setMargins(0, Utils.convertDpToPixel(3), 0, Utils.convertDpToPixel(3));
         lineLayout.setLayoutParams(params);
         linearLayout.addView(lineLayout);
     }
