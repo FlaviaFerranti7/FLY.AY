@@ -32,6 +32,7 @@ public class AddEventTitleCategoriesFragment extends Fragment {
 
     private String btnString;
     private Boolean clicked;
+    private String btnName;
 
     private LinearLayout linearLayout;
 
@@ -170,12 +171,21 @@ public class AddEventTitleCategoriesFragment extends Fragment {
                     AddEventSubCategoryFragment fragment = new AddEventSubCategoryFragment();
                     btnString = String.valueOf(i);
                     if (!clicked){
+                        btnName = btnString;
                         addFragment(fragment);
                         clicked = true;
                     } else {
-                        fragment = (AddEventSubCategoryFragment) getActivity().getSupportFragmentManager().findFragmentById(linearLayout.getId());
-                        removeFragment(fragment);
-                        clicked = false;
+                        if (btnName.equals(btnString)){
+                            fragment = (AddEventSubCategoryFragment) getActivity().getSupportFragmentManager().findFragmentById(linearLayout.getId());
+                            removeFragment(fragment);
+                            clicked = false;
+                        } else {
+                            btnName = btnString;
+                            fragment = (AddEventSubCategoryFragment) getActivity().getSupportFragmentManager().findFragmentById(linearLayout.getId());
+                            removeFragment(fragment);
+                            addFragment(fragment);
+                            clicked = true;
+                        }
                     }
                 }
             });
