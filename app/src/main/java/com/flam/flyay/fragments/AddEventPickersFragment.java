@@ -199,6 +199,18 @@ public class AddEventPickersFragment extends Fragment {
 
             startTime =  ((hour > 12) ? hour % 12 : hour) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + ((hour >= 12) ? "PM" : "AM");
             btnStartTime.setText(startTime);
+
+            try {
+                Date timeStart = new SimpleDateFormat("hh:mm a").parse(startTime);
+                Integer h = timeStart.getHours() + 1;
+                endTime =  ((h > 12) ? h % 12 : h) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + ((h >= 12) ? "PM" : "AM");
+                btnEndTime.setText(endTime);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
         }
     };
 
