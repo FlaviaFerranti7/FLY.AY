@@ -3,7 +3,6 @@ package com.flam.flyay.fragments;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,7 @@ public class AddEventSubCategoryFragment extends Fragment {
 
     public AddEventSubCategoryFragment() {}
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "ResourceType"})
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.add_event_sub_category_fragment, container, false);
 
@@ -46,7 +45,6 @@ public class AddEventSubCategoryFragment extends Fragment {
 
         Bundle arguments = getArguments();
         btnString = arguments.getString("btnString");
-        Log.d(".AddEventSubCategoryFragment", btnString);
 
         freeTimeSubCategoryList = Arrays.asList(SubCategoryEnum.FRIENDS.name, SubCategoryEnum.FAMILY.name, SubCategoryEnum.HOBBY.name,
                 SubCategoryEnum.TRAVELS.name, SubCategoryEnum.FILMS_TV_SERIES.name, SubCategoryEnum.THEATRE.name, SubCategoryEnum.MUSIC.name,
