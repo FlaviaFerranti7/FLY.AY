@@ -101,5 +101,5 @@ public class AddEventPeriodicOptionsFragment extends Fragment {
         transaction.remove(fragment);
         transaction.commit();
     }
-    
+
 }
