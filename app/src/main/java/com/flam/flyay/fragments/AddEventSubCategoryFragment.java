@@ -122,6 +122,7 @@ public class AddEventSubCategoryFragment extends Fragment {
         for (final Object i : categoryList) {
             Button btn = new Button(this.getContext());
             btn.setText(String.valueOf(i));
+            btn.setBackgroundColor(Color.TRANSPARENT);
             LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT

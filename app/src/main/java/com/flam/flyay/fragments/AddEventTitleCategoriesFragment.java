@@ -155,7 +155,7 @@ public class AddEventTitleCategoriesFragment extends Fragment {
         horizontalScrollView(layout, buttonsLayout);
 
         for (final Object i : categoryList) {
-            Button btn = new Button(this.getContext());
+            final Button btn = new Button(this.getContext());
             btn.setText(String.valueOf(i));
             LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -164,15 +164,18 @@ public class AddEventTitleCategoriesFragment extends Fragment {
             btnparams.setMargins(Utils.convertDpToPixel(8), Utils.convertDpToPixel(8), 0, 0);
             btn.setLayoutParams(btnparams);
             btn.setBackgroundColor(Color.TRANSPARENT);
+            btn.setClickable(true);
             buttonsLayout.addView(btn);
 
             btn.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("ResourceAsColor")
                 public void onClick(View view) {
                     AddEventSubCategoryFragment fragment = new AddEventSubCategoryFragment();
                     btnString = String.valueOf(i);
                     if (!clicked){
                         btnName = btnString;
                         addFragment(fragment);
+                        //btn.setBackgroundColor(R.color.colorPrimary);
                         clicked = true;
                     } else {
                         if (btnName.equals(btnString)){

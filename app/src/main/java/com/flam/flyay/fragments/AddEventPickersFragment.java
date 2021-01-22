@@ -312,11 +312,10 @@ public class AddEventPickersFragment extends Fragment {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(Utils.convertDpToPixel(24), Utils.convertDpToPixel(-8), 0, 0);
+        params.setMargins(Utils.convertDpToPixel(24), Utils.convertDpToPixel(-7), 0, 0);
         checkBox.setLayoutParams(params);
         checkBoxLayout.addView(checkBox);
 
-        addLineSeparator();
     }
 
     public void addLineSeparator() {
