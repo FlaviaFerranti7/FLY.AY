@@ -20,6 +20,9 @@ import androidx.preference.PreferenceFragmentCompat;
 import com.flam.flyay.util.TouchInterceptor;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.WHITE;
+
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -47,6 +50,9 @@ public class SettingsActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+            navView.setBackgroundColor(BLACK);
+        else navView.setBackgroundColor(WHITE);
         navView.setSelectedItemId(R.id.profile);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override

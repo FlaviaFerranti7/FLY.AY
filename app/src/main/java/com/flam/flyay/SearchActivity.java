@@ -25,6 +25,9 @@ import com.flam.flyay.model.Event;
 import com.flam.flyay.util.TouchInterceptor;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.WHITE;
+
 
 public class SearchActivity extends AppCompatActivity implements SearchResultsFragment.OnEventsListListener {
 
@@ -49,6 +52,9 @@ public class SearchActivity extends AppCompatActivity implements SearchResultsFr
         ab = getSupportActionBar();
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+            navView.setBackgroundColor(BLACK);
+        else navView.setBackgroundColor(WHITE);
         navView.setSelectedItemId(R.id.lens);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

@@ -14,6 +14,9 @@ import android.view.MenuItem;
 import com.flam.flyay.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.WHITE;
+
 public class ProfileActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -39,6 +42,9 @@ public class ProfileActivity extends AppCompatActivity {
         ab.setIcon(R.drawable.ic_profile);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+            navView.setBackgroundColor(BLACK);
+        else navView.setBackgroundColor(WHITE);
         navView.setSelectedItemId(R.id.profile);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override

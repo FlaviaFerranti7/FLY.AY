@@ -62,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         currentDate = df.format(c.getTime());
 
         navView = findViewById(R.id.nav_view);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+            navView.setBackgroundColor(BLACK);
+        else navView.setBackgroundColor(WHITE);
         //navView.getMenu().getItem(2).setEnabled(false);
         navView.setSelectedItemId(R.id.home);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){

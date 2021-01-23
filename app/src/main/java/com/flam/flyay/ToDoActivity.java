@@ -23,6 +23,9 @@ import com.flam.flyay.fragments.ToDoListFragment;
 import com.flam.flyay.model.ToDo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.WHITE;
+
 public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.OnToDoListListener {
 
     private Toolbar toolbar;
@@ -46,6 +49,9 @@ public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.
         invalidateOptionsMenu();*/
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+            navView.setBackgroundColor(BLACK);
+        else navView.setBackgroundColor(WHITE);
         navView.setSelectedItemId(R.id.list);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
