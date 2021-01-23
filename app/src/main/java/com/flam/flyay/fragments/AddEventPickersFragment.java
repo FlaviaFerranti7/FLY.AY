@@ -74,7 +74,7 @@ public class AddEventPickersFragment extends Fragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
         imageParams.setMargins(Utils.convertDpToPixel(marginLeft), Utils.convertDpToPixel(marginTop), 0, 0);
-        image.setBackgroundColor(Color.WHITE );
+        image.setBackgroundColor(Color.TRANSPARENT);
         image.setLayoutParams(imageParams);
 
         layout.addView(image);
@@ -89,7 +89,6 @@ public class AddEventPickersFragment extends Fragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
         textParams.setMargins(Utils.convertDpToPixel(marginLeft), Utils.convertDpToPixel(marginTop), 0, 0);
-        textView.setTextColor(Color.BLACK);
         textView.setLayoutParams(textParams);
 
         layout.addView(textView);

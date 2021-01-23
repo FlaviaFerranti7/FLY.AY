@@ -88,7 +88,6 @@ public class AddEventSubCategoryFragment extends Fragment {
                 LinearLayout.LayoutParams.MATCH_PARENT
         );
         textParams.setMargins(Utils.convertDpToPixel(marginLeft), Utils.convertDpToPixel(marginTop), 0, 0);
-        textView.setTextColor(Color.BLACK);
         textView.setLayoutParams(textParams);
 
         layout.addView(textView);
@@ -107,7 +106,7 @@ public class AddEventSubCategoryFragment extends Fragment {
         mainLayout.addView(horizontalScrollView);
     }
 
-    public void addButtons(LinearLayout layout, List<String> categoryList) {
+    public void addButtons(LinearLayout layout, List<String> subCategoryList) {
 
         final LinearLayout buttonsLayout = new LinearLayout(this.getContext());
         LinearLayout.LayoutParams buttonsParams = new LinearLayout.LayoutParams(
@@ -119,15 +118,15 @@ public class AddEventSubCategoryFragment extends Fragment {
 
         horizontalScrollView(layout, buttonsLayout);
 
-        for (final Object i : categoryList) {
+        for (final Object i : subCategoryList) {
             Button btn = new Button(this.getContext());
             btn.setText(String.valueOf(i));
-            btn.setBackgroundColor(Color.TRANSPARENT);
             LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
             btnparams.setMargins(Utils.convertDpToPixel(8), Utils.convertDpToPixel(8), 0, 0);
+            btn.setBackgroundColor(Color.TRANSPARENT);
             btn.setLayoutParams(btnparams);
             buttonsLayout.addView(btn);
 

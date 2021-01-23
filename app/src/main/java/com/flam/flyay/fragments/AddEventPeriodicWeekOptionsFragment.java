@@ -63,7 +63,7 @@ public class AddEventPeriodicWeekOptionsFragment extends Fragment {
         );
         buttonsLayout.setOrientation(LinearLayout.HORIZONTAL);
         buttonsLayout.setLayoutParams(buttonsParams);
-
+        
         horizontalScrollView(layout, buttonsLayout);
 
         for (final Object i : list) {
@@ -75,7 +75,7 @@ public class AddEventPeriodicWeekOptionsFragment extends Fragment {
             );
             btnparams.setMargins(0, 0, 0, 0);
             btn.setLayoutParams(btnparams);
-            //btn.setBackgroundColor(Color.TRANSPARENT);
+            btn.setBackgroundColor(Color.TRANSPARENT);
             buttonsLayout.addView(btn);
         }
     }
