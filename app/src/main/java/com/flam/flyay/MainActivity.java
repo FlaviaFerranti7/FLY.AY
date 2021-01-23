@@ -1,6 +1,7 @@
 package com.flam.flyay;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -28,6 +29,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import static android.graphics.Color.*;
 
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnEventsListListener{

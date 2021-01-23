@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -93,7 +94,9 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> im
     private void setCheckedList (MaterialCardView card, ToDo toDo) {
         if(toDo.isChecked()) {
             card.setChecked(true);
-            card.setCardBackgroundColor(Color.LTGRAY);
+            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+                card.setCardBackgroundColor(Color.DKGRAY);
+            else card.setCardBackgroundColor(Color.LTGRAY);
         }
         else
             card.setChecked(false);

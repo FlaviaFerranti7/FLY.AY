@@ -12,7 +12,6 @@
     app:contentPaddingBottom="0dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true"
-    app:theme="@style/Theme.MaterialComponents.Light"
     android:clickable="true"
     android:focusable="true"
     android:checkable="true"

@@ -23,14 +23,16 @@
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:parentActivityName=".ProfileActivity">
+            android:parentActivityName=".ProfileActivity"
+            android:windowSoftInputMode="adjustNothing">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ProfileActivity" />
         </activity>
         <activity android:name=".ProfileActivity" />
         <activity android:name=".ToDoActivity" />
-        <activity android:name=".AddEventActivity" />
+        <activity android:name=".AddEventActivity"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".SearchActivity" />
         <activity android:name=".MainActivity" />
         <activity

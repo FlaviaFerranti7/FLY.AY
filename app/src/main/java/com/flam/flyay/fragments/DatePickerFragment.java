@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.DialogFragment;
+
+import com.flam.flyay.R;
 
 import java.util.Calendar;
 
@@ -22,6 +25,7 @@ public class DatePickerFragment extends DialogFragment {
     private int year;
     private int month;
     private int day;
+    private int theme;
 
     public static DatePickerFragment newInstance(){
         DatePickerFragment frag = new DatePickerFragment();
@@ -45,7 +49,13 @@ public class DatePickerFragment extends DialogFragment {
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog dialogDatePicker =  new DatePickerDialog(getActivity(), android.R.style.Theme_Holo_Light_Dialog, onDateSet, year, month, day);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            theme = android.R.style.Theme_Holo_Dialog;
+        } else {
+            theme =  android.R.style.Theme_Holo_Light_Dialog;
+        }
+
+        DatePickerDialog dialogDatePicker =  new DatePickerDialog(getActivity(),theme, onDateSet, year, month, day);
         dialogDatePicker.getDatePicker().setSpinnersShown(true);
         dialogDatePicker.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
