@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_options_profile"
-        android:icon="@drawable/ic_action_settings"
+        android:icon="@drawable/action_options_profile"
         android:title="@string/action_options"
         app:showAsAction="always">
         <menu>
@@ -20,7 +20,7 @@
     </item>
     <item
         android:id="@+id/action_options_list"
-        android:icon="@drawable/ic_action_settings"
+        android:icon="@drawable/action_options_profile"
         android:title="@string/action_options"
         app:showAsAction="always">
         <menu>
