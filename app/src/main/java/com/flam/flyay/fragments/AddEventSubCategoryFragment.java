@@ -23,6 +23,8 @@ import com.flam.flyay.util.Utils;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.flam.flyay.R.color.colorAccent;
+
 public class AddEventSubCategoryFragment extends Fragment {
 
     private LinearLayout linearLayout;
@@ -119,7 +121,7 @@ public class AddEventSubCategoryFragment extends Fragment {
         horizontalScrollView(layout, buttonsLayout);
 
         for (final Object i : subCategoryList) {
-            Button btn = new Button(this.getContext());
+            final Button btn = new Button(this.getContext());
             btn.setText(String.valueOf(i));
             LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,

@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/colorPrimary"
         android:layout_alignParentTop="true"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:theme="@style/NavigationTheme"
-        android:background="@android:color/white"
+        android:background="@color/colorPrimary"
         app:menu="@menu/bottom_nav_menu" />
 </RelativeLayout>
 

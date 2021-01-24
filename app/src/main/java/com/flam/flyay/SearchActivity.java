@@ -52,9 +52,6 @@ public class SearchActivity extends AppCompatActivity implements SearchResultsFr
         ab = getSupportActionBar();
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
-            navView.setBackgroundColor(BLACK);
-        else navView.setBackgroundColor(WHITE);
         navView.setSelectedItemId(R.id.lens);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

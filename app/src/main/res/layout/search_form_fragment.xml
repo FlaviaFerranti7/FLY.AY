@@ -121,7 +121,7 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/buttonSearch"
         android:layout_marginTop="320dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorAccent"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:shadowColor="#000000"

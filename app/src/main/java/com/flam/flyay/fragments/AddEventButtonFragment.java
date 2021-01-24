@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import com.flam.flyay.R;
 import com.flam.flyay.util.Utils;
 
+import static com.flam.flyay.R.color.*;
+
 
 public class AddEventButtonFragment extends Fragment {
 
@@ -40,6 +42,7 @@ public class AddEventButtonFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("ResourceAsColor")
     public void addEventButton(){
         LinearLayout buttonLayout = new LinearLayout(this.getContext());
         buttonLayout.setOrientation(LinearLayout.VERTICAL);
@@ -52,6 +55,7 @@ public class AddEventButtonFragment extends Fragment {
         );
         btnparams.setMargins(Utils.convertDpToPixel(128), Utils.convertDpToPixel(16), 0, 0);
         btn.setLayoutParams(btnparams);
+        btn.setBackgroundColor(btn.getContext().getResources().getColor(colorAccent));
         buttonLayout.addView(btn);
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {

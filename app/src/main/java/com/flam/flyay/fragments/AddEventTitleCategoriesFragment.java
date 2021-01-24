@@ -27,6 +27,8 @@ import com.flam.flyay.util.Utils;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.flam.flyay.R.color.colorAccent;
+
 
 public class AddEventTitleCategoriesFragment extends Fragment {
 
@@ -174,12 +176,13 @@ public class AddEventTitleCategoriesFragment extends Fragment {
                     if (!clicked){
                         btnName = btnString;
                         addFragment(fragment);
-                        //btn.setBackgroundColor(R.color.colorPrimary);
+                        btn.setBackgroundColor(btn.getContext().getResources().getColor(colorAccent));
                         clicked = true;
                     } else {
                         if (btnName.equals(btnString)){
                             fragment = (AddEventSubCategoryFragment) getActivity().getSupportFragmentManager().findFragmentById(linearLayout.getId());
                             removeFragment(fragment);
+                            btn.setBackgroundColor(Color.TRANSPARENT);
                             clicked = false;
                         } else {
                             btnName = btnString;
