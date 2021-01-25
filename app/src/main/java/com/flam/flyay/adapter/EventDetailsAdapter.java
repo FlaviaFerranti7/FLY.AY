@@ -59,14 +59,15 @@ public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapte
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String propertyName = Utils.capitalize(keyList.get(position)) + ":";
+        String propertyName = Utils.buildPropertyName(keyList.get(position), ':');
         holder.propertyName.setText(propertyName);
 
         if(valueList.get(keyList.get(position)) == null ||
                 Objects.requireNonNull(valueList.get(keyList.get(position))).toString().length() == 0) {
-            holder.propertyContainer.setVisibility(LinearLayout.GONE);
+            holder.propertyContainer.setVisibility(View.GONE);
+            holder.propertyContainer.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
         } else {
-            holder.propertyValue.setText(Utils.capitalize(valueList.get(keyList.get(position)).toString()));
+            holder.propertyValue.setText(Utils.capitalize(Objects.requireNonNull(valueList.get(keyList.get(position))).toString()));
         }
 
     }

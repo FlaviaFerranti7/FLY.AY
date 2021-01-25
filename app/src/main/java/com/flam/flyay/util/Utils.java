@@ -179,4 +179,25 @@ public class Utils {
         return str.substring(0,1).toUpperCase() + str.substring(1).toLowerCase();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static String buildPropertyName(String nameProperty, char finalCharacter) {
+        List<String> namePropertyList = new ArrayList<>();
+        String ret = "";
+        int lastPointUsed = 0;
+
+        for(int i = 1; i < nameProperty.length(); i ++) {
+            if(nameProperty.charAt(i) >= 'A' && nameProperty.charAt(i) <= 'Z') {
+                namePropertyList.add(nameProperty.substring(lastPointUsed, i));
+                lastPointUsed = i;
+            }
+        }
+
+        namePropertyList.add(nameProperty.substring(lastPointUsed));
+
+        for(String word: namePropertyList) {
+            ret += capitalize(word) + " ";
+        }
+        return ret + finalCharacter;
+    }
+
 }
