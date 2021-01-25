@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentTransaction;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import static android.graphics.Color.*;
@@ -148,10 +149,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         Bundle bundle = new Bundle();
         bundle.putSerializable("event", event);
 
-        getSupportActionBar().setTitle("Details");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setIcon(null);
-
         return bundle;
     }
 
@@ -169,7 +166,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
     @Override
     public void onEventSelected(Event e) {
         Log.d(".MainActivity", e.toString());
-
+        Objects.requireNonNull(getSupportActionBar()).setTitle(e.getTitle());
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setIcon(null);
         addFragment(new EventDetailsFragment(), createParamsFragment(e));
     }
 
