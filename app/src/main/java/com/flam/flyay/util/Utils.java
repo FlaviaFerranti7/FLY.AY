@@ -172,4 +172,11 @@ public class Utils {
         return Math.round(px);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static String capitalize(String str) {
+        if(Objects.isNull(str) || str.length() == 0)
+            return "";
+        return str.substring(0,1).toUpperCase() + str.substring(1).toLowerCase();
+    }
+
 }

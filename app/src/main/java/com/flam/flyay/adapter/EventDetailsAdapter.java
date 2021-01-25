@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,10 +14,12 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flam.flyay.R;
+import com.flam.flyay.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapter.ViewHolder> {
 
@@ -30,12 +33,15 @@ public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        public LinearLayout propertyContainer;
+
         public TextView propertyName;
         public TextView propertyValue;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
+            propertyContainer = itemView.findViewById(R.id.property_container);
             propertyName = itemView.findViewById(R.id.property_name_event_details);
             propertyValue = itemView.findViewById(R.id.property_value_event_details);
         }
@@ -53,8 +59,16 @@ public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapte
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.propertyName.setText(keyList.get(position));
-        holder.propertyValue.setText(valueList.get(keyList.get(position)) != null ? valueList.get(keyList.get(position)).toString(): "");
+        String propertyName = Utils.capitalize(keyList.get(position)) + ":";
+        holder.propertyName.setText(propertyName);
+
+        if(valueList.get(keyList.get(position)) == null ||
+                Objects.requireNonNull(valueList.get(keyList.get(position))).toString().length() == 0) {
+            holder.propertyContainer.setVisibility(LinearLayout.GONE);
+        } else {
+            holder.propertyValue.setText(Utils.capitalize(valueList.get(keyList.get(position)).toString()));
+        }
+
     }
 
     @Override
