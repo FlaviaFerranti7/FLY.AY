@@ -337,17 +337,30 @@
     }
   },
   "user": {
-    "return": {
-      "id": 1,
-      "username": "dombianchi",
-      "firstName": "Domenico",
-      "lastName": "Bianchi",
-      "email": "domenico.bianchi@gmail.com",
-      "password": "FrancescoTotti10",
-      "birthday": "10/12/1998",
-      "country": "Italy",
-      "religion": "Catholic"
-    }
+    "return": [
+      {
+        "id": 1,
+        "username": "dombianchi",
+        "firstName": "Domenico",
+        "lastName": "Bianchi",
+        "email": "domenico.bianchi@gmail.com",
+        "password": "FrancescoTotti10",
+        "birthday": "10/12/1998",
+        "country": "Italy",
+        "religion": "Catholic"
+      },
+      {
+        "id": 2,
+        "username": "mariaferranti",
+        "firstName": "Maria",
+        "lastName": "Ferranti",
+        "email": "maria.ferranti@gmail.com",
+        "password": "Urano7",
+        "birthday": "1/10/1997",
+        "country": "Italy",
+        "religion": "Catholic"
+      }
+    ]
   },
   "userUpdateOK": {
     "return": {
@@ -579,31 +592,29 @@
     }
   },
   "list": {
-    "return": {
-      "lists": [
-        {
-          "id": 1,
-          "title": "Film",
-          "color": "red",
-          "lifetimer": null,
-          "checked": false
-        },
-        {
-          "id": 2,
-          "title": "Shopping list",
-          "color": "yellow",
-          "lifetimer": null,
-          "checked": false
-        },
-        {
-          "id": 3,
-          "title": "Books",
-          "color": "red",
-          "lifetimer": null,
-          "checked": true
-        }
-      ]
-    }
+    "return": [
+      {
+        "id": 1,
+        "title": "Film",
+        "image": "img_film",
+        "lifetimer": null,
+        "checked": false
+      },
+      {
+        "id": 2,
+        "title": "Shopping list",
+        "image": "img_food",
+        "lifetimer": null,
+        "checked": false
+      },
+      {
+        "id": 3,
+        "title": "Books",
+        "image": "img_book",
+        "lifetimer": null,
+        "checked": true
+      }
+    ]
   },
   "listItem": {
     "return": {

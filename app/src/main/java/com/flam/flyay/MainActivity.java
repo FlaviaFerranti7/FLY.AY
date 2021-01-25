@@ -1,6 +1,7 @@
 package com.flam.flyay;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -8,7 +9,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.flam.flyay.fragments.EventDetailsFragment;
 import com.flam.flyay.fragments.HomeFragment;
@@ -19,18 +19,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
 import java.util.TimeZone;
+
+import static android.graphics.Color.*;
 
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnEventsListListener{
@@ -44,6 +44,11 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.DarkAppTheme);
+        } else {
+            setTheme(R.style.AppTheme);
+        }
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -55,11 +60,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         c = Calendar.getInstance(TimeZone.getTimeZone("GMT"),Locale.getDefault());
         df = new SimpleDateFormat("dd/MM/yyyy");
         currentDate = df.format(c.getTime());
-        ab.setTitle(currentDate);
-        ab.setIcon(R.drawable.ic_home_page);
 
         navView = findViewById(R.id.nav_view);
-        navView.getMenu().getItem(2).setEnabled(false);
+        //navView.getMenu().getItem(2).setEnabled(false);
         navView.setSelectedItemId(R.id.home);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
@@ -73,29 +76,21 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
                     case R.id.lens:
                         startActivity(new Intent(getApplicationContext(), SearchActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("Search");
-                        ab.setIcon(R.drawable.ic_search);
                         return true;
 
                     case R.id.plus:
                         startActivity(new Intent(getApplicationContext(), AddEventActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("Add event");
-                        ab.setIcon(R.drawable.ic_add_event);
                         return true;
 
                     case R.id.list:
                         startActivity(new Intent(getApplicationContext(), ToDoActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("To do");
-                        ab.setIcon(R.drawable.ic_to_do);
                         return true;
 
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         overridePendingTransition(0,0);
-                        ab.setTitle("Profile");
-                        ab.setIcon(R.drawable.ic_profile);
                         return true;
                 }
                 return false;
@@ -153,6 +148,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         Bundle bundle = new Bundle();
         bundle.putSerializable("event", event);
 
+        getSupportActionBar().setTitle("Details");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setIcon(null);
+
         return bundle;
     }
 
@@ -181,4 +180,16 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    @Override
+    public void onBackPressed() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 1) {
+            fragmentManager.popBackStackImmediate();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 }

@@ -32,6 +32,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public EventAdapter(List<Event> events, HomeFragment.OnEventsListListener onEventsListListener) {
         this.events = events;
         this.onEventsListListener = onEventsListListener;
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

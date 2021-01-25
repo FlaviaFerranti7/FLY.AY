@@ -1,18 +1,32 @@
 package com.flam.flyay;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.flam.flyay.fragments.ToDoItemsFragment;
+import com.flam.flyay.fragments.ToDoListFragment;
+import com.flam.flyay.model.ToDo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class ToDoActivity extends AppCompatActivity {
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.WHITE;
+
+public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.OnToDoListListener {
 
     private Toolbar toolbar;
     private ActionBar ab;
@@ -20,13 +34,19 @@ public class ToDoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.DarkAppTheme);
+        } else {
+            setTheme(R.style.AppTheme);
+        }
         setContentView(R.layout.activity_to_do);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ab = getSupportActionBar();
-        ab.setTitle("To do");
+        /*ab.setTitle("To do");
         ab.setIcon(R.drawable.ic_to_do);
+        invalidateOptionsMenu();*/
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setSelectedItemId(R.id.list);
@@ -60,6 +80,8 @@ public class ToDoActivity extends AppCompatActivity {
                 return false;
             }
         });
+        initializeFragments(new ToDoListFragment(),null);
+        //invalidateOptionsMenu();
     }
 
     @Override
@@ -72,5 +94,42 @@ public class ToDoActivity extends AppCompatActivity {
                 menu.getItem(i).setVisible(true);
         }
         return true;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onToDoListSelected(ToDo toDo) {
+        Log.d(".ToDoActivity", toDo.toString());
+        initializeFragments(new ToDoItemsFragment(), createParamsItems(toDo));
+    }
+
+    private Bundle createParamsItems(ToDo toDo) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("toDo", toDo);
+
+        return bundle;
+    }
+
+    private void initializeFragments(Fragment fragment, Bundle params) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragment.setArguments(params);
+        fragmentTransaction.replace(R.id.display_todo_list_fragment, fragment, fragment.getClass().getName());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+    @Override
+    public void onBackPressed() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 1) {
+            fragmentManager.popBackStackImmediate();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

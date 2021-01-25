@@ -26,6 +26,14 @@
     <string name="save_as_model">Save as model</string>
     <string name="delete_after">Delete after</string>
     <string name="delete">Delete</string>
+    <string name="app_label">Search</string>
+    <string name="search_hint_name">Which event are you looking for?</string>
+    <string name="search_hint_place">In which place?</string>
+    <string name="search_hint_category">In which category?</string>
+    <string name="title_add_event">Insert the title</string>
+    <string name="category_add_event">Choose the category:</string>
+    <string name="date_add_event">Choose the date:</string>
+
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -48,4 +56,5 @@
     <string name="password_null_error">password cannot be empty</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

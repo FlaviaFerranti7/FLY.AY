@@ -13,11 +13,18 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.flam.flyay.MainActivity;
+import com.flam.flyay.model.Event;
+import com.flam.flyay.model.User;
+import com.flam.flyay.util.ConverterFromJsonToModel;
 import com.flam.flyay.util.MockServerUrl;
 import com.flam.flyay.util.Utils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserService {
     private Context context;
@@ -38,4 +45,35 @@ public class UserService {
             }
         });
     }
+    public void getUserById(JSONObject params, final ServerCallback callback) {
+        Log.d(".UserService", "GET - UserById");
+        appRequest.jsonObjectGETRequest(context, MockServerUrl.PROFILE_USER.url, params, new ServerCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                getDetailsUser((JSONObject) result, callback);
+            }
+        });
+    }
+    public void getDetailsUser(JSONObject requestResult, final ServerCallback callback) {
+        List<User> users = new ArrayList<>();
+        JSONArray containerResponse = new JSONArray();
+        try {
+            containerResponse = requestResult.getJSONArray("return");
+
+            for(int i = 0; i < containerResponse.length()-1; i ++) {
+                JSONObject currentJSONObject = containerResponse.getJSONObject(i);
+                User user = ConverterFromJsonToModel.converterFromJsonToUser(currentJSONObject);
+                Log.d(".ProfileFragment", user.toString());
+
+                users.add(user);
+            }
+            callback.onSuccess(users);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 }
