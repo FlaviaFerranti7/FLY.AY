@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
@@ -46,11 +47,9 @@ import java.util.TimeZone;
 
 public class CalendarFragment extends Fragment {
 
-    private LinearLayout linearLayout;
+    private LinearLayout linearLayoutCalendar;
 
     private String selectedDate;
-    private Calendar c;
-    private SimpleDateFormat df;
 
     private EventService service;
     private HomeFragment.OnEventsListListener onEventsListListener;
@@ -78,13 +77,13 @@ public class CalendarFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.calendar_fragment, container, false);
-        linearLayout = view.findViewById(R.id.fragment_calendar);
-
         final RecyclerView listRecyclerView = view.findViewById(R.id.events_recycler);
         listRecyclerView.setNestedScrollingEnabled(false);
 
         this.service = new EventService(this.getContext());
         this.events = new ArrayList<>();
+
+        linearLayoutCalendar = view.findViewById(R.id.fragment_calendar);
 
         Bundle arguments = getArguments();
         selectedDate = arguments.getString("currentDate");
@@ -96,7 +95,6 @@ public class CalendarFragment extends Fragment {
         addCalendar();
 
         JSONObject params = getParams(selectedDate);
-        Log.d(".EventsListFragment", "parameters: [currentDate = '" + selectedDate + "']");
 
         service.getEventsByDay(params, new ServerCallback() {
             @Override
@@ -115,7 +113,6 @@ public class CalendarFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
@@ -126,7 +123,7 @@ public class CalendarFragment extends Fragment {
         layoutParams.setMargins(90, 160, 80, 40);
         calendarView.setLayoutParams(layoutParams);
 
-        linearLayout.addView(calendarView);
+        linearLayoutCalendar.addView(calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, final int year, final int month, final int dayOfMonth) {
@@ -143,6 +140,17 @@ public class CalendarFragment extends Fragment {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflator) {
         menu.clear();
