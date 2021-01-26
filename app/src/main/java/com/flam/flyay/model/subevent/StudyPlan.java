@@ -1,7 +1,12 @@
 package com.flam.flyay.model.subevent;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.flam.flyay.model.Event;
 import com.flam.flyay.util.CategoryEnum;
+import com.flam.flyay.util.Utils;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -120,11 +125,12 @@ public class StudyPlan extends Event {
         this.safeDays = safeDays;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public Map<String, Object> getValueEvent() {
         Map<String, Object> valueEvent = new HashMap<>();
 
-        valueEvent.put("endingStudy", this.endingStudy);
+        valueEvent.put("endingStudy", Utils.convertionFromDateToString(this.endingStudy));
         valueEvent.put("studyingDays", this.studyingDays);
         valueEvent.put("overRange", this.overRange);
         valueEvent.put("startingOverRangeTime", this.startingOverRangeTime);

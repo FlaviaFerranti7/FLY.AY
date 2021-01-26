@@ -3,6 +3,7 @@ package com.flam.flyay.util;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.icu.number.NumberRangeFormatter;
+import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.app.Activity;
 import android.content.Context;
@@ -24,7 +25,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -198,6 +201,11 @@ public class Utils {
             ret += capitalize(word) + " ";
         }
         return ret + finalCharacter;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static String convertionFromDateToString(Date date) {
+        return new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(date);
     }
 
 }

@@ -4,6 +4,8 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.flam.flyay.util.Utils;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -94,6 +96,7 @@ public abstract class Event implements Serializable {
                 + this.date + " title: " + this.title + "note: " + this.note;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public Map<String, Object> getValueEvent() {
         Map<String, Object> valueEvent = new HashMap<>();
 
@@ -101,7 +104,7 @@ public abstract class Event implements Serializable {
         valueEvent.put("category", this.category);
         valueEvent.put("subcategory", this.subcategory);
         valueEvent.put("title", this.title);
-        valueEvent.put("date", this.date);
+        valueEvent.put("date", Utils.convertionFromDateToString(this.date));
         valueEvent.put("note", this.note);
 
         return valueEvent;

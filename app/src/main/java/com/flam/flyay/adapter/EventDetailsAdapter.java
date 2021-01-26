@@ -23,8 +23,8 @@ import java.util.Objects;
 
 public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapter.ViewHolder> {
 
-    private List<String> keyList;
-    private Map<String, Object> valueList;
+    private final List<String> keyList;
+    private final Map<String, Object> valueList;
 
     public EventDetailsAdapter(List<String> keyList, Map<String, Object> valueList) {
         this.keyList = keyList;
