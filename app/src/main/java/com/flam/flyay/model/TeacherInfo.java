@@ -73,22 +73,25 @@ public class TeacherInfo {
     public Map<String, Object> getValueEvent() {
         Map<String, Object> valueEvent = new HashMap<>();
 
-        valueEvent.put("teacherName", this.name);
-        valueEvent.put("teacherEmail", this.email);
-        valueEvent.put("teacherReceiptDate", this.receiptDate);
-        valueEvent.put("teacherReceiptRoom", this.receiptRoom);
-
+        valueEvent.put("teacher", this);
 
         return valueEvent;
     }
 
     public List<String> getKeySetSorted() {
         List<String> keySetSorted = new ArrayList<>();
-        keySetSorted.add("teacherName");
-        keySetSorted.add("teacherEmail");
-        keySetSorted.add("teacherReceiptDate");
-        keySetSorted.add("teacherReceiptRoom");
+        keySetSorted.add("teacher");
 
         return keySetSorted;
+    }
+
+    @Override
+    public String toString() {
+        return "TeacherInfo{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", receiptDate='" + receiptDate + '\'' +
+                ", receiptRoom='" + receiptRoom + '\'' +
+                '}';
     }
 }

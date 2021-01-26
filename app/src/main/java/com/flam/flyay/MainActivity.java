@@ -136,18 +136,20 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         switch (item.getItemId()) {
             case R.id.home_calendar:
                 //goToCalendar(); // TO DO
-                return true;
+                break;
             case R.id.edit_event:
                 //TODO: implement redirect on form add event
                 Toast.makeText(this.getApplicationContext(),"Press on edit event",Toast.LENGTH_SHORT).show();
-                return true;
+                break;
             case R.id.delete_event:
                 //TODO: integrate pop-up to confirm
                 Toast.makeText(this.getApplicationContext(),"Press on delete event",Toast.LENGTH_SHORT).show();
-                return true;
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+        return true;
     }
 
     @Override

@@ -481,11 +481,11 @@
           "receiptRoom": "Via scarpa stanza 41"
         },
         "studyPlan": {
-          "endingStudy": "14/01/2021",
+          "endStudy": "14/01/2021",
           "studyingDays": ["Mon","Tue","Wed","Thu","Fri"],
           "overRange": "afternoon",
           "startingOverRangeTime": 14.00,
-          "endingOverRangeTime": 17.00,
+          "endOverRangeTime": 17.00,
           "minStudyHours": 1.30,
           "minBreakHours": 1.00,
           "safeDays": "7"
