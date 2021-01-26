@@ -133,8 +133,8 @@ public class StudyPlan {
         valueEvent.put("overRange", this.overRange);
         valueEvent.put("startingOverRangeTime", this.startingOverRangeTime);
         valueEvent.put("endOverRangeTime", this.endOverRangeTime);
-        valueEvent.put("minStudyHours", this.minStudyHours);
-        valueEvent.put("minBreakHours", this.minBreakHours);
+        valueEvent.put("minStudyHours", Utils.convertionFromDoubleToTime(this.minStudyHours,':'));
+        valueEvent.put("minBreakHours", Utils.convertionFromDoubleToTime(this.minBreakHours,':'));
         valueEvent.put("safeDays", this.safeDays);
 
         if(this.startingOverRangeTime != null && this.endOverRangeTime != null)

@@ -47,8 +47,9 @@ public class Utils {
 
     public static String convertionFromDoubleToTime(double input, char separator) {
         String doubleString = Double.toString(input);
-        String hours = doubleString.substring(0,2);
-        String minutes = doubleString.substring(3);
+        String[] time = doubleString.split("\\.");
+        String hours = time[0];
+        String minutes = time[1];
 
         if(minutes.length() == 1)
             minutes += '0';

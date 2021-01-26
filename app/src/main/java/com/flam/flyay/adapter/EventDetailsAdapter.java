@@ -152,7 +152,7 @@ public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapte
                         holder.accordionIcon.setImageResource(R.drawable.ic_arrow_down);
                     }
                 }
-            });;
+            });
         }
 
         if(valueList.get(keyList.get(position)) == null ||
