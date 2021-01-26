@@ -1,7 +1,6 @@
 package com.flam.flyay;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -10,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.flam.flyay.fragments.CalendarFragment;
 import com.flam.flyay.fragments.EventDetailsFragment;
 import com.flam.flyay.fragments.HomeFragment;
 import com.flam.flyay.model.Event;
@@ -29,8 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import static android.graphics.Color.*;
 
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnEventsListListener{
@@ -117,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.home_calendar:
-                //goToCalendar(); // TO DO
+                addFragment(new CalendarFragment(), createParamsEventsFragment());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
