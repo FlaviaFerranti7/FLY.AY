@@ -160,7 +160,8 @@ public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapte
             holder.propertyContainer.setVisibility(View.GONE);
             holder.propertyContainer.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
         } else {
-            holder.propertyValue.setText(Utils.capitalize(Objects.requireNonNull(valueList.get(keyList.get(position))).toString()));
+            holder.propertyValue.setText(
+                    Utils.replaceSpecialChar(Utils.capitalize(Objects.requireNonNull(valueList.get(keyList.get(position))).toString())));
         }
 
     }

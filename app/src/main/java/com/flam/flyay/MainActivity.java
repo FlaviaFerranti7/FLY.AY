@@ -135,15 +135,16 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.home_calendar:
-                //goToCalendar(); // TO DO
+                //TODO: go to calendar
+                Toast.makeText(this.getApplicationContext(),"Go to Calendar",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.edit_event:
-                //TODO: implement redirect on form add event
-                Toast.makeText(this.getApplicationContext(),"Press on edit event",Toast.LENGTH_SHORT).show();
+                //TODO: go to form add event
+                Toast.makeText(this.getApplicationContext(),"Go to Form Add Event",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.delete_event:
                 //TODO: integrate pop-up to confirm
-                Toast.makeText(this.getApplicationContext(),"Press on delete event",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getApplicationContext(),"Pop-up to Confirm",Toast.LENGTH_SHORT).show();
                 break;
             default:
                 return super.onOptionsItemSelected(item);

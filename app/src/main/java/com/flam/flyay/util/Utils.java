@@ -170,6 +170,10 @@ public class Utils {
         return Math.round(px);
     }
 
+    public static String replaceSpecialChar(String str) {
+        return str.replace('_', ' ');
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static String capitalize(String str) {
         if(Objects.isNull(str) || str.length() == 0)
