@@ -1,5 +1,9 @@
 package com.flam.flyay.model.subevent;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.flam.flyay.model.Event;
 import com.flam.flyay.util.CategoryEnum;
 
@@ -42,6 +46,7 @@ public class FinancesEvent extends Event {
         this.place = place;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public Map<String, Object> getValueEvent() {
         Map<String, Object> valueEvent = super.getValueEvent();

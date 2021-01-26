@@ -61,6 +61,8 @@ public class EventDetailsFragment extends Fragment {
         return view;
     }
 
+
+
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);

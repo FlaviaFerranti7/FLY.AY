@@ -1,7 +1,12 @@
 package com.flam.flyay.model.subevent;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.flam.flyay.model.Event;
 import com.flam.flyay.util.CategoryEnum;
+import com.flam.flyay.util.Utils;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -27,11 +32,15 @@ public class FestivityEvent extends Event {
         this.startingTime = startingTime;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public Map<String, Object> getValueEvent() {
         Map<String, Object> valueEvent = super.getValueEvent();
 
         valueEvent.put("startingTime", this.startingTime);
+
+        if(this.startingTime != null)
+            valueEvent.put("time", Utils.convertionFromDoubleToTime(this.startingTime, ':'));
 
         return valueEvent;
     }
@@ -43,7 +52,7 @@ public class FestivityEvent extends Event {
     @Override
     public List<String> getKeySetSorted() {
         List<String> keySetSorted = super.getKeySetSorted();
-        keySetSorted.add("startingTime");
+        keySetSorted.add("time");
 
         keySetSorted.add("note");
         return keySetSorted;

@@ -10,12 +10,13 @@ import com.flam.flyay.util.Utils;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StudyPlan extends Event {
+public class StudyPlan {
     @Nullable
     private Date endingStudy;
 
@@ -40,9 +41,7 @@ public class StudyPlan extends Event {
     @Nullable
     private Integer safeDays;
 
-
-    public StudyPlan(int id, String title, Date date, String note, @Nullable Date endingStudy, @Nullable List<String> studyingDays, @Nullable String overRange, @Nullable Double startingOverRangeTime, @Nullable Double endingOverRangeTime, @Nullable Double minStudyHours, @Nullable Double minBreakHours, @Nullable Integer safeDays) {
-        super(id, CategoryEnum.STUDY.name, "STUDY-PLANNER", title, date, note);
+    public StudyPlan(@Nullable Date endingStudy, @Nullable List<String> studyingDays, @Nullable String overRange, @Nullable Double startingOverRangeTime, @Nullable Double endingOverRangeTime, @Nullable Double minStudyHours, @Nullable Double minBreakHours, @Nullable Integer safeDays) {
         this.endingStudy = endingStudy;
         this.studyingDays = studyingDays;
         this.overRange = overRange;
@@ -126,7 +125,6 @@ public class StudyPlan extends Event {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
     public Map<String, Object> getValueEvent() {
         Map<String, Object> valueEvent = new HashMap<>();
 
@@ -139,22 +137,23 @@ public class StudyPlan extends Event {
         valueEvent.put("minBreakHours", this.minBreakHours);
         valueEvent.put("safeDays", this.safeDays);
 
+        if(this.startingOverRangeTime != null && this.endingOverRangeTime != null)
+            valueEvent.put("timeOverRange", Utils.getTimeToString(this.startingOverRangeTime, this.endingOverRangeTime));
+        else if(this.startingOverRangeTime != null || this.endingOverRangeTime != null)
+            valueEvent.put("timeOverRange", Utils.convertionFromDoubleToTime(this.startingOverRangeTime != null ? this.startingOverRangeTime : this.endingOverRangeTime, ':'));
+
         return valueEvent;
     }
 
-    @Override
     public List<String> getKeySetSorted() {
-        List<String> keySetSorted = super.getKeySetSorted();
+        List<String> keySetSorted = new ArrayList<>();
         keySetSorted.add("endingStudy");
         keySetSorted.add("studyingDays");
         keySetSorted.add("overRange");
-        keySetSorted.add("startingOverRangeTime");
-        keySetSorted.add("endingOverRangeTime");
+        keySetSorted.add("timeOverRange");
         keySetSorted.add("minStudyHours");
         keySetSorted.add("minBreakHours");
         keySetSorted.add("safeDays");
-
-        keySetSorted.add("note");
 
         return keySetSorted;
     }

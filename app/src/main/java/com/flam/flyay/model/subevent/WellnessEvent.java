@@ -1,7 +1,12 @@
 package com.flam.flyay.model.subevent;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.flam.flyay.model.Event;
 import com.flam.flyay.util.CategoryEnum;
+import com.flam.flyay.util.Utils;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -55,6 +60,7 @@ public class WellnessEvent extends Event {
         this.place = place;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public Map<String, Object> getValueEvent() {
         Map<String, Object> valueEvent = super.getValueEvent();
@@ -62,6 +68,11 @@ public class WellnessEvent extends Event {
         valueEvent.put("startingTime", this.startingTime);
         valueEvent.put("endTime", this.endTime);
         valueEvent.put("place", this.place);
+
+        if(this.startingTime != null && this.endTime != null)
+            valueEvent.put("time", Utils.getTimeToString(this.startingTime, this.endTime));
+        else if(this.startingTime != null || this.endTime != null)
+            valueEvent.put("time", Utils.convertionFromDoubleToTime(this.startingTime != null ? this.startingTime : this.endTime, ':'));
 
         return valueEvent;
     }
@@ -75,10 +86,8 @@ public class WellnessEvent extends Event {
     @Override
     public List<String> getKeySetSorted() {
         List<String> keySetSorted = super.getKeySetSorted();
-        keySetSorted.add("startingTime");
-        keySetSorted.add("endTime");
+        keySetSorted.add("time");
         keySetSorted.add("place");
-
 
         keySetSorted.add("note");
         return keySetSorted;

@@ -1,20 +1,12 @@
 package com.flam.flyay.util;
 
-import android.content.Intent;
 import android.content.res.Resources;
-import android.icu.number.NumberRangeFormatter;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
-import android.app.Activity;
-import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
-
-import com.flam.flyay.MainActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.flam.flyay.model.Event;
 import com.flam.flyay.model.StatusResponse;
@@ -33,6 +25,7 @@ import java.util.Objects;
 
 public class Utils {
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public static String getTimeToString(Event e) {
 
         Map<String, Object> valueEvent = e.getValueEvent();
@@ -45,22 +38,25 @@ public class Utils {
     }
 
     public static String getTimeToString(double startingTimeInput, double endTimeInput) {
-        String startingTime = Double.toString(startingTimeInput);
-        String endTime = Double.toString(endTimeInput);
-        String startingTimeInt = startingTime.substring(0,2);
-        String startingTimeDecimal = startingTime.substring(3);
 
-        if(startingTimeDecimal.length() == 1)
-            startingTimeDecimal += "0";
+        String startingTime = convertionFromDoubleToTime(startingTimeInput, ':');
+        String endTime = convertionFromDoubleToTime(endTimeInput, ':');
 
-        String endTimeInt = endTime.substring(0,2);
-        String endTimeDecimal = endTime.substring(3);
-        if(endTimeDecimal.length() == 1)
-            endTimeDecimal += "0";
-
-        return startingTimeInt + ":" + startingTimeDecimal + " - " + endTimeInt + ":" + endTimeDecimal;
+        return startingTime + " - " + endTime;
     }
 
+    public static String convertionFromDoubleToTime(double input, char separator) {
+        String doubleString = Double.toString(input);
+        String hours = doubleString.substring(0,2);
+        String minutes = doubleString.substring(3);
+
+        if(minutes.length() == 1)
+            minutes += '0';
+
+        return hours + separator + minutes;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     static void merge(Event[] events, String property, int l, int m, int r)
     {
         int n1 = m - l + 1;
@@ -106,6 +102,7 @@ public class Utils {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     static void sort(Event[] events, String property, int l, int r)
     {
         if (l < r) {
@@ -119,14 +116,14 @@ public class Utils {
     }
 
     private static void clearList(List<?> list) {
-        System.out.println("clearList" + list.toString());
         int size = list.size();
-        for(int i = 0; i < size; i ++) {
-            list.remove(0);
+        if (size > 0) {
+            list.subList(0, size).clear();
         }
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public static void orderEventListBy(List<Event> events, String property) {
         Log.d(".Utils.orderEventListBy", "start ordering");
         System.out.println(events);
@@ -139,7 +136,7 @@ public class Utils {
     }
 
     public static void getStatusResponse(JSONObject requestResult, final ServerCallback callback) {
-        JSONObject containerResponse = new JSONObject();
+        JSONObject containerResponse;
         String status = "";
 
         StatusResponse response = new StatusResponse();
@@ -163,10 +160,7 @@ public class Utils {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static boolean isEmptyOrBlank(String s){
-        if (Objects.isNull(s) || s.length() == 0){
-            return true;
-        }
-        return false;
+        return Objects.isNull(s) || s.length() == 0;
     }
 
     public static int convertDpToPixel(float dp) {
@@ -185,7 +179,7 @@ public class Utils {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static String buildPropertyName(String nameProperty, char finalCharacter) {
         List<String> namePropertyList = new ArrayList<>();
-        String ret = "";
+        StringBuilder ret = new StringBuilder();
         int lastPointUsed = 0;
 
         for(int i = 1; i < nameProperty.length(); i ++) {
@@ -198,9 +192,9 @@ public class Utils {
         namePropertyList.add(nameProperty.substring(lastPointUsed));
 
         for(String word: namePropertyList) {
-            ret += capitalize(word) + " ";
+            ret.append(capitalize(word)).append(" ");
         }
-        return ret + finalCharacter;
+        return ret.toString() + finalCharacter;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
