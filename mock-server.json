@@ -474,9 +474,12 @@
         "endTime": 13.00,
         "place": "Via scarpa 1",
         "room": "DIAG B2",
-        "teacherName": "Beraldi",
-        "teacherEmail": "Beraldi@uniroma1.docenti.it",
-        "teacherReceiptDate": "MON 11.00",
+        "teacherInfo": {
+          "name": "Beraldi",
+          "email": "beraldi@uniroma1.docenti.it",
+          "receiptDate": "Mon 11:00",
+          "receiptRoom": "Via scarpa stanza 41"
+        },
         "studyPlan": {
           "endingStudy": "14/01/2021",
           "studyingDays": ["Mon","Tue","Wed","Thu","Fri"],

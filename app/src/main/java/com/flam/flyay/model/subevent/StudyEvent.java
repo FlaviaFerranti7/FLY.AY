@@ -5,6 +5,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.flam.flyay.model.Event;
+import com.flam.flyay.model.TeacherInfo;
 import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.Utils;
 
@@ -29,16 +30,7 @@ public class StudyEvent extends Event {
     private String room;
 
     @Nullable
-    private String teacherName;
-
-    @Nullable
-    private String teacherEmail;
-
-    @Nullable
-    private String teacherReceiptDate;
-
-    @Nullable
-    private String teacherReceiptRoom;
+    private TeacherInfo teacherInfo;
 
     @Nullable
     private StudyPlan studyPlan;
@@ -50,10 +42,7 @@ public class StudyEvent extends Event {
         this.endTime = endTime;
         this.place = place;
         this.room = room;
-        this.teacherName = teacherName;
-        this.teacherEmail = teacherEmail;
-        this.teacherReceiptDate = teacherReceiptDate;
-        this.teacherReceiptRoom = teacherReceiptRoom;
+        this.teacherInfo = new TeacherInfo(teacherName, teacherEmail, teacherReceiptDate, teacherReceiptRoom);
         this.studyPlan = studyPlan;
     }
 
@@ -85,42 +74,6 @@ public class StudyEvent extends Event {
     }
 
     @Nullable
-    public String getTeacherName() {
-        return teacherName;
-    }
-
-    public void setTeacherName(@Nullable String teacherName) {
-        this.teacherName = teacherName;
-    }
-
-    @Nullable
-    public String getTeacherEmail() {
-        return teacherEmail;
-    }
-
-    public void setTeacherEmail(@Nullable String teacherEmail) {
-        this.teacherEmail = teacherEmail;
-    }
-
-    @Nullable
-    public String getTeacherReceiptDate() {
-        return teacherReceiptDate;
-    }
-
-    public void setTeacherReceiptDate(@Nullable String teacherReceiptDate) {
-        this.teacherReceiptDate = teacherReceiptDate;
-    }
-
-    @Nullable
-    public String getTeacherReceiptRoom() {
-        return teacherReceiptRoom;
-    }
-
-    public void setTeacherReceiptRoom(@Nullable String teacherReceiptRoom) {
-        this.teacherReceiptRoom = teacherReceiptRoom;
-    }
-
-    @Nullable
     public StudyPlan getStudyPlan() {
         return studyPlan;
     }
@@ -138,10 +91,6 @@ public class StudyEvent extends Event {
         valueEvent.put("endTime", this.endTime);
         valueEvent.put("room", this.room);
         valueEvent.put("place", this.place);
-        valueEvent.put("teacherName", this.teacherName);
-        valueEvent.put("teacherEmail", this.teacherEmail);
-        valueEvent.put("teacherReceiptDate", this.teacherReceiptDate);
-        valueEvent.put("teacherReceiptRoom", this.teacherReceiptRoom);
 
         if(this.startingTime != null && this.endTime != null)
             valueEvent.put("time", Utils.getTimeToString(this.startingTime, this.endTime));
@@ -152,6 +101,9 @@ public class StudyEvent extends Event {
         assert this.studyPlan != null;
         valueEvent.putAll(this.studyPlan.getValueEvent());
 
+        assert this.teacherInfo != null;
+        valueEvent.putAll(this.teacherInfo.getValueEvent());
+
         return valueEvent;
     }
 
@@ -161,10 +113,9 @@ public class StudyEvent extends Event {
         keySetSorted.add("time");
         keySetSorted.add("place");
         keySetSorted.add("room");
-        keySetSorted.add("teacherName");
-        keySetSorted.add("teacherEmail");
-        keySetSorted.add("teacherReceiptDate");
-        keySetSorted.add("teacherReceiptRoom");
+
+        if(teacherInfo != null)
+            keySetSorted.addAll(teacherInfo.getKeySetSorted());
 
         if(studyPlan == null)
             keySetSorted.add("note");
