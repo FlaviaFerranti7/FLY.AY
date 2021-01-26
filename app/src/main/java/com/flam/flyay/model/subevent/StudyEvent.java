@@ -1,12 +1,19 @@
 package com.flam.flyay.model.subevent;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.flam.flyay.model.Event;
+import com.flam.flyay.model.TeacherInfo;
 import com.flam.flyay.util.CategoryEnum;
+import com.flam.flyay.util.Utils;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class StudyEvent extends Event {
@@ -23,16 +30,7 @@ public class StudyEvent extends Event {
     private String room;
 
     @Nullable
-    private String teacherName;
-
-    @Nullable
-    private String teacherEmail;
-
-    @Nullable
-    private String teacherReceiptDate;
-
-    @Nullable
-    private String teacherReceiptRoom;
+    private TeacherInfo teacherInfo;
 
     @Nullable
     private StudyPlan studyPlan;
@@ -44,10 +42,7 @@ public class StudyEvent extends Event {
         this.endTime = endTime;
         this.place = place;
         this.room = room;
-        this.teacherName = teacherName;
-        this.teacherEmail = teacherEmail;
-        this.teacherReceiptDate = teacherReceiptDate;
-        this.teacherReceiptRoom = teacherReceiptRoom;
+        this.teacherInfo = new TeacherInfo(teacherName, teacherEmail, teacherReceiptDate, teacherReceiptRoom);
         this.studyPlan = studyPlan;
     }
 
@@ -79,42 +74,6 @@ public class StudyEvent extends Event {
     }
 
     @Nullable
-    public String getTeacherName() {
-        return teacherName;
-    }
-
-    public void setTeacherName(@Nullable String teacherName) {
-        this.teacherName = teacherName;
-    }
-
-    @Nullable
-    public String getTeacherEmail() {
-        return teacherEmail;
-    }
-
-    public void setTeacherEmail(@Nullable String teacherEmail) {
-        this.teacherEmail = teacherEmail;
-    }
-
-    @Nullable
-    public String getTeacherReceiptDate() {
-        return teacherReceiptDate;
-    }
-
-    public void setTeacherReceiptDate(@Nullable String teacherReceiptDate) {
-        this.teacherReceiptDate = teacherReceiptDate;
-    }
-
-    @Nullable
-    public String getTeacherReceiptRoom() {
-        return teacherReceiptRoom;
-    }
-
-    public void setTeacherReceiptRoom(@Nullable String teacherReceiptRoom) {
-        this.teacherReceiptRoom = teacherReceiptRoom;
-    }
-
-    @Nullable
     public StudyPlan getStudyPlan() {
         return studyPlan;
     }
@@ -123,6 +82,7 @@ public class StudyEvent extends Event {
         this.studyPlan = studyPlan;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public Map<String, Object> getValueEvent() {
         Map<String, Object> valueEvent = super.getValueEvent();
@@ -131,16 +91,39 @@ public class StudyEvent extends Event {
         valueEvent.put("endTime", this.endTime);
         valueEvent.put("room", this.room);
         valueEvent.put("place", this.place);
-        valueEvent.put("teacherName", this.teacherName);
-        valueEvent.put("teacherEmail", this.teacherEmail);
-        valueEvent.put("teacherReceiptDate", this.teacherReceiptDate);
-        valueEvent.put("teacherReceiptRoom", this.teacherReceiptRoom);
+
+        if(this.startingTime != null && this.endTime != null)
+            valueEvent.put("time", Utils.getTimeToString(this.startingTime, this.endTime));
+        else if(this.startingTime != null || this.endTime != null)
+            valueEvent.put("time", Utils.convertionFromDoubleToTime(this.startingTime != null ? this.startingTime : this.endTime, ':'));
 
 
         assert this.studyPlan != null;
         valueEvent.putAll(this.studyPlan.getValueEvent());
 
+        assert this.teacherInfo != null;
+        valueEvent.putAll(this.teacherInfo.getValueEvent());
+
         return valueEvent;
+    }
+
+    @Override
+    public List<String> getKeySetSorted() {
+        List<String> keySetSorted = super.getKeySetSorted();
+        keySetSorted.add("time");
+        keySetSorted.add("place");
+        keySetSorted.add("room");
+
+        if(teacherInfo != null)
+            keySetSorted.addAll(teacherInfo.getKeySetSorted());
+
+        if(studyPlan == null)
+            keySetSorted.add("note");
+        else {
+            keySetSorted.addAll(studyPlan.getKeySetSorted());
+        }
+
+        return keySetSorted;
     }
 
     @Override

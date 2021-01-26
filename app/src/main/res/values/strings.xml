@@ -26,6 +26,7 @@
     <string name="save_as_model">Save as model</string>
     <string name="delete_after">Delete after</string>
     <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
     <string name="app_label">Search</string>
     <string name="search_hint_name">Which event are you looking for?</string>
     <string name="search_hint_place">In which place?</string>
