@@ -66,6 +66,16 @@ public class CalendarFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try{
+            onEventsListListener = (HomeFragment.OnEventsListListener) context;
+        } catch(ClassCastException e) {
+            throw new ClassCastException("OnEventsListListener interface must be implemented");
+        }
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.calendar_fragment, container, false);
         linearLayout = view.findViewById(R.id.fragment_calendar);
