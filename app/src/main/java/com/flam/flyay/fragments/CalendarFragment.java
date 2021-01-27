@@ -1,5 +1,6 @@
 package com.flam.flyay.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -50,11 +51,14 @@ public class CalendarFragment extends Fragment {
     private LinearLayout linearLayoutCalendar;
 
     private String selectedDate;
+    private Calendar c;
+    private SimpleDateFormat df;
+    private String eventDate;
 
     private EventService service;
     private HomeFragment.OnEventsListListener onEventsListListener;
     private List<Event> events;
-
+    private List<Event> eventsFiltered;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -76,6 +80,7 @@ public class CalendarFragment extends Fragment {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.calendar_fragment, container, false);
         final RecyclerView listRecyclerView = view.findViewById(R.id.events_recycler);
@@ -83,7 +88,7 @@ public class CalendarFragment extends Fragment {
 
         this.service = new EventService(this.getContext());
         this.events = new ArrayList<>();
-
+        this.eventsFiltered = new ArrayList<>();
 
         linearLayoutCalendar = view.findViewById(R.id.fragment_calendar);
 
@@ -94,36 +99,21 @@ public class CalendarFragment extends Fragment {
         ((MainActivity) getActivity()).getSupportActionBar().setTitle(selectedDate);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        addCalendar();
-
         JSONObject params = getParams(selectedDate);
 
         service.getEventsByDay(params, new ServerCallback() {
             @Override
             public void onSuccess(Object result) {
                 events = (List<Event>) result;
-                Log.d(".EventsListFragment", events.toString());
-
-                EventAdapter eventAdapter = new EventAdapter(events, onEventsListListener);
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                listRecyclerView.setAdapter(eventAdapter);
-                listRecyclerView.setLayoutManager(layoutManager);
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listRecyclerView.getContext(),
-                        layoutManager.getOrientation());
-                listRecyclerView.addItemDecoration(dividerItemDecoration);
-                eventAdapter.notifyDataSetChanged();
             }
+
         });
 
-        return view;
-    }
-
-
-    public void addCalendar(){
         CalendarView calendarView = new CalendarView(this.getContext());
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(90, 160, 80, 40);
+        layoutParams.setMargins(10, 160, 10, 40);
         calendarView.setLayoutParams(layoutParams);
+        df = new SimpleDateFormat("dd/MM/yyyy");
 
         linearLayoutCalendar.addView(calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -134,13 +124,31 @@ public class CalendarFragment extends Fragment {
                 c.set(Calendar.YEAR, year);
                 c.set(Calendar.MONTH, month);
                 c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                selectedDate = (new StringBuilder().append(dayOfMonth).append("/").append(month + 1).append("/").append(year)).toString();
+                
+                selectedDate = df.format(c.getTime());
                 ((MainActivity) getActivity()).getSupportActionBar().setTitle(selectedDate);
+
+                eventsFiltered.clear();
+
+                for (Event e : events) {
+                    eventDate = df.format(e.getDate());
+                    if(selectedDate.equals(eventDate)){
+                        eventsFiltered.add(e);
+                    }
+                }
+                EventAdapter eventAdapter = new EventAdapter(eventsFiltered, onEventsListListener);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                listRecyclerView.setAdapter(eventAdapter);
+                listRecyclerView.setLayoutManager(layoutManager);
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listRecyclerView.getContext(),
+                        layoutManager.getOrientation());
+                listRecyclerView.addItemDecoration(dividerItemDecoration);
+                eventAdapter.notifyDataSetChanged();
             }
         });
-
+        return view;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -152,7 +160,7 @@ public class CalendarFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-    
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflator) {
         menu.clear();
