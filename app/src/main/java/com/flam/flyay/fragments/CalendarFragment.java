@@ -105,6 +105,20 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onSuccess(Object result) {
                 events = (List<Event>) result;
+                for (Event e : events) {
+                    eventDate = df.format(e.getDate());
+                    if(selectedDate.equals(eventDate)){
+                        eventsFiltered.add(e);
+                    }
+                }
+                EventAdapter eventAdapter = new EventAdapter(eventsFiltered, onEventsListListener);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                listRecyclerView.setAdapter(eventAdapter);
+                listRecyclerView.setLayoutManager(layoutManager);
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listRecyclerView.getContext(),
+                        layoutManager.getOrientation());
+                listRecyclerView.addItemDecoration(dividerItemDecoration);
+                eventAdapter.notifyDataSetChanged();
             }
 
         });
@@ -124,7 +138,7 @@ public class CalendarFragment extends Fragment {
                 c.set(Calendar.YEAR, year);
                 c.set(Calendar.MONTH, month);
                 c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                
+
                 selectedDate = df.format(c.getTime());
                 ((MainActivity) getActivity()).getSupportActionBar().setTitle(selectedDate);
 
