@@ -124,7 +124,6 @@ public class CategoriesFieldFragment extends Fragment {
         horizontalScrollView(layout, buttonsLayout);
 
         final List<Button> buttons = new ArrayList<>();
-        final AddEventSubCategoryFragment fragment = new AddEventSubCategoryFragment();
 
         for (final Object i : categoryList) {
             final Button btn = new Button(this.getContext());
@@ -151,22 +150,22 @@ public class CategoriesFieldFragment extends Fragment {
                     if(background instanceof ColorDrawable)
                         color = ((ColorDrawable) background).getColor();
 
-                    clearAllButtonBackground(buttons);
+                    clearOtherButtonBackground(buttons, btn);
                     switch(categoryName) {
                         case "FINANCES":
-                            openOrCloseSubcategory(color, btn, fragment, CategoryEnum.FINANCES);
+                            openOrCloseSubcategory(color, btn, new AddEventSubCategoryFragment(), CategoryEnum.FINANCES);
                             break;
                         case "WELLNESS":
-                            openOrCloseSubcategory(color, btn, fragment, CategoryEnum.WELLNESS);
+                            openOrCloseSubcategory(color, btn, new AddEventSubCategoryFragment(), CategoryEnum.WELLNESS);
                             break;
                         case "FESTIVITY":
-                            openOrCloseSubcategory(color, btn, fragment, CategoryEnum.FESTIVITY);
+                            openOrCloseSubcategory(color, btn, new AddEventSubCategoryFragment(), CategoryEnum.FESTIVITY);
                             break;
                         case "STUDY":
-                            openOrCloseSubcategory(color, btn, fragment, CategoryEnum.STUDY);
+                            openOrCloseSubcategory(color, btn, new AddEventSubCategoryFragment(), CategoryEnum.STUDY);
                             break;
                         case "FREE_TIME":
-                            openOrCloseSubcategory(color, btn, fragment, CategoryEnum.FREE_TIME);
+                            openOrCloseSubcategory(color, btn, new AddEventSubCategoryFragment(), CategoryEnum.FREE_TIME);
                             break;
                     }
                 }
@@ -192,13 +191,16 @@ public class CategoriesFieldFragment extends Fragment {
             btn.setBackgroundColor(Color.parseColor(categoryEnum.color));
             addFragment(fragment, createParamsEventsFragment(categoryEnum));
         } else {
+            System.out.println("IL COLORE E' DIVERSO DA TRASPARENT");
             removeFragment(fragment);
         }
     }
 
-    private void clearAllButtonBackground(List<Button> buttons) {
-        for(Button btn: buttons)
-            btn.setBackgroundColor(Color.TRANSPARENT);
+    private void clearOtherButtonBackground(List<Button> buttons, Button excluding) {
+        for(Button btn: buttons){
+            if(btn != excluding)
+                btn.setBackgroundColor(Color.TRANSPARENT);
+        }
     }
 
 
@@ -221,7 +223,6 @@ public class CategoriesFieldFragment extends Fragment {
     }
 
     public void removeFragment(Fragment fragment){
-
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.remove(fragment);
         transaction.commit();
