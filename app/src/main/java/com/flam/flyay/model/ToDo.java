@@ -12,7 +12,7 @@ public class ToDo implements Serializable {
     private boolean checked;
     private int image_pos;
 
-
+    public ToDo() {}
 
     public ToDo(int id, String title, String image, double lifetimer, boolean checked){
         this.id = id;
