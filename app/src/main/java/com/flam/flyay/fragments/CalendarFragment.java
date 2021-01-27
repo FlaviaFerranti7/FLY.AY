@@ -54,6 +54,7 @@ public class CalendarFragment extends Fragment {
     private EventService service;
     private HomeFragment.OnEventsListListener onEventsListListener;
     private List<Event> events;
+    private List<Event> eventsFiltered;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -82,6 +83,7 @@ public class CalendarFragment extends Fragment {
 
         this.service = new EventService(this.getContext());
         this.events = new ArrayList<>();
+        this.eventsFiltered = new ArrayList<>();
 
         linearLayoutCalendar = view.findViewById(R.id.fragment_calendar);
 
@@ -101,8 +103,13 @@ public class CalendarFragment extends Fragment {
             public void onSuccess(Object result) {
                 events = (List<Event>) result;
                 Log.d(".EventsListFragment", events.toString());
+                for (Event e : events) {
+                    if(e.getDate().toString().equals(selectedDate)){
+                        eventsFiltered.add(e);
+                    }
+                }
 
-                EventAdapter eventAdapter = new EventAdapter(events, onEventsListListener);
+                EventAdapter eventAdapter = new EventAdapter(eventsFiltered, onEventsListListener);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 listRecyclerView.setAdapter(eventAdapter);
                 listRecyclerView.setLayoutManager(layoutManager);
