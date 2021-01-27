@@ -2,6 +2,8 @@ package com.flam.flyay.fragments;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -24,6 +27,7 @@ import com.flam.flyay.R;
 import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.Utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,12 +36,7 @@ import static com.flam.flyay.R.color.colorAccent;
 
 public class CategoriesFieldFragment extends Fragment {
 
-    private String btnString;
-    private Boolean clicked;
-    private String btnName;
-
     private LinearLayout linearLayout;
-
     private List<String> categoryList;
 
     public CategoriesFieldFragment() {
@@ -49,8 +48,6 @@ public class CategoriesFieldFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.categories_field_fragment, container, false);
-
-        clicked = false;
 
         categoryList = Arrays.asList(CategoryEnum.FREE_TIME.name, CategoryEnum.STUDY.name, CategoryEnum.WELLNESS.name,
                 CategoryEnum.FESTIVITY.name, CategoryEnum.FINANCES.name);
@@ -126,9 +123,13 @@ public class CategoriesFieldFragment extends Fragment {
 
         horizontalScrollView(layout, buttonsLayout);
 
+        final List<Button> buttons = new ArrayList<>();
+        final AddEventSubCategoryFragment fragment = new AddEventSubCategoryFragment();
+
         for (final Object i : categoryList) {
             final Button btn = new Button(this.getContext());
             btn.setText(String.valueOf(i));
+            buttons.add(btn);
             LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
@@ -142,31 +143,38 @@ public class CategoriesFieldFragment extends Fragment {
             btn.setOnClickListener(new View.OnClickListener() {
                 @SuppressLint("ResourceAsColor")
                 public void onClick(View view) {
-                    AddEventSubCategoryFragment fragment = new AddEventSubCategoryFragment();
-                    btnString = String.valueOf(i);
-                    if (!clicked){
-                        btnName = btnString;
-                        addFragment(fragment);
-                        btn.setBackgroundColor(btn.getContext().getResources().getColor(colorAccent));
-                        clicked = true;
-                    } else {
-                        if (btnName.equals(btnString)){
-                            fragment = (AddEventSubCategoryFragment) getActivity().getSupportFragmentManager().findFragmentById(linearLayout.getId());
-                            removeFragment(fragment);
-                            btn.setBackgroundColor(Color.TRANSPARENT);
-                            clicked = false;
-                        } else {
-                            btnName = btnString;
-                            fragment = (AddEventSubCategoryFragment) getActivity().getSupportFragmentManager().findFragmentById(linearLayout.getId());
-                            removeFragment(fragment);
-                            addFragment(fragment);
-                            clicked = true;
-                        }
+                    String categoryName = String.valueOf(i);
+
+                    Drawable background = btn.getBackground();
+                    int color = Color.TRANSPARENT;
+
+                    if(background instanceof ColorDrawable)
+                        color = ((ColorDrawable) background).getColor();
+
+                    clearAllButtonBackground(buttons);
+                    switch(categoryName) {
+                        case "FINANCES":
+                            openOrCloseSubcategory(color, btn, fragment, CategoryEnum.FINANCES);
+                            break;
+                        case "WELLNESS":
+                            openOrCloseSubcategory(color, btn, fragment, CategoryEnum.WELLNESS);
+                            break;
+                        case "FESTIVITY":
+                            openOrCloseSubcategory(color, btn, fragment, CategoryEnum.FESTIVITY);
+                            break;
+                        case "STUDY":
+                            openOrCloseSubcategory(color, btn, fragment, CategoryEnum.STUDY);
+                            break;
+                        case "FREE_TIME":
+                            openOrCloseSubcategory(color, btn, fragment, CategoryEnum.FREE_TIME);
+                            break;
                     }
                 }
             });
         }
     }
+
+
 
     public void addTextViewAndButtons(Integer obj, String text, final List<String> categoryList) {
 
@@ -179,6 +187,20 @@ public class CategoriesFieldFragment extends Fragment {
 
     }
 
+    private void openOrCloseSubcategory(int color, Button btn, Fragment fragment, CategoryEnum categoryEnum) {
+        if(color == Color.TRANSPARENT) {
+            btn.setBackgroundColor(Color.parseColor(categoryEnum.color));
+            addFragment(fragment, createParamsEventsFragment(categoryEnum));
+        } else {
+            removeFragment(fragment);
+        }
+    }
+
+    private void clearAllButtonBackground(List<Button> buttons) {
+        for(Button btn: buttons)
+            btn.setBackgroundColor(Color.TRANSPARENT);
+    }
+
 
     public void addLineSeparator() {
         LinearLayout lineLayout = new LinearLayout(this.getContext());
@@ -188,11 +210,12 @@ public class CategoriesFieldFragment extends Fragment {
         linearLayout.addView(lineLayout);
     }
 
-    public void addFragment(Fragment fragment){
+    public void addFragment(Fragment fragment, Bundle params){
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragment.setArguments(createParamsEventsFragment());
-        transaction.add(linearLayout.getId(), fragment, fragment.getClass().getName());
+        if(params != null)
+            fragment.setArguments(params);
+        transaction.replace(linearLayout.getId(), fragment, fragment.getClass().getName());
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -204,9 +227,9 @@ public class CategoriesFieldFragment extends Fragment {
         transaction.commit();
     }
 
-    private Bundle createParamsEventsFragment() {
+    private Bundle createParamsEventsFragment(CategoryEnum categoryEnum) {
         Bundle bundle = new Bundle();
-        bundle.putString("btnString", btnString);
+        bundle.putString("btnString", categoryEnum.name);
         return bundle;
     }
 
