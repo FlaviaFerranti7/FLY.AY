@@ -108,4 +108,19 @@ public class InputField {
     public void setMandatory(boolean mandatory) {
         this.mandatory = mandatory;
     }
+
+    @Override
+    public String toString() {
+        return "InputField{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", labelName='" + labelName + '\'' +
+                ", fieldType='" + fieldType + '\'' +
+                ", fieldOrderId=" + fieldOrderId +
+                ", fieldParentId=" + fieldParentId +
+                ", min=" + min +
+                ", max=" + max +
+                ", mandatory=" + mandatory +
+                '}';
+    }
 }

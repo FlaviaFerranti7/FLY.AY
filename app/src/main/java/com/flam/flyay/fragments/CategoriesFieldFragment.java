@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.flam.flyay.R;
@@ -84,6 +86,7 @@ public class CategoriesFieldFragment extends Fragment {
 
         TextView textView = new TextView(this.getContext());
         textView.setText(text);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
         LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -245,6 +248,10 @@ public class CategoriesFieldFragment extends Fragment {
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             transaction.remove(subcategoryFragment);
             transaction.commit();
+
+            FragmentManager fm = getFragmentManager();
+            AddEventFormFragment dynamicFormFragment = (AddEventFormFragment)fm.findFragmentById(R.id.fragment_container);
+            dynamicFormFragment.hideDynamicForm();
         }
     }
 

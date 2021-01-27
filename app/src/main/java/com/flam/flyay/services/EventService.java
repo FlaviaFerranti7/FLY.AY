@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.flam.flyay.model.Event;
+import com.flam.flyay.model.InputField;
 import com.flam.flyay.util.ConverterFromJsonToModel;
 import com.flam.flyay.util.MockServerUrl;
 import com.flam.flyay.util.Utils;
@@ -29,8 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventService {
-    private Context context;
-    private AppRequest appRequest;
+    private final Context context;
+    private final AppRequest appRequest;
 
     public EventService(Context context) {
         this.context = context;
@@ -59,6 +60,17 @@ public class EventService {
         });
     }
 
+    public void getInputFieldBySubcategory(JSONObject params, final ServerCallback callback) {
+        Log.d(".EventService", "POST - SubcategoryItems");
+        AppRequest.jsonObjectPOSTRequest(context, MockServerUrl.SUBCATEGORY_ITEMS.url, params, new ServerCallback() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onSuccess(Object result) {
+                getInputFieldList((JSONObject) result, callback);
+            }
+        });
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void getEventsList(JSONObject requestResult, final ServerCallback callback) {
         List<Event> events = new ArrayList<>();
@@ -74,7 +86,6 @@ public class EventService {
                 events.add(event);
             }
             Utils.orderEventListBy(events, "startingTime");
-            System.out.println("AFTER ORDER:\n" + events);
             callback.onSuccess(events);
         } catch (JSONException e) {
             Log.getStackTraceString(e);
@@ -82,22 +93,21 @@ public class EventService {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getInputFieldBySubcategory(JSONObject requestResult, final ServerCallback callback) {
-        List<Event> events = new ArrayList<>();
-        JSONArray containerResponse = new JSONArray();
+    public void getInputFieldList(JSONObject requestResult, final ServerCallback callback) {
+        Log.d(".EventService", "json response: " + requestResult.toString());
+        List<InputField> inputFields = new ArrayList<>();
+        JSONArray containerResponse;
         try {
             containerResponse = requestResult.getJSONArray("return");
 
             for(int i = 0; i < containerResponse.length(); i ++) {
                 JSONObject currentJSONObject = containerResponse.getJSONObject(i);
-                Event event = ConverterFromJsonToModel.converterFromJsonToEvent(currentJSONObject);
-                Log.d(".EventsListFragment", event.toString());
+                InputField inputField = ConverterFromJsonToModel.converterFromJsonToInputFiled(currentJSONObject);
+                Log.d(".EventService", "input field received: " + inputField.toString());
 
-                events.add(event);
+                inputFields.add(inputField);
             }
-            Utils.orderEventListBy(events, "startingTime");
-            System.out.println("AFTER ORDER:\n" + events);
-            callback.onSuccess(events);
+            callback.onSuccess(inputFields);
         } catch (JSONException e) {
             Log.getStackTraceString(e);
         }

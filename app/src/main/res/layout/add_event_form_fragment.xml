@@ -10,6 +10,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp"
+        android:id="@+id/touchInterceptorFormFragment"
+        android:layout_marginBottom="?attr/actionBarSize"
         >
 
         <com.google.android.material.textfield.TextInputLayout
@@ -46,8 +48,7 @@
             android:id="@+id/dynamic_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:padding="5dp"
             />
     </LinearLayout>
 

@@ -4,7 +4,10 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +18,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.flam.flyay.R;
 import com.flam.flyay.util.CategoryEnum;
@@ -88,6 +93,7 @@ public class AddEventSubCategoryFragment extends Fragment {
 
         TextView textView = new TextView(this.getContext());
         textView.setText(text);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
         LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
@@ -127,6 +133,7 @@ public class AddEventSubCategoryFragment extends Fragment {
 
         for (final Object i : subCategoryList) {
             final Button btn = new Button(this.getContext());
+            final String subcategoryName = String.valueOf(i);
             btn.setText(String.valueOf(i));
             buttons.add(btn);
             LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
@@ -139,6 +146,7 @@ public class AddEventSubCategoryFragment extends Fragment {
             buttonsLayout.addView(btn);
 
             btn.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
                 @SuppressLint("ResourceAsColor")
                 public void onClick(View view) {
 
@@ -151,19 +159,19 @@ public class AddEventSubCategoryFragment extends Fragment {
                     clearOtherButtonBackground(buttons, btn);
                     switch(btnString) {
                         case "FINANCES":
-                            changeStatusButton(color, btn, CategoryEnum.FINANCES);
+                            changeStatusButton(color, btn, CategoryEnum.FINANCES, subcategoryName);
                             break;
                         case "WELLNESS":
-                            changeStatusButton(color, btn, CategoryEnum.WELLNESS);
+                            changeStatusButton(color, btn, CategoryEnum.WELLNESS, subcategoryName);
                             break;
                         case "FESTIVITY":
-                            changeStatusButton(color, btn, CategoryEnum.FESTIVITY);
+                            changeStatusButton(color, btn, CategoryEnum.FESTIVITY, subcategoryName);
                             break;
                         case "STUDY":
-                            changeStatusButton(color, btn, CategoryEnum.STUDY);
+                            changeStatusButton(color, btn, CategoryEnum.STUDY, subcategoryName);
                             break;
                         case "FREE_TIME":
-                            changeStatusButton(color, btn, CategoryEnum.FREE_TIME);
+                            changeStatusButton(color, btn, CategoryEnum.FREE_TIME, subcategoryName);
                             break;
                     }
                 }
@@ -172,12 +180,19 @@ public class AddEventSubCategoryFragment extends Fragment {
         }
     }
 
-    private void changeStatusButton(int color, Button btn, CategoryEnum categoryEnum) {
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void changeStatusButton(int color, Button btn, CategoryEnum categoryEnum, String subcategoryName) {
+        FragmentManager fm = getFragmentManager();
+        AddEventFormFragment dynamicFormFragment = (AddEventFormFragment)fm.findFragmentById(R.id.fragment_container);
+
         if(color == Color.TRANSPARENT) {
-            //TODO implements 'GET VALUE' logic
             btn.setBackgroundColor(Color.parseColor(categoryEnum.color));
-        } else
+            dynamicFormFragment.activeDynamicForm(subcategoryName);
+        } else {
             btn.setBackgroundColor(Color.TRANSPARENT);
+            dynamicFormFragment.hideDynamicForm();
+        }
+
     }
 
     private void clearOtherButtonBackground(List<Button> buttons, Button excluding) {
@@ -193,7 +208,7 @@ public class AddEventSubCategoryFragment extends Fragment {
         layout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.addView(layout);
 
-        addTextView(layout, text, 16, 16);
+        addTextView(layout, text, 5, 5);
         addButtons(layout, categoryList);
 
     }

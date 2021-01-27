@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import com.flam.flyay.fragments.AddEventSubCategoryFragment;
 import com.flam.flyay.fragments.CategoriesFieldFragment;
 import com.flam.flyay.model.InputField;
 import com.flam.flyay.util.CategoryEnum;
+import com.flam.flyay.util.TouchInterceptor;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -44,6 +46,8 @@ public class DynamicFormAdapter extends RecyclerView.Adapter<DynamicFormAdapter.
             textInputLayout = itemView.findViewById(R.id.dynamic_form_text_input_container);
             textInputEditText = itemView.findViewById(R.id.dynamic_form_text_input_value);
             fragmentContainer = itemView.findViewById(R.id.dynamic_form_fragment_container);
+
+
         }
     }
 
@@ -52,7 +56,7 @@ public class DynamicFormAdapter extends RecyclerView.Adapter<DynamicFormAdapter.
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        Log.d(".EventAdapter",inputField.toString());
+        Log.d(".DynamicFormAdapter",inputField.toString());
         final View contactView = inflater.inflate(R.layout.dynamic_form_adapter_layout, parent, false);
 
         return new DynamicFormAdapter.ViewHolder(contactView);
@@ -62,13 +66,18 @@ public class DynamicFormAdapter extends RecyclerView.Adapter<DynamicFormAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         InputField field = inputField.get(position);
 
+        Log.d(".DynamicFormAdapter", field.toString());
+
         switch(field.getFieldType()) {
-            case "STRING":
+            case "TEXT":
+            case "EMAIL":
+            case "DATE":
                 holder.textInputLayout.setVisibility(View.VISIBLE);
                 holder.textInputEditText.setVisibility(View.VISIBLE);
                 holder.textInputEditText.setHint(field.getLabelName() != null ? field.getLabelName() : "");
 
                 break;
+                /*
             case "CATEGORY":
                 holder.fragmentContainer.setVisibility(View.VISIBLE);
                 addFragment(new CategoriesFieldFragment(), null);
@@ -80,6 +89,7 @@ public class DynamicFormAdapter extends RecyclerView.Adapter<DynamicFormAdapter.
                 bundle.putString("btnString", CategoryEnum.STUDY.name);
                 addFragment(new AddEventSubCategoryFragment(), null);
                 break;
+                */
             default:
                 break;
         }

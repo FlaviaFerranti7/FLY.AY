@@ -70,37 +70,52 @@
     }
   },
   "subcategoryItems": {
-    "return": {
-      "itemsBySubcategory": [
+    "return": [
         {
           "id": 34,
-          "name": "title",
-          "labelName": "Title",
-          "fieldType": "STRING",
+          "name": "teacherName",
+          "labelName": "Teacher Name",
+          "fieldType": "TEXT",
           "fieldOrderId": 1,
           "min": 2,
           "max": 20,
-          "mandatory": true
+          "mandatory": false
         },
         {
           "id": 35,
-          "name": "category",
-          "labelName": "Category",
-          "fieldType": "CATEGORY",
+          "name": "teacherEmail",
+          "labelName": "Teacher Email",
+          "fieldType": "EMAIL",
           "fieldOrderId": 2,
-          "mandatory": true
+          "min": 2,
+          "max": 20,
+          "mandatory": false
+        },
+        {
+          "id": 35,
+          "name": "teacherReceiptDate",
+          "labelName": "Teacher Receipt Date",
+          "fieldType": "DATE",
+          "fieldOrderId": 3,
+          "mandatory": false
         },
         {
           "id": 36,
-          "name": "subcategory",
-          "labelName": "Subcategory",
-          "fieldType": "SUBCATEGORY",
+          "name": "teacherReceiptRoom",
+          "labelName": "Teacher Receipt Room",
+          "fieldType": "TEXT",
           "fieldOrderId": 3,
-          "fieldParentId": 35,
-          "mandatory": true
+          "mandatory": false
+        },
+        {
+          "id": 36,
+          "name": "teacherReceiptRoom",
+          "labelName": "TEST",
+          "fieldType": "TEXT",
+          "fieldOrderId": 3,
+          "mandatory": false
         }
       ]
-    }
   },
   "userSigninOK": {
     "return": {
