@@ -31,6 +31,7 @@ import com.flam.flyay.services.ServerCallback;
 import com.flam.flyay.services.ToDoService;
 import com.flam.flyay.util.ItemMoveCallback;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +48,9 @@ public class ToDoItemsFragment extends Fragment {
     private List<ToDoItems> listItems;
     private ArrayAdapter<String> itemsAdapter;
 
+    private TextInputLayout listTitleLayout;
+    private TextInputEditText listTitle;
+    private TextInputLayout addItemLayout;
     private TextInputEditText addedItem;
 
     public ToDoItemsFragment(){}
@@ -66,6 +70,9 @@ public class ToDoItemsFragment extends Fragment {
         final Button button = view.findViewById(R.id.btnAddItem);
 
         this.service = new ToDoService(this.getContext());
+        this.listTitleLayout = (TextInputLayout) view.findViewById(R.id.list_title_layout);
+        this.listTitle = (TextInputEditText) view.findViewById(R.id.list_title);
+        this.addItemLayout = (TextInputLayout) view.findViewById(R.id.etNewItemLayout);
         this.addedItem = (TextInputEditText) view.findViewById(R.id.etNewItem);
 
         Bundle arguments = getArguments();
@@ -77,9 +84,11 @@ public class ToDoItemsFragment extends Fragment {
             toDo = (ToDo) arguments.get("toDo");
         else return null;
 
-        ((ToDoActivity) getActivity()).getSupportActionBar().setTitle(toDo.getTitle());
+        ((ToDoActivity) getActivity()).getSupportActionBar().setTitle(" ");
         ((ToDoActivity) getActivity()).getSupportActionBar().setIcon(null);
         ((ToDoActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        listTitle.setText(toDo.getTitle());
 
         Log.d(".ToDoItemsFragment", "event received: " + toDo.toString());
 

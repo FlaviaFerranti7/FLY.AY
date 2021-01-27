@@ -17,10 +17,12 @@ import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 
 import com.flam.flyay.fragments.ToDoItemsFragment;
 import com.flam.flyay.fragments.ToDoListFragment;
 import com.flam.flyay.model.ToDo;
+import com.flam.flyay.util.TouchInterceptor;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import static android.graphics.Color.BLACK;
@@ -40,6 +42,9 @@ public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.
             setTheme(R.style.AppTheme);
         }
         setContentView(R.layout.activity_to_do);
+
+        RelativeLayout touchInterceptor = (RelativeLayout) findViewById(R.id.touchInterceptor);
+        touchInterceptor.setOnTouchListener(new TouchInterceptor(this));
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
