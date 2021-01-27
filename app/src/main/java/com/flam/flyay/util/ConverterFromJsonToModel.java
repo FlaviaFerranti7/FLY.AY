@@ -1,6 +1,7 @@
 package com.flam.flyay.util;
 
 import com.flam.flyay.model.Event;
+import com.flam.flyay.model.InputField;
 import com.flam.flyay.model.User;
 import com.flam.flyay.model.ToDo;
 import com.flam.flyay.model.subevent.FestivityEvent;
@@ -42,6 +43,10 @@ public class ConverterFromJsonToModel {
         }
 
         return event;
+    }
+
+    public static InputField converterFromJsonToInputFiled(JSONObject jsonToConvert) {
+        return new GsonBuilder().create().fromJson(jsonToConvert.toString(), InputField.class);
     }
 
     public static ToDo converterFromJsonToList(JSONObject jsonToConvert) {

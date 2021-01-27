@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         Bundle bundle = new Bundle();
         bundle.putSerializable("event", event);
 
-        getSupportActionBar().setTitle("Details");
+        getSupportActionBar().setTitle(event.getTitle());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setIcon(null);
 

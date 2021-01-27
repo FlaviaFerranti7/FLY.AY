@@ -30,7 +30,7 @@ import java.util.List;
 import static com.flam.flyay.R.color.colorAccent;
 
 
-public class AddEventTitleCategoriesFragment extends Fragment {
+public class CategoriesFieldFragment extends Fragment {
 
     private String btnString;
     private Boolean clicked;
@@ -40,7 +40,7 @@ public class AddEventTitleCategoriesFragment extends Fragment {
 
     private List<String> categoryList;
 
-    public AddEventTitleCategoriesFragment() {
+    public CategoriesFieldFragment() {
     }
 
     @SuppressLint("ResourceType")
@@ -48,7 +48,7 @@ public class AddEventTitleCategoriesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.add_event_title_categories_fragment, container, false);
+        final View view = inflater.inflate(R.layout.categories_field_fragment, container, false);
 
         clicked = false;
 
@@ -59,7 +59,6 @@ public class AddEventTitleCategoriesFragment extends Fragment {
         linearLayout.setId(2);
 
         addLineSeparator();
-        addIconAndEditText(R.drawable.ic_title,"Title");
         addTextViewAndButtons(R.drawable.ic_category, "Which category?", categoryList);
 
         return view;
@@ -93,38 +92,10 @@ public class AddEventTitleCategoriesFragment extends Fragment {
         layout.addView(textView);
     }
 
-    public void addEditText(LinearLayout layout, String hint, Integer marginLeft, Integer marginTop) {
-
-        EditText editText = new EditText(this.getContext());
-        editText.setHint(hint);
-        LinearLayout.LayoutParams editTextparams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
-        );
-        editTextparams.setMargins(Utils.convertDpToPixel(marginLeft), Utils.convertDpToPixel(marginTop),Utils.convertDpToPixel(32), 0);
-        editText.setLayoutParams(editTextparams);
-        editText.setTextSize(16);
-
-        layout.addView(editText);
-    }
-
     public void addIconAndTextView(LinearLayout layout, Integer obj, String text) {
 
         addIcon(layout, obj, 16, 16);
         addTextView(layout, text, 56, -19);
-
-        addLineSeparator();
-
-    }
-
-    public void addIconAndEditText(Integer obj, String hint) {
-
-        LinearLayout layout = new LinearLayout(this.getContext());
-        layout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.addView(layout);
-
-        addIcon(layout, obj, 16, 16);
-        addEditText(layout, hint, 48, -32);
 
         addLineSeparator();
 

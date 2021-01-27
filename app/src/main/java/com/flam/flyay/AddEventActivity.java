@@ -44,7 +44,7 @@ public class AddEventActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_add_event);
 
-        RelativeLayout touchInterceptor = (RelativeLayout) findViewById(R.id.touchInterceptor);
+        RelativeLayout touchInterceptor = (RelativeLayout) findViewById(R.id.touchInterceptorAddEvent);
         touchInterceptor.setOnTouchListener(new TouchInterceptor(this));
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);

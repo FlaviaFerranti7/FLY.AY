@@ -2,11 +2,14 @@ package com.flam.flyay.services;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,6 +40,7 @@ public class EventService {
     public void getEventsByDay(JSONObject params, final ServerCallback callback) {
         Log.d(".EventService", "GET - EventsByDay");
         appRequest.jsonObjectGETRequest(context, MockServerUrl.EVENT_DAY.url, params, new ServerCallback() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSuccess(Object result) {
                 getEventsList((JSONObject) result, callback);
@@ -47,6 +51,7 @@ public class EventService {
     public void getEventsByFilter(JSONObject params, final ServerCallback callback) {
         Log.d(".EventService", "POST - EventsByFilter");
         appRequest.jsonObjectPOSTRequest(context, MockServerUrl.EVENT_DAY.url, params, new ServerCallback() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSuccess(Object result) {
                 getEventsList((JSONObject) result, callback);
@@ -54,7 +59,30 @@ public class EventService {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void getEventsList(JSONObject requestResult, final ServerCallback callback) {
+        List<Event> events = new ArrayList<>();
+        JSONArray containerResponse = new JSONArray();
+        try {
+            containerResponse = requestResult.getJSONArray("return");
+
+            for(int i = 0; i < containerResponse.length(); i ++) {
+                JSONObject currentJSONObject = containerResponse.getJSONObject(i);
+                Event event = ConverterFromJsonToModel.converterFromJsonToEvent(currentJSONObject);
+                Log.d(".EventsListFragment", event.toString());
+
+                events.add(event);
+            }
+            Utils.orderEventListBy(events, "startingTime");
+            System.out.println("AFTER ORDER:\n" + events);
+            callback.onSuccess(events);
+        } catch (JSONException e) {
+            Log.getStackTraceString(e);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getInputFieldBySubcategory(JSONObject requestResult, final ServerCallback callback) {
         List<Event> events = new ArrayList<>();
         JSONArray containerResponse = new JSONArray();
         try {
