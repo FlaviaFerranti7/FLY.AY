@@ -2,6 +2,8 @@ package com.flam.flyay.fragments;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.SubCategoryEnum;
 import com.flam.flyay.util.Utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -120,9 +123,12 @@ public class AddEventSubCategoryFragment extends Fragment {
 
         horizontalScrollView(layout, buttonsLayout);
 
+        final List<Button> buttons = new ArrayList<>();
+
         for (final Object i : subCategoryList) {
             final Button btn = new Button(this.getContext());
             btn.setText(String.valueOf(i));
+            buttons.add(btn);
             LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
@@ -132,6 +138,52 @@ public class AddEventSubCategoryFragment extends Fragment {
             btn.setLayoutParams(btnparams);
             buttonsLayout.addView(btn);
 
+            btn.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("ResourceAsColor")
+                public void onClick(View view) {
+
+                    Drawable background = btn.getBackground();
+                    int color = Color.TRANSPARENT;
+
+                    if(background instanceof ColorDrawable)
+                        color = ((ColorDrawable) background).getColor();
+
+                    clearOtherButtonBackground(buttons, btn);
+                    switch(btnString) {
+                        case "FINANCES":
+                            changeStatusButton(color, btn, CategoryEnum.FINANCES);
+                            break;
+                        case "WELLNESS":
+                            changeStatusButton(color, btn, CategoryEnum.WELLNESS);
+                            break;
+                        case "FESTIVITY":
+                            changeStatusButton(color, btn, CategoryEnum.FESTIVITY);
+                            break;
+                        case "STUDY":
+                            changeStatusButton(color, btn, CategoryEnum.STUDY);
+                            break;
+                        case "FREE_TIME":
+                            changeStatusButton(color, btn, CategoryEnum.FREE_TIME);
+                            break;
+                    }
+                }
+            });
+
+        }
+    }
+
+    private void changeStatusButton(int color, Button btn, CategoryEnum categoryEnum) {
+        if(color == Color.TRANSPARENT) {
+            //TODO implements 'GET VALUE' logic
+            btn.setBackgroundColor(Color.parseColor(categoryEnum.color));
+        } else
+            btn.setBackgroundColor(Color.TRANSPARENT);
+    }
+
+    private void clearOtherButtonBackground(List<Button> buttons, Button excluding) {
+        for(Button btn: buttons){
+            if(btn != excluding)
+                btn.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 

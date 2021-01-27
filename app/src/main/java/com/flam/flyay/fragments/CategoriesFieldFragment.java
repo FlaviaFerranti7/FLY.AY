@@ -226,15 +226,6 @@ public class CategoriesFieldFragment extends Fragment {
         linearLayout.addView(lineLayout);
     }
 
-    public void addFragment(Fragment fragment, Bundle params){
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        if(params != null)
-            fragment.setArguments(params);
-        transaction.replace(linearLayout.getId(), fragment, fragment.getClass().getName());
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
     private void addSubcategoryFragment(Bundle params) {
         Fragment fragment = new AddEventSubCategoryFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -255,12 +246,6 @@ public class CategoriesFieldFragment extends Fragment {
             transaction.remove(subcategoryFragment);
             transaction.commit();
         }
-    }
-
-    public void removeFragment(Fragment fragment){
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.remove(fragment);
-        transaction.commit();
     }
 
     private Bundle createParamsEventsFragment(CategoryEnum categoryEnum) {
