@@ -1,5 +1,9 @@
 package com.flam.flyay.model.subevent;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.flam.flyay.model.Event;
 import com.flam.flyay.util.CategoryEnum;
 
@@ -7,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class FinancesEvent extends Event {
@@ -41,6 +46,7 @@ public class FinancesEvent extends Event {
         this.place = place;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public Map<String, Object> getValueEvent() {
         Map<String, Object> valueEvent = super.getValueEvent();
@@ -55,5 +61,16 @@ public class FinancesEvent extends Event {
     @NotNull
     public String toString() {
         return super.toString() + " price: " + price + " place: " + place;
+    }
+
+    @Override
+    public List<String> getKeySetSorted() {
+        List<String> keySetSorted = super.getKeySetSorted();
+        keySetSorted.add("price");
+        keySetSorted.add("place");
+
+
+        keySetSorted.add("note");
+        return keySetSorted;
     }
 }

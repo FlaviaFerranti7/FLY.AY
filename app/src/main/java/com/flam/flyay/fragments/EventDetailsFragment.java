@@ -51,17 +51,17 @@ public class EventDetailsFragment extends Fragment {
             event = (Event) arguments.get("event");
         else return null;
 
-
         Log.d(".EventDetailsFragment", "event received: " + event.toString());
-        System.out.println(event.getValueEvent());
-        EventDetailsAdapter eventDetailsAdapter = new EventDetailsAdapter(new ArrayList<>(event.getValueEvent().keySet()),
-                new ArrayList<>(event.getValueEvent().values()));
+
+        EventDetailsAdapter eventDetailsAdapter = new EventDetailsAdapter(event.getKeySetSorted(), event.getValueEvent());
         eventDetailsAdapter.notifyDataSetChanged();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         listRecyclerView.setLayoutManager(layoutManager);
         listRecyclerView.setAdapter(eventDetailsAdapter);
         return view;
     }
+
+
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {

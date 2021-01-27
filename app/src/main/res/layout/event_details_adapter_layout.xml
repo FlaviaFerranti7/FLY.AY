@@ -2,28 +2,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingBottom="5dp"
-    android:paddingTop="5dp"
-    android:paddingLeft="15dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/property_name_event_details"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="14sp"
-        android:padding="3dp"
-        android:gravity="start"
-        />
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:id="@+id/property_container"
+        >
 
-    <TextView
-        android:id="@+id/property_value_event_details"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:textSize="14sp"
-        android:padding="3dp"
-        />
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:id="@+id/icon_of_event_details_option"
+            android:padding="3dp"
+            />
 
+        <TextView
+            android:id="@+id/property_name_event_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:padding="3dp"
+            android:gravity="start"
+            android:text="prova"
+
+            />
+
+        <TextView
+            android:id="@+id/property_value_event_details"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="16sp"
+            android:padding="3dp"
+            android:layout_marginLeft="2dp"
+            android:text="prova"
+            android:layout_weight="1"
+            />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:id="@+id/accordion"
+            android:src="@drawable/ic_arrow_down"
+            android:padding="3dp"
+            android:layout_marginRight="15dp"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/accordion_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:visibility="gone"
+        android:paddingLeft="20dp"
+        />
 
 </LinearLayout>
