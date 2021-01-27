@@ -25,11 +25,13 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import com.flam.flyay.R;
 import com.flam.flyay.ToDoActivity;
 import com.flam.flyay.adapter.ToDoAdapter;
+import com.flam.flyay.adapter.ToDoItemsAdapter;
 import com.flam.flyay.model.ToDo;
 import com.flam.flyay.model.ToDoItems;
 import com.flam.flyay.services.ServerCallback;
 import com.flam.flyay.services.ToDoService;
 import com.flam.flyay.util.ItemMoveCallback;
+import com.flam.flyay.util.Utils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -44,9 +46,9 @@ import static com.flam.flyay.R.id.etNewItem;
 public class ToDoItemsFragment extends Fragment {
 
     private ToDoService service;
-    private List<String> items;
+    private ArrayList<String> items;
     private List<ToDoItems> listItems;
-    private ArrayAdapter<String> itemsAdapter;
+    private ToDoItemsAdapter itemsAdapter;
 
     private TextInputLayout listTitleLayout;
     private TextInputEditText listTitle;
@@ -62,6 +64,7 @@ public class ToDoItemsFragment extends Fragment {
 
     }
 
+    @SuppressLint("NewApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,8 +93,6 @@ public class ToDoItemsFragment extends Fragment {
 
         listTitle.setText(toDo.getTitle());
 
-        Log.d(".ToDoItemsFragment", "event received: " + toDo.toString());
-
         String listId = String.valueOf(toDo.getId());
         JSONObject params = getParams(listId);
 
@@ -102,11 +103,16 @@ public class ToDoItemsFragment extends Fragment {
                 public void onSuccess(Object result) {
                     listItems = (List<ToDoItems>) result;
                     items = new ArrayList<String>();
-                    itemsAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items);
-                    lvItems.setAdapter(itemsAdapter);
                     for(ToDoItems i: listItems){
                         items.add(i.getTitle());
                     }
+                    Log.d(".ToDoItemsFragment", "items: " + items);
+                    //instantiate custom adapter
+                    itemsAdapter = new ToDoItemsAdapter(listItems, items, getContext());
+
+                    //handle listview and assign adapter
+                    ListView lView = (ListView) view.findViewById(R.id.lvItems);
+                    lView.setAdapter(itemsAdapter);
                 }
             });
         } catch (JSONException e) {
@@ -117,31 +123,17 @@ public class ToDoItemsFragment extends Fragment {
 
         button.setOnClickListener(new View.OnClickListener() {
 
+            @SuppressLint("NewApi")
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-
                 String itemText = addedItem.getText().toString();
-                itemsAdapter.add(itemText);
-                addedItem.setText("");
-
+                if(!Utils.isEmptyOrBlank(itemText)) {
+                    itemsAdapter.add(itemText);
+                    addedItem.setText("");
+                }
             }
         });
-
-        lvItems.setOnItemLongClickListener(
-                new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> adapter,
-                                                   View item, int pos, long id) {
-                        // Remove the item within array at position
-                        items.remove(pos);
-                        // Refresh the adapter
-                        itemsAdapter.notifyDataSetChanged();
-                        // Return true consumes the long click event (marks it handled)
-                        return true;
-                    }
-
-                });
 
         return view;
     }
