@@ -70,7 +70,6 @@ public class ToDoItemsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_to_do_items, container, false);
-        final ListView lvItems = view.findViewById(R.id.lvItems);
         final Button button = view.findViewById(R.id.btnAddItem);
 
         this.service = new ToDoService(this.getContext());
@@ -105,7 +104,6 @@ public class ToDoItemsFragment extends Fragment {
                     listItems = (List<ToDoItems>) result;
 
                     itemsAdapter = new ToDoItemsAdapter(listItems, getContext());
-
                     ListView lView = (ListView) view.findViewById(R.id.lvItems);
                     lView.setAdapter(itemsAdapter);
                 }
@@ -198,7 +196,6 @@ public class ToDoItemsFragment extends Fragment {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
                 return true;
-            case R.id.delete_after:
             default:
                 return super.onOptionsItemSelected(item);
         }

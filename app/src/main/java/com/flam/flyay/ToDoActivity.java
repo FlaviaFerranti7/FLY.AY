@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 
 import com.flam.flyay.fragments.ToDoItemsFragment;
 import com.flam.flyay.fragments.ToDoListFragment;
+import com.flam.flyay.fragments.ToDoNewFragment;
 import com.flam.flyay.model.ToDo;
 import com.flam.flyay.util.TouchInterceptor;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -97,6 +98,18 @@ public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.
             menu.getItem(i).setVisible(false);
             if(menu.getItem(i).getItemId() == R.id.new_todo)
                 menu.getItem(i).setVisible(true);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.new_todo:
+                initializeFragments(new ToDoNewFragment(), null);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
         return true;
     }

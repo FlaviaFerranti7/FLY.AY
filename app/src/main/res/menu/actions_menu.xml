@@ -32,10 +32,10 @@
                 android:id="@+id/check_all"
                 android:icon="@drawable/ic_checkall"
                 android:title="@string/check_all" />
-            <item
+            <!--<item
                 android:id="@+id/delete_after"
                 android:icon="@drawable/ic_deleteafter"
-                android:title="@string/delete_after"/>
+                android:title="@string/delete_after"/> -->
             <item
                 android:id="@+id/delete"
                 android:icon="@drawable/ic_delete"

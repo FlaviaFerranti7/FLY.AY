@@ -31,7 +31,7 @@
         <item name="android:textSize">18dp</item>
     </style>
 
-     <style name="NavigationTheme" parent="AppTheme">
+    <style name="NavigationTheme" parent="AppTheme">
         <item name="itemIconTint">@drawable/selector</item>
         <item name="itemTextColor">@drawable/selector</item>
     </style>
