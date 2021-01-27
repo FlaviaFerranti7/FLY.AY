@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.IdRes;
@@ -25,6 +27,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.flam.flyay.R;
 import com.flam.flyay.util.CategoryEnum;
+import com.flam.flyay.util.TouchInterceptor;
 import com.flam.flyay.util.Utils;
 
 import java.util.ArrayList;
@@ -37,6 +40,7 @@ import static com.flam.flyay.R.color.colorAccent;
 public class CategoriesFieldFragment extends Fragment {
 
     private LinearLayout linearLayout;
+    private View fragmentContainer;
     private List<String> categoryList;
 
     public CategoriesFieldFragment() {
@@ -53,6 +57,7 @@ public class CategoriesFieldFragment extends Fragment {
                 CategoryEnum.FESTIVITY.name, CategoryEnum.FINANCES.name);
 
         linearLayout = view.findViewById(R.id.add_event_title_categories_fragment);
+        linearLayout.setOnTouchListener(new TouchInterceptor(getActivity()));
         linearLayout.setId(2);
 
         addLineSeparator();
@@ -139,10 +144,17 @@ public class CategoriesFieldFragment extends Fragment {
             btn.setClickable(true);
             buttonsLayout.addView(btn);
 
+
             btn.setOnClickListener(new View.OnClickListener() {
                 @SuppressLint("ResourceAsColor")
                 public void onClick(View view) {
                     String categoryName = String.valueOf(i);
+
+                    Fragment subcategoryFragment = getActivity().getSupportFragmentManager()
+                            .findFragmentByTag(AddEventSubCategoryFragment.class.getName());
+
+                    if(subcategoryFragment == null)
+                        subcategoryFragment = new AddEventSubCategoryFragment();
 
                     Drawable background = btn.getBackground();
                     int color = Color.TRANSPARENT;
@@ -153,19 +165,19 @@ public class CategoriesFieldFragment extends Fragment {
                     clearOtherButtonBackground(buttons, btn);
                     switch(categoryName) {
                         case "FINANCES":
-                            openOrCloseSubcategory(color, btn, new AddEventSubCategoryFragment(), CategoryEnum.FINANCES);
+                            openOrCloseSubcategory(color, btn, subcategoryFragment, CategoryEnum.FINANCES);
                             break;
                         case "WELLNESS":
-                            openOrCloseSubcategory(color, btn, new AddEventSubCategoryFragment(), CategoryEnum.WELLNESS);
+                            openOrCloseSubcategory(color, btn, subcategoryFragment, CategoryEnum.WELLNESS);
                             break;
                         case "FESTIVITY":
-                            openOrCloseSubcategory(color, btn, new AddEventSubCategoryFragment(), CategoryEnum.FESTIVITY);
+                            openOrCloseSubcategory(color, btn, subcategoryFragment, CategoryEnum.FESTIVITY);
                             break;
                         case "STUDY":
-                            openOrCloseSubcategory(color, btn, new AddEventSubCategoryFragment(), CategoryEnum.STUDY);
+                            openOrCloseSubcategory(color, btn, subcategoryFragment, CategoryEnum.STUDY);
                             break;
                         case "FREE_TIME":
-                            openOrCloseSubcategory(color, btn, new AddEventSubCategoryFragment(), CategoryEnum.FREE_TIME);
+                            openOrCloseSubcategory(color, btn, subcategoryFragment, CategoryEnum.FREE_TIME);
                             break;
                     }
                 }
@@ -181,7 +193,8 @@ public class CategoriesFieldFragment extends Fragment {
         layout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.addView(layout);
 
-        addIconAndTextView(layout, obj, text);
+        //addIconAndTextView(layout, obj, text);
+        addTextView(layout, text, 5, 5);
         addButtons(layout, categoryList);
 
     }
@@ -189,10 +202,11 @@ public class CategoriesFieldFragment extends Fragment {
     private void openOrCloseSubcategory(int color, Button btn, Fragment fragment, CategoryEnum categoryEnum) {
         if(color == Color.TRANSPARENT) {
             btn.setBackgroundColor(Color.parseColor(categoryEnum.color));
-            addFragment(fragment, createParamsEventsFragment(categoryEnum));
+            addSubcategoryFragment(createParamsEventsFragment(categoryEnum));
+            linearLayout.setVisibility(View.VISIBLE);
         } else {
-            System.out.println("IL COLORE E' DIVERSO DA TRASPARENT");
-            removeFragment(fragment);
+            btn.setBackgroundColor(Color.TRANSPARENT);
+            removeSubcategoryFragment();
         }
     }
 
@@ -213,13 +227,34 @@ public class CategoriesFieldFragment extends Fragment {
     }
 
     public void addFragment(Fragment fragment, Bundle params){
-
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         if(params != null)
             fragment.setArguments(params);
         transaction.replace(linearLayout.getId(), fragment, fragment.getClass().getName());
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    private void addSubcategoryFragment(Bundle params) {
+        Fragment fragment = new AddEventSubCategoryFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        if(params != null)
+            fragment.setArguments(params);
+        transaction.replace(linearLayout.getId(), fragment, fragment.getClass().getName());
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private void removeSubcategoryFragment() {
+        Fragment subcategoryFragment = getActivity().getSupportFragmentManager()
+                .findFragmentByTag(AddEventSubCategoryFragment.class.getName());
+
+        if(subcategoryFragment != null) {
+            Log.d(".CategoriesField", "remove current fragment " + subcategoryFragment);
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.remove(subcategoryFragment);
+            transaction.commit();
+        }
     }
 
     public void removeFragment(Fragment fragment){
