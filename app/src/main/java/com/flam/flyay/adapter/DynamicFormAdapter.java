@@ -1,12 +1,13 @@
 package com.flam.flyay.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,10 +16,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flam.flyay.R;
-import com.flam.flyay.fragments.AddEventSubCategoryFragment;
-import com.flam.flyay.fragments.CategoriesFieldFragment;
+import com.flam.flyay.fragments.DatePickerFragment;
 import com.flam.flyay.model.InputField;
-import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.TouchInterceptor;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -27,10 +26,12 @@ import java.util.List;
 
 public class DynamicFormAdapter extends RecyclerView.Adapter<DynamicFormAdapter.ViewHolder>{
     private List<InputField> inputField;
+    private Activity referActivity;
     private Context context;
 
-    public DynamicFormAdapter(List<InputField> inputField) {
+    public DynamicFormAdapter(List<InputField> inputField, Activity referActivity) {
         this.inputField = inputField;
+        this.referActivity = referActivity;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -58,7 +59,8 @@ public class DynamicFormAdapter extends RecyclerView.Adapter<DynamicFormAdapter.
         LayoutInflater inflater = LayoutInflater.from(context);
         Log.d(".DynamicFormAdapter",inputField.toString());
         final View contactView = inflater.inflate(R.layout.dynamic_form_adapter_layout, parent, false);
-
+        LinearLayout touchInterceptor = (LinearLayout) contactView.findViewById(R.id.dynamic_form_item_container);
+        touchInterceptor.setOnTouchListener(new TouchInterceptor(referActivity));
         return new DynamicFormAdapter.ViewHolder(contactView);
     }
 
@@ -71,18 +73,17 @@ public class DynamicFormAdapter extends RecyclerView.Adapter<DynamicFormAdapter.
         switch(field.getFieldType()) {
             case "TEXT":
             case "EMAIL":
-            case "DATE":
                 holder.textInputLayout.setVisibility(View.VISIBLE);
                 holder.textInputEditText.setVisibility(View.VISIBLE);
                 holder.textInputEditText.setHint(field.getLabelName() != null ? field.getLabelName() : "");
 
                 break;
-                /*
-            case "CATEGORY":
+            case "DATE":
                 holder.fragmentContainer.setVisibility(View.VISIBLE);
-                addFragment(new CategoriesFieldFragment(), null);
+                addFragment(new DatePickerFragment(), null);
 
                 break;
+                /*
             case "SUBCATEGORY":
                 holder.fragmentContainer.setVisibility(View.VISIBLE);
                 Bundle bundle = new Bundle();

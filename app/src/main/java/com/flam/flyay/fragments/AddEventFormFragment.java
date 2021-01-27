@@ -1,5 +1,6 @@
 package com.flam.flyay.fragments;
 
+import android.accessibilityservice.AccessibilityService;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -111,7 +112,7 @@ public class AddEventFormFragment extends Fragment {
                 object = (List<InputField>) result;
                 Log.d(".AddEventFromFragment", object.toString());
 
-                DynamicFormAdapter dynamicFormAdapter = new DynamicFormAdapter(object);
+                DynamicFormAdapter dynamicFormAdapter = new DynamicFormAdapter(object, getActivity());
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 listRecyclerView.setAdapter(dynamicFormAdapter);
                 listRecyclerView.setLayoutManager(layoutManager);

@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.flam.flyay.fragments.AddEventFormFragment;
@@ -47,6 +48,8 @@ public class AddEventActivity extends AppCompatActivity {
         RelativeLayout touchInterceptor = (RelativeLayout) findViewById(R.id.touchInterceptorAddEvent);
         touchInterceptor.setOnTouchListener(new TouchInterceptor(this));
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ab = getSupportActionBar();
