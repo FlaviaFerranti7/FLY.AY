@@ -46,7 +46,6 @@ import static com.flam.flyay.R.id.etNewItem;
 public class ToDoItemsFragment extends Fragment {
 
     private ToDoService service;
-    private ArrayList<String> items;
     private List<ToDoItems> listItems;
     private ToDoItemsAdapter itemsAdapter;
 
@@ -102,15 +101,9 @@ public class ToDoItemsFragment extends Fragment {
                 @Override
                 public void onSuccess(Object result) {
                     listItems = (List<ToDoItems>) result;
-                    items = new ArrayList<String>();
-                    for(ToDoItems i: listItems){
-                        items.add(i.getTitle());
-                    }
-                    Log.d(".ToDoItemsFragment", "items: " + items);
-                    //instantiate custom adapter
-                    itemsAdapter = new ToDoItemsAdapter(listItems, items, getContext());
 
-                    //handle listview and assign adapter
+                    itemsAdapter = new ToDoItemsAdapter(listItems, getContext());
+
                     ListView lView = (ListView) view.findViewById(R.id.lvItems);
                     lView.setAdapter(itemsAdapter);
                 }

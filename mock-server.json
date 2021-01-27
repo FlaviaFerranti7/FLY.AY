@@ -623,37 +623,31 @@
     "return": [
       {
         "id": 1,
-        "name": "item1",
         "title": "Jack Ryan",
         "checked": false
       },
       {
         "id": 2,
-        "name": "item2",
         "title": "Inception",
         "checked": true
       },
       {
         "id": 3,
-        "name": "item3",
         "title": "Interstellar",
         "checked": true
       },
       {
         "id": 4,
-        "name": "item4",
         "title": "The judge",
         "checked": false
       },
       {
         "id": 5,
-        "name": "item5",
         "title": "The mask",
         "checked": true
       },
       {
         "id": 6,
-        "name": "item6",
         "title": "Now you see me",
         "checked": true
       }
@@ -663,55 +657,46 @@
     "return": [
         {
           "id": 1,
-          "name": "item1",
           "title": "Bread",
           "checked": false
         },
         {
           "id": 2,
-          "name": "item2",
           "title": "Yogurt",
           "checked": true
         },
         {
           "id": 3,
-          "name": "item3",
           "title": "Milk",
           "checked": true
         },
         {
           "id": 4,
-          "name": "item4",
           "title": "Chicken",
           "checked": false
         },
         {
           "id": 5,
-          "name": "item5",
           "title": "Salad",
           "checked": true
         },
         {
           "id": 6,
-          "name": "item6",
           "title": "Tuna",
           "checked": true
         },
         {
           "id": 7,
-          "name": "item7",
           "title": "Pasta",
           "checked": false
         },
         {
           "id": 8,
-          "name": "item8",
           "title": "Apple",
           "checked": false
         },
         {
           "id": 9,
-          "name": "item9",
           "title": "Chocolate",
           "checked": true
         }
@@ -721,19 +706,16 @@
     "return": [
       {
         "id": 1,
-        "name": "item1",
         "title": "Beautiful Creatures",
         "checked": true
       },
       {
         "id": 2,
-        "name": "item2",
         "title": "Harry Potter",
         "checked": true
       },
       {
         "id": 3,
-        "name": "item3",
         "title": "The lord of the rings",
         "checked": true
       }

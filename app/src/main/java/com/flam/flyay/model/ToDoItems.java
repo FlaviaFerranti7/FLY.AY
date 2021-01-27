@@ -4,15 +4,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class ToDoItems {
     private int id;
-    private String name;
     private String title;
     private boolean checked;
 
     public ToDoItems() {}
 
-    public ToDoItems(int id, String name, String title, boolean checked) {
+    public ToDoItems(int id, String title, boolean checked) {
         this.id = id;
-        this.name = name;
         this.title = title;
         this.checked = checked;
     }
@@ -24,14 +22,6 @@ public class ToDoItems {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getTitle() {
@@ -52,6 +42,6 @@ public class ToDoItems {
 
     @NotNull
     public String toString() {
-        return "ListItems => id: " + this.id + "; name: " + this.name + "; title: " + this.title  + "; checked: " + this.checked;
+        return "ListItems => id: " + this.id + "; title: " + this.title  + "; checked: " + this.checked;
     }
 }
