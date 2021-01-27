@@ -1,5 +1,6 @@
 package com.flam.flyay.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
@@ -18,6 +19,8 @@ import com.flam.flyay.R;
 import com.flam.flyay.model.ToDoItems;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ToDoItemsAdapter extends BaseAdapter implements ListAdapter {
@@ -83,7 +86,6 @@ public class ToDoItemsAdapter extends BaseAdapter implements ListAdapter {
         todoItem.setTitle(itemText);
         todoItem.setChecked(false);
         todo_items.add(todoItem);
-        Log.d("prova :", todoItem.toString());
         notifyDataSetChanged();
 
     }
@@ -101,5 +103,38 @@ public class ToDoItemsAdapter extends BaseAdapter implements ListAdapter {
     @Override
     public long getItemId(int position) {
         return todo_items.get(position).getId();
+    }
+
+    public void deleteAll() {
+        todo_items.removeAll(todo_items);
+        notifyDataSetChanged();
+    }
+
+    public void un_check() {
+        int i=0;
+        for(ToDoItems tdi : todo_items){
+            if(tdi.isChecked()) i++;
+        }
+        if(i == todo_items.size()){
+            for(ToDoItems tdi : todo_items){
+                tdi.setChecked(false);
+            }
+        }
+        else {
+            for(ToDoItems tdi : todo_items){
+                tdi.setChecked(true);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    @SuppressLint("NewApi")
+    public void sort() {
+        Collections.sort(todo_items, new Comparator<ToDoItems>() {
+            public int compare(ToDoItems p1, ToDoItems p2) {
+                return p1.getTitle().compareTo(p2.getTitle());
+            }
+        });
+        notifyDataSetChanged();
     }
 }
