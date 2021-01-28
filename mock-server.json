@@ -95,7 +95,7 @@
           "id": 36,
           "name": "teacherReceiptDate",
           "labelName": "Teacher Receipt Date",
-          "fieldType": "DATE",
+          "fieldType": "BUTTONLIST",
           "fieldOrderId": 3,
           "mandatory": false
         },

@@ -32,7 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddEventPickersFragment extends Fragment {
+public class DateFieldFragment extends Fragment {
 
     private Button btnDate;
     private String selectedDate;
@@ -46,7 +46,7 @@ public class AddEventPickersFragment extends Fragment {
     private LinearLayout linearLayout;
 
 
-    public AddEventPickersFragment() {
+    public DateFieldFragment() {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

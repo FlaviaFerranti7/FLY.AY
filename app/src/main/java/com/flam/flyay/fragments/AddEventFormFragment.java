@@ -1,9 +1,7 @@
 package com.flam.flyay.fragments;
 
-import android.accessibilityservice.AccessibilityService;
 import android.os.Build;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,8 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -20,14 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.flam.flyay.R;
-import com.flam.flyay.adapter.DynamicFormAdapter;
-import com.flam.flyay.adapter.EventAdapter;
-import com.flam.flyay.model.Event;
 import com.flam.flyay.model.InputField;
 import com.flam.flyay.services.EventService;
 import com.flam.flyay.services.ServerCallback;
@@ -122,11 +112,6 @@ public class AddEventFormFragment extends Fragment {
 
                 clearDynamicForm();
 
-                RelativeLayout childLayout = new RelativeLayout(getContext());
-                LinearLayout.LayoutParams paramsLayout = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                childLayout.setLayoutParams(paramsLayout);
-
                 for(int i = 0; i < object.size(); i ++) {
                     InputField input = object.get(i);
                     switch (input.getFieldType()) {
@@ -156,11 +141,25 @@ public class AddEventFormFragment extends Fragment {
                             break;
                         case "DATE":
                             Log.d(".AddEventForm", "data picker received");
-                            addFragmentDynamically(new AddEventPickersFragment(), i);
+                            RelativeLayout childLayout = new RelativeLayout(getContext());
+                            LinearLayout.LayoutParams paramsLayout = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            childLayout.setLayoutParams(paramsLayout);
+
+                            dynamicForm.addView(childLayout, i);
+                            childLayout.setId(View.generateViewId());
+                            addFragment(new DateFieldFragment(), childLayout.getId());
                             break;
                         case "TIME":
                             Log.d(".AddEventForm", "time picker received");
-                            addFragmentDynamically(new AddEventPeriodicCheckboxFragment(), i);
+                            childLayout = new RelativeLayout(getContext());
+                            paramsLayout = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            childLayout.setLayoutParams(paramsLayout);
+
+                            dynamicForm.addView(childLayout, i);
+                            childLayout.setId(View.generateViewId());
+                            addFragment(new AddEventPeriodicCheckboxFragment(), childLayout.getId());
                             break;
                         default:
                             break;
