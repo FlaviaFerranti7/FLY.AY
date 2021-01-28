@@ -33,6 +33,9 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
 
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.WHITE;
+
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnEventsListListener{
     private Toolbar toolbar;
@@ -65,7 +68,14 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         currentDate = df.format(c.getTime());
 
         navView = findViewById(R.id.nav_view);
-        //navView.getMenu().getItem(2).setEnabled(false);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            navView.setBackgroundColor(BLACK);
+            toolbar.setBackgroundColor(BLACK);
+        }
+        else{
+            navView.setBackgroundColor(WHITE);
+            toolbar.setBackgroundColor(WHITE);
+        }
         navView.setSelectedItemId(R.id.home);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
