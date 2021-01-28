@@ -3,6 +3,7 @@ package com.flam.flyay.fragments;
 import android.accessibilityservice.AccessibilityService;
 import android.os.Build;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,8 +11,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -29,6 +32,8 @@ import com.flam.flyay.model.InputField;
 import com.flam.flyay.services.EventService;
 import com.flam.flyay.services.ServerCallback;
 import com.flam.flyay.util.TouchInterceptor;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +44,8 @@ import java.util.List;
 public class AddEventFormFragment extends Fragment {
     private EventService service;
     List<InputField> object = null;
-    RecyclerView listRecyclerView;
+    LinearLayout linearLayout;
+    LinearLayout dynamicForm;
 
     public AddEventFormFragment() {
     }
@@ -50,14 +56,16 @@ public class AddEventFormFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         System.out.println(".AddEventFormFragment: " + container);
         final View view = inflater.inflate(R.layout.add_event_form_fragment, container, false);
-        listRecyclerView = view.findViewById(R.id.dynamic_form);
         this.service = new EventService(getActivity());
-        LinearLayout linearLayout = view.findViewById(R.id.touchInterceptorFormFragment);
+        linearLayout = view.findViewById(R.id.touchInterceptorFormFragment);
+        dynamicForm = view.findViewById(R.id.dynamic_form);
+        dynamicForm.setId(View.generateViewId());
         linearLayout.setOnTouchListener(new TouchInterceptor(getActivity()));
 
         addFragment(new CategoriesFieldFragment(), null, R.id.category_fragment);
@@ -112,19 +120,78 @@ public class AddEventFormFragment extends Fragment {
                 object = (List<InputField>) result;
                 Log.d(".AddEventFromFragment", object.toString());
 
-                DynamicFormAdapter dynamicFormAdapter = new DynamicFormAdapter(object, getActivity());
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                listRecyclerView.setAdapter(dynamicFormAdapter);
-                listRecyclerView.setLayoutManager(layoutManager);
-                if(listRecyclerView.getVisibility() == View.GONE)
-                    listRecyclerView.setVisibility(View.VISIBLE);
-                dynamicFormAdapter.notifyDataSetChanged();
+                clearDynamicForm();
+
+                RelativeLayout childLayout = new RelativeLayout(getContext());
+                LinearLayout.LayoutParams paramsLayout = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                childLayout.setLayoutParams(paramsLayout);
+
+                for(int i = 0; i < object.size(); i ++) {
+                    InputField input = object.get(i);
+                    switch (input.getFieldType()) {
+                        case "TEXT":
+                        case "EMAIL":
+                            Log.d(".AddEventForm", "input text received");
+                            TextInputLayout textInputLayout=new TextInputLayout(getActivity());
+                            textInputLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT));
+
+                            TextInputEditText textInputEditText = new TextInputEditText(getContext());
+
+                            LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                            textInputEditText.setLayoutParams(editTextParams);
+
+                            textInputEditText.setTextSize(16);
+                            textInputLayout.setHint(input.getLabelName());
+                            textInputLayout.setFocusable(true);
+                            textInputLayout.setFocusableInTouchMode(true);
+                            textInputLayout.setEndIconMode(TextInputLayout.END_ICON_CLEAR_TEXT);
+
+                            textInputLayout.addView(textInputEditText);
+                            dynamicForm.addView(textInputLayout, i);
+
+                            break;
+                        case "DATE":
+                            Log.d(".AddEventForm", "data picker received");
+                            addFragmentDynamically(new AddEventPickersFragment(), i);
+                            break;
+                        case "TIME":
+                            Log.d(".AddEventForm", "time picker received");
+                            addFragmentDynamically(new AddEventPeriodicCheckboxFragment(), i);
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
         });
     }
 
-    public void hideDynamicForm() {
-        listRecyclerView.setVisibility(View.GONE);
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public void addFragmentDynamically(Fragment fragment, int index) {
+        RelativeLayout childLayout = new RelativeLayout(getContext());
+        LinearLayout.LayoutParams paramsLayout = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        childLayout.setLayoutParams(paramsLayout);
+
+        dynamicForm.addView(childLayout, index);
+        childLayout.setId(View.generateViewId());
+        addFragment(fragment, childLayout.getId());
+    }
+
+    public void addFragment(Fragment fragment, int id){
+        Log.d(".AddEventForm", "fragment to add: " + fragment);
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.add(id, fragment, fragment.getClass().getName());
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void clearDynamicForm() {
+        dynamicForm.removeAllViews();
     }
 
     private JSONObject getParams(String subcategory) {

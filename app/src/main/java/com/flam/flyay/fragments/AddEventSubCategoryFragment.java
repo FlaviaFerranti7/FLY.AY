@@ -190,7 +190,7 @@ public class AddEventSubCategoryFragment extends Fragment {
             dynamicFormFragment.activeDynamicForm(subcategoryName);
         } else {
             btn.setBackgroundColor(Color.TRANSPARENT);
-            dynamicFormFragment.hideDynamicForm();
+            dynamicFormFragment.clearDynamicForm();
         }
 
     }

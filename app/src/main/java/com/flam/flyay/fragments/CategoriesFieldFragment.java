@@ -251,7 +251,7 @@ public class CategoriesFieldFragment extends Fragment {
 
             FragmentManager fm = getFragmentManager();
             AddEventFormFragment dynamicFormFragment = (AddEventFormFragment)fm.findFragmentById(R.id.fragment_container);
-            dynamicFormFragment.hideDynamicForm();
+            dynamicFormFragment.clearDynamicForm();
         }
     }
 

@@ -92,7 +92,7 @@
           "mandatory": false
         },
         {
-          "id": 35,
+          "id": 36,
           "name": "teacherReceiptDate",
           "labelName": "Teacher Receipt Date",
           "fieldType": "DATE",
@@ -100,7 +100,7 @@
           "mandatory": false
         },
         {
-          "id": 36,
+          "id": 37,
           "name": "teacherReceiptRoom",
           "labelName": "Teacher Receipt Room",
           "fieldType": "TEXT",
@@ -108,14 +108,38 @@
           "mandatory": false
         },
         {
-          "id": 36,
+          "id": 38,
           "name": "teacherReceiptRoom",
           "labelName": "TEST",
           "fieldType": "TEXT",
           "fieldOrderId": 3,
           "mandatory": false
-        }
-      ]
+        },
+        {
+          "id": 36,
+          "name": "teacherReceiptDate",
+          "labelName": "Teacher Receipt Date",
+          "fieldType": "DATE",
+          "fieldOrderId": 3,
+          "mandatory": false
+        },
+        {
+          "id": 39,
+          "name": "teacherReceiptRoom",
+          "labelName": "TEST2",
+          "fieldType": "TEXT",
+          "fieldOrderId": 3,
+          "mandatory": false
+        },
+      {
+        "id": 36,
+        "name": "teacherReceiptDate",
+        "labelName": "Teacher Receipt Date",
+        "fieldType": "TIME",
+        "fieldOrderId": 3,
+        "mandatory": false
+      }
+    ]
   },
   "userSigninOK": {
     "return": {

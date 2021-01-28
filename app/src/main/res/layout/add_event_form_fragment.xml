@@ -44,11 +44,13 @@
         </FrameLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
+        <LinearLayout
             android:id="@+id/dynamic_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:orientation="vertical"
+            >
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flam.flyay.R;
+import com.flam.flyay.fragments.CategoriesFieldFragment;
 import com.flam.flyay.fragments.DatePickerFragment;
 import com.flam.flyay.model.InputField;
 import com.flam.flyay.util.TouchInterceptor;
@@ -75,28 +76,20 @@ public class DynamicFormAdapter extends RecyclerView.Adapter<DynamicFormAdapter.
             case "EMAIL":
                 holder.textInputLayout.setVisibility(View.VISIBLE);
                 holder.textInputEditText.setVisibility(View.VISIBLE);
-                holder.textInputEditText.setHint(field.getLabelName() != null ? field.getLabelName() : "");
+                holder.textInputLayout.setHint(field.getLabelName() != null ? field.getLabelName() : "");
 
                 break;
             case "DATE":
+                addFragment(new CategoriesFieldFragment(), null);
                 holder.fragmentContainer.setVisibility(View.VISIBLE);
-                addFragment(new DatePickerFragment(), null);
-
                 break;
-                /*
-            case "SUBCATEGORY":
-                holder.fragmentContainer.setVisibility(View.VISIBLE);
-                Bundle bundle = new Bundle();
-                bundle.putString("btnString", CategoryEnum.STUDY.name);
-                addFragment(new AddEventSubCategoryFragment(), null);
-                break;
-                */
             default:
                 break;
         }
     }
 
     public void addFragment(Fragment fragment, Bundle params) {
+        Log.d("DynamicForm", "fragment received: " + fragment);
         FragmentTransaction transaction = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
         if(params != null)
             fragment.setArguments(params);
