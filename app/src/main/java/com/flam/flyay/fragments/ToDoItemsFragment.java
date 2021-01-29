@@ -49,12 +49,15 @@ public class ToDoItemsFragment extends Fragment {
 
     private ToDoService service;
     private List<ToDoItems> listItems;
+    private List<ToDoItems> newItems;
     private ToDoItemsAdapter itemsAdapter;
 
     private TextInputLayout listTitleLayout;
     private TextInputEditText listTitle;
     private TextInputLayout addItemLayout;
     private TextInputEditText addedItem;
+
+    private boolean changes;
 
     public ToDoItemsFragment(){}
 
@@ -77,6 +80,8 @@ public class ToDoItemsFragment extends Fragment {
         this.listTitle = (TextInputEditText) view.findViewById(R.id.list_title);
         this.addItemLayout = (TextInputLayout) view.findViewById(R.id.etNewItemLayout);
         this.addedItem = (TextInputEditText) view.findViewById(R.id.etNewItem);
+        changes = false;
+        newItems = new ArrayList<>();
 
         Bundle arguments = getArguments();
 
@@ -122,8 +127,10 @@ public class ToDoItemsFragment extends Fragment {
             public void onClick(View v) {
                 String itemText = addedItem.getText().toString();
                 if(!Utils.isEmptyOrBlank(itemText)) {
-                    itemsAdapter.add(itemText);
+                    ToDoItems newItem = itemsAdapter.add(itemText);
+                    newItems.add(newItem);
                     addedItem.setText("");
+                    changes = true;
                 }
             }
         });
@@ -146,16 +153,11 @@ public class ToDoItemsFragment extends Fragment {
                 new AlertDialog.Builder(getContext())
                     .setTitle("Delete items")
                     .setMessage("Are you sure you want to delete the items in the list?")
-
-                    // Specifying a listener allows you to take an action before dismissing the dialog.
-                    // The dialog is automatically dismissed when a dialog button is clicked.
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             itemsAdapter.deleteAll();
                         }
                     })
-
-                    // A null listener allows the button to dismiss the dialog and take no further action.
                     .setNegativeButton(android.R.string.no, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -164,16 +166,11 @@ public class ToDoItemsFragment extends Fragment {
                 new AlertDialog.Builder(getContext())
                     .setTitle("Change item status")
                     .setMessage("Are you sure you want to change the status of all items?")
-
-                    // Specifying a listener allows you to take an action before dismissing the dialog.
-                    // The dialog is automatically dismissed when a dialog button is clicked.
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             itemsAdapter.un_check();
                         }
                     })
-
-                    // A null listener allows the button to dismiss the dialog and take no further action.
                     .setNegativeButton(android.R.string.no, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -182,16 +179,11 @@ public class ToDoItemsFragment extends Fragment {
                 new AlertDialog.Builder(getContext())
                     .setTitle("Change items order")
                     .setMessage("Are you sure you want to change items order into alphabetical?")
-
-                    // Specifying a listener allows you to take an action before dismissing the dialog.
-                    // The dialog is automatically dismissed when a dialog button is clicked.
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             itemsAdapter.sort();
                         }
                     })
-
-                    // A null listener allows the button to dismiss the dialog and take no further action.
                     .setNegativeButton(android.R.string.no, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -222,6 +214,16 @@ public class ToDoItemsFragment extends Fragment {
         }
 
         return params;
+    }
+
+    public void notSave(){
+        itemsAdapter.remove(newItems);
+        newItems.clear();
+        changes = false;
+    }
+
+    public boolean madechanges(){
+        return changes;
     }
 
 }

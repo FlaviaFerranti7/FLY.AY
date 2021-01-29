@@ -96,9 +96,6 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> im
                 new AlertDialog.Builder(context)
                     .setTitle("Delete list")
                     .setMessage("Are you sure you want to delete the list?")
-
-                    // Specifying a listener allows you to take an action before dismissing the dialog.
-                    // The dialog is automatically dismissed when a dialog button is clicked.
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             toDoList.remove(holder.getAdapterPosition());
@@ -106,10 +103,8 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> im
                             notifyItemRangeChanged(holder.getAdapterPosition(), toDoList.size());
                         }
                     })
-
-                    // A null listener allows the button to dismiss the dialog and take no further action.
                     .setNegativeButton(android.R.string.no, null)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setIcon(R.drawable.ic_warning)
                     .show();
 
             }
@@ -149,6 +144,13 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> im
         });
     }
 
+    public void add(ToDo todo){
+        toDoList.add(todo);
+        Log.d(".adapter", "list '" + todo.toString() + "']");
+        notifyItemInserted(toDoList.size() - 1);
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onRowMoved(int fromPosition, int toPosition) {
         if (fromPosition < toPosition) {
@@ -174,7 +176,6 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> im
         viewHolder.card.setCardBackgroundColor(Color.WHITE);
 
     }
-
 
     @Override
     public int getItemCount() {

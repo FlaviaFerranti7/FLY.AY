@@ -80,13 +80,19 @@ public class ToDoItemsAdapter extends BaseAdapter implements ListAdapter {
         return view;
     }
 
-    public void add(String itemText) {
+    public void remove(List<ToDoItems> items){
+        todo_items.removeAll(items);
+        notifyDataSetChanged();
+    }
+
+    public ToDoItems add(String itemText) {
         todoItem = new ToDoItems();
         todoItem.setId(todo_items.size()+1);
         todoItem.setTitle(itemText);
         todoItem.setChecked(false);
         todo_items.add(todoItem);
         notifyDataSetChanged();
+        return todoItem;
 
     }
 
