@@ -37,6 +37,7 @@
     <string name="periodic_event">Periodic event</string>
     <string name="over_range">Over range</string>
     <string name="exam_difficulty">Exam difficulty</string>
+    <string name="note">Note</string>
 
 
     <!-- Preference Titles -->

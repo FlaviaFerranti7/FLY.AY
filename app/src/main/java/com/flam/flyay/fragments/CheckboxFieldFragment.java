@@ -52,13 +52,20 @@ public class CheckboxFieldFragment extends Fragment {
         overRange = getActivity().getString(R.string.over_range);
         examDifficulty = getActivity().getString(R.string.exam_difficulty);
 
+        Bundle params = getArguments();
+        String typeCheckbox = params.getString("typeCheckbox");
 
-        addCheckBox(periodicEvent);
-
-        addCheckBox(overRange);
-        addCheckBox(examDifficulty);
-
-
+        switch (typeCheckbox) {
+            case "PERIODIC_EVENT":
+                addCheckBox(periodicEvent);
+                break;
+            case "OVER_RANGE":
+                addCheckBox(overRange);
+                break;
+            case "EXAM_DIFFICULTY":
+                addCheckBox(examDifficulty);
+                break;
+        }
 
         return view;
     }

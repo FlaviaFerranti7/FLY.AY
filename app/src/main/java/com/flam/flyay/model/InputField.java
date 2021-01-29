@@ -23,8 +23,11 @@ public class InputField {
 
     private boolean mandatory;
 
+    @Nullable
+    private Object value;
 
-    public InputField(int id, String name,@Nullable String labelName, String fieldType, int fieldOrderId,@Nullable Integer fieldParentId,@Nullable Double min,@Nullable Double max, boolean mandatory) {
+
+    public InputField(int id, String name, @Nullable String labelName, String fieldType, int fieldOrderId, @Nullable Integer fieldParentId, @Nullable Double min, @Nullable Double max, boolean mandatory, @Nullable Object value) {
         this.id = id;
         this.name = name;
         this.labelName = labelName;
@@ -34,6 +37,7 @@ public class InputField {
         this.min = min;
         this.max = max;
         this.mandatory = mandatory;
+        this.value = value;
     }
 
     public int getId() {
@@ -122,5 +126,14 @@ public class InputField {
                 ", max=" + max +
                 ", mandatory=" + mandatory +
                 '}';
+    }
+
+    @Nullable
+    public Object getValue() {
+        return value;
+    }
+
+    public void setValue(@Nullable Object value) {
+        this.value = value;
     }
 }

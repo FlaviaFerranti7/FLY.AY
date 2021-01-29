@@ -3,6 +3,8 @@ package com.flam.flyay.fragments;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,6 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -38,6 +42,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 
 public class AddEventFormFragment extends Fragment {
@@ -143,127 +148,7 @@ public class AddEventFormFragment extends Fragment {
                 Log.d(".AddEventFromFragment", object.toString());
 
                 clearDynamicForm();
-
-                for(int i = 0; i < object.size(); i ++) {
-                    InputField input = object.get(i);
-                    switch (input.getFieldType()) {
-                        case "TEXT":
-                        case "EMAIL":
-                            Log.d(".AddEventForm", "input text received");
-                            TextInputLayout textInputLayout=new TextInputLayout(getActivity());
-                            textInputLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT));
-
-                            TextInputEditText textInputEditText = new TextInputEditText(getContext());
-
-                            LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-                            textInputEditText.setLayoutParams(editTextParams);
-
-                            textInputEditText.setTextSize(16);
-                            textInputLayout.setHint(input.getLabelName());
-                            textInputLayout.setFocusable(true);
-                            textInputLayout.setFocusableInTouchMode(true);
-                            textInputLayout.setEndIconMode(TextInputLayout.END_ICON_CLEAR_TEXT);
-
-                            textInputLayout.addView(textInputEditText);
-                            dynamicForm.addView(textInputLayout, i);
-
-                            break;
-                        case "DATE":
-                            Log.d(".AddEventForm", "data picker received");
-                            RelativeLayout childLayout = new RelativeLayout(getContext());
-                            LinearLayout.LayoutParams paramsLayout = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            childLayout.setLayoutParams(paramsLayout);
-
-                            dynamicForm.addView(childLayout, i);
-                            childLayout.setId(View.generateViewId());
-                            addFragment(new DateFieldFragment(), childLayout.getId());
-                            break;
-                        case "TIME":
-                            Log.d(".AddEventForm", "time picker received");
-                            childLayout = new RelativeLayout(getContext());
-                            paramsLayout = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            childLayout.setLayoutParams(paramsLayout);
-                            TimeFieldFragment f = new TimeFieldFragment();
-                            f.setArguments(createParamsTime(true, input.getLabelName()));
-                            dynamicForm.addView(childLayout, i);
-                            childLayout.setId(View.generateViewId());
-                            addFragment(f, childLayout.getId());
-                            break;
-                        case "TIMEWITHOUTALLDAY":
-                            Log.d(".AddEventForm", "time picker received");
-                            childLayout = new RelativeLayout(getContext());
-                            paramsLayout = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            childLayout.setLayoutParams(paramsLayout);
-                            f = new TimeFieldFragment();
-                            f.setArguments(createParamsTime(false, input.getLabelName()));
-                            dynamicForm.addView(childLayout, i);
-                            childLayout.setId(View.generateViewId());
-                            addFragment(f, childLayout.getId());
-                            break;
-                        case "CHECKBOX":
-                            Log.d(".AddEventForm", "checkbox received");
-                            childLayout = new RelativeLayout(getContext());
-                            paramsLayout = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            childLayout.setLayoutParams(paramsLayout);
-
-                            dynamicForm.addView(childLayout, i);
-                            childLayout.setId(View.generateViewId());
-                            addFragment(new CheckboxFieldFragment(), childLayout.getId());
-                            break;
-                        case "OFFICEDAY":
-                            Log.d(".AddEventForm", "button received");
-                            childLayout = new RelativeLayout(getContext());
-                            paramsLayout = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            paramsLayout.setMargins(Utils.convertDpToPixel(5), Utils.convertDpToPixel(20), 0, 0);
-                            childLayout.setLayoutParams(paramsLayout);
-
-                            dynamicForm.addView(childLayout, i);
-                            childLayout.setId(View.generateViewId());
-                            ButtonsFieldFragment fragmentB = new ButtonsFieldFragment();
-                            fragmentB.setArguments(createParamsButtonList(input.getLabelName(), weekDays, colorCategory));
-                            addFragment(fragmentB, childLayout.getId());
-                            break;
-                        case "SWITCH":
-                            Log.d(".AddEventForm", "switch received");
-                            LinearLayout cLayout = new LinearLayout(getContext());
-                            paramsLayout = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-                            paramsLayout.setMargins(Utils.convertDpToPixel(5), Utils.convertDpToPixel(20), 0, 0);
-
-                            cLayout.setLayoutParams(paramsLayout);
-                            cLayout.setOrientation(LinearLayout.HORIZONTAL);
-
-
-                            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT,
-                                    LinearLayout.LayoutParams.MATCH_PARENT,
-                                    1.0f
-                            );
-
-                            TextView textViewSwitch = new TextView(getContext());
-                            textViewSwitch.setTextSize(16);
-                            textViewSwitch.setText(input.getLabelName());
-                            textViewSwitch.setLayoutParams(param);
-
-                            Switch switchOption = new Switch(getContext());
-
-                            cLayout.addView(textViewSwitch);
-                            cLayout.addView(switchOption);
-
-                            dynamicForm.addView(cLayout, input.getFieldOrderId());
-                        default:
-                            break;
-                    }
-                }
+                createDynamicForm(object, colorCategory);
             }
         });
     }
@@ -305,6 +190,237 @@ public class AddEventFormFragment extends Fragment {
         bundle.putInt("color", colorCategory);
 
         return bundle;
+    }
+
+    private Bundle createParamsDate(String title) {
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        return bundle;
+    }
+
+    private Bundle createParamsCheckbox(String typeCheckbox) {
+        Bundle bundle = new Bundle();
+        bundle.putString("typeCheckbox", typeCheckbox);
+        return bundle;
+    }
+
+    private boolean visibleField(List<InputField> list, int parentId) {
+        Log.d(".AddEventForm", "parent id received: " + parentId);
+        for(InputField input : list) {
+            if(input.getId() == parentId) {
+                Object value = input.getValue();
+                if(value instanceof Boolean) {
+                    Log.d(".AddEventForm", value.toString());
+                    return (Boolean) value;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private void createDynamicForm(final List<InputField> object, final int colorCategory) {
+        for(int i = 0; i < object.size(); i ++) {
+            final InputField input = object.get(i);
+            boolean parent = true;
+            if(input.getFieldParentId() != null) {
+                Log.d(".AddEventForm", "input with parent id: " + input);
+                parent = visibleField(object, input.getFieldParentId());
+            }
+
+            Log.d(".AddEventForm", input + "=======>" + parent);
+
+            if(parent) {
+                switch (input.getFieldType()) {
+                    case "NUMBER":
+                        Log.d(".AddEventForm", "switch received");
+                        LinearLayout cLayout = new LinearLayout(getContext());
+                        LinearLayout.LayoutParams  paramsLayout = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+                        paramsLayout.setMargins(Utils.convertDpToPixel(5), Utils.convertDpToPixel(20), 0, 0);
+
+                        cLayout.setLayoutParams(paramsLayout);
+                        cLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+                        TextView textViewNumber = new TextView(getContext());
+                        textViewNumber.setTextSize(16);
+                        textViewNumber.setText(input.getLabelName());
+
+                        EditText numberInput = new EditText(getContext());
+                        numberInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        numberInput.setTextSize(16);
+
+                        cLayout.addView(textViewNumber);
+                        cLayout.addView(numberInput);
+
+                        dynamicForm.addView(cLayout, input.getFieldOrderId());
+                        break;
+                    case "TEXT":
+                    case "EMAIL":
+                        Log.d(".AddEventForm", "input text received");
+                        TextInputLayout textInputLayout=new TextInputLayout(getActivity());
+                        textInputLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT));
+
+                        TextInputEditText textInputEditText = new TextInputEditText(getContext());
+
+                        LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                        textInputEditText.setLayoutParams(editTextParams);
+
+                        textInputEditText.setTextSize(16);
+                        textInputLayout.setHint(input.getLabelName());
+                        textInputLayout.setFocusable(true);
+                        textInputLayout.setFocusableInTouchMode(true);
+                        textInputLayout.setEndIconMode(TextInputLayout.END_ICON_CLEAR_TEXT);
+
+                        textInputLayout.addView(textInputEditText);
+
+                        dynamicForm.addView(textInputLayout, input.getFieldOrderId());
+
+                        break;
+                    case "DATE":
+                        Log.d(".AddEventForm", "data picker received");
+                        RelativeLayout childLayout = new RelativeLayout(getContext());
+                        paramsLayout = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        childLayout.setLayoutParams(paramsLayout);
+
+                        dynamicForm.addView(childLayout, input.getFieldOrderId());
+                        childLayout.setId(View.generateViewId());
+                        DateFieldFragment dateFieldFragment = new DateFieldFragment();
+                        dateFieldFragment.setArguments(createParamsDate(input.getLabelName()));
+                        addFragment(dateFieldFragment, childLayout.getId());
+                        break;
+                    case "TIME":
+                        Log.d(".AddEventForm", "time picker received");
+                        childLayout = new RelativeLayout(getContext());
+                        paramsLayout = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        childLayout.setLayoutParams(paramsLayout);
+                        TimeFieldFragment f = new TimeFieldFragment();
+                        f.setArguments(createParamsTime(true, input.getLabelName()));
+                        dynamicForm.addView(childLayout, input.getFieldOrderId());
+                        childLayout.setId(View.generateViewId());
+                        addFragment(f, childLayout.getId());
+                        break;
+                    case "TIMEWITHOUTALLDAY":
+                        Log.d(".AddEventForm", "time picker received");
+                        childLayout = new RelativeLayout(getContext());
+                        paramsLayout = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        childLayout.setLayoutParams(paramsLayout);
+                        f = new TimeFieldFragment();
+                        f.setArguments(createParamsTime(false, input.getLabelName()));
+                        dynamicForm.addView(childLayout, input.getFieldOrderId());
+                        childLayout.setId(View.generateViewId());
+                        addFragment(f, childLayout.getId());
+                        break;
+                    case "CHECKBOX":
+                        Log.d(".AddEventForm", "checkbox received");
+                        childLayout = new RelativeLayout(getContext());
+                        paramsLayout = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        childLayout.setLayoutParams(paramsLayout);
+                        CheckboxFieldFragment checkboxFieldFragment = new CheckboxFieldFragment();
+
+                        switch (input.getName()) {
+                            case "examDifficulty":
+                                checkboxFieldFragment.setArguments(createParamsCheckbox("EXAM_DIFFICULTY"));
+                                break;
+                            case "overRange":
+                                checkboxFieldFragment.setArguments(createParamsCheckbox("OVER_RANGE"));
+                                break;
+                            default:
+                                break;
+                        }
+
+                        dynamicForm.addView(childLayout, input.getFieldOrderId());
+                        childLayout.setId(View.generateViewId());
+                        addFragment(checkboxFieldFragment, childLayout.getId());
+                        break;
+                    case "OFFICEDAY":
+                        Log.d(".AddEventForm", "button received");
+                        Log.d(".AddEventForm", "OFFICEDAY: " + input);
+                        childLayout = new RelativeLayout(getContext());
+                        paramsLayout = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        paramsLayout.setMargins(Utils.convertDpToPixel(5), Utils.convertDpToPixel(20), 0, 0);
+                        childLayout.setLayoutParams(paramsLayout);
+
+                        dynamicForm.addView(childLayout, input.getFieldOrderId());
+                        childLayout.setId(View.generateViewId());
+                        ButtonsFieldFragment fragmentB = new ButtonsFieldFragment();
+                        fragmentB.setArguments(createParamsButtonList(input.getLabelName(), weekDays, colorCategory));
+                        addFragment(fragmentB, childLayout.getId());
+                        break;
+                    case "TOPICSPAGES":
+                        Log.d(".AddEventForm", "button received");
+                        Log.d(".AddEventForm", "OFFICEDAY: " + input);
+                        childLayout = new RelativeLayout(getContext());
+                        paramsLayout = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        paramsLayout.setMargins(Utils.convertDpToPixel(5), Utils.convertDpToPixel(20), 0, 0);
+                        childLayout.setLayoutParams(paramsLayout);
+
+                        dynamicForm.addView(childLayout, input.getFieldOrderId());
+                        childLayout.setId(View.generateViewId());
+                        fragmentB = new ButtonsFieldFragment();
+                        fragmentB.setArguments(createParamsButtonList(input.getLabelName(), studyBy, colorCategory));
+                        addFragment(fragmentB, childLayout.getId());
+                        break;
+                    case "SWITCH":
+                        Log.d(".AddEventForm", "switch received");
+                        cLayout = new LinearLayout(getContext());
+                        paramsLayout = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+                        paramsLayout.setMargins(Utils.convertDpToPixel(5), Utils.convertDpToPixel(20), 0, 0);
+
+                        cLayout.setLayoutParams(paramsLayout);
+                        cLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+
+                        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                1.0f
+                        );
+
+                        TextView textViewSwitch = new TextView(getContext());
+                        textViewSwitch.setTextSize(16);
+                        textViewSwitch.setText(input.getLabelName());
+                        textViewSwitch.setLayoutParams(param);
+
+                        final Switch switchOption = new Switch(getContext());
+                        if(input.getValue() != null) {
+                            switchOption.setChecked((Boolean) input.getValue());
+                        }
+
+                        cLayout.addView(textViewSwitch);
+                        cLayout.addView(switchOption);
+
+                        dynamicForm.addView(cLayout, input.getFieldOrderId());
+
+                        if(input.getName().equalsIgnoreCase("studyPlanFlag")) {
+                            Log.d(".AddEventForm", "This is a study plan switch");
+                            switchOption.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                    Log.d("QUANTE VOLTE ENTRO?", "FGSJAHGKDFLSJG");
+                                    input.setValue(isChecked);
+                                    clearDynamicForm();
+                                    createDynamicForm(object, colorCategory);
+                                }
+                            });
+                        }
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
 

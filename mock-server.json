@@ -74,7 +74,7 @@
       {
         "id": 36,
         "name": "date",
-        "labelName": "Date",
+        "labelName": "When?",
         "fieldType": "DATE",
         "fieldOrderId": 0,
         "mandatory": true
@@ -158,14 +158,67 @@
         "mandatory": false
       },
       {
-        "id": 39,
-        "name": "note",
-        "labelName": "Note",
-        "fieldType": "TEXT",
+        "id": 46,
+        "name": "endingStudy",
+        "labelName": "end",
+        "fieldType": "DATE",
         "fieldOrderId": 10,
-        "min": 2,
-        "max": 80,
-        "mandatory": false
+        "fieldParentId": 45,
+        "mandatory": true
+      },
+      {
+        "id": 47,
+        "name": "studyingDays",
+        "labelName": "studying days",
+        "fieldType": "OFFICEDAY",
+        "fieldOrderId": 11,
+        "fieldParentId": 45,
+        "mandatory": true
+      },
+      {
+        "id": 48,
+        "name": "overRange",
+        "labelName": "Over range",
+        "fieldType": "CHECKBOX",
+        "fieldOrderId": 12,
+        "fieldParentId": 45,
+        "mandatory": true
+      },
+      {
+        "id": 47,
+        "name": "minHoursDay",
+        "labelName": "min hours per day",
+        "fieldType": "NUMBER",
+        "fieldOrderId": 13,
+        "fieldParentId": 45,
+        "mandatory": true
+      },
+      {
+        "id": 48,
+        "name": "maxHoursDay",
+        "labelName": "max hours per day",
+        "fieldType": "NUMBER",
+        "fieldOrderId": 14,
+        "fieldParentId": 45,
+        "mandatory": true
+      },
+      {
+        "id": 49,
+        "name": "examDifficulty",
+        "labelName": "exam difficulty",
+        "fieldType": "CHECKBOX",
+        "fieldOrderId": 15,
+        "fieldParentId": 45,
+        "mandatory": true
+      },
+      {
+        "id": 50,
+        "name": "organizedStudyBy",
+        "labelName": "Organized study by",
+        "fieldType": "TOPICSPAGES",
+        "fieldOrderId": 16,
+        "fieldParentId": 45,
+        "mandatory": true
       }
     ]
   },
