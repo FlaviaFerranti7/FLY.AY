@@ -2,6 +2,7 @@ package com.flam.flyay.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +29,9 @@ import com.flam.flyay.model.Event;
 import com.flam.flyay.services.EventService;
 import com.flam.flyay.services.ServerCallback;
 
+import com.flam.flyay.util.DayDecorator;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.format.DateFormatDayFormatter;
@@ -41,7 +44,9 @@ import java.nio.file.attribute.UserPrincipalLookupService;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -58,6 +63,7 @@ public class CalendarFragment extends Fragment {
     private List<Event> events;
     private List<Event> eventsFiltered;
     private List<Date> listDays;
+    private HashSet<CalendarDay> dates;
     
     private int color;
     private CalendarDay c;
@@ -106,7 +112,7 @@ public class CalendarFragment extends Fragment {
         JSONObject params = getParams(selectedDate);
 
         c = CalendarDay.today();
-        MaterialCalendarView materialCalView = view.findViewById(R.id.calendarView);
+        final MaterialCalendarView materialCalView = view.findViewById(R.id.calendarView);
         materialCalView.setDateSelected(c, true);
 
         int day = c.getDay();
@@ -125,6 +131,14 @@ public class CalendarFragment extends Fragment {
         else{
             calendarDay = day + "/" + month +"/" + year;
         }
+
+        dates = new HashSet<>();
+        CalendarDay newCal = CalendarDay.from(2021, 01,15);
+        dates.add(newCal);
+        color = Color.rgb(0,0, 255);
+
+        DayDecorator dayDecorator = new DayDecorator(color, dates);
+        materialCalView.addDecorator(dayDecorator);
 
         df = new SimpleDateFormat("dd/MM/yyyy");
         service.getEventsByDay(params, new ServerCallback() {
