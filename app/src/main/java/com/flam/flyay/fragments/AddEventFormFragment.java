@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -52,13 +53,10 @@ public class AddEventFormFragment extends Fragment {
     LinearLayout dynamicForm;
 
 
-
     private List<String> weekDays;
     private List<String> projectWith;
     private List<String> studyBy;
     private List<String> recapPer;
-
-    private List<String> buttonsValue;
 
 
 

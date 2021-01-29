@@ -82,7 +82,7 @@
       {
         "id": 37,
         "name": "time",
-        "labelName": "At what time ?",
+        "labelName": "At what time?",
         "fieldType": "TIME",
         "fieldOrderId": 1,
         "mandatory": true
@@ -90,7 +90,7 @@
       {
         "id": 38,
         "name": "place",
-        "labelName": "Where",
+        "labelName": "Where?",
         "fieldType": "TEXT",
         "fieldOrderId": 2,
         "mandatory": false
@@ -98,7 +98,7 @@
       {
         "id": 39,
         "name": "room",
-        "labelName": "Room",
+        "labelName": "Room:",
         "fieldType": "TEXT",
         "fieldOrderId": 3,
         "mandatory": false
@@ -106,7 +106,7 @@
       {
         "id": 40,
         "name": "teacherName",
-        "labelName": "Teacher Name",
+        "labelName": "Teacher name:",
         "fieldType": "TEXT",
         "fieldOrderId": 4,
         "min": 2,
@@ -116,7 +116,7 @@
       {
         "id": 41,
         "name": "teacherEmail",
-        "labelName": "Teacher Email",
+        "labelName": "Teacher email:",
         "fieldType": "EMAIL",
         "fieldOrderId": 5,
         "min": 2,
@@ -126,7 +126,7 @@
       {
         "id": 42,
         "name": "dayOfWeekTeacherReceipt",
-        "labelName": "Office day",
+        "labelName": "Office day:",
         "fieldType": "OFFICEDAY",
         "fieldOrderId": 6,
         "mandatory": false
@@ -134,7 +134,7 @@
       {
         "id": 43,
         "name": "teacherReceiptTime",
-        "labelName": "Office time",
+        "labelName": "Office time:",
         "fieldType": "TIMEWITHOUTALLDAY",
         "fieldOrderId": 7,
         "mandatory": false
@@ -142,7 +142,7 @@
       {
         "id": 44,
         "name": "teacherReceiptRoom",
-        "labelName": "Teacher Receipt Room",
+        "labelName": "Teacher's room:",
         "fieldType": "TEXT",
         "fieldOrderId": 8,
         "min": 2,
@@ -160,7 +160,7 @@
       {
         "id": 46,
         "name": "endingStudy",
-        "labelName": "end",
+        "labelName": "Scheduled study end:",
         "fieldType": "DATE",
         "fieldOrderId": 10,
         "fieldParentId": 45,
@@ -169,7 +169,7 @@
       {
         "id": 47,
         "name": "studyingDays",
-        "labelName": "studying days",
+        "labelName": "Studying days:",
         "fieldType": "OFFICEDAY",
         "fieldOrderId": 11,
         "fieldParentId": 45,
@@ -178,7 +178,7 @@
       {
         "id": 48,
         "name": "overRange",
-        "labelName": "Over range",
+        "labelName": "Over range:",
         "fieldType": "CHECKBOX",
         "fieldOrderId": 12,
         "fieldParentId": 45,
@@ -187,7 +187,7 @@
       {
         "id": 47,
         "name": "minHoursDay",
-        "labelName": "min hours per day",
+        "labelName": "Min hours per day:",
         "fieldType": "NUMBER",
         "fieldOrderId": 13,
         "fieldParentId": 45,
@@ -196,7 +196,7 @@
       {
         "id": 48,
         "name": "maxHoursDay",
-        "labelName": "max hours per day",
+        "labelName": "Max hours per day:",
         "fieldType": "NUMBER",
         "fieldOrderId": 14,
         "fieldParentId": 45,
@@ -205,7 +205,7 @@
       {
         "id": 49,
         "name": "examDifficulty",
-        "labelName": "exam difficulty",
+        "labelName": "Exam difficulty:",
         "fieldType": "CHECKBOX",
         "fieldOrderId": 15,
         "fieldParentId": 45,
@@ -214,7 +214,7 @@
       {
         "id": 50,
         "name": "organizedStudyBy",
-        "labelName": "Organized study by",
+        "labelName": "Organize study by:",
         "fieldType": "TOPICSPAGES",
         "fieldOrderId": 16,
         "fieldParentId": 45,

@@ -29,11 +29,7 @@ public class CheckboxFieldFragment extends Fragment {
     private LinearLayout linearLayout;
 
     private String periodicEvent;
-    private String overRange;
-    private String examDifficulty;
 
-    private String checkboxValue;
-    private String mainCheckbox;
 
 
     public CheckboxFieldFragment() {
@@ -49,23 +45,8 @@ public class CheckboxFieldFragment extends Fragment {
         linearLayout = view.findViewById(R.id.checkbox_field_fragment);
 
         periodicEvent = getActivity().getString(R.string.periodic_event);
-        overRange = getActivity().getString(R.string.over_range);
-        examDifficulty = getActivity().getString(R.string.exam_difficulty);
 
-        Bundle params = getArguments();
-        String typeCheckbox = params.getString("typeCheckbox");
-
-        switch (typeCheckbox) {
-            case "PERIODIC_EVENT":
-                addCheckBox(periodicEvent);
-                break;
-            case "OVER_RANGE":
-                addCheckBox(overRange);
-                break;
-            case "EXAM_DIFFICULTY":
-                addCheckBox(examDifficulty);
-                break;
-        }
+        addCheckBox(periodicEvent);
 
         return view;
     }
@@ -89,8 +70,7 @@ public class CheckboxFieldFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (checkBox.isChecked()) {
-                    mainCheckbox = (String) checkBox.getText();
-                    addOptionsFragment(createParamsEventsFragment());
+                    addOptionsFragment();
 
                 } else {
                     removeOptionsFragment();
@@ -101,11 +81,10 @@ public class CheckboxFieldFragment extends Fragment {
 
     }
 
-    private void addOptionsFragment(Bundle params) {
-        Fragment fragment = new OptionsFieldFragment();
+    private void addOptionsFragment() {
+        Fragment fragment = new PeriodicOptionsFieldFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        if(params != null)
-            fragment.setArguments(params);
+
         transaction.replace(linearLayout.getId(), fragment, fragment.getClass().getName());
         transaction.addToBackStack(null);
         transaction.commit();
@@ -113,7 +92,7 @@ public class CheckboxFieldFragment extends Fragment {
 
     private void removeOptionsFragment() {
         Fragment optionsFragment = getActivity().getSupportFragmentManager()
-                .findFragmentByTag(OptionsFieldFragment.class.getName());
+                .findFragmentByTag(PeriodicOptionsFieldFragment.class.getName());
 
         if(optionsFragment != null) {
             Log.d(".CheckboxField", "remove current fragment " + optionsFragment);
@@ -122,12 +101,5 @@ public class CheckboxFieldFragment extends Fragment {
             transaction.commit();
         }
     }
-
-    private Bundle createParamsEventsFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putString("mainCheckbox", mainCheckbox);
-        return bundle;
-    }
-
 
 }

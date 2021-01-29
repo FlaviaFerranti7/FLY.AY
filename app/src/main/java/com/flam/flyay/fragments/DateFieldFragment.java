@@ -19,6 +19,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.flam.flyay.R;
+import com.flam.flyay.model.InputField;
 import com.flam.flyay.util.Utils;
 
 import java.util.Calendar;
@@ -104,7 +105,13 @@ public class DateFieldFragment extends Fragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        btnparams.setMargins(Utils.convertDpToPixel(91), Utils.convertDpToPixel(-34), 0, 0);
+
+        int marginLeft = 0;
+        if(title.length()>10)
+            marginLeft = 191;
+        else marginLeft = 91;
+
+        btnparams.setMargins(Utils.convertDpToPixel(marginLeft), Utils.convertDpToPixel(-34), 0, 0);
         btnDate.setLayoutParams(btnparams);
         btnDate.setBackgroundColor(Color.TRANSPARENT);
         layout.addView(btnDate);

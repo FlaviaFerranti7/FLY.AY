@@ -73,6 +73,47 @@
                 android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/buttons_CANC_SAVE"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:text="CANCEL"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_canc"
+                android:background="@color/colorAccent"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:shadowColor="#000000"
+                android:shadowRadius="1"
+                android:layout_marginRight="5dp"
+                app:layout_constraintEnd_toStartOf="@+id/button_save"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                />
+
+            <Button
+                android:text="SAVE"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_save"
+                android:background="@color/colorAccent"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:shadowColor="#000000"
+                android:shadowRadius="1"
+                android:layout_marginLeft="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/button_canc"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </LinearLayout>
 
 </FrameLayout>
