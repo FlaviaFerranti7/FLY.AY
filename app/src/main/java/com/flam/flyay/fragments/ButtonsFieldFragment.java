@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,7 @@ import java.util.List;
 public class ButtonsFieldFragment extends Fragment {
 
     private LinearLayout linearLayout;
+    private TextView title;
 
     private List<String> buttonsValue;
 
@@ -35,6 +37,8 @@ public class ButtonsFieldFragment extends Fragment {
     private List<String> projectWith;
     private List<String> studyBy;
     private List<String> recapPer;
+
+    private int colorCategory;
 
 
     public ButtonsFieldFragment() {}
@@ -44,6 +48,7 @@ public class ButtonsFieldFragment extends Fragment {
         final View view = inflater.inflate(R.layout.buttons_field_fragment, container, false);
 
         linearLayout = view.findViewById(R.id.buttons_field_fragment);
+        title = view.findViewById(R.id.button_group_title);
 
         weekDays = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
         projectWith = Arrays.asList("by myself", "with friend");
@@ -51,13 +56,14 @@ public class ButtonsFieldFragment extends Fragment {
         recapPer = Arrays.asList("Main", "Sub");
 
         Bundle arguments = getArguments();
-        buttonsValue = new ArrayList<String>(Arrays.asList(arguments.getString("buttonsValue")
-                .replace("[","").replace("]","")
-                .split(",")));
-        Log.d(".ButtonsFieldFragment", buttonsValue.toString());
 
+        String titleParam = arguments.getString("title");
+        colorCategory = arguments.getInt("color");
+        title.setText(titleParam);
 
-        addButtons(buttonsValue);
+        List<String> list = (List<String>) arguments.getSerializable("list");
+        Log.d(".ButtonGroup", "list received: " + list.toString());
+        addButtons(list);
 
         return view;
     }
@@ -70,7 +76,7 @@ public class ButtonsFieldFragment extends Fragment {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
         );
-        scrollParams.setMargins(Utils.convertDpToPixel(32), 0, 0, 0);
+
         horizontalScrollView.setLayoutParams(scrollParams);
         horizontalScrollView.addView(scrollableLayout);
 
@@ -115,7 +121,7 @@ public class ButtonsFieldFragment extends Fragment {
 
                     clearOtherButtonBackground(buttons, btn);
                     if(color == Color.TRANSPARENT) {
-                        btn.setBackgroundColor(Color.parseColor(CategoryEnum.STUDY.color));
+                        btn.setBackgroundColor(colorCategory);
                         linearLayout.setVisibility(View.VISIBLE);
                     } else {
                         btn.setBackgroundColor(Color.TRANSPARENT);

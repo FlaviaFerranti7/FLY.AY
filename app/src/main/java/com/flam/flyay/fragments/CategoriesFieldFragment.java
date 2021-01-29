@@ -12,14 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -35,8 +32,6 @@ import com.flam.flyay.util.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static com.flam.flyay.R.color.colorAccent;
 
 
 public class CategoriesFieldFragment extends Fragment {
@@ -154,10 +149,10 @@ public class CategoriesFieldFragment extends Fragment {
                     String categoryName = String.valueOf(i);
 
                     Fragment subcategoryFragment = getActivity().getSupportFragmentManager()
-                            .findFragmentByTag(AddEventSubCategoryFragment.class.getName());
+                            .findFragmentByTag(SubCategoryFieldFragment.class.getName());
 
                     if(subcategoryFragment == null)
-                        subcategoryFragment = new AddEventSubCategoryFragment();
+                        subcategoryFragment = new SubCategoryFieldFragment();
 
                     Drawable background = btn.getBackground();
                     int color = Color.TRANSPARENT;
@@ -230,7 +225,7 @@ public class CategoriesFieldFragment extends Fragment {
     }
 
     private void addSubcategoryFragment(Bundle params) {
-        Fragment fragment = new AddEventSubCategoryFragment();
+        Fragment fragment = new SubCategoryFieldFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         if(params != null)
             fragment.setArguments(params);
@@ -241,7 +236,7 @@ public class CategoriesFieldFragment extends Fragment {
 
     private void removeSubcategoryFragment() {
         Fragment subcategoryFragment = getActivity().getSupportFragmentManager()
-                .findFragmentByTag(AddEventSubCategoryFragment.class.getName());
+                .findFragmentByTag(SubCategoryFieldFragment.class.getName());
 
         if(subcategoryFragment != null) {
             Log.d(".CategoriesField", "remove current fragment " + subcategoryFragment);

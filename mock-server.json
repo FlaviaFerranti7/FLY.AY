@@ -72,85 +72,99 @@
   "subcategoryItems": {
     "return": [
       {
-        "id": 34,
-        "name": "teacherName",
-        "labelName": "Teacher Name",
-        "fieldType": "TEXT",
-        "fieldOrderId": 1,
-        "min": 2,
-        "max": 20,
-        "mandatory": false
-      },
-      {
-        "id": 35,
-        "name": "teacherEmail",
-        "labelName": "Teacher Email",
-        "fieldType": "EMAIL",
-        "fieldOrderId": 2,
-        "min": 2,
-        "max": 20,
-        "mandatory": false
-      },
-      {
         "id": 36,
-        "name": "teacherReceiptDate",
-        "labelName": "Teacher Receipt Date",
-        "fieldType": "TEXT",
-        "fieldOrderId": 3,
-        "mandatory": false
+        "name": "date",
+        "labelName": "Date",
+        "fieldType": "DATE",
+        "fieldOrderId": 0,
+        "mandatory": true
       },
       {
         "id": 37,
-        "name": "teacherReceiptRoom",
-        "labelName": "Teacher Receipt Room",
-        "fieldType": "TEXT",
-        "fieldOrderId": 3,
-        "mandatory": false
+        "name": "time",
+        "labelName": "At what time ?",
+        "fieldType": "TIME",
+        "fieldOrderId": 1,
+        "mandatory": true
       },
       {
         "id": 38,
-        "name": "teacherReceiptRoom",
-        "labelName": "TEST",
+        "name": "place",
+        "labelName": "Where",
         "fieldType": "TEXT",
-        "fieldOrderId": 3,
-        "mandatory": false
-      },
-      {
-        "id": 36,
-        "name": "teacherReceiptDate",
-        "labelName": "Teacher Receipt Date",
-        "fieldType": "DATE",
-        "fieldOrderId": 3,
+        "fieldOrderId": 2,
         "mandatory": false
       },
       {
         "id": 39,
-        "name": "teacherReceiptRoom",
-        "labelName": "TEST2",
+        "name": "room",
+        "labelName": "Room",
         "fieldType": "TEXT",
         "fieldOrderId": 3,
         "mandatory": false
       },
       {
-        "id": 36,
-        "name": "teacherReceiptDate",
-        "labelName": "Teacher Receipt Date",
-        "fieldType": "TIME",
-        "fieldOrderId": 3,
+        "id": 40,
+        "name": "teacherName",
+        "labelName": "Teacher Name",
+        "fieldType": "TEXT",
+        "fieldOrderId": 4,
+        "min": 2,
+        "max": 20,
         "mandatory": false
       },
-      {"id": 40,
-        "name": "overRange",
-        "labelName": "Over Range",
-        "fieldType": "CHECKBOX",
-        "fieldOrderId": 3,
+      {
+        "id": 41,
+        "name": "teacherEmail",
+        "labelName": "Teacher Email",
+        "fieldType": "EMAIL",
+        "fieldOrderId": 5,
+        "min": 2,
+        "max": 20,
         "mandatory": false
       },
-      {"id": 41,
-        "name": "teacherReceiptDate",
-        "labelName": "Teacher Receipt Date",
-        "fieldType": "BUTTON",
-        "fieldOrderId": 3,
+      {
+        "id": 42,
+        "name": "dayOfWeekTeacherReceipt",
+        "labelName": "Office day",
+        "fieldType": "OFFICEDAY",
+        "fieldOrderId": 6,
+        "mandatory": false
+      },
+      {
+        "id": 43,
+        "name": "teacherReceiptTime",
+        "labelName": "Office time",
+        "fieldType": "TIMEWITHOUTALLDAY",
+        "fieldOrderId": 7,
+        "mandatory": false
+      },
+      {
+        "id": 44,
+        "name": "teacherReceiptRoom",
+        "labelName": "Teacher Receipt Room",
+        "fieldType": "TEXT",
+        "fieldOrderId": 8,
+        "min": 2,
+        "max": 20,
+        "mandatory": false
+      },
+      {
+        "id": 45,
+        "name": "studyPlanFlag",
+        "labelName": "Study plan",
+        "fieldType": "SWITCH",
+        "fieldOrderId": 9,
+        "mandatory": false
+      },
+      {
+        "id": 39,
+        "name": "note",
+        "labelName": "Note",
+        "fieldType": "TEXT",
+        "fieldOrderId": 10,
+        "min": 2,
+        "max": 80,
         "mandatory": false
       }
     ]

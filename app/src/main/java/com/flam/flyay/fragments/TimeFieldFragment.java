@@ -43,6 +43,8 @@ public class TimeFieldFragment extends Fragment {
 
     private LinearLayout linearLayout;
 
+    private String label;
+
 
     public TimeFieldFragment() {
     }
@@ -55,8 +57,17 @@ public class TimeFieldFragment extends Fragment {
 
         linearLayout = view.findViewById(R.id.time_field_fragment);
 
+        Bundle params = getArguments();
+
+        boolean allDayFlag = params.getBoolean("allDayFlag");
+        label = params.getString("label");
+
         addTimePickersDialog();
-        addCheckBox();
+
+        if(allDayFlag) {
+            addCheckBox();
+        }
+
 
         return view;
     }
@@ -241,7 +252,7 @@ public class TimeFieldFragment extends Fragment {
         addStartTimePickerDialog(internalLayout);
         addEndTimePickerDialog(internalLayout);
 
-        addIconAndTextView(layout, R.drawable.ic_clock, "At what time?");
+        addIconAndTextView(layout, R.drawable.ic_clock, label);
         layout.addView(internalLayout);
 
     }

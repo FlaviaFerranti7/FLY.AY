@@ -33,7 +33,7 @@ import java.util.List;
 
 import static com.flam.flyay.R.color.colorAccent;
 
-public class AddEventSubCategoryFragment extends Fragment {
+public class SubCategoryFieldFragment extends Fragment {
 
     private LinearLayout linearLayout;
     private String btnString;
@@ -45,7 +45,7 @@ public class AddEventSubCategoryFragment extends Fragment {
     private List<String> financesSubCategoryList;
 
 
-    public AddEventSubCategoryFragment() {}
+    public SubCategoryFieldFragment() {}
 
     @SuppressLint({"LongLogTag", "ResourceType"})
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -187,7 +187,7 @@ public class AddEventSubCategoryFragment extends Fragment {
 
         if(color == Color.TRANSPARENT) {
             btn.setBackgroundColor(Color.parseColor(categoryEnum.color));
-            dynamicFormFragment.activeDynamicForm(subcategoryName);
+            dynamicFormFragment.activeDynamicForm(subcategoryName, Color.parseColor(categoryEnum.color));
         } else {
             btn.setBackgroundColor(Color.TRANSPARENT);
             dynamicFormFragment.clearDynamicForm();

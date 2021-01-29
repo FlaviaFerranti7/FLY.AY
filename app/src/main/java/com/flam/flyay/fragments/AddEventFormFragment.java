@@ -1,5 +1,6 @@
 package com.flam.flyay.fragments;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.util.Util;
 import com.flam.flyay.AddEventActivity;
 import com.flam.flyay.R;
 import com.flam.flyay.SearchActivity;
@@ -24,12 +28,14 @@ import com.flam.flyay.model.InputField;
 import com.flam.flyay.services.EventService;
 import com.flam.flyay.services.ServerCallback;
 import com.flam.flyay.util.TouchInterceptor;
+import com.flam.flyay.util.Utils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -126,10 +132,11 @@ public class AddEventFormFragment extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void activeDynamicForm(String subcategoryName) {
-        JSONObject params = getParams(subcategoryName);
+    public void activeDynamicForm(String subcategoryName, final int colorCategory) {
+        final JSONObject params = getParams(subcategoryName);
 
         service.getInputFieldBySubcategory(params, new ServerCallback() {
+            @RequiresApi(api = Build.VERSION_CODES.P)
             @Override
             public void onSuccess(Object result) {
                 object = (List<InputField>) result;
@@ -181,10 +188,23 @@ public class AddEventFormFragment extends Fragment {
                             paramsLayout = new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                             childLayout.setLayoutParams(paramsLayout);
-
+                            TimeFieldFragment f = new TimeFieldFragment();
+                            f.setArguments(createParamsTime(true, input.getLabelName()));
                             dynamicForm.addView(childLayout, i);
                             childLayout.setId(View.generateViewId());
-                            addFragment(new TimeFieldFragment(), childLayout.getId());
+                            addFragment(f, childLayout.getId());
+                            break;
+                        case "TIMEWITHOUTALLDAY":
+                            Log.d(".AddEventForm", "time picker received");
+                            childLayout = new RelativeLayout(getContext());
+                            paramsLayout = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            childLayout.setLayoutParams(paramsLayout);
+                            f = new TimeFieldFragment();
+                            f.setArguments(createParamsTime(false, input.getLabelName()));
+                            dynamicForm.addView(childLayout, i);
+                            childLayout.setId(View.generateViewId());
+                            addFragment(f, childLayout.getId());
                             break;
                         case "CHECKBOX":
                             Log.d(".AddEventForm", "checkbox received");
@@ -197,38 +217,55 @@ public class AddEventFormFragment extends Fragment {
                             childLayout.setId(View.generateViewId());
                             addFragment(new CheckboxFieldFragment(), childLayout.getId());
                             break;
-                        case "BUTTON":
+                        case "OFFICEDAY":
                             Log.d(".AddEventForm", "button received");
                             childLayout = new RelativeLayout(getContext());
                             paramsLayout = new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            paramsLayout.setMargins(Utils.convertDpToPixel(5), Utils.convertDpToPixel(20), 0, 0);
                             childLayout.setLayoutParams(paramsLayout);
 
                             dynamicForm.addView(childLayout, i);
                             childLayout.setId(View.generateViewId());
                             ButtonsFieldFragment fragmentB = new ButtonsFieldFragment();
-                            buttonsValue = recapPer;
-                            fragmentB.setArguments(createParamsEventsFragment());
+                            fragmentB.setArguments(createParamsButtonList(input.getLabelName(), weekDays, colorCategory));
                             addFragment(fragmentB, childLayout.getId());
                             break;
+                        case "SWITCH":
+                            Log.d(".AddEventForm", "switch received");
+                            LinearLayout cLayout = new LinearLayout(getContext());
+                            paramsLayout = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+                            paramsLayout.setMargins(Utils.convertDpToPixel(5), Utils.convertDpToPixel(20), 0, 0);
+
+                            cLayout.setLayoutParams(paramsLayout);
+                            cLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+
+                            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    1.0f
+                            );
+
+                            TextView textViewSwitch = new TextView(getContext());
+                            textViewSwitch.setTextSize(16);
+                            textViewSwitch.setText(input.getLabelName());
+                            textViewSwitch.setLayoutParams(param);
+
+                            Switch switchOption = new Switch(getContext());
+
+                            cLayout.addView(textViewSwitch);
+                            cLayout.addView(switchOption);
+
+                            dynamicForm.addView(cLayout, input.getFieldOrderId());
                         default:
                             break;
                     }
                 }
             }
         });
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public void addFragmentDynamically(Fragment fragment, int index) {
-        RelativeLayout childLayout = new RelativeLayout(getContext());
-        LinearLayout.LayoutParams paramsLayout = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        childLayout.setLayoutParams(paramsLayout);
-
-        dynamicForm.addView(childLayout, index);
-        childLayout.setId(View.generateViewId());
-        addFragment(fragment, childLayout.getId());
     }
 
     public void addFragment(Fragment fragment, int id){
@@ -254,10 +291,19 @@ public class AddEventFormFragment extends Fragment {
         return params;
     }
 
-    private Bundle createParamsEventsFragment() {
+    private Bundle createParamsTime(boolean flag, String label) {
         Bundle bundle = new Bundle();
-        bundle.putString("buttonsValue", buttonsValue.toString());
-        Log.d(".AddEventForm", buttonsValue.toString());
+        bundle.putBoolean("allDayFlag", flag);
+        bundle.putString("label", label);
+        return bundle;
+    }
+
+    private Bundle createParamsButtonList(String title, List<String> nameButton, int colorCategory) {
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        bundle.putSerializable("list", new ArrayList(nameButton));
+        bundle.putInt("color", colorCategory);
+
         return bundle;
     }
 
