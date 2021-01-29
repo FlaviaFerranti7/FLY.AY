@@ -1,10 +1,8 @@
 package com.flam.flyay.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,45 +11,45 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
-import android.widget.DatePicker;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flam.flyay.MainActivity;
 import com.flam.flyay.R;
-import com.flam.flyay.SearchActivity;
 import com.flam.flyay.adapter.EventAdapter;
 import com.flam.flyay.model.Event;
 import com.flam.flyay.services.EventService;
 import com.flam.flyay.services.ServerCallback;
-import com.flam.flyay.util.ConverterFromJsonToModel;
+
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.prolificinteractive.materialcalendarview.format.DateFormatDayFormatter;
+import com.prolificinteractive.materialcalendarview.format.DayFormatter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.file.attribute.UserPrincipalLookupService;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class CalendarFragment extends Fragment {
 
     private LinearLayout linearLayoutCalendar;
 
     private String selectedDate;
-    private Calendar c;
     private SimpleDateFormat df;
     private String eventDate;
 
@@ -59,6 +57,11 @@ public class CalendarFragment extends Fragment {
     private HomeFragment.OnEventsListListener onEventsListListener;
     private List<Event> events;
     private List<Event> eventsFiltered;
+    private List<Date> listDays;
+    
+    private int color;
+    private CalendarDay c;
+    private String calendarDay;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -80,6 +83,7 @@ public class CalendarFragment extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("SimpleDateFormat")
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.calendar_fragment, container, false);
@@ -101,13 +105,35 @@ public class CalendarFragment extends Fragment {
 
         JSONObject params = getParams(selectedDate);
 
+        c = CalendarDay.today();
+        MaterialCalendarView materialCalView = view.findViewById(R.id.calendarView);
+        materialCalView.setDateSelected(c, true);
+
+        int day = c.getDay();
+        int month = c.getMonth();
+        int year = c.getYear();
+
+        if(day < 10 && month < 10) {
+            calendarDay = "0" + day + "/0" + month + "/" + year;
+        }
+        else if(month < 10){
+            calendarDay = day + "/0" + month +"/" + year;
+        }
+        else if(day < 10){
+            calendarDay = "0"+ day + "/" + month +"/" + year;
+        }
+        else{
+            calendarDay = day + "/" + month +"/" + year;
+        }
+
+        df = new SimpleDateFormat("dd/MM/yyyy");
         service.getEventsByDay(params, new ServerCallback() {
             @Override
             public void onSuccess(Object result) {
                 events = (List<Event>) result;
                 for (Event e : events) {
                     eventDate = df.format(e.getDate());
-                    if(selectedDate.equals(eventDate)){
+                    if(calendarDay.equals(eventDate)){
                         eventsFiltered.add(e);
                     }
                 }
@@ -123,24 +149,26 @@ public class CalendarFragment extends Fragment {
 
         });
 
-        CalendarView calendarView = new CalendarView(this.getContext());
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(10, 160, 10, 40);
-        calendarView.setLayoutParams(layoutParams);
-        df = new SimpleDateFormat("dd/MM/yyyy");
 
-        linearLayoutCalendar.addView(calendarView);
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        materialCalView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, final int year, final int month, final int dayOfMonth) {
-
-                Calendar c = Calendar.getInstance();
-                c.set(Calendar.YEAR, year);
-                c.set(Calendar.MONTH, month);
-                c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                selectedDate = df.format(c.getTime());
-                ((MainActivity) getActivity()).getSupportActionBar().setTitle(selectedDate);
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                int day = date.getDay();
+                int month =  date.getMonth();
+                int year =  date.getYear();
+                if(day < 10 && month < 10) {
+                    calendarDay = "0" + day + "/0" + month + "/" + year;
+                }
+                else if(month < 10){
+                    calendarDay = day + "/0" + month +"/" + year;
+                }
+                else if(day < 10){
+                    calendarDay = "0"+ day + "/" + month +"/" + year;
+                }
+                else{
+                    calendarDay = day + "/" + month +"/" + year;
+                }
+                ((MainActivity) getActivity()).getSupportActionBar().setTitle(calendarDay);
 
                 eventsFiltered.clear();
 
@@ -160,6 +188,7 @@ public class CalendarFragment extends Fragment {
                 eventAdapter.notifyDataSetChanged();
             }
         });
+
         return view;
     }
 

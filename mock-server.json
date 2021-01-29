@@ -497,7 +497,7 @@
         "title": "Dinner with friends",
         "category": "FREE_TIME",
         "subcategory": "WELFARE",
-        "date": "27/01/2021",
+        "date": "07/01/2021",
         "startingTime": 21.00,
         "endTime": 23.00,
         "place": "Via spa 2",
@@ -511,6 +511,17 @@
         "date": "15/01/2021",
         "startingTime": 20.00,
         "endTime": 24.00,
+        "place": "Via spa 2",
+        "note": ""
+      },
+      {
+        "id": 240,
+        "title": "Dinner with friends",
+        "category": "FREE_TIME",
+        "subcategory": "WELFARE",
+        "date": "29/01/2021",
+        "startingTime": 21.00,
+        "endTime": 23.00,
         "place": "Via spa 2",
         "note": ""
       }
