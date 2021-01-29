@@ -11,12 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:id="@+id/add_event_periodic_options_fragment_1"/>
+        android:id="@+id/options_field_fragment"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:id="@+id/add_event_periodic_options_fragment_2"/>
+        android:id="@+id/options_field_fragment_1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/options_field_fragment_2"/>
 
 </LinearLayout>

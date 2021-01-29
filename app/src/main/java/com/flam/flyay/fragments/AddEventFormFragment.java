@@ -17,7 +17,9 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.flam.flyay.AddEventActivity;
 import com.flam.flyay.R;
+import com.flam.flyay.SearchActivity;
 import com.flam.flyay.model.InputField;
 import com.flam.flyay.services.EventService;
 import com.flam.flyay.services.ServerCallback;
@@ -28,6 +30,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -36,6 +39,17 @@ public class AddEventFormFragment extends Fragment {
     List<InputField> object = null;
     LinearLayout linearLayout;
     LinearLayout dynamicForm;
+
+
+
+    private List<String> weekDays;
+    private List<String> projectWith;
+    private List<String> studyBy;
+    private List<String> recapPer;
+
+    private List<String> buttonsValue;
+
+
 
     public AddEventFormFragment() {
     }
@@ -50,6 +64,11 @@ public class AddEventFormFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((AddEventActivity) getActivity()).getSupportActionBar().setTitle("      Add event");
+        ((AddEventActivity) getActivity()).getSupportActionBar().setIcon(R.drawable.ic_add_event);
+        ((AddEventActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         System.out.println(".AddEventFormFragment: " + container);
         final View view = inflater.inflate(R.layout.add_event_form_fragment, container, false);
         this.service = new EventService(getActivity());
@@ -59,6 +78,12 @@ public class AddEventFormFragment extends Fragment {
         linearLayout.setOnTouchListener(new TouchInterceptor(getActivity()));
 
         addFragment(new CategoriesFieldFragment(), null, R.id.category_fragment);
+
+
+        weekDays = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
+        projectWith = Arrays.asList("by myself", "with friend");
+        studyBy = Arrays.asList("Topics", "Pages");
+        recapPer = Arrays.asList("Main", "Sub");
 
         return view;
     }
@@ -159,7 +184,32 @@ public class AddEventFormFragment extends Fragment {
 
                             dynamicForm.addView(childLayout, i);
                             childLayout.setId(View.generateViewId());
-                            addFragment(new AddEventPeriodicCheckboxFragment(), childLayout.getId());
+                            addFragment(new TimeFieldFragment(), childLayout.getId());
+                            break;
+                        case "CHECKBOX":
+                            Log.d(".AddEventForm", "checkbox received");
+                            childLayout = new RelativeLayout(getContext());
+                            paramsLayout = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            childLayout.setLayoutParams(paramsLayout);
+
+                            dynamicForm.addView(childLayout, i);
+                            childLayout.setId(View.generateViewId());
+                            addFragment(new CheckboxFieldFragment(), childLayout.getId());
+                            break;
+                        case "BUTTON":
+                            Log.d(".AddEventForm", "button received");
+                            childLayout = new RelativeLayout(getContext());
+                            paramsLayout = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            childLayout.setLayoutParams(paramsLayout);
+
+                            dynamicForm.addView(childLayout, i);
+                            childLayout.setId(View.generateViewId());
+                            ButtonsFieldFragment fragmentB = new ButtonsFieldFragment();
+                            buttonsValue = recapPer;
+                            fragmentB.setArguments(createParamsEventsFragment());
+                            addFragment(fragmentB, childLayout.getId());
                             break;
                         default:
                             break;
@@ -204,6 +254,12 @@ public class AddEventFormFragment extends Fragment {
         return params;
     }
 
+    private Bundle createParamsEventsFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putString("buttonsValue", buttonsValue.toString());
+        Log.d(".AddEventForm", buttonsValue.toString());
+        return bundle;
+    }
 
 
 }

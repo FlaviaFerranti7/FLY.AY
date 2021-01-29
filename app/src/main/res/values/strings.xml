@@ -34,6 +34,9 @@
     <string name="title_add_event">Insert the title</string>
     <string name="category_add_event">Choose the category:</string>
     <string name="date_add_event">Choose the date:</string>
+    <string name="periodic_event">Periodic event</string>
+    <string name="over_range">Over range</string>
+    <string name="exam_difficulty">Exam difficulty</string>
 
 
     <!-- Preference Titles -->
