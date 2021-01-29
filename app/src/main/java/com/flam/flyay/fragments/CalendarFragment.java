@@ -157,18 +157,18 @@ public class CalendarFragment extends Fragment {
                 int month =  date.getMonth();
                 int year =  date.getYear();
                 if(day < 10 && month < 10) {
-                    calendarDay = "0" + day + "/0" + month + "/" + year;
+                    selectedDate = "0" + day + "/0" + month + "/" + year;
                 }
                 else if(month < 10){
-                    calendarDay = day + "/0" + month +"/" + year;
+                    selectedDate = day + "/0" + month +"/" + year;
                 }
                 else if(day < 10){
-                    calendarDay = "0"+ day + "/" + month +"/" + year;
+                    selectedDate = "0"+ day + "/" + month +"/" + year;
                 }
                 else{
-                    calendarDay = day + "/" + month +"/" + year;
+                    selectedDate = day + "/" + month +"/" + year;
                 }
-                ((MainActivity) getActivity()).getSupportActionBar().setTitle(calendarDay);
+                ((MainActivity) getActivity()).getSupportActionBar().setTitle(selectedDate);
 
                 eventsFiltered.clear();
 
