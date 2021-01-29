@@ -204,7 +204,7 @@ public class Utils {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static String convertionFromDateToString(Date date) {
-        return new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(date);
+        return new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date);
     }
 
 }

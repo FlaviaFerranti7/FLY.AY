@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items

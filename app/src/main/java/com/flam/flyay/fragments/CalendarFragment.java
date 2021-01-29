@@ -49,6 +49,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import static com.flam.flyay.util.Utils.convertionFromDateToString;
+
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class CalendarFragment extends Fragment {
 
@@ -62,12 +64,11 @@ public class CalendarFragment extends Fragment {
     private HomeFragment.OnEventsListListener onEventsListListener;
     private List<Event> events;
     private List<Event> eventsFiltered;
-    private List<Date> listDays;
     private HashSet<CalendarDay> dates;
     
     private int color;
     private CalendarDay c;
-    private String calendarDay;
+    int day, month, year;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -96,6 +97,7 @@ public class CalendarFragment extends Fragment {
         final RecyclerView listRecyclerView = view.findViewById(R.id.events_recycler);
         listRecyclerView.setNestedScrollingEnabled(false);
 
+
         this.service = new EventService(this.getContext());
         this.events = new ArrayList<>();
         this.eventsFiltered = new ArrayList<>();
@@ -111,54 +113,48 @@ public class CalendarFragment extends Fragment {
 
         JSONObject params = getParams(selectedDate);
 
+        color = Color.rgb(39,143, 92);
         c = CalendarDay.today();
         final MaterialCalendarView materialCalView = view.findViewById(R.id.calendarView);
         materialCalView.setDateSelected(c, true);
 
-        int day = c.getDay();
-        int month = c.getMonth();
-        int year = c.getYear();
+        day = c.getDay();
+        month = c.getMonth();
+        year = c.getYear();
 
         if(day < 10 && month < 10) {
-            calendarDay = "0" + day + "/0" + month + "/" + year;
+            selectedDate = "0" + day + "/0" + month + "/" + year;
         }
         else if(month < 10){
-            calendarDay = day + "/0" + month +"/" + year;
+            selectedDate = day + "/0" + month +"/" + year;
         }
         else if(day < 10){
-            calendarDay = "0"+ day + "/" + month +"/" + year;
+            selectedDate = "0"+ day + "/" + month +"/" + year;
         }
         else{
-            calendarDay = day + "/" + month +"/" + year;
+            selectedDate = day + "/" + month +"/" + year;
         }
 
-        df = new SimpleDateFormat("dd/MM/yyyy");
+
         dates = new HashSet<>();
         service.getEventsByDay(params, new ServerCallback() {
             @Override
             public void onSuccess(Object result) {
                 events = (List<Event>) result;
                 for (Event e : events) {
-                    eventDate = df.format(e.getDate());
-                    String d = df.format(e.getDate());
-                    String[] days = d.split("/");
-                    int day = Integer.parseInt(days[0]);
-                    int month = Integer.parseInt(days[1]);
-                    int year = Integer.parseInt(days[2]);
-                    Log.d(".Calendar:", String.valueOf(day));
-                    Log.d(".Calendar:", String.valueOf(month));
-                    Log.d(".Calendar:", String.valueOf(year));
+                    eventDate = convertionFromDateToString(e.getDate());
+                    String[] days = eventDate.split("/");
+                    day = Integer.parseInt(days[0]);
+                    month = Integer.parseInt(days[1]);
+                    year = Integer.parseInt(days[2]);
 
                     CalendarDay newCal = CalendarDay.from(year, month, day);
                     dates.add(newCal);
-                    if(calendarDay.equals(eventDate)){
+                    if(selectedDate.equals(eventDate)){
                         eventsFiltered.add(e);
                     }
                 }
-                color = Color.rgb(39,143, 92);
 
-                CalendarDay newCal = CalendarDay.from(2021, 01, 15);
-                dates.add(newCal);
                 DayDecorator dayDecorator = new DayDecorator(color, dates);
                 materialCalView.addDecorator(dayDecorator);
 
@@ -173,9 +169,6 @@ public class CalendarFragment extends Fragment {
             }
 
         });
-
-
-
 
         materialCalView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
@@ -195,16 +188,17 @@ public class CalendarFragment extends Fragment {
                 else{
                     selectedDate = day + "/" + month +"/" + year;
                 }
-                ((MainActivity) getActivity()).getSupportActionBar().setTitle(selectedDate);
 
+                ((MainActivity) getActivity()).getSupportActionBar().setTitle(selectedDate);
                 eventsFiltered.clear();
 
                 for (Event e : events) {
-                    eventDate = df.format(e.getDate());
+                    eventDate = convertionFromDateToString(e.getDate());
                     if(selectedDate.equals(eventDate)){
                         eventsFiltered.add(e);
                     }
                 }
+
                 EventAdapter eventAdapter = new EventAdapter(eventsFiltered, onEventsListListener);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 listRecyclerView.setAdapter(eventAdapter);
@@ -213,9 +207,9 @@ public class CalendarFragment extends Fragment {
                         layoutManager.getOrientation());
                 listRecyclerView.addItemDecoration(dividerItemDecoration);
                 eventAdapter.notifyDataSetChanged();
+
             }
         });
-
         return view;
     }
 
@@ -237,6 +231,7 @@ public class CalendarFragment extends Fragment {
         inflator.inflate(R.menu.actions_menu, menu);
         for (int i = 0; i < menu.size(); i++) {
             menu.getItem(i).setVisible(false);
+
         }
         super.onCreateOptionsMenu(menu, inflator);
     }
@@ -248,7 +243,6 @@ public class CalendarFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return params;
     }
 
