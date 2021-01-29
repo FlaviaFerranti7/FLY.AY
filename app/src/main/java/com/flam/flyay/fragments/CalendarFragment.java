@@ -132,25 +132,36 @@ public class CalendarFragment extends Fragment {
             calendarDay = day + "/" + month +"/" + year;
         }
 
-        dates = new HashSet<>();
-        CalendarDay newCal = CalendarDay.from(2021, 01,15);
-        dates.add(newCal);
-        color = Color.rgb(0,0, 255);
-
-        DayDecorator dayDecorator = new DayDecorator(color, dates);
-        materialCalView.addDecorator(dayDecorator);
-
         df = new SimpleDateFormat("dd/MM/yyyy");
+        dates = new HashSet<>();
         service.getEventsByDay(params, new ServerCallback() {
             @Override
             public void onSuccess(Object result) {
                 events = (List<Event>) result;
                 for (Event e : events) {
                     eventDate = df.format(e.getDate());
+                    String d = df.format(e.getDate());
+                    String[] days = d.split("/");
+                    int day = Integer.parseInt(days[0]);
+                    int month = Integer.parseInt(days[1]);
+                    int year = Integer.parseInt(days[2]);
+                    Log.d(".Calendar:", String.valueOf(day));
+                    Log.d(".Calendar:", String.valueOf(month));
+                    Log.d(".Calendar:", String.valueOf(year));
+
+                    CalendarDay newCal = CalendarDay.from(year, month, day);
+                    dates.add(newCal);
                     if(calendarDay.equals(eventDate)){
                         eventsFiltered.add(e);
                     }
                 }
+                color = Color.rgb(39,143, 92);
+
+                CalendarDay newCal = CalendarDay.from(2021, 01, 15);
+                dates.add(newCal);
+                DayDecorator dayDecorator = new DayDecorator(color, dates);
+                materialCalView.addDecorator(dayDecorator);
+
                 EventAdapter eventAdapter = new EventAdapter(eventsFiltered, onEventsListListener);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 listRecyclerView.setAdapter(eventAdapter);
@@ -162,6 +173,8 @@ public class CalendarFragment extends Fragment {
             }
 
         });
+
+
 
 
         materialCalView.setOnDateChangedListener(new OnDateSelectedListener() {
