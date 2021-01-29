@@ -198,8 +198,9 @@ public class AddEventFormFragment extends Fragment {
         return bundle;
     }
 
-    private Bundle createParamsCheckbox(String typeCheckbox) {
+    private Bundle createParamsCheckbox(String title, String typeCheckbox) {
         Bundle bundle = new Bundle();
+        bundle.putString("title", title);
         bundle.putString("typeCheckbox", typeCheckbox);
         return bundle;
     }
@@ -325,14 +326,14 @@ public class AddEventFormFragment extends Fragment {
                         paramsLayout = new LinearLayout.LayoutParams(
                                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         childLayout.setLayoutParams(paramsLayout);
-                        CheckboxFieldFragment checkboxFieldFragment = new CheckboxFieldFragment();
+                        OptionsFieldFragment optionsFieldFragment = new OptionsFieldFragment();
 
                         switch (input.getName()) {
                             case "examDifficulty":
-                                checkboxFieldFragment.setArguments(createParamsCheckbox("EXAM_DIFFICULTY"));
+                                optionsFieldFragment.setArguments(createParamsCheckbox(input.getLabelName(), "EXAM_DIFFICULTY"));
                                 break;
                             case "overRange":
-                                checkboxFieldFragment.setArguments(createParamsCheckbox("OVER_RANGE"));
+                                optionsFieldFragment.setArguments(createParamsCheckbox(input.getLabelName(), "OVER_RANGE"));
                                 break;
                             default:
                                 break;
@@ -340,7 +341,7 @@ public class AddEventFormFragment extends Fragment {
 
                         dynamicForm.addView(childLayout, input.getFieldOrderId());
                         childLayout.setId(View.generateViewId());
-                        addFragment(checkboxFieldFragment, childLayout.getId());
+                        addFragment(optionsFieldFragment, childLayout.getId());
                         break;
                     case "OFFICEDAY":
                         Log.d(".AddEventForm", "button received");

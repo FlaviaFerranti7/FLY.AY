@@ -149,10 +149,10 @@ public class CategoriesFieldFragment extends Fragment {
                     String categoryName = String.valueOf(i);
 
                     Fragment subcategoryFragment = getActivity().getSupportFragmentManager()
-                            .findFragmentByTag(SubCategoryFieldFragment.class.getName());
+                            .findFragmentByTag(SubCategoriesFieldFragment.class.getName());
 
                     if(subcategoryFragment == null)
-                        subcategoryFragment = new SubCategoryFieldFragment();
+                        subcategoryFragment = new SubCategoriesFieldFragment();
 
                     Drawable background = btn.getBackground();
                     int color = Color.TRANSPARENT;
@@ -225,7 +225,7 @@ public class CategoriesFieldFragment extends Fragment {
     }
 
     private void addSubcategoryFragment(Bundle params) {
-        Fragment fragment = new SubCategoryFieldFragment();
+        Fragment fragment = new SubCategoriesFieldFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         if(params != null)
             fragment.setArguments(params);
@@ -236,7 +236,7 @@ public class CategoriesFieldFragment extends Fragment {
 
     private void removeSubcategoryFragment() {
         Fragment subcategoryFragment = getActivity().getSupportFragmentManager()
-                .findFragmentByTag(SubCategoryFieldFragment.class.getName());
+                .findFragmentByTag(SubCategoriesFieldFragment.class.getName());
 
         if(subcategoryFragment != null) {
             Log.d(".CategoriesField", "remove current fragment " + subcategoryFragment);

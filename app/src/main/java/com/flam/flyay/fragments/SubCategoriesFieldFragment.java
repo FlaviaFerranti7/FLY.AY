@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,9 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.flam.flyay.R.color.colorAccent;
-
-public class SubCategoryFieldFragment extends Fragment {
+public class SubCategoriesFieldFragment extends Fragment {
 
     private LinearLayout linearLayout;
     private String btnString;
@@ -45,13 +42,13 @@ public class SubCategoryFieldFragment extends Fragment {
     private List<String> financesSubCategoryList;
 
 
-    public SubCategoryFieldFragment() {}
+    public SubCategoriesFieldFragment() {}
 
     @SuppressLint({"LongLogTag", "ResourceType"})
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.add_event_sub_category_fragment, container, false);
+        final View view = inflater.inflate(R.layout.sub_categories_field_fragment, container, false);
 
-        linearLayout = view.findViewById(R.id.add_event_sub_category_fragment);
+        linearLayout = view.findViewById(R.id.sub_categories_field_fragment);
 
         Bundle arguments = getArguments();
         btnString = arguments.getString("btnString");
