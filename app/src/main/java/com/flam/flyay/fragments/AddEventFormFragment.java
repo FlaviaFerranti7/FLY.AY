@@ -1,9 +1,7 @@
-package com.flam.flyay.fragments;
+ package com.flam.flyay.fragments;
 
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -25,10 +22,8 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.bumptech.glide.util.Util;
 import com.flam.flyay.AddEventActivity;
 import com.flam.flyay.R;
-import com.flam.flyay.SearchActivity;
 import com.flam.flyay.model.InputField;
 import com.flam.flyay.services.EventService;
 import com.flam.flyay.services.ServerCallback;
@@ -42,7 +37,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -51,6 +48,8 @@ public class AddEventFormFragment extends Fragment {
     List<InputField> object = null;
     LinearLayout linearLayout;
     LinearLayout dynamicForm;
+
+    Map<Integer, List<InputField>> componentWithParentId;
 
 
     private List<String> weekDays;
@@ -85,6 +84,8 @@ public class AddEventFormFragment extends Fragment {
         dynamicForm = view.findViewById(R.id.dynamic_form);
         dynamicForm.setId(View.generateViewId());
         linearLayout.setOnTouchListener(new TouchInterceptor(getActivity()));
+
+        componentWithParentId = new HashMap<>();
 
         addFragment(new CategoriesFieldFragment(), null, R.id.category_fragment);
 
@@ -225,10 +226,16 @@ public class AddEventFormFragment extends Fragment {
             boolean parent = true;
             if(input.getFieldParentId() != null) {
                 Log.d(".AddEventForm", "input with parent id: " + input);
+                Log.d(".AddEventForm", componentWithParentId.toString());
                 parent = visibleField(object, input.getFieldParentId());
+                List<InputField> updatedList = componentWithParentId.get(input.getFieldParentId());
+                updatedList.add(input);
+                componentWithParentId.put(input.getFieldParentId(), updatedList);
+                input.setFieldParentId(null);
             }
-
-            Log.d(".AddEventForm", input + "=======>" + parent);
+            else {
+                componentWithParentId.put(input.getId(), new ArrayList<InputField>());
+            }
 
             if(parent) {
                 switch (input.getFieldType()) {
@@ -408,10 +415,14 @@ public class AddEventFormFragment extends Fragment {
                             Log.d(".AddEventForm", "This is a study plan switch");
                             switchOption.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                    Log.d("QUANTE VOLTE ENTRO?", "FGSJAHGKDFLSJG");
+                                    /*
                                     input.setValue(isChecked);
                                     clearDynamicForm();
                                     createDynamicForm(object, colorCategory);
+                                    */
+                                    Log.d(".AddEventForm", "study plan switch is checked");
+                                    input.setValue(isChecked);
+                                    createDynamicForm(componentWithParentId.get(input.getId()), colorCategory);
                                 }
                             });
                         }
