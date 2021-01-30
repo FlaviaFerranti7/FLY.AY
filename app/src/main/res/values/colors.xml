@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Default Palette
-
-        <color name="colorPrimary">#008577</color>
-        <color name="colorPrimaryDark">#00574B</color>
-        <color name="colorAccent">#D81B60</color>
-
-    -->
-    <!--
-        Kiva Palette
-    !-->
-    <color name="colorPrimary">#3CB371</color>
+    <color name="colorPrimary">#5EB58B</color>
     <color name="colorPrimaryDark">#278F5C</color>
     <color name="colorAccent">#A03CB3</color>
 
