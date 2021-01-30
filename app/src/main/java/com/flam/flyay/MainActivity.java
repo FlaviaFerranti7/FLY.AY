@@ -119,10 +119,14 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         Log.d(".ActivityMain", "onCreateOptionsMenu");
 
         MenuInflater inflater = getMenuInflater();
+
+        Fragment calendarFragment = (Fragment) getSupportFragmentManager()
+                .findFragmentByTag(CalendarFragment.class.getName());
         Fragment fragmentInFrame = (Fragment) getSupportFragmentManager()
                 .findFragmentByTag(EventDetailsFragment.class.getName());
 
-        if(fragmentInFrame == null) {
+
+        if(fragmentInFrame == null && calendarFragment == null) {
             Log.d(".ActivityMain", "setting home calendar option on toolbar");
             inflater.inflate(R.menu.actions_menu, menu);
 
@@ -130,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
                 if(menu.getItem(i).getItemId() != R.id.home_calendar)
                     menu.getItem(i).setVisible(false);
             }
-        } else {
+        } else if (fragmentInFrame != null) {
             Log.d(".ActivityMain", "setting event details actions on toolbar");
             inflater.inflate(R.menu.event_details_actions, menu);
         }
@@ -186,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         Bundle bundle = new Bundle();
         bundle.putSerializable("event", event);
 
-        getSupportActionBar().setTitle("Details");
+        getSupportActionBar().setTitle(event.getTitle());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setIcon(null);
 
