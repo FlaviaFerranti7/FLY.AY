@@ -50,6 +50,15 @@ public class SettingsActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
+
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            navView.setBackgroundColor(BLACK);
+            toolbar.setBackgroundColor(BLACK);
+        }
+        else{
+            navView.setBackgroundColor(WHITE);
+            toolbar.setBackgroundColor(WHITE);
+        }
         navView.setSelectedItemId(R.id.profile);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
