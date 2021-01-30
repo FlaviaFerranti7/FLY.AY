@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,7 @@ public class DateFieldFragment extends Fragment {
         layout.addView(textView);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void addDatePickerDialog() {
 
         LinearLayout layout = new LinearLayout(this.getContext());
@@ -99,7 +101,7 @@ public class DateFieldFragment extends Fragment {
         addTextView(layout, title, 32, -22);
 
         btnDate = new Button(this.getContext());
-        btnDate.setText(new StringBuilder().append(bDay).append("/").append(bMonth + 1).append("/").append(bYear));
+        btnDate.setText(Utils.convertionFromDateToString(calendar.getTime()));
         btnDate.setTextSize(16);
         LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -127,6 +129,7 @@ public class DateFieldFragment extends Fragment {
     }
 
     private DatePickerDialog.OnDateSetListener onDate = new DatePickerDialog.OnDateSetListener() {
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void onDateSet(final DatePicker view, final int year, final int month, final int dayOfMonth) {
 
@@ -135,7 +138,7 @@ public class DateFieldFragment extends Fragment {
             c.set(Calendar.MONTH, month);
             c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            selectedDate = (new StringBuilder().append(dayOfMonth).append("/").append(month + 1).append("/").append(year)).toString();
+            selectedDate = Utils.convertionFromDateToString(c.getTime());
             btnDate.setText(selectedDate);
         }
     };
