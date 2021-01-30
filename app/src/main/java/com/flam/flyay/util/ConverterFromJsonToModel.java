@@ -1,6 +1,7 @@
 package com.flam.flyay.util;
 
 import com.flam.flyay.model.Event;
+import com.flam.flyay.model.ToDoItems;
 import com.flam.flyay.model.User;
 import com.flam.flyay.model.ToDo;
 import com.flam.flyay.model.subevent.FestivityEvent;
@@ -54,5 +55,11 @@ public class ConverterFromJsonToModel {
         Gson gson = new GsonBuilder()
                 .setDateFormat("dd/MM/yyyy").create();
         return gson.fromJson(jsonToConvert.toString(), User.class);
+    }
+
+    public static ToDoItems converterFromJsonToListItems(JSONObject jsonToConvert) {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("dd/MM/yyyy").create();
+        return gson.fromJson(jsonToConvert.toString(), ToDoItems.class);
     }
 }

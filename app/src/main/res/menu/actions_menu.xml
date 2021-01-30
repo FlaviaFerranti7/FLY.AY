@@ -31,19 +31,15 @@
             <item
                 android:id="@+id/check_all"
                 android:icon="@drawable/ic_checkall"
-                android:title="@string/check_all"/>
-            <item
-                android:id="@+id/save_as_model"
-                android:icon="@drawable/ic_save"
-                android:title="@string/save_as_model"/>
-            <item
+                android:title="@string/check_all" />
+            <!--<item
                 android:id="@+id/delete_after"
                 android:icon="@drawable/ic_deleteafter"
-                android:title="@string/delete_after"/>
+                android:title="@string/delete_after"/> -->
             <item
                 android:id="@+id/delete"
                 android:icon="@drawable/ic_delete"
-                android:title="@string/delete"/>
+                android:title= "Delete items"/>
         </menu>
     </item>
     <item
