@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,7 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -26,12 +31,15 @@ import com.flam.flyay.adapter.ToDoItemsAdapter;
 import com.flam.flyay.model.ToDo;
 import com.flam.flyay.model.ToDoItems;
 import com.flam.flyay.services.ToDoService;
+import com.flam.flyay.util.TouchInterceptor;
 import com.flam.flyay.util.Utils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ToDoNewFragment extends Fragment {
 
@@ -42,7 +50,7 @@ public class ToDoNewFragment extends Fragment {
     private TextInputEditText listTitle;
     private TextInputLayout addItemLayout;
     private TextInputEditText addedItem;
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -56,6 +64,9 @@ public class ToDoNewFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_to_do_items, container, false);
         final Button button = view.findViewById(R.id.btnAddItem);
+
+        LinearLayout touchInterceptor = (LinearLayout) view.findViewById(R.id.touchInterceptor_toDoItems);
+        touchInterceptor.setOnTouchListener(new TouchInterceptor(getActivity()));
 
         this.listTitleLayout = (TextInputLayout) view.findViewById(R.id.list_title_layout);
         this.listTitle = (TextInputEditText) view.findViewById(R.id.list_title);

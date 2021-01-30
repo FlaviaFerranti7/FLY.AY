@@ -151,7 +151,7 @@ public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.
                 alertbox.setTitle("Save changes");
                 alertbox.setMessage("Do you want to save your changes?");
 
-                alertbox.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                alertbox.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 FragmentManager fragmentManager = getSupportFragmentManager();
                                 if (fragmentManager.getBackStackEntryCount() > 1) {
@@ -159,7 +159,7 @@ public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.
                                 }
                             }
                         });
-                alertbox.setNeutralButton("No", new DialogInterface.OnClickListener() {
+                alertbox.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ((ToDoItemsFragment) fragment).notSave();
@@ -184,7 +184,7 @@ public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.
             alertbox.setTitle("Save changes");
             alertbox.setMessage("Do you want to save your changes?");
 
-            alertbox.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            alertbox.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 public void onClick(DialogInterface dialog, int which) {
                     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -196,7 +196,7 @@ public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.
                     ((ToDoListFragment) f).creating(toDo);
                 }
             });
-            alertbox.setNeutralButton("No", new DialogInterface.OnClickListener() {
+            alertbox.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     FragmentManager fragmentManager = getSupportFragmentManager();
