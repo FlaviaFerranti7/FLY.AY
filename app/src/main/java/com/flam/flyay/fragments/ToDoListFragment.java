@@ -36,6 +36,8 @@ public class ToDoListFragment extends Fragment {
     private ConverterFromJsonToModel converterFromJsonToModel;
     private List<ToDo> toDoList;
     private OnToDoListListener onToDoListListener;
+    private ToDoAdapter toDoAdapter;
+    private ToDo newlist;
 
     public interface OnToDoListListener {
         void onToDoListSelected(ToDo toDo);
@@ -84,8 +86,9 @@ public class ToDoListFragment extends Fragment {
             @Override
             public void onSuccess(Object result) {
                 toDoList = (List<ToDo>) result;
+                if(newlist!=null) toDoList.add(newlist);
                 Log.d(".TodoListFragment", toDoList.toString());
-                ToDoAdapter toDoAdapter = new ToDoAdapter(toDoList, onToDoListListener, getContext());
+                toDoAdapter = new ToDoAdapter(toDoList, onToDoListListener, getContext());
                 ItemTouchHelper.Callback callback =
                         new ItemMoveCallback(toDoAdapter);
                 ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
@@ -113,5 +116,9 @@ public class ToDoListFragment extends Fragment {
         }
 
         return params;
+    }
+
+    public void creating(ToDo t){
+        newlist = t;
     }
 }

@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.flam.flyay.fragments.EventDetailsFragment;
@@ -109,7 +110,7 @@ public class SearchActivity extends AppCompatActivity implements SearchResultsFr
         Bundle bundle = new Bundle();
         bundle.putSerializable("event", event);
 
-        getSupportActionBar().setTitle("Details");
+        getSupportActionBar().setTitle(event.getTitle());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setIcon(null);
 

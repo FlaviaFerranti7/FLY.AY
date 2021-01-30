@@ -3,6 +3,7 @@ package com.flam.flyay;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -150,12 +152,69 @@ public class ToDoActivity extends AppCompatActivity implements ToDoListFragment.
     }
     @Override
     public void onBackPressed() {
+        final Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.display_todo_list_fragment);
+        if(fragment instanceof ToDoItemsFragment){
+            if(((ToDoItemsFragment) fragment).madechanges()) {
+                AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
+                alertbox.setTitle("Save changes");
+                alertbox.setMessage("Do you want to save your changes?");
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        if (fragmentManager.getBackStackEntryCount() > 1) {
-            fragmentManager.popBackStackImmediate();
-        } else {
-            super.onBackPressed();
+                alertbox.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                FragmentManager fragmentManager = getSupportFragmentManager();
+                                if (fragmentManager.getBackStackEntryCount() > 1) {
+                                    fragmentManager.popBackStackImmediate();
+                                }
+                            }
+                        });
+                alertbox.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ((ToDoItemsFragment) fragment).notSave();
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        if (fragmentManager.getBackStackEntryCount() > 1) {
+                            fragmentManager.popBackStackImmediate();
+                        }
+                    }
+                });
+                alertbox.setIcon(R.drawable.ic_saving);
+                alertbox.show();
+            }
+            else{
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                if (fragmentManager.getBackStackEntryCount() > 1) {
+                    fragmentManager.popBackStackImmediate();
+                }
+            }
+        }
+        else{
+            AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
+            alertbox.setTitle("Save changes");
+            alertbox.setMessage("Do you want to save your changes?");
+
+            alertbox.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                public void onClick(DialogInterface dialog, int which) {
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    ToDo toDo = ((ToDoNewFragment) fragment).createdList();
+                    if (fragmentManager.getBackStackEntryCount() > 1) {
+                        fragmentManager.popBackStackImmediate();
+                    }
+                    Fragment f = getSupportFragmentManager().findFragmentById(R.id.display_todo_list_fragment);
+                    ((ToDoListFragment) f).creating(toDo);
+                }
+            });
+            alertbox.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    if (fragmentManager.getBackStackEntryCount() > 1) {
+                        fragmentManager.popBackStackImmediate();
+                    }
+                }
+            });
+            alertbox.setIcon(R.drawable.ic_saving);
+            alertbox.show();
         }
     }
 }

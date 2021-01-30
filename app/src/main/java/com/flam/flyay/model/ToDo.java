@@ -58,6 +58,8 @@ public class ToDo implements Serializable {
         return image;
     }
 
+    public void setImage(String image){this.image = image;}
+
     public void setImagePos(int pos) { image_pos = pos; }
 
     public int getImagePos(){ return image_pos;  }
