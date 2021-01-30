@@ -54,10 +54,7 @@ import static com.flam.flyay.util.Utils.convertionFromDateToString;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class CalendarFragment extends Fragment {
 
-    private LinearLayout linearLayoutCalendar;
-
     private String selectedDate;
-    private SimpleDateFormat df;
     private String eventDate;
 
     private EventService service;
@@ -97,12 +94,9 @@ public class CalendarFragment extends Fragment {
         final RecyclerView listRecyclerView = view.findViewById(R.id.events_recycler);
         listRecyclerView.setNestedScrollingEnabled(false);
 
-
         this.service = new EventService(this.getContext());
         this.events = new ArrayList<>();
         this.eventsFiltered = new ArrayList<>();
-
-        linearLayoutCalendar = view.findViewById(R.id.fragment_calendar);
 
         Bundle arguments = getArguments();
         selectedDate = arguments.getString("currentDate");
@@ -134,7 +128,6 @@ public class CalendarFragment extends Fragment {
         else{
             selectedDate = day + "/" + month +"/" + year;
         }
-
 
         dates = new HashSet<>();
         service.getEventsByDay(params, new ServerCallback() {
@@ -173,9 +166,9 @@ public class CalendarFragment extends Fragment {
         materialCalView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                int day = date.getDay();
-                int month =  date.getMonth();
-                int year =  date.getYear();
+                day = date.getDay();
+                month =  date.getMonth();
+                year =  date.getYear();
                 if(day < 10 && month < 10) {
                     selectedDate = "0" + day + "/0" + month + "/" + year;
                 }
