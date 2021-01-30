@@ -185,7 +185,7 @@
         "mandatory": true
       },
       {
-        "id": 47,
+        "id": 49,
         "name": "minHoursDay",
         "labelName": "Min hours per day:",
         "fieldType": "NUMBER",
@@ -194,7 +194,7 @@
         "mandatory": true
       },
       {
-        "id": 48,
+        "id": 50,
         "name": "maxHoursDay",
         "labelName": "Max hours per day:",
         "fieldType": "NUMBER",
@@ -203,7 +203,7 @@
         "mandatory": true
       },
       {
-        "id": 49,
+        "id": 51,
         "name": "examDifficulty",
         "labelName": "Exam difficulty:",
         "fieldType": "CHECKBOX",
@@ -212,12 +212,66 @@
         "mandatory": true
       },
       {
-        "id": 50,
+        "id": 52,
         "name": "organizedStudyBy",
         "labelName": "Organize study by:",
         "fieldType": "TOPICSPAGES",
         "fieldOrderId": 16,
         "fieldParentId": 45,
+        "mandatory": true
+      },
+      {
+        "id": 53,
+        "name": "totalPagesP",
+        "labelName": "total pages",
+        "fieldType": "NUMBER",
+        "fieldOrderId": 17,
+        "fieldParentId": 52,
+        "mandatory": true
+      },
+      {
+        "id": 54,
+        "name": "minPagesPerDaysP",
+        "labelName": "min pages per days",
+        "fieldType": "NUMBER",
+        "fieldOrderId": 18,
+        "fieldParentId": 52,
+        "mandatory": true
+      },
+      {
+        "id": 55,
+        "name": "maxPagesPerDaysP",
+        "labelName": "max pages per days",
+        "fieldType": "NUMBER",
+        "fieldOrderId": 19,
+        "fieldParentId": 52,
+        "mandatory": true
+      },
+      {
+        "id": 56,
+        "name": "startingTotalRecapP",
+        "labelName": "starting total recap",
+        "fieldType": "DATE",
+        "fieldOrderId": 20,
+        "fieldParentId": 52,
+        "mandatory": true
+      },
+      {
+        "id": 57,
+        "name": "exercisesP",
+        "labelName": "exercises",
+        "fieldType": "SWITCH",
+        "fieldOrderId": 21,
+        "fieldParentId": 52,
+        "mandatory": true
+      },
+      {
+        "id": 58,
+        "name": "projectP",
+        "labelName": "project",
+        "fieldType": "SWITCH",
+        "fieldOrderId": 22,
+        "fieldParentId": 52,
         "mandatory": true
       }
     ]

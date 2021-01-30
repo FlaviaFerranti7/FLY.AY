@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.flam.flyay.R;
 import com.flam.flyay.util.CategoryEnum;
@@ -116,6 +117,9 @@ public class ButtonsFieldFragment extends Fragment {
                     Drawable background = btn.getBackground();
                     int color = Color.TRANSPARENT;
 
+                    FragmentManager fm = getFragmentManager();
+                    AddEventFormFragment dynamicFormFragment = (AddEventFormFragment)fm.findFragmentById(R.id.fragment_container);
+
                     if(background instanceof ColorDrawable)
                         color = ((ColorDrawable) background).getColor();
 
@@ -123,8 +127,21 @@ public class ButtonsFieldFragment extends Fragment {
                     if(color == Color.TRANSPARENT) {
                         btn.setBackgroundColor(colorCategory);
                         linearLayout.setVisibility(View.VISIBLE);
+                        if(btn.getText().toString().equalsIgnoreCase("Pages")) {
+                            dynamicFormFragment.toggleTopicPagesForm("P",true);
+                            dynamicFormFragment.toggleTopicPagesForm("T",false);
+                        }
+                        else if(btn.getText().toString().equalsIgnoreCase("Topics")) {
+                            dynamicFormFragment.toggleTopicPagesForm("T",true);
+                            dynamicFormFragment.toggleTopicPagesForm("P",false);
+                        }
+
                     } else {
                         btn.setBackgroundColor(Color.TRANSPARENT);
+                        if(btn.getText().toString().equalsIgnoreCase("Pages"))
+                            dynamicFormFragment.toggleTopicPagesForm("P",false);
+                        else if(btn.getText().toString().equalsIgnoreCase("Topics"))
+                            dynamicFormFragment.toggleTopicPagesForm("T",false);
                     }
                 }
 
