@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,7 +108,12 @@ public class ButtonsFieldFragment extends Fragment {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
             );
-            btnparams.setMargins(0, 0, 0, 0);
+
+            if(list.size() == 2){
+                Log.d(".ButtonsField", String.valueOf(list.size()));
+                btnparams.setMargins(Utils.convertDpToPixel(50), 0,0,0);
+            }
+
             btn.setLayoutParams(btnparams);
             btn.setBackgroundColor(Color.TRANSPARENT);
             buttonsLayout.addView(btn);
