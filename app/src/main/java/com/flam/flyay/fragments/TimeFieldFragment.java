@@ -80,7 +80,7 @@ public class TimeFieldFragment extends Fragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        imageParams.setMargins(Utils.convertDpToPixel(0), Utils.convertDpToPixel(marginTop), 0, 0);
+        imageParams.setMargins(Utils.convertDpToPixel(2.5f), Utils.convertDpToPixel(marginTop), 0, 0);
         image.setBackgroundColor(Color.TRANSPARENT);
         image.setLayoutParams(imageParams);
 

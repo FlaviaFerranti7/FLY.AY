@@ -44,11 +44,17 @@ public class OptionsFieldFragment extends Fragment {
         linearLayout = view.findViewById(R.id.options_field_fragment);
         title = view.findViewById(R.id.checkbox_group_title);
 
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        params.setMargins(Utils.convertDpToPixel(5), Utils.convertDpToPixel(20), 0, 0);
+
         Bundle arguments = getArguments();
         typeCheckbox = arguments.getString("typeCheckbox");
 
         String titleParam = arguments.getString("title");
         title.setText(titleParam);
+        title.setLayoutParams(params);
 
         overRange = Arrays.asList("morning", "afternoon", "evening");
 
@@ -85,7 +91,7 @@ public class OptionsFieldFragment extends Fragment {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(Utils.convertDpToPixel(32), Utils.convertDpToPixel(16), Utils.convertDpToPixel(16), 0);
+            params.setMargins(Utils.convertDpToPixel(25), Utils.convertDpToPixel(10), Utils.convertDpToPixel(10), 0);
             checkBox.setLayoutParams(params);
             checkBoxLayout.addView(checkBox);
 

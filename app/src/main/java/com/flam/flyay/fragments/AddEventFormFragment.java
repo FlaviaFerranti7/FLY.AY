@@ -41,9 +41,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 
  public class AddEventFormFragment extends Fragment {
     private EventService service;
@@ -247,7 +244,7 @@ import java.util.stream.Collectors;
                     LinearLayout.LayoutParams  paramsLayout = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
-                    paramsLayout.setMargins(Utils.convertDpToPixel(5), Utils.convertDpToPixel(20), 0, 0);
+                    paramsLayout.setMargins(Utils.convertDpToPixel(5), Utils.convertDpToPixel(10), 0, 0);
 
                     cLayout.setLayoutParams(paramsLayout);
                     cLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -259,6 +256,10 @@ import java.util.stream.Collectors;
                     EditText numberInput = new EditText(getContext());
                     numberInput.setInputType(InputType.TYPE_CLASS_NUMBER);
                     numberInput.setTextSize(16);
+
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    lp.setMargins(Utils.convertDpToPixel(10), 0, 0, 0);
+                    numberInput.setLayoutParams(lp);
 
                     cLayout.addView(textViewNumber);
                     cLayout.addView(numberInput);
@@ -446,8 +447,9 @@ import java.util.stream.Collectors;
                                     if (isChecked) {
                                         Utils.listVISIBLE(viewWithParentId.get(input.getId()));
                                     } else {
-                                        Log.d("TEST:", viewWithParentId.toString());
                                         Utils.listGONE(viewWithParentId.get(input.getId()));
+                                        toggleTopicPagesForm("P", false);
+                                        toggleTopicPagesForm("T", false);
                                     }
                                 }
                             }
@@ -473,7 +475,6 @@ import java.util.stream.Collectors;
     public void toggleTopicPagesForm(String typeForm, boolean flag) {
         List<View> tmp = new ArrayList<>();
         for(View view : viewWithParentId.get(52)) {
-            Log.d(".toogleTopicPagesForm", view.getTag().toString());
             if(view.getTag().toString().endsWith(typeForm))
                 tmp.add(view);
         }

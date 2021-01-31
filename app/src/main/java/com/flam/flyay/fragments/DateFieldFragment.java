@@ -63,7 +63,7 @@ public class DateFieldFragment extends Fragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        imageParams.setMargins(Utils.convertDpToPixel(0), Utils.convertDpToPixel(marginTop), 0, 0);
+        imageParams.setMargins(Utils.convertDpToPixel(2.5f), Utils.convertDpToPixel(marginTop), 0, 0);
         image.setBackgroundColor(Color.TRANSPARENT);
         image.setLayoutParams(imageParams);
 
@@ -97,7 +97,7 @@ public class DateFieldFragment extends Fragment {
         final int bMonth = calendar.get(Calendar.MONTH);
         final int bDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-        addIcon(layout, R.drawable.ic_calendar, 16);
+        addIcon(layout, R.drawable.ic_calendar,16);
         addTextView(layout, title, 32, -22);
 
         btnDate = new Button(this.getContext());

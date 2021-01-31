@@ -3,8 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingRight="30dp"
-    android:paddingLeft="30dp"
     >
 
     <LinearLayout
@@ -69,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/note"
-                android:inputType="text"
+                android:inputType="text|textMultiLine"
                 android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -78,7 +76,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/buttons_CANC_SAVE"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp">
 
             <Button
                 android:text="CANCEL"
@@ -90,7 +89,7 @@
                 android:textSize="16sp"
                 android:shadowColor="#000000"
                 android:shadowRadius="1"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="10dp"
                 app:layout_constraintEnd_toStartOf="@+id/button_save"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -107,7 +106,7 @@
                 android:textSize="16sp"
                 android:shadowColor="#000000"
                 android:shadowRadius="1"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/button_canc"
                 app:layout_constraintTop_toTopOf="parent"/>
