@@ -120,4 +120,5 @@ public class AddEventActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
 }

@@ -1,5 +1,6 @@
  package com.flam.flyay.fragments;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
@@ -10,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -48,7 +50,10 @@ import java.util.Map;
     LinearLayout linearLayout;
     LinearLayout dynamicForm;
 
-    Map<Integer, List<InputField>> inputFieldWithParentId;
+    Button save;
+    Button cancel;
+
+
     Map<Integer, List<View>> viewWithParentId;
 
 
@@ -82,10 +87,13 @@ import java.util.Map;
         this.service = new EventService(getActivity());
         linearLayout = view.findViewById(R.id.touchInterceptorFormFragment);
         dynamicForm = view.findViewById(R.id.dynamic_form);
+
+        save = view.findViewById(R.id.button_save);
+        cancel = view.findViewById(R.id.button_cancel);
+
         dynamicForm.setId(View.generateViewId());
         linearLayout.setOnTouchListener(new TouchInterceptor(getActivity()));
 
-        inputFieldWithParentId = new HashMap<>();
         viewWithParentId = new HashMap<>();
 
         addFragment(new CategoriesFieldFragment(), null, R.id.category_fragment);
@@ -95,6 +103,27 @@ import java.util.Map;
         projectWith = Arrays.asList("by myself", "with friend");
         studyBy = Arrays.asList("Topics", "Pages");
         recapPer = Arrays.asList("Main", "Sub");
+
+        save.setEnabled(false);
+
+        save.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Log.d(".AddEventForm", "click on save button");
+                Log.d(".AddEventForm", object.toString());
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Log.d(".AddEventForm", "click on cancel button");
+                Intent intent = new Intent(getContext(), AddEventActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -222,19 +251,10 @@ import java.util.Map;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void createDynamicForm(final List<InputField> object, final int colorCategory) {
+        save.setEnabled(true);
+
         for(int i = 0; i < object.size(); i ++) {
             final InputField input = object.get(i);
-
-            if(input.getFieldParentId() != null) {
-                Log.d(".AddEventForm", "input with parent id: " + input);
-                Log.d(".AddEventForm", inputFieldWithParentId.toString());
-
-                List<InputField> updatedList = inputFieldWithParentId.get(input.getFieldParentId());
-                updatedList.add(input);
-
-                inputFieldWithParentId.put(input.getFieldParentId(), updatedList);
-            }
-            inputFieldWithParentId.put(input.getId(), new ArrayList<InputField>());
             viewWithParentId.put(input.getId(), new ArrayList<View>());
 
             switch (input.getFieldType()) {
