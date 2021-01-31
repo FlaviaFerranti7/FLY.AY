@@ -3,6 +3,7 @@
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,7 +47,8 @@ import java.util.Map;
 
  public class AddEventFormFragment extends Fragment {
     private EventService service;
-    List<InputField> object = null;
+    List<InputField> object;
+    Map<InputField, View> objectView;
     LinearLayout linearLayout;
     LinearLayout dynamicForm;
 
@@ -75,7 +77,7 @@ import java.util.Map;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         ((AddEventActivity) getActivity()).getSupportActionBar().setTitle("      Add event");
@@ -94,6 +96,8 @@ import java.util.Map;
         dynamicForm.setId(View.generateViewId());
         linearLayout.setOnTouchListener(new TouchInterceptor(getActivity()));
 
+        object = new ArrayList<>();
+        objectView = new HashMap<>();
         viewWithParentId = new HashMap<>();
 
         addFragment(new CategoriesFieldFragment(), null, R.id.category_fragment);
@@ -111,7 +115,26 @@ import java.util.Map;
             @Override
             public void onClick(View v) {
                 Log.d(".AddEventForm", "click on save button");
-                Log.d(".AddEventForm", object.toString());
+
+                for(InputField input : object) {
+                    if(objectView.get(input).getVisibility() == View.VISIBLE) {
+                        switch (input.getFieldType()) {
+                            case "TEXT":
+                            case "EMAIL":
+                                TextInputLayout t = (TextInputLayout) objectView.get(input);
+                                Log.d(".SAVEAddEventForm", input.getName() + " " + t.getEditText().getText());
+
+                                input.setValue(t.getEditText().getText());
+                                break;
+                            case "NUMBER":
+                                EditText e = (EditText) ((LinearLayout) objectView.get(input)).getChildAt(1);
+                                Log.d(".SAVEAddEventForm", input.getName() + " " + e.getText());
+
+                                input.setValue(e.getText());
+                                break;
+                        }
+                    }
+                }
             }
         });
 
@@ -286,6 +309,7 @@ import java.util.Map;
 
                     cLayout.setTag(input.getName());
                     addElementIntoListMap(viewWithParentId, cLayout, input.getFieldParentId());
+                    objectView.put(input, cLayout);
                     dynamicForm.addView(cLayout, input.getFieldOrderId());
                     break;
                 case "TEXT":
@@ -301,7 +325,11 @@ import java.util.Map;
                             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
                     textInputEditText.setLayoutParams(editTextParams);
-
+                    if(input.getFieldType().equalsIgnoreCase("EMAIL"))
+                        textInputEditText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                    else {
+                        textInputEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+                    }
                     textInputEditText.setTextSize(16);
                     textInputLayout.setHint(input.getLabelName());
                     textInputLayout.setFocusable(true);
@@ -312,6 +340,7 @@ import java.util.Map;
 
                     textInputLayout.setTag(input.getName());
                     addElementIntoListMap(viewWithParentId, textInputLayout, input.getFieldParentId());
+                    objectView.put(input, textInputLayout);
                     dynamicForm.addView(textInputLayout, input.getFieldOrderId());
 
                     break;
@@ -324,6 +353,8 @@ import java.util.Map;
 
                     childLayout.setTag(input.getName());
                     addElementIntoListMap(viewWithParentId, childLayout, input.getFieldParentId());
+
+                    objectView.put(input, childLayout);
                     dynamicForm.addView(childLayout, input.getFieldOrderId());
                     childLayout.setId(View.generateViewId());
                     DateFieldFragment dateFieldFragment = new DateFieldFragment();
@@ -341,6 +372,8 @@ import java.util.Map;
 
                     childLayout.setTag(input.getName());
                     addElementIntoListMap(viewWithParentId, childLayout, input.getFieldParentId());
+
+                    objectView.put(input, childLayout);
                     dynamicForm.addView(childLayout, input.getFieldOrderId());
                     childLayout.setId(View.generateViewId());
                     addFragment(f, childLayout.getId());
@@ -356,6 +389,8 @@ import java.util.Map;
 
                     childLayout.setTag(input.getName());
                     addElementIntoListMap(viewWithParentId, childLayout, input.getFieldParentId());
+
+                    objectView.put(input, childLayout);
                     dynamicForm.addView(childLayout, input.getFieldOrderId());
                     childLayout.setId(View.generateViewId());
                     addFragment(f, childLayout.getId());
@@ -379,16 +414,16 @@ import java.util.Map;
                             break;
                     }
 
-
                     childLayout.setTag(input.getName());
                     addElementIntoListMap(viewWithParentId, childLayout, input.getFieldParentId());
+
+                    objectView.put(input, childLayout);
                     dynamicForm.addView(childLayout, input.getFieldOrderId());
                     childLayout.setId(View.generateViewId());
                     addFragment(optionsFieldFragment, childLayout.getId());
                     break;
                 case "OFFICEDAY":
                     Log.d(".AddEventForm", "button received");
-                    Log.d(".AddEventForm", "OFFICEDAY: " + input);
                     childLayout = new RelativeLayout(getContext());
                     paramsLayout = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -398,6 +433,8 @@ import java.util.Map;
 
                     childLayout.setTag(input.getName());
                     addElementIntoListMap(viewWithParentId, childLayout, input.getFieldParentId());
+
+                    objectView.put(input, childLayout);
                     dynamicForm.addView(childLayout, input.getFieldOrderId());
                     childLayout.setId(View.generateViewId());
                     ButtonsFieldFragment fragmentB = new ButtonsFieldFragment();
@@ -415,6 +452,8 @@ import java.util.Map;
 
                     childLayout.setTag(input.getName());
                     addElementIntoListMap(viewWithParentId, childLayout, input.getFieldParentId());
+
+                    objectView.put(input, childLayout);
                     dynamicForm.addView(childLayout, input.getFieldOrderId());
                     childLayout.setId(View.generateViewId());
                     fragmentB = new ButtonsFieldFragment();
@@ -455,6 +494,7 @@ import java.util.Map;
 
                     cLayout.setTag(input.getName());
                     addElementIntoListMap(viewWithParentId, cLayout, input.getFieldParentId());
+                    objectView.put(input, cLayout);
                     dynamicForm.addView(cLayout, input.getFieldOrderId());
 
                     if(input.getName().equalsIgnoreCase("studyPlanFlag")) {
