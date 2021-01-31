@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:itemBackground">@android:color/white</item>
         <item name="android:itemTextAppearance">@style/menuTextStyle</item>
@@ -15,12 +15,16 @@
         <item name="android:textSize">18dp</item>
     </style>
 
+    <style name="NavigationTheme" parent="AppTheme">
+        <item name="itemIconTint">@drawable/selector</item>
+        <item name="itemTextColor">@drawable/selector</item>
+    </style>
 
     <style name="DarkAppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Customize your theme here. -->
 
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:itemBackground">@android:color/black</item>
         <item name="android:itemTextAppearance">@style/darkMenuTextStyle</item>
@@ -31,14 +35,14 @@
         <item name="android:textSize">18dp</item>
     </style>
 
-    <style name="NavigationTheme" parent="AppTheme">
-        <item name="itemIconTint">@drawable/selector</item>
-        <item name="itemTextColor">@drawable/selector</item>
+    <style name="DarkNavigationTheme" parent="DarkAppTheme">
+        <item name="itemIconTint">@drawable/dark_selector</item>
+        <item name="itemTextColor">@drawable/dark_selector</item>
     </style>
 
     <style name="TitleApp">
         <item name="android:textSize">34sp</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
 </resources>

@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -107,7 +108,7 @@ public class CalendarFragment extends Fragment {
 
         JSONObject params = getParams(selectedDate);
 
-        color = Color.rgb(39,143, 92);
+        color = Color.rgb(94, 181, 139); //rgb(39,143, 92);
         c = CalendarDay.today();
         final MaterialCalendarView materialCalView = view.findViewById(R.id.calendarView);
         materialCalView.setDateSelected(c, true);
@@ -203,6 +204,12 @@ public class CalendarFragment extends Fragment {
 
             }
         });
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            materialCalView.setDateTextAppearance(Color.WHITE);
+        }
+        else{
+            materialCalView.setDateTextAppearance(Color.BLACK);
+        }
         return view;
     }
 

@@ -264,7 +264,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav_menu"
-        android:theme="@style/NavigationTheme"
         android:background="@color/colorPrimary"/>
 </RelativeLayout>
 
