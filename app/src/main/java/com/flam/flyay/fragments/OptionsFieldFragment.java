@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.flam.flyay.R;
@@ -38,6 +39,7 @@ public class OptionsFieldFragment extends Fragment {
     private TextView title;
 
     private String typeCheckbox;
+    private String keyToSetValue;
 
     public OptionsFieldFragment() {}
 
@@ -57,6 +59,7 @@ public class OptionsFieldFragment extends Fragment {
 
         Bundle arguments = getArguments();
         typeCheckbox = arguments.getString("typeCheckbox");
+        keyToSetValue = arguments.getString("key");
 
         String titleParam = arguments.getString("title");
         title.setText(titleParam);
@@ -104,14 +107,34 @@ public class OptionsFieldFragment extends Fragment {
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    FragmentManager fm = getFragmentManager();
+                    AddEventFormFragment dynamicFormFragment = (AddEventFormFragment)fm.findFragmentById(R.id.fragment_container);
+
                     for(CheckBox checkBoxItem : listCheckBox) {
 
                         if(isChecked) {
-                            if(!checkBoxItem.getText().toString().equalsIgnoreCase(checkBox.getText().toString())) {
-                                checkBoxItem.setChecked(false);
-                            };
+                            if(typeCheckbox.equalsIgnoreCase("EXAM_DIFFICULTY")) {
+                                if(!checkBoxItem.getText().toString().equalsIgnoreCase(checkBox.getText().toString())) {
+                                    checkBoxItem.setChecked(false);
+                                }
+                            }
                         }
 
+                    }
+
+                    if(isChecked && typeCheckbox.equalsIgnoreCase("EXAM_DIFFICULTY")) {
+                        dynamicFormFragment.setValueInputField(keyToSetValue, checkBox.getText().toString());
+                    }
+                    else if(!isChecked && typeCheckbox.equalsIgnoreCase("EXAM_DIFFICULTY")) {
+                        dynamicFormFragment.setValueInputField(keyToSetValue, null);
+                    }
+                    else {
+                        List<String> newValue = new ArrayList<>();
+                        for(CheckBox c : listCheckBox) {
+                            if(c.isChecked())
+                                newValue.add(c.getText().toString());
+                        }
+                        dynamicFormFragment.setValueInputField(keyToSetValue, newValue);
                     }
                 }
             });

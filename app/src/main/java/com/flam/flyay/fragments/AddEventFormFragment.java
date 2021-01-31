@@ -138,6 +138,7 @@ import java.util.Map;
                             case "SWITCH":
                             case "OFFICEDAY":
                             case "TOPICSPAGES":
+                            case "CHECKBOX":
                                 Log.d(".SAVEAddEventForm", input.getName() + " " + input.getValue());
                                 break;
 
@@ -261,9 +262,10 @@ import java.util.Map;
         return bundle;
     }
 
-    private Bundle createParamsCheckbox(String title, String typeCheckbox) {
+    private Bundle createParamsCheckbox(String title, String key, String typeCheckbox) {
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
+        bundle.putString("key", key);
         bundle.putString("typeCheckbox", typeCheckbox);
         return bundle;
     }
@@ -402,10 +404,10 @@ import java.util.Map;
 
                     switch (input.getName()) {
                         case "examDifficulty":
-                            optionsFieldFragment.setArguments(createParamsCheckbox(input.getLabelName(), "EXAM_DIFFICULTY"));
+                            optionsFieldFragment.setArguments(createParamsCheckbox(input.getLabelName(), input.getName(), "EXAM_DIFFICULTY"));
                             break;
                         case "overRange":
-                            optionsFieldFragment.setArguments(createParamsCheckbox(input.getLabelName(), "OVER_RANGE"));
+                            optionsFieldFragment.setArguments(createParamsCheckbox(input.getLabelName(), input.getName(), "OVER_RANGE"));
                             break;
                         default:
                             break;

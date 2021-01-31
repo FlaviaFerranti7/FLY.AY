@@ -206,6 +206,10 @@ public class CategoriesFieldFragment extends Fragment {
             btn.setBackgroundColor(Color.TRANSPARENT);
             removeSubcategoryFragment();
         }
+
+        FragmentManager fm = getFragmentManager();
+        AddEventFormFragment dynamicFormFragment = (AddEventFormFragment)fm.findFragmentById(R.id.fragment_container);
+        dynamicFormFragment.clearDynamicForm();
     }
 
     private void clearOtherButtonBackground(List<Button> buttons, Button excluding) {
@@ -243,10 +247,6 @@ public class CategoriesFieldFragment extends Fragment {
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             transaction.remove(subcategoryFragment);
             transaction.commit();
-
-            FragmentManager fm = getFragmentManager();
-            AddEventFormFragment dynamicFormFragment = (AddEventFormFragment)fm.findFragmentById(R.id.fragment_container);
-            dynamicFormFragment.clearDynamicForm();
         }
     }
 
