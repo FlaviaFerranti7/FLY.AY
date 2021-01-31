@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ public class SubCategoriesFieldFragment extends Fragment {
 
     private LinearLayout linearLayout;
     private String btnString;
+    private String initialSubcategory;
 
     private List<String> freeTimeSubCategoryList;
     private List<String> studySubCategoryList;
@@ -52,6 +54,7 @@ public class SubCategoriesFieldFragment extends Fragment {
 
         Bundle arguments = getArguments();
         btnString = arguments.getString("btnString");
+        initialSubcategory = arguments.getString("initialSubcategory");
 
         freeTimeSubCategoryList = Arrays.asList(SubCategoryEnum.FRIENDS.name, SubCategoryEnum.FAMILY.name, SubCategoryEnum.HOBBY.name,
                 SubCategoryEnum.TRAVELS.name, SubCategoryEnum.FILMS_TV_SERIES.name, SubCategoryEnum.THEATRE.name, SubCategoryEnum.MUSIC.name,
@@ -138,7 +141,28 @@ public class SubCategoriesFieldFragment extends Fragment {
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
             btnparams.setMargins(Utils.convertDpToPixel(8), Utils.convertDpToPixel(8), 0, 0);
-            btn.setBackgroundColor(Color.TRANSPARENT);
+
+            if(initialSubcategory != null && btn.getText().toString().equalsIgnoreCase(initialSubcategory)) {
+                switch(btnString) {
+                    case "FINANCES":
+                        btn.setBackgroundColor(Color.parseColor(CategoryEnum.FINANCES.color));
+                        break;
+                    case "WELLNESS":
+                        btn.setBackgroundColor(Color.parseColor(CategoryEnum.WELLNESS.color));
+                        break;
+                    case "FESTIVITY":
+                        btn.setBackgroundColor(Color.parseColor(CategoryEnum.FESTIVITY.color));
+                        break;
+                    case "STUDY":
+                        btn.setBackgroundColor(Color.parseColor(CategoryEnum.STUDY.color));
+                        break;
+                    case "FREE_TIME":
+                        btn.setBackgroundColor(Color.parseColor(CategoryEnum.FREE_TIME.color));
+                        break;
+                }
+            } else {
+                btn.setBackgroundColor(Color.TRANSPARENT);
+            }
             btn.setLayoutParams(btnparams);
             buttonsLayout.addView(btn);
 

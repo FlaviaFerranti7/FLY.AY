@@ -113,7 +113,16 @@ import java.util.Map;
         viewWithParentId = new HashMap<>();
         mapInputField = new HashMap<>();
 
-        addFragment(new CategoriesFieldFragment(), null, R.id.category_fragment);
+        CategoriesFieldFragment categoriesFieldFragment = new CategoriesFieldFragment();
+        Bundle bundle = new Bundle();
+        if(eventEditable != null) {
+            bundle.putString("initialCategory", eventEditable.getCategory());
+            bundle.putString("initialSubcategory", eventEditable.getSubcategory());
+        } else {
+            bundle = null;
+        }
+
+        addFragment(categoriesFieldFragment, bundle, R.id.category_fragment);
 
 
         save.setEnabled(false);

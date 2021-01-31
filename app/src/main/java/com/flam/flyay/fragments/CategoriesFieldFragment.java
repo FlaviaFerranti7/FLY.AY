@@ -40,6 +40,10 @@ public class CategoriesFieldFragment extends Fragment {
     private View fragmentContainer;
     private List<String> categoryList;
 
+    private List<Button> buttons;
+    private String initialCategory;
+    private String initialSubcategory;
+
     public CategoriesFieldFragment() {
     }
 
@@ -56,6 +60,17 @@ public class CategoriesFieldFragment extends Fragment {
         linearLayout = view.findViewById(R.id.add_event_title_categories_fragment);
         linearLayout.setOnTouchListener(new TouchInterceptor(getActivity()));
         linearLayout.setId(2);
+        buttons = new ArrayList<>();
+
+        Bundle arguments = getArguments();
+
+        if(arguments != null) {
+            initialCategory = arguments.getString("initialCategory");
+            initialSubcategory = arguments.getString("initialSubcategory");
+
+            Log.d(".CategoriesField", "parameters:\n\t1) " + initialCategory + "\n\t2) " + initialSubcategory);
+        }
+
 
         addLineSeparator();
         addTextViewAndButtons(R.drawable.ic_category, "Which category?", categoryList);
@@ -126,8 +141,6 @@ public class CategoriesFieldFragment extends Fragment {
 
         horizontalScrollView(layout, buttonsLayout);
 
-        final List<Button> buttons = new ArrayList<>();
-
         for (final Object i : categoryList) {
             final Button btn = new Button(this.getContext());
             btn.setText(String.valueOf(i));
@@ -138,7 +151,34 @@ public class CategoriesFieldFragment extends Fragment {
             );
             btnparams.setMargins(Utils.convertDpToPixel(8), Utils.convertDpToPixel(8), 0, 0);
             btn.setLayoutParams(btnparams);
-            btn.setBackgroundColor(Color.TRANSPARENT);
+            if(initialCategory != null && btn.getText().toString().equalsIgnoreCase(initialCategory)) {
+                switch (initialCategory) {
+                    case "FINANCES":
+                        btn.setBackgroundColor(Color.parseColor(CategoryEnum.FINANCES.color));
+                        addSubcategoryFragment(createParamsEventsFragment(CategoryEnum.FINANCES, initialSubcategory));
+                        break;
+                    case "WELLNESS":
+                        btn.setBackgroundColor(Color.parseColor(CategoryEnum.WELLNESS.color));
+                        addSubcategoryFragment(createParamsEventsFragment(CategoryEnum.WELLNESS, initialSubcategory));
+                        break;
+                    case "FESTIVITY":
+                        btn.setBackgroundColor(Color.parseColor(CategoryEnum.FESTIVITY.color));
+                        addSubcategoryFragment(createParamsEventsFragment(CategoryEnum.FESTIVITY, initialSubcategory));
+                        break;
+                    case "STUDY":
+                        btn.setBackgroundColor(Color.parseColor(CategoryEnum.STUDY.color));
+                        addSubcategoryFragment(createParamsEventsFragment(CategoryEnum.STUDY, initialSubcategory));
+                        break;
+                    case "FREE_TIME":
+                        btn.setBackgroundColor(Color.parseColor(CategoryEnum.FREE_TIME.color));
+                        addSubcategoryFragment(createParamsEventsFragment(CategoryEnum.FREE_TIME, initialSubcategory));
+                        break;
+                }
+
+            } else {
+                btn.setBackgroundColor(Color.TRANSPARENT);
+            }
+
             btn.setClickable(true);
             buttonsLayout.addView(btn);
 
@@ -181,6 +221,7 @@ public class CategoriesFieldFragment extends Fragment {
                 }
             });
         }
+        Log.d(".CategoriesField", buttons.toString());
     }
 
 
@@ -200,7 +241,7 @@ public class CategoriesFieldFragment extends Fragment {
     private void openOrCloseSubcategory(int color, Button btn, Fragment fragment, CategoryEnum categoryEnum) {
         if(color == Color.TRANSPARENT) {
             btn.setBackgroundColor(Color.parseColor(categoryEnum.color));
-            addSubcategoryFragment(createParamsEventsFragment(categoryEnum));
+            addSubcategoryFragment(createParamsEventsFragment(categoryEnum, null));
             linearLayout.setVisibility(View.VISIBLE);
         } else {
             btn.setBackgroundColor(Color.TRANSPARENT);
@@ -250,9 +291,10 @@ public class CategoriesFieldFragment extends Fragment {
         }
     }
 
-    private Bundle createParamsEventsFragment(CategoryEnum categoryEnum) {
+    private Bundle createParamsEventsFragment(CategoryEnum categoryEnum, String initialSubcategory) {
         Bundle bundle = new Bundle();
         bundle.putString("btnString", categoryEnum.name);
+        bundle.putString("initialSubcategory", initialSubcategory);
         return bundle;
     }
 
