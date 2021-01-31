@@ -37,6 +37,8 @@ public class ButtonsFieldFragment extends Fragment {
     private int colorCategory;
 
     private List<Button> activeButtons;
+    private List<String> initialValues;
+    private List<Button> buttons;
 
 
     public ButtonsFieldFragment() {}
@@ -54,6 +56,10 @@ public class ButtonsFieldFragment extends Fragment {
         typeOfList = arguments.getString("typeOfList");
         colorCategory = arguments.getInt("color");
         keyToSetValue = arguments.getString("key");
+        initialValues = (List<String>) arguments.getStringArrayList("initialValues");
+
+        Log.d(".ButtonField", "initialValues: " + initialValues);
+
         activeButtons = new ArrayList<>();
 
         title.setText(titleParam);
@@ -106,7 +112,7 @@ public class ButtonsFieldFragment extends Fragment {
         
         horizontalScrollView(buttonsLayout);
 
-        final List<Button> buttons = new ArrayList<>();
+        buttons = new ArrayList<>();
 
         for (final Object i : list) {
             final Button btn = new Button(this.getContext());
@@ -191,6 +197,15 @@ public class ButtonsFieldFragment extends Fragment {
                 }
 
             });
+
+            if(initialValues != null) {
+                for(String initialValue: initialValues) {
+                    if(initialValue.equalsIgnoreCase(btn.getText().toString())) {
+                        btn.setBackgroundColor(colorCategory);
+                        activeButtons.add(btn);
+                    }
+                }
+            }
         }
     }
 

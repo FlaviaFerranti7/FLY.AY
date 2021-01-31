@@ -144,13 +144,16 @@ public class OptionsFieldFragment extends Fragment {
                 }
             });
 
-            for(String initialValue : initialValues) {
-                Log.d(".OPTION", "initialValue: " + initialValue + " checkbox text: " + checkBox.getText().toString());
-                if(initialValue.equalsIgnoreCase(checkBox.getText().toString())) {
-                    checkBox.setChecked(true);
-                    break;
+            if(initialValues != null) {
+                for(String initialValue : initialValues) {
+                    Log.d(".OPTION", "initialValue: " + initialValue + " checkbox text: " + checkBox.getText().toString());
+                    if(initialValue.equalsIgnoreCase(checkBox.getText().toString())) {
+                        checkBox.setChecked(true);
+                        break;
+                    }
                 }
             }
+
 
         }
     }

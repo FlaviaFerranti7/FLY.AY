@@ -106,7 +106,8 @@ import java.util.Map;
                     TeacherInfo teacherInfo = (TeacherInfo) eventEditableValues.get("teacher");
                     eventEditableValues.put("teacherName", teacherInfo.getName());
                     eventEditableValues.put("teacherEmail", teacherInfo.getEmail());
-                    eventEditableValues.put("teacherReceiptDate", teacherInfo.getReceiptDate());
+                    eventEditableValues.put("teacherOfficeDay", teacherInfo.getOfficeDay());
+                    eventEditableValues.put("teacherReceiptTime", Utils.getTimeToString(teacherInfo.getReceiptStartingTime(), teacherInfo.getReceiptEndingTime()));
                     eventEditableValues.put("teacherReceiptRoom", teacherInfo.getReceiptRoom());
                 }
             }
@@ -311,12 +312,13 @@ import java.util.Map;
         return bundle;
     }
 
-    private Bundle createParamsButtonList(String title, String key, String typeOfList, int colorCategory) {
+    private Bundle createParamsButtonList(String title, String key, String typeOfList, int colorCategory, List<String> initialValues) {
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         bundle.putString("key", key);
         bundle.putString("typeOfList", typeOfList);
         bundle.putInt("color", colorCategory);
+        bundle.putStringArrayList("initialValues", initialValues != null ? new ArrayList<String>(initialValues): null);
 
         return bundle;
     }
@@ -334,7 +336,7 @@ import java.util.Map;
         bundle.putString("title", title);
         bundle.putString("key", key);
         bundle.putString("typeCheckbox", typeCheckbox);
-        bundle.putStringArrayList("initialValues", new ArrayList<String>(initialValues));
+        bundle.putStringArrayList("initialValues", initialValues != null ? new ArrayList<String>(initialValues): null);
         return bundle;
     }
 
@@ -535,12 +537,19 @@ import java.util.Map;
                     dynamicForm.addView(childLayout, input.getFieldOrderId());
                     childLayout.setId(View.generateViewId());
                     ButtonsFieldFragment fragmentB = new ButtonsFieldFragment();
-                    fragmentB.setArguments(createParamsButtonList(input.getLabelName(), input.getName(), "weekDays", colorCategory));
+                    if(eventEditable != null && input.getName().equalsIgnoreCase("studyingDays")) {
+                        fragmentB.setArguments(createParamsButtonList(input.getLabelName(), input.getName(), "weekDays", colorCategory, ((StudyEvent)eventEditable).getStudyPlan().getStudyingDays()));
+                    }
+                    else if(eventEditable != null && input.getName().equalsIgnoreCase("officeDay")) {
+                        fragmentB.setArguments(createParamsButtonList(input.getLabelName(), input.getName(), "weekDays", colorCategory, ((StudyEvent)eventEditable).getTeacherInfo().getOfficeDay()));
+                    }
+                    else {
+                        fragmentB.setArguments(createParamsButtonList(input.getLabelName(), input.getName(), "weekDays", colorCategory, null));
+                    }
                     addFragment(fragmentB, childLayout.getId());
                     break;
                 case "TOPICSPAGES":
                     Log.d(".AddEventForm", "button received");
-                    Log.d(".AddEventForm", "OFFICEDAY: " + input);
                     childLayout = new RelativeLayout(getContext());
                     paramsLayout = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -554,7 +563,7 @@ import java.util.Map;
                     dynamicForm.addView(childLayout, input.getFieldOrderId());
                     childLayout.setId(View.generateViewId());
                     fragmentB = new ButtonsFieldFragment();
-                    fragmentB.setArguments(createParamsButtonList(input.getLabelName(), input.getName(), "studyBy", colorCategory));
+                    fragmentB.setArguments(createParamsButtonList(input.getLabelName(), input.getName(), "studyBy", colorCategory, null));
                     addFragment(fragmentB, childLayout.getId());
                     break;
                 case "SWITCH":

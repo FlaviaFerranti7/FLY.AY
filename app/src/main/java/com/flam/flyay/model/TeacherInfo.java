@@ -4,8 +4,6 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.flam.flyay.util.Utils;
-
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -25,12 +23,23 @@ public class TeacherInfo implements Serializable {
     private String receiptDate;
 
     @Nullable
+    private List<String> officeDay;
+
+    @Nullable
+    private Double receiptStartingTime;
+
+    @Nullable
+    private Double receiptEndingTime;
+
+    @Nullable
     private String receiptRoom;
 
-    public TeacherInfo(@Nullable String name, @Nullable String email, @Nullable String receiptDate, @Nullable String receiptRoom) {
+    public TeacherInfo(@Nullable String name, @Nullable String email, @Nullable List<String> officeDay, @Nullable Double receiptStartingTime, @Nullable Double receiptEndingTime, @Nullable String receiptRoom) {
         this.name = name;
         this.email = email;
-        this.receiptDate = receiptDate;
+        this.officeDay = officeDay;
+        this.receiptStartingTime = receiptStartingTime;
+        this.receiptEndingTime = receiptEndingTime;
         this.receiptRoom = receiptRoom;
     }
 
@@ -94,5 +103,32 @@ public class TeacherInfo implements Serializable {
                 ", receiptDate='" + receiptDate + '\'' +
                 ", receiptRoom='" + receiptRoom + '\'' +
                 '}';
+    }
+
+    @Nullable
+    public List<String> getOfficeDay() {
+        return officeDay;
+    }
+
+    public void setOfficeDay(@Nullable List<String> officeDay) {
+        this.officeDay = officeDay;
+    }
+
+    @Nullable
+    public Double getReceiptStartingTime() {
+        return receiptStartingTime;
+    }
+
+    public void setReceiptStartingTime(@Nullable Double receiptStartingTime) {
+        this.receiptStartingTime = receiptStartingTime;
+    }
+
+    @Nullable
+    public Double getReceiptEndingTime() {
+        return receiptEndingTime;
+    }
+
+    public void setReceiptEndingTime(@Nullable Double receiptEndingTime) {
+        this.receiptEndingTime = receiptEndingTime;
     }
 }

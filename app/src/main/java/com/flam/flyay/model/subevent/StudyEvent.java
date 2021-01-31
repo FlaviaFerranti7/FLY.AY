@@ -36,13 +36,13 @@ public class StudyEvent extends Event {
     private StudyPlan studyPlan;
 
 
-    public StudyEvent(int id, String subcategory, String title, Date date, String note, @Nullable Double startingTime, @Nullable Double endTime, @Nullable String place, @Nullable String room, @Nullable String teacherName, @Nullable String teacherEmail, @Nullable String teacherReceiptDate, @Nullable String teacherReceiptRoom, @Nullable StudyPlan studyPlan) {
+    public StudyEvent(int id, String subcategory, String title, Date date, String note, @Nullable Double startingTime, @Nullable Double endTime, @Nullable String place, @Nullable String room, @Nullable String teacherName, @Nullable String teacherEmail, @Nullable List<String> officeDay, @Nullable Double receiptStartingTime, @Nullable Double receiptEndingTime, @Nullable String teacherReceiptRoom, @Nullable StudyPlan studyPlan) {
         super(id, CategoryEnum.STUDY.name, subcategory, title, date, note);
         this.startingTime = startingTime;
         this.endTime = endTime;
         this.place = place;
         this.room = room;
-        this.teacherInfo = new TeacherInfo(teacherName, teacherEmail, teacherReceiptDate, teacherReceiptRoom);
+        this.teacherInfo = new TeacherInfo(teacherName, teacherEmail, officeDay, receiptStartingTime, receiptEndingTime, teacherReceiptRoom);
         this.studyPlan = studyPlan;
     }
 
@@ -63,6 +63,9 @@ public class StudyEvent extends Event {
     public void setEndTime(@Nullable Double endTime) {
         this.endTime = endTime;
     }
+
+    @Nullable
+    public TeacherInfo getTeacherInfo() { return this.teacherInfo; }
 
     @Nullable
     public String getRoom() {
