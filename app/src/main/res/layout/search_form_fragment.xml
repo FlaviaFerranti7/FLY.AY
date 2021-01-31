@@ -38,58 +38,21 @@
         android:hint="@string/search_hint_category"
         android:textSize="16dp"/>
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleButtonCategories"
+    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="140dp"
-        android:layout_marginLeft="30dp">
+        android:layout_height="60dp"
+        android:layout_marginTop="140dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/studyCategoryButton"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_centerHorizontal="true"
-            android:layout_width="60dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:icon="@drawable/ic_category_study"
-            app:iconTint="@color/blueStudy"/>
+            android:orientation="horizontal"
+            android:paddingRight="30dp"
+            android:paddingLeft="30dp"
+            android:id="@+id/buttonCategoriesGroups">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/freeTimeCategoryButton"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_centerHorizontal="true"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            app:icon="@drawable/ic_category_freetime"
-            app:iconTint="@color/redFreeTime"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/wellnessCategoryButton"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_centerHorizontal="true"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            app:icon="@drawable/ic_category_wellness"
-            app:iconTint="@color/violetWellness"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/festivityCategoryButton"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_centerHorizontal="true"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            app:icon="@drawable/ic_category_festivity"
-            app:iconTint="@color/orangeFestivity"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/financesCategoryButton"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_centerHorizontal="true"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            app:icon="@drawable/ic_category_finances"
-            app:iconTint="@color/yellowFinances"/>
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/whereEventLayout"
@@ -97,7 +60,7 @@
         android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="210dp"
         android:focusable="true"
         android:focusableInTouchMode ="true"
         app:endIconMode="clear_text"
