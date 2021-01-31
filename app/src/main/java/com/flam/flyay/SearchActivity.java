@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.flam.flyay.fragments.EventDetailsFragment;
@@ -52,6 +53,14 @@ public class SearchActivity extends AppCompatActivity implements SearchResultsFr
         ab = getSupportActionBar();
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            navView.setBackgroundColor(BLACK);
+            toolbar.setBackgroundColor(BLACK);
+        }
+        else{
+            navView.setBackgroundColor(WHITE);
+            toolbar.setBackgroundColor(WHITE);
+        }
         navView.setSelectedItemId(R.id.lens);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -101,7 +110,7 @@ public class SearchActivity extends AppCompatActivity implements SearchResultsFr
         Bundle bundle = new Bundle();
         bundle.putSerializable("event", event);
 
-        getSupportActionBar().setTitle("Details");
+        getSupportActionBar().setTitle(event.getTitle());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setIcon(null);
 

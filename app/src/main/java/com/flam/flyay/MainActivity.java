@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.flam.flyay.fragments.CalendarFragment;
 import com.flam.flyay.fragments.EventDetailsFragment;
 import com.flam.flyay.fragments.HomeFragment;
 import com.flam.flyay.model.Event;
@@ -32,7 +33,8 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
 
-import static android.graphics.Color.*;
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.WHITE;
 
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnEventsListListener{
@@ -66,7 +68,14 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         currentDate = df.format(c.getTime());
 
         navView = findViewById(R.id.nav_view);
-        //navView.getMenu().getItem(2).setEnabled(false);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            navView.setBackgroundColor(BLACK);
+            toolbar.setBackgroundColor(BLACK);
+        }
+        else{
+            navView.setBackgroundColor(WHITE);
+            toolbar.setBackgroundColor(WHITE);
+        }
         navView.setSelectedItemId(R.id.home);
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
@@ -110,10 +119,14 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         Log.d(".ActivityMain", "onCreateOptionsMenu");
 
         MenuInflater inflater = getMenuInflater();
+
+        Fragment calendarFragment = (Fragment) getSupportFragmentManager()
+                .findFragmentByTag(CalendarFragment.class.getName());
         Fragment fragmentInFrame = (Fragment) getSupportFragmentManager()
                 .findFragmentByTag(EventDetailsFragment.class.getName());
 
-        if(fragmentInFrame == null) {
+
+        if(fragmentInFrame == null && calendarFragment == null) {
             Log.d(".ActivityMain", "setting home calendar option on toolbar");
             inflater.inflate(R.menu.actions_menu, menu);
 
@@ -121,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
                 if(menu.getItem(i).getItemId() != R.id.home_calendar)
                     menu.getItem(i).setVisible(false);
             }
-        } else {
+        } else if (fragmentInFrame != null) {
             Log.d(".ActivityMain", "setting event details actions on toolbar");
             inflater.inflate(R.menu.event_details_actions, menu);
         }
@@ -129,12 +142,13 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.home_calendar:
-                //TODO: go to calendar
+                addFragment(new CalendarFragment(), createParamsEventsFragment());
                 Toast.makeText(this.getApplicationContext(),"Go to Calendar",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.edit_event:

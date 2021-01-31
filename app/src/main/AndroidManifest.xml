@@ -30,7 +30,8 @@
                 android:value=".ProfileActivity" />
         </activity>
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".ToDoActivity" />
+        <activity android:name=".ToDoActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".AddEventActivity"
             android:windowSoftInputMode="stateVisible"/>
         <activity android:name=".SearchActivity" />

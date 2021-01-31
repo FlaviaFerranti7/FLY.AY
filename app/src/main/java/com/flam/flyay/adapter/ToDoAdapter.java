@@ -1,6 +1,7 @@
 package com.flam.flyay.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +46,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> im
         public MaterialCardView card;
         public ImageView image;
         public Button button;
+        public ImageView btn_delete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -51,6 +54,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> im
             card = itemView.findViewById(R.id.card);
             image = itemView.findViewById(R.id.card_img);
             button = itemView.findViewById(R.id.action_button_1);
+            btn_delete = itemView.findViewById(R.id.card_delete);
         }
     }
 
@@ -69,6 +73,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> im
 
         holder.textView.setText(toDo.getTitle());
         Glide.with(context).load(getCardImage(toDo.getImage())).into(holder.image);
+        holder.btn_delete.setBackgroundColor(Color.TRANSPARENT);
 
         for(int i=0; i<images.length; i++){
             if (getCardImage(toDo.getImage()) == images[i])
@@ -82,6 +87,26 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> im
             @Override
             public void onClick(View v) {
                 onToDoListListener.onToDoListSelected(toDo);
+            }
+        });
+
+        holder.btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(context)
+                    .setTitle("Delete list")
+                    .setMessage("Are you sure you want to delete the list?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            toDoList.remove(holder.getAdapterPosition());
+                            notifyItemRemoved(holder.getAdapterPosition());
+                            notifyItemRangeChanged(holder.getAdapterPosition(), toDoList.size());
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(R.drawable.ic_warning)
+                    .show();
+
             }
         });
     }
@@ -119,6 +144,13 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> im
         });
     }
 
+    public void add(ToDo todo){
+        toDoList.add(todo);
+        Log.d(".adapter", "list '" + todo.toString() + "']");
+        notifyItemInserted(toDoList.size() - 1);
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onRowMoved(int fromPosition, int toPosition) {
         if (fromPosition < toPosition) {
@@ -144,7 +176,6 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> im
         viewHolder.card.setCardBackgroundColor(Color.WHITE);
 
     }
-
 
     @Override
     public int getItemCount() {

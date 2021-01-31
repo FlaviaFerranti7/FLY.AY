@@ -22,7 +22,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <ImageView
             android:id="@+id/card_img"
             android:layout_width="match_parent"
@@ -42,21 +41,33 @@
             android:textSize="18sp" />
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/action_button_1"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+        <ImageButton
+
+            android:id="@+id/card_delete"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_below="@id/card_img"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginTop="7dp"
+            android:clickable="true"
+            android:src="@drawable/ic_delete"
+             />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/action_button_1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/card_img"
+            android:layout_marginRight="0dp"
+            android:layout_toLeftOf="@id/card_delete"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:text="Change Image"
-            android:textAppearance="
-            @style/TextAppearance.MaterialComponents.Headline6"
-            android:textSize="18sp" />
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:text="New Image"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textSize="18sp"
+             />
 
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>
+
