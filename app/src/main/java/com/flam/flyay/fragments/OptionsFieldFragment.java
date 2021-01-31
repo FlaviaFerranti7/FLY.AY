@@ -22,7 +22,9 @@ import com.flam.flyay.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OptionsFieldFragment extends Fragment {
 
@@ -30,6 +32,8 @@ public class OptionsFieldFragment extends Fragment {
 
     private List<String> overRange;
     private List<String> examDifficulty;
+
+    private List<CheckBox> listCheckBox;
 
     private TextView title;
 
@@ -44,6 +48,8 @@ public class OptionsFieldFragment extends Fragment {
         linearLayout = view.findViewById(R.id.options_field_fragment);
         title = view.findViewById(R.id.checkbox_group_title);
 
+        listCheckBox = new ArrayList<>();
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
@@ -57,7 +63,6 @@ public class OptionsFieldFragment extends Fragment {
         title.setLayoutParams(params);
 
         overRange = Arrays.asList("morning", "afternoon", "evening");
-
         examDifficulty = Arrays.asList("easy", "medium", "difficult");
 
         switch (typeCheckbox) {
@@ -87,6 +92,7 @@ public class OptionsFieldFragment extends Fragment {
         for (final Object i : list) {
             final CheckBox checkBox = new CheckBox(this.getContext());
             checkBox.setText(String.valueOf(i));
+            listCheckBox.add(checkBox);
             checkBox.setTextSize(16);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -98,7 +104,15 @@ public class OptionsFieldFragment extends Fragment {
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    for(CheckBox checkBoxItem : listCheckBox) {
 
+                        if(isChecked) {
+                            if(!checkBoxItem.getText().toString().equalsIgnoreCase(checkBox.getText().toString())) {
+                                checkBoxItem.setChecked(false);
+                            };
+                        }
+
+                    }
                 }
             });
         }

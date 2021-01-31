@@ -135,6 +135,7 @@ import java.util.Map;
                                 input.setValue(e.getText());
                                 break;
                             case "DATE":
+                            case "SWITCH":
                             case "OFFICEDAY":
                             case "TOPICSPAGES":
                                 Log.d(".SAVEAddEventForm", input.getName() + " " + input.getValue());
