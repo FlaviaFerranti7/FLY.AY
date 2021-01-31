@@ -1,6 +1,7 @@
  package com.flam.flyay.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.renderscript.ScriptGroup;
@@ -28,9 +29,11 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.util.Util;
 import com.flam.flyay.AddEventActivity;
 import com.flam.flyay.R;
+import com.flam.flyay.model.Event;
 import com.flam.flyay.model.InputField;
 import com.flam.flyay.services.EventService;
 import com.flam.flyay.services.ServerCallback;
+import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.TouchInterceptor;
 import com.flam.flyay.util.Utils;
 import com.google.android.material.textfield.TextInputEditText;
@@ -53,17 +56,15 @@ import java.util.Map;
     LinearLayout linearLayout;
     LinearLayout dynamicForm;
 
+    TextInputEditText title;
+    TextInputEditText note;
     Button save;
     Button cancel;
 
 
     Map<Integer, List<View>> viewWithParentId;
+    Event eventEditable;
 
-
-    private List<String> weekDays;
-    private List<String> projectWith;
-    private List<String> studyBy;
-    private List<String> recapPer;
 
 
 
@@ -76,7 +77,7 @@ import java.util.Map;
         setHasOptionsMenu(true);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,6 +91,15 @@ import java.util.Map;
         this.service = new EventService(getActivity());
         linearLayout = view.findViewById(R.id.touchInterceptorFormFragment);
         dynamicForm = view.findViewById(R.id.dynamic_form);
+
+        title = view.findViewById(R.id.dynamic_form_title_value);
+        note = view.findViewById(R.id.note_value);
+
+        Bundle arguments = getArguments();
+        if(arguments != null)
+            eventEditable = (Event) arguments.getSerializable("eventEditable");
+
+        Log.d(".AddEventForm", "event editable: " + eventEditable);
 
 
         save = view.findViewById(R.id.button_save);
@@ -105,11 +115,6 @@ import java.util.Map;
 
         addFragment(new CategoriesFieldFragment(), null, R.id.category_fragment);
 
-
-        weekDays = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
-        projectWith = Arrays.asList("by myself", "with friend");
-        studyBy = Arrays.asList("Topics", "Pages");
-        recapPer = Arrays.asList("Main", "Sub");
 
         save.setEnabled(false);
 
@@ -160,6 +165,32 @@ import java.util.Map;
                 startActivity(intent);
             }
         });
+
+        if(eventEditable != null) {
+            /* set layout variables */
+            title.setText(eventEditable.getTitle());
+            if(eventEditable.getNote() != null)
+                note.setText(eventEditable.getNote());
+
+            /* Open dynamic form */
+            switch (eventEditable.getCategory()) {
+                case "FREE_TIME":
+                    activeDynamicForm(eventEditable.getSubcategory(), Color.parseColor(CategoryEnum.FREE_TIME.color));
+                    break;
+                case "FINANCES":
+                    activeDynamicForm(eventEditable.getSubcategory(), Color.parseColor(CategoryEnum.FINANCES.color));
+                    break;
+                case "WELLNESS":
+                    activeDynamicForm(eventEditable.getSubcategory(), Color.parseColor(CategoryEnum.WELLNESS.color));
+                    break;
+                case "STUDY":
+                    activeDynamicForm(eventEditable.getSubcategory(), Color.parseColor(CategoryEnum.STUDY.color));
+                    break;
+                case "FESTIVITY":
+                    activeDynamicForm(eventEditable.getSubcategory(), Color.parseColor(CategoryEnum.FESTIVITY.color));
+                    break;
+            }
+        }
 
         return view;
     }

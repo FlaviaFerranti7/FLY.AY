@@ -37,6 +37,7 @@ public class AddEventActivity extends AppCompatActivity {
 
     private Event eventEditable;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +107,10 @@ public class AddEventActivity extends AppCompatActivity {
             }
         });
 
-        addFragment(new AddEventFormFragment(), null);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("eventEditable", eventEditable);
+
+        addFragment(new AddEventFormFragment(), bundle);
     }
 
     @Override
