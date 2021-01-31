@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -83,36 +85,62 @@ public class SearchFormFragment extends Fragment {
         for (final Object i : categoryList) {
             final Button btn = new Button(this.getContext());
             Drawable drawable;
+
             switch (String.valueOf(i)){
                 case "FINANCES":
                     drawable = view.getResources().getDrawable(R.drawable.ic_category_finances);
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                        DrawableCompat.setTint(drawable, Color.WHITE);
+                    } else {
+                        DrawableCompat.setTint(drawable, Color.BLACK);
+                    }
                     drawable.setBounds(0,0, 65, 65);
                     btn.setCompoundDrawables(null, drawable, null, null);
                     break;
                 case "WELLNESS":
                     drawable = view.getResources().getDrawable(R.drawable.ic_category_wellness);
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                        DrawableCompat.setTint(drawable, Color.WHITE);
+                    } else {
+                        DrawableCompat.setTint(drawable, Color.BLACK);
+                    }
                     drawable.setBounds(0,0, 65, 65);
                     btn.setCompoundDrawables(null, drawable, null, null);
                     break;
                 case "FESTIVITY":
                     drawable = view.getResources().getDrawable(R.drawable.ic_category_festivity);
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                        DrawableCompat.setTint(drawable, Color.WHITE);
+                    } else {
+                        DrawableCompat.setTint(drawable, Color.BLACK);
+                    }
                     drawable.setBounds(0,0, 65, 65);
                     btn.setCompoundDrawables(null, drawable, null, null);
                     break;
                 case "STUDY":
                     drawable = view.getResources().getDrawable(R.drawable.ic_category_study);
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                        DrawableCompat.setTint(drawable, Color.WHITE);
+                    } else {
+                        DrawableCompat.setTint(drawable, Color.BLACK);
+                    }
                     drawable.setBounds(0,0, 65, 65);
                     btn.setCompoundDrawables(null, drawable, null, null);
                     break;
                 case "FREE_TIME":
                     drawable = view.getResources().getDrawable(R.drawable.ic_category_freetime);
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                        DrawableCompat.setTint(drawable, Color.WHITE);
+                    } else {
+                        DrawableCompat.setTint(drawable, Color.BLACK);
+                    }
                     drawable.setBounds(0,0, 65, 65);
                     btn.setCompoundDrawables(null, drawable, null, null);
                     break;
             }
             buttons.add(btn);
             LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
-                    Utils.convertDpToPixel(52),
+                    Utils.convertDpToPixel(55),
                     ViewGroup.LayoutParams.WRAP_CONTENT
             );
             btnparams.setMargins(Utils.convertDpToPixel(8), Utils.convertDpToPixel(8), 0, 0);
@@ -180,6 +208,7 @@ public class SearchFormFragment extends Fragment {
             checkedCategory = categoryEnum.name;
         } else {
             btn.setBackgroundColor(Color.TRANSPARENT);
+            checkedCategory = "";
         }
         Log.d(".SearchFormFragment", "selected category: " + checkedCategory);
     }

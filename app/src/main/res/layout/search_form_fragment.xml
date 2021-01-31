@@ -5,19 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/search_form">
+    android:id="@+id/search_form"
+    android:padding="10dp">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/whichEventLayout"
         android:textSize="16sp"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:focusable="true"
         android:focusableInTouchMode ="true"
-        app:endIconMode="clear_text"
-        app:startIconDrawable="@drawable/ic_search">
+        app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/whichEvent"
@@ -34,7 +34,7 @@
         android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="110dp"
-        android:layout_centerHorizontal="true"
+        android:padding="5dp"
         android:hint="@string/search_hint_category"
         android:textSize="16dp"/>
 
@@ -47,8 +47,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:paddingRight="30dp"
-            android:paddingLeft="30dp"
             android:id="@+id/buttonCategoriesGroups">
 
         </LinearLayout>
@@ -57,14 +55,13 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/whereEventLayout"
         android:textSize="16sp"
-        android:layout_width="290dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="210dp"
         android:focusable="true"
         android:focusableInTouchMode ="true"
-        app:endIconMode="clear_text"
-        app:startIconDrawable="@drawable/ic_search">
+        app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/whereEvent"
