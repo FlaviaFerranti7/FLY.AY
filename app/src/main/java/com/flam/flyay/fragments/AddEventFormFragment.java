@@ -48,6 +48,7 @@ import java.util.Map;
  public class AddEventFormFragment extends Fragment {
     private EventService service;
     List<InputField> object;
+    Map<String, InputField> mapInputField;
     Map<InputField, View> objectView;
     LinearLayout linearLayout;
     LinearLayout dynamicForm;
@@ -99,6 +100,7 @@ import java.util.Map;
         object = new ArrayList<>();
         objectView = new HashMap<>();
         viewWithParentId = new HashMap<>();
+        mapInputField = new HashMap<>();
 
         addFragment(new CategoriesFieldFragment(), null, R.id.category_fragment);
 
@@ -132,6 +134,12 @@ import java.util.Map;
 
                                 input.setValue(e.getText());
                                 break;
+                            case "DATE":
+                            case "OFFICEDAY":
+                            case "TOPICSPAGES":
+                                Log.d(".SAVEAddEventForm", input.getName() + " " + input.getValue());
+                                break;
+
                         }
                     }
                 }
@@ -235,18 +243,20 @@ import java.util.Map;
         return bundle;
     }
 
-    private Bundle createParamsButtonList(String title, List<String> nameButton, int colorCategory) {
+    private Bundle createParamsButtonList(String title, String key, String typeOfList, int colorCategory) {
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
-        bundle.putSerializable("list", new ArrayList(nameButton));
+        bundle.putString("key", key);
+        bundle.putString("typeOfList", typeOfList);
         bundle.putInt("color", colorCategory);
 
         return bundle;
     }
 
-    private Bundle createParamsDate(String title) {
+    private Bundle createParamsDate(String title, String key) {
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
+        bundle.putString("key", key);
         return bundle;
     }
 
@@ -257,21 +267,6 @@ import java.util.Map;
         return bundle;
     }
 
-    private boolean visibleField(List<InputField> list, int parentId) {
-        Log.d(".AddEventForm", "parent id received: " + parentId);
-        for(InputField input : list) {
-            if(input.getId() == parentId) {
-                Object value = input.getValue();
-                if(value instanceof Boolean) {
-                    Log.d(".AddEventForm", value.toString());
-                    return (Boolean) value;
-                }
-            }
-        }
-
-        return false;
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void createDynamicForm(final List<InputField> object, final int colorCategory) {
         save.setEnabled(true);
@@ -279,6 +274,7 @@ import java.util.Map;
         for(int i = 0; i < object.size(); i ++) {
             final InputField input = object.get(i);
             viewWithParentId.put(input.getId(), new ArrayList<View>());
+            mapInputField.put(input.getName(), input);
 
             switch (input.getFieldType()) {
                 case "NUMBER":
@@ -358,7 +354,7 @@ import java.util.Map;
                     dynamicForm.addView(childLayout, input.getFieldOrderId());
                     childLayout.setId(View.generateViewId());
                     DateFieldFragment dateFieldFragment = new DateFieldFragment();
-                    dateFieldFragment.setArguments(createParamsDate(input.getLabelName()));
+                    dateFieldFragment.setArguments(createParamsDate(input.getLabelName(), input.getName()));
                     addFragment(dateFieldFragment, childLayout.getId());
                     break;
                 case "TIME":
@@ -438,7 +434,7 @@ import java.util.Map;
                     dynamicForm.addView(childLayout, input.getFieldOrderId());
                     childLayout.setId(View.generateViewId());
                     ButtonsFieldFragment fragmentB = new ButtonsFieldFragment();
-                    fragmentB.setArguments(createParamsButtonList(input.getLabelName(), weekDays, colorCategory));
+                    fragmentB.setArguments(createParamsButtonList(input.getLabelName(), input.getName(), "weekDays", colorCategory));
                     addFragment(fragmentB, childLayout.getId());
                     break;
                 case "TOPICSPAGES":
@@ -457,7 +453,7 @@ import java.util.Map;
                     dynamicForm.addView(childLayout, input.getFieldOrderId());
                     childLayout.setId(View.generateViewId());
                     fragmentB = new ButtonsFieldFragment();
-                    fragmentB.setArguments(createParamsButtonList(input.getLabelName(), studyBy, colorCategory));
+                    fragmentB.setArguments(createParamsButtonList(input.getLabelName(), input.getName(), "studyBy", colorCategory));
                     addFragment(fragmentB, childLayout.getId());
                     break;
                 case "SWITCH":
@@ -543,4 +539,8 @@ import java.util.Map;
         else
             Utils.listGONE(tmp);
     }
+
+    public void setValueInputField(String name, Object value) {
+        mapInputField.get(name).setValue(value);
+   }
 }

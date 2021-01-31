@@ -31,16 +31,12 @@ import java.util.List;
 public class ButtonsFieldFragment extends Fragment {
 
     private LinearLayout linearLayout;
-    private TextView title;
 
-    private List<String> buttonsValue;
-
-    private List<String> weekDays;
-    private List<String> projectWith;
-    private List<String> studyBy;
-    private List<String> recapPer;
-
+    private String typeOfList;
+    private String keyToSetValue;
     private int colorCategory;
+
+    private List<Button> activeButtons;
 
 
     public ButtonsFieldFragment() {}
@@ -50,20 +46,33 @@ public class ButtonsFieldFragment extends Fragment {
         final View view = inflater.inflate(R.layout.buttons_field_fragment, container, false);
 
         linearLayout = view.findViewById(R.id.buttons_field_fragment);
-        title = view.findViewById(R.id.button_group_title);
-
-        weekDays = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
-        projectWith = Arrays.asList("by myself", "with friend");
-        studyBy = Arrays.asList("Topics", "Pages");
-        recapPer = Arrays.asList("Main", "Sub");
+        TextView title = view.findViewById(R.id.button_group_title);
 
         Bundle arguments = getArguments();
 
         String titleParam = arguments.getString("title");
+        typeOfList = arguments.getString("typeOfList");
         colorCategory = arguments.getInt("color");
+        keyToSetValue = arguments.getString("key");
+        activeButtons = new ArrayList<>();
+
         title.setText(titleParam);
 
-        List<String> list = (List<String>) arguments.getSerializable("list");
+        List<String> list = new ArrayList<>();
+        switch (typeOfList) {
+            case "weekDays":
+                list = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
+                break;
+            case "projectWith":
+                list = Arrays.asList("by myself", "with friend");
+                break;
+            case "studyBy":
+                list = Arrays.asList("Topics", "Pages");
+                break;
+            case "recapPer":
+                list = Arrays.asList("Main", "Sub");
+                break;
+        }
         Log.d(".ButtonGroup", "list received: " + list.toString());
         addButtons(list);
 
@@ -129,10 +138,27 @@ public class ButtonsFieldFragment extends Fragment {
                     if(background instanceof ColorDrawable)
                         color = ((ColorDrawable) background).getColor();
 
-                    clearOtherButtonBackground(buttons, btn);
+                    if(!typeOfList.equalsIgnoreCase("weekDays")) {
+                        clearOtherButtonBackground(buttons, btn);
+                    }
+
                     if(color == Color.TRANSPARENT) {
                         btn.setBackgroundColor(colorCategory);
                         linearLayout.setVisibility(View.VISIBLE);
+
+                        activeButtons.add(btn);
+                        Log.d(".ButtonsField", "ADD OPERATION; activeButtons => " + activeButtons.toString());
+
+                        if(!typeOfList.equalsIgnoreCase("weekDays")) {
+                            dynamicFormFragment.setValueInputField(keyToSetValue, btn.getText().toString());
+                        } else {
+                            List<String> newValue = new ArrayList<>();
+                            for(Button button : activeButtons)
+                                newValue.add(button.getText().toString());
+                            Log.d(".ButtonsField", "weekDays value: " + activeButtons.toString());
+                            dynamicFormFragment.setValueInputField(keyToSetValue, newValue);
+                        }
+
                         if(btn.getText().toString().equalsIgnoreCase("Pages")) {
                             dynamicFormFragment.toggleTopicPagesForm("P",true);
                             dynamicFormFragment.toggleTopicPagesForm("T",false);
@@ -144,6 +170,19 @@ public class ButtonsFieldFragment extends Fragment {
 
                     } else {
                         btn.setBackgroundColor(Color.TRANSPARENT);
+                        activeButtons.remove(btn);
+                        Log.d(".ButtonsField", "DELETE OPERATION; activeButtons => " + activeButtons.toString());
+
+                        if(!typeOfList.equalsIgnoreCase("weekDays")) {
+                            dynamicFormFragment.setValueInputField(keyToSetValue, null);
+                        } else {
+                            List<String> newValue = new ArrayList<>();
+                            for(Button button : activeButtons)
+                                newValue.add(button.getText().toString());
+                            Log.d(".ButtonsField", "weekDays value: " + activeButtons.toString());
+                            dynamicFormFragment.setValueInputField(keyToSetValue, newValue);
+                        }
+
                         if(btn.getText().toString().equalsIgnoreCase("Pages"))
                             dynamicFormFragment.toggleTopicPagesForm("P",false);
                         else if(btn.getText().toString().equalsIgnoreCase("Topics"))

@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.flam.flyay.R;
 import com.flam.flyay.model.InputField;
@@ -34,6 +35,8 @@ public class DateFieldFragment extends Fragment {
 
     private String title;
 
+    private String keyToSetValue;
+
 
     public DateFieldFragment() {
     }
@@ -49,6 +52,7 @@ public class DateFieldFragment extends Fragment {
         Bundle params = getArguments();
 
         title = params.getString("title");
+        keyToSetValue = params.getString("key");
 
         addDatePickerDialog();
 
@@ -140,6 +144,10 @@ public class DateFieldFragment extends Fragment {
 
             selectedDate = Utils.convertionFromDateToString(c.getTime());
             btnDate.setText(selectedDate);
+
+            FragmentManager fm = getFragmentManager();
+            AddEventFormFragment dynamicFormFragment = (AddEventFormFragment)fm.findFragmentById(R.id.fragment_container);
+            dynamicFormFragment.setValueInputField(keyToSetValue, selectedDate);
         }
     };
 
