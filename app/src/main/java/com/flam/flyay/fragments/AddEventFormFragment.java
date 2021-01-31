@@ -64,9 +64,7 @@ import java.util.Map;
 
     Map<Integer, List<View>> viewWithParentId;
     Event eventEditable;
-
-
-
+    Map<String, Object> eventEditableValues;
 
     public AddEventFormFragment() {
     }
@@ -94,10 +92,14 @@ import java.util.Map;
 
         title = view.findViewById(R.id.dynamic_form_title_value);
         note = view.findViewById(R.id.note_value);
+        eventEditableValues = new HashMap<>();
 
         Bundle arguments = getArguments();
-        if(arguments != null)
+        if(arguments != null) {
             eventEditable = (Event) arguments.getSerializable("eventEditable");
+            eventEditableValues = eventEditable.getValueEvent();
+        }
+
 
         Log.d(".AddEventForm", "event editable: " + eventEditable);
 
@@ -343,6 +345,10 @@ import java.util.Map;
                     numberInput.setInputType(InputType.TYPE_CLASS_NUMBER);
                     numberInput.setTextSize(16);
 
+                    if(eventEditableValues.get(input.getName()) != null) {
+                        numberInput.setText(eventEditableValues.get(input.getName()).toString());
+                    }
+
                     LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     lp.setMargins(Utils.convertDpToPixel(10), 0, 0, 0);
                     numberInput.setLayoutParams(lp);
@@ -374,6 +380,11 @@ import java.util.Map;
                         textInputEditText.setInputType(InputType.TYPE_CLASS_TEXT);
                     }
                     textInputEditText.setTextSize(16);
+
+                    if(eventEditableValues.get(input.getName()) != null) {
+                        textInputEditText.setText(eventEditableValues.get(input.getName()).toString());
+                    }
+
                     textInputLayout.setHint(input.getLabelName());
                     textInputLayout.setFocusable(true);
                     textInputLayout.setFocusableInTouchMode(true);

@@ -186,7 +186,7 @@
       },
       {
         "id": 49,
-        "name": "minHoursDay",
+        "name": "minStudyHours",
         "labelName": "Min hours per day:",
         "fieldType": "NUMBER",
         "fieldOrderId": 13,
@@ -195,7 +195,7 @@
       },
       {
         "id": 50,
-        "name": "maxHoursDay",
+        "name": "maxStudyHours",
         "labelName": "Max hours per day:",
         "fieldType": "NUMBER",
         "fieldOrderId": 14,
