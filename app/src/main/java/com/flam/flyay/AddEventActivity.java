@@ -27,6 +27,8 @@ import com.flam.flyay.model.Event;
 import com.flam.flyay.util.TouchInterceptor;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Objects;
+
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.WHITE;
 
@@ -109,6 +111,13 @@ public class AddEventActivity extends AppCompatActivity {
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("eventEditable", eventEditable);
+
+        if(eventEditable != null) {
+            Log.d("TESTEEE", getSupportActionBar().getTitle().toString());
+            Objects.requireNonNull(getSupportActionBar()).setTitle("Edit " + eventEditable.getTitle() + " event");
+            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        }
+
 
         addFragment(new AddEventFormFragment(), bundle);
     }

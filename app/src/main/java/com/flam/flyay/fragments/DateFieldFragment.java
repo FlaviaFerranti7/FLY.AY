@@ -36,6 +36,7 @@ public class DateFieldFragment extends Fragment {
     private String title;
 
     private String keyToSetValue;
+    private String initialDate;
 
 
     public DateFieldFragment() {
@@ -53,6 +54,7 @@ public class DateFieldFragment extends Fragment {
 
         title = params.getString("title");
         keyToSetValue = params.getString("key");
+        initialDate = params.getString("initialDate");
 
         addDatePickerDialog();
 
@@ -97,15 +99,15 @@ public class DateFieldFragment extends Fragment {
         linearLayout.addView(layout);
 
         Calendar calendar = Calendar.getInstance();
-        final int bYear = calendar.get(Calendar.YEAR);
-        final int bMonth = calendar.get(Calendar.MONTH);
-        final int bDay = calendar.get(Calendar.DAY_OF_MONTH);
 
         addIcon(layout, R.drawable.ic_calendar,16);
         addTextView(layout, title, 32, -22);
 
         btnDate = new Button(this.getContext());
-        btnDate.setText(Utils.convertionFromDateToString(calendar.getTime()));
+        if(initialDate == null)
+            btnDate.setText(Utils.convertionFromDateToString(calendar.getTime()));
+        else
+            btnDate.setText(initialDate);
         btnDate.setTextSize(16);
         LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,

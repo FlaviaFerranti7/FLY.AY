@@ -213,6 +213,15 @@
       },
       {
         "id": 52,
+        "name": "safeDays",
+        "labelName": "Safe Days:",
+        "fieldType": "NUMBER",
+        "fieldOrderId": 15,
+        "fieldParentId": 45,
+        "mandatory": true
+      },
+      {
+        "id": 53,
         "name": "organizedStudyBy",
         "labelName": "Organize study by:",
         "fieldType": "TOPICSPAGES",
@@ -226,7 +235,7 @@
         "labelName": "total pages",
         "fieldType": "NUMBER",
         "fieldOrderId": 17,
-        "fieldParentId": 52,
+        "fieldParentId": 53,
         "mandatory": true
       },
       {
@@ -235,7 +244,7 @@
         "labelName": "min pages per days",
         "fieldType": "NUMBER",
         "fieldOrderId": 18,
-        "fieldParentId": 52,
+        "fieldParentId": 53,
         "mandatory": true
       },
       {
@@ -244,7 +253,7 @@
         "labelName": "max pages per days",
         "fieldType": "NUMBER",
         "fieldOrderId": 19,
-        "fieldParentId": 52,
+        "fieldParentId": 53,
         "mandatory": true
       },
       {
@@ -253,7 +262,7 @@
         "labelName": "starting total recap",
         "fieldType": "DATE",
         "fieldOrderId": 20,
-        "fieldParentId": 52,
+        "fieldParentId": 53,
         "mandatory": true
       },
       {
@@ -262,7 +271,7 @@
         "labelName": "exercises",
         "fieldType": "SWITCH",
         "fieldOrderId": 21,
-        "fieldParentId": 52,
+        "fieldParentId": 53,
         "mandatory": true
       },
       {
@@ -271,7 +280,7 @@
         "labelName": "project",
         "fieldType": "SWITCH",
         "fieldOrderId": 22,
-        "fieldParentId": 52,
+        "fieldParentId": 53,
         "mandatory": true
       }
     ]
@@ -450,14 +459,16 @@
         "studyPlan": {
           "endStudy": "14/01/2021",
           "studyingDays": ["Mon","Tue","Wed","Thu","Fri"],
-          "overRange": "afternoon",
+          "overRange": ["afternoon", "evening"],
           "startingOverRangeTime": 14.00,
           "endOverRangeTime": 17.00,
           "minStudyHours": 1.30,
+          "maxStudyHours": 4.30,
           "minBreakHours": 1.00,
+          "examDifficulty": "medium",
           "safeDays": "7"
         },
-        "note": ""
+        "note": "Orale difficile"
       },
       {
         "id": 237,

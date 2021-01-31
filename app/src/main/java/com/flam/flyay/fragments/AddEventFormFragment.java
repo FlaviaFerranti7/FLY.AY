@@ -31,6 +31,8 @@ import com.flam.flyay.AddEventActivity;
 import com.flam.flyay.R;
 import com.flam.flyay.model.Event;
 import com.flam.flyay.model.InputField;
+import com.flam.flyay.model.TeacherInfo;
+import com.flam.flyay.model.subevent.StudyEvent;
 import com.flam.flyay.services.EventService;
 import com.flam.flyay.services.ServerCallback;
 import com.flam.flyay.util.CategoryEnum;
@@ -97,12 +99,21 @@ import java.util.Map;
         Bundle arguments = getArguments();
         if(arguments != null) {
             eventEditable = (Event) arguments.getSerializable("eventEditable");
-            eventEditableValues = eventEditable.getValueEvent();
+            if(eventEditable != null) {
+                ((AddEventActivity) getActivity()).getSupportActionBar().setTitle("      Edit " + eventEditable.getTitle() + " event");
+                eventEditableValues = eventEditable.getValueEvent();
+                if(eventEditableValues.get("teacher") != null) {
+                    TeacherInfo teacherInfo = (TeacherInfo) eventEditableValues.get("teacher");
+                    eventEditableValues.put("teacherName", teacherInfo.getName());
+                    eventEditableValues.put("teacherEmail", teacherInfo.getEmail());
+                    eventEditableValues.put("teacherReceiptDate", teacherInfo.getReceiptDate());
+                    eventEditableValues.put("teacherReceiptRoom", teacherInfo.getReceiptRoom());
+                }
+            }
         }
 
 
         Log.d(".AddEventForm", "event editable: " + eventEditable);
-
 
         save = view.findViewById(R.id.button_save);
         cancel = view.findViewById(R.id.button_cancel);
@@ -256,6 +267,15 @@ import java.util.Map;
 
                 clearDynamicForm();
                 createDynamicForm(object, colorCategory);
+
+                if(eventEditable instanceof StudyEvent && ((StudyEvent) eventEditable).getStudyPlan() != null) {
+                    Log.d(".TESTTT", "Ho un evento studio con study plane");
+                    Utils.listVISIBLE(viewWithParentId.get(45));
+                    Switch tmp = (Switch) ((LinearLayout) dynamicForm.findViewWithTag("studyPlanFlag")).getChildAt(1);
+                    Log.d(".TESTTTT", tmp.toString());
+
+                    tmp.setChecked(true);
+                }
             }
         });
     }
@@ -301,22 +321,24 @@ import java.util.Map;
         return bundle;
     }
 
-    private Bundle createParamsDate(String title, String key) {
+    private Bundle createParamsDate(String title, String key, String initialDate) {
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         bundle.putString("key", key);
+        bundle.putString("initialDate", initialDate);
         return bundle;
     }
 
-    private Bundle createParamsCheckbox(String title, String key, String typeCheckbox) {
+    private Bundle createParamsCheckbox(String title, String key, String typeCheckbox, List<String> initialValues) {
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         bundle.putString("key", key);
         bundle.putString("typeCheckbox", typeCheckbox);
+        bundle.putStringArrayList("initialValues", new ArrayList<String>(initialValues));
         return bundle;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void createDynamicForm(final List<InputField> object, final int colorCategory) {
         save.setEnabled(true);
 
@@ -412,7 +434,12 @@ import java.util.Map;
                     dynamicForm.addView(childLayout, input.getFieldOrderId());
                     childLayout.setId(View.generateViewId());
                     DateFieldFragment dateFieldFragment = new DateFieldFragment();
-                    dateFieldFragment.setArguments(createParamsDate(input.getLabelName(), input.getName()));
+                    if(eventEditable != null && input.getName().equalsIgnoreCase("date"))
+                        dateFieldFragment.setArguments(createParamsDate(input.getLabelName(), input.getName(), Utils.convertionFromDateToString(eventEditable.getDate())));
+                    else if(eventEditable != null && input.getName().equalsIgnoreCase("endingStudy"))
+                        dateFieldFragment.setArguments(createParamsDate(input.getLabelName(), input.getName(), Utils.convertionFromDateToString(((StudyEvent) eventEditable).getStudyPlan().getEndStudy())));
+                    else
+                        dateFieldFragment.setArguments(createParamsDate(input.getLabelName(), input.getName(), null));
                     addFragment(dateFieldFragment, childLayout.getId());
                     break;
                 case "TIME":
@@ -457,12 +484,28 @@ import java.util.Map;
                     childLayout.setLayoutParams(paramsLayout);
                     OptionsFieldFragment optionsFieldFragment = new OptionsFieldFragment();
 
+                    StudyEvent studyEvent = null;
+                    if(eventEditable != null)
+                        studyEvent = (StudyEvent) eventEditable;
+
                     switch (input.getName()) {
                         case "examDifficulty":
-                            optionsFieldFragment.setArguments(createParamsCheckbox(input.getLabelName(), input.getName(), "EXAM_DIFFICULTY"));
+                            if(studyEvent != null) {
+                                optionsFieldFragment.setArguments(createParamsCheckbox(input.getLabelName(), input.getName(), "EXAM_DIFFICULTY", Arrays.asList(studyEvent.getStudyPlan().getExamDifficulty())));
+                            }
+                            else {
+                                optionsFieldFragment.setArguments(createParamsCheckbox(input.getLabelName(), input.getName(), "EXAM_DIFFICULTY", null));
+                            }
+
                             break;
                         case "overRange":
-                            optionsFieldFragment.setArguments(createParamsCheckbox(input.getLabelName(), input.getName(), "OVER_RANGE"));
+                            if(studyEvent != null) {
+                                optionsFieldFragment.setArguments(createParamsCheckbox(input.getLabelName(), input.getName(), "OVER_RANGE", studyEvent.getStudyPlan().getOverRange()));
+                            }
+                            else{
+                                optionsFieldFragment.setArguments(createParamsCheckbox(input.getLabelName(), input.getName(), "OVER_RANGE", null));
+                            }
+
                             break;
                         default:
                             break;
@@ -588,7 +631,7 @@ import java.util.Map;
 
     public void toggleTopicPagesForm(String typeForm, boolean flag) {
         List<View> tmp = new ArrayList<>();
-        for(View view : viewWithParentId.get(52)) {
+        for(View view : viewWithParentId.get(53)) {
             if(view.getTag().toString().endsWith(typeForm))
                 tmp.add(view);
         }

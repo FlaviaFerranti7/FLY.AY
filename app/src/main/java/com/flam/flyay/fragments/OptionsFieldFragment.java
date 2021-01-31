@@ -39,6 +39,7 @@ public class OptionsFieldFragment extends Fragment {
     private TextView title;
 
     private String typeCheckbox;
+    private List<String> initialValues;
     private String keyToSetValue;
 
     public OptionsFieldFragment() {}
@@ -60,6 +61,10 @@ public class OptionsFieldFragment extends Fragment {
         Bundle arguments = getArguments();
         typeCheckbox = arguments.getString("typeCheckbox");
         keyToSetValue = arguments.getString("key");
+
+        initialValues = (List<String>) arguments.getStringArrayList("initialValues");
+
+        Log.d(".OptionsField", "initialsValues: " + initialValues.toString());
 
         String titleParam = arguments.getString("title");
         title.setText(titleParam);
@@ -138,6 +143,15 @@ public class OptionsFieldFragment extends Fragment {
                     }
                 }
             });
+
+            for(String initialValue : initialValues) {
+                Log.d(".OPTION", "initialValue: " + initialValue + " checkbox text: " + checkBox.getText().toString());
+                if(initialValue.equalsIgnoreCase(checkBox.getText().toString())) {
+                    checkBox.setChecked(true);
+                    break;
+                }
+            }
+
         }
     }
 

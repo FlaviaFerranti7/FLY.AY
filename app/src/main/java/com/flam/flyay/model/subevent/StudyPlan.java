@@ -4,8 +4,6 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.flam.flyay.model.Event;
-import com.flam.flyay.util.CategoryEnum;
 import com.flam.flyay.util.Utils;
 
 import org.jetbrains.annotations.Nullable;
@@ -25,7 +23,7 @@ public class StudyPlan implements Serializable {
     private List<String> studyingDays;
 
     @Nullable
-    private String overRange;
+    private List<String> overRange;
 
     @Nullable
     private Double startingOverRangeTime;
@@ -37,19 +35,27 @@ public class StudyPlan implements Serializable {
     private Double minStudyHours;
 
     @Nullable
+    private Double maxStudyHours;
+
+    @Nullable
     private Double minBreakHours;
+
+    @Nullable
+    private String examDifficulty;
 
     @Nullable
     private Integer safeDays;
 
-    public StudyPlan(@Nullable Date endStudy, @Nullable List<String> studyingDays, @Nullable String overRange, @Nullable Double startingOverRangeTime, @Nullable Double endOverRangeTime, @Nullable Double minStudyHours, @Nullable Double minBreakHours, @Nullable Integer safeDays) {
+    public StudyPlan(@Nullable Date endStudy, @Nullable List<String> studyingDays, @Nullable List<String> overRange, @Nullable Double startingOverRangeTime, @Nullable Double endOverRangeTime, @Nullable Double minStudyHours, @Nullable Double maxStudyHours, @Nullable Double minBreakHours, @Nullable String examDifficulty, @Nullable Integer safeDays) {
         this.endStudy = endStudy;
         this.studyingDays = studyingDays;
         this.overRange = overRange;
         this.startingOverRangeTime = startingOverRangeTime;
         this.endOverRangeTime = endOverRangeTime;
         this.minStudyHours = minStudyHours;
+        this.maxStudyHours = maxStudyHours;
         this.minBreakHours = minBreakHours;
+        this.examDifficulty = examDifficulty;
         this.safeDays = safeDays;
     }
 
@@ -72,11 +78,11 @@ public class StudyPlan implements Serializable {
     }
 
     @Nullable
-    public String getOverRange() {
+    public List<String> getOverRange() {
         return overRange;
     }
 
-    public void setOverRange(@Nullable String overRange) {
+    public void setOverRange(@Nullable List<String> overRange) {
         this.overRange = overRange;
     }
 
@@ -135,7 +141,9 @@ public class StudyPlan implements Serializable {
         valueEvent.put("startingOverRangeTime", this.startingOverRangeTime);
         valueEvent.put("endOverRangeTime", this.endOverRangeTime);
         valueEvent.put("minStudyHours", Utils.convertionFromDoubleToTime(this.minStudyHours,':'));
+        valueEvent.put("maxStudyHours", Utils.convertionFromDoubleToTime(this.maxStudyHours,':'));
         valueEvent.put("minBreakHours", Utils.convertionFromDoubleToTime(this.minBreakHours,':'));
+        valueEvent.put("examDifficulty", this.examDifficulty);
         valueEvent.put("safeDays", this.safeDays);
 
         if(this.startingOverRangeTime != null && this.endOverRangeTime != null)
@@ -152,10 +160,30 @@ public class StudyPlan implements Serializable {
         keySetSorted.add("studyingDays");
         keySetSorted.add("overRange");
         keySetSorted.add("timeOverRange");
+        keySetSorted.add("examDifficulty");
         keySetSorted.add("minStudyHours");
+        keySetSorted.add("maxStudyHours");
         keySetSorted.add("minBreakHours");
         keySetSorted.add("safeDays");
 
         return keySetSorted;
+    }
+
+    @Nullable
+    public String getExamDifficulty() {
+        return examDifficulty;
+    }
+
+    public void setExamDifficulty(@Nullable String examDifficulty) {
+        this.examDifficulty = examDifficulty;
+    }
+
+    @Nullable
+    public Double getMaxStudyHours() {
+        return maxStudyHours;
+    }
+
+    public void setMaxStudyHours(@Nullable Double maxStudyHours) {
+        this.maxStudyHours = maxStudyHours;
     }
 }

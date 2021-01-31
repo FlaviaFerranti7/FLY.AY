@@ -107,6 +107,7 @@ public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapte
                 layoutType = 2;
                 break;
             case "studyingDays":
+            case "overRange":
                 List<String> days = (List<String>) valueList.get(keyList.get(position));
                 List<String> keySetSorted = new ArrayList<>();
                 items = new HashMap<>();
