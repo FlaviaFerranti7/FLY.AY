@@ -139,6 +139,8 @@ import java.util.Map;
                             case "OFFICEDAY":
                             case "TOPICSPAGES":
                             case "CHECKBOX":
+                            case "TIME":
+                            case "TIMEWITHOUTALLDAY":
                                 Log.d(".SAVEAddEventForm", input.getName() + " " + input.getValue());
                                 break;
 
@@ -238,9 +240,10 @@ import java.util.Map;
         return params;
     }
 
-    private Bundle createParamsTime(boolean flag, String label) {
+    private Bundle createParamsTime(boolean flag, String key, String label) {
         Bundle bundle = new Bundle();
         bundle.putBoolean("allDayFlag", flag);
+        bundle.putString("key", key);
         bundle.putString("label", label);
         return bundle;
     }
@@ -367,7 +370,7 @@ import java.util.Map;
                             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     childLayout.setLayoutParams(paramsLayout);
                     TimeFieldFragment f = new TimeFieldFragment();
-                    f.setArguments(createParamsTime(true, input.getLabelName()));
+                    f.setArguments(createParamsTime(true, input.getName(), input.getLabelName()));
 
                     childLayout.setTag(input.getName());
                     addElementIntoListMap(viewWithParentId, childLayout, input.getFieldParentId());
@@ -384,7 +387,7 @@ import java.util.Map;
                             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     childLayout.setLayoutParams(paramsLayout);
                     f = new TimeFieldFragment();
-                    f.setArguments(createParamsTime(false, input.getLabelName()));
+                    f.setArguments(createParamsTime(false, input.getName(), input.getLabelName()));
 
                     childLayout.setTag(input.getName());
                     addElementIntoListMap(viewWithParentId, childLayout, input.getFieldParentId());

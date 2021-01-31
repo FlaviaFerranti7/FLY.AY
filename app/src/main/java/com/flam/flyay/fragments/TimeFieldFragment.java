@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.flam.flyay.R;
 import com.flam.flyay.util.Utils;
@@ -43,6 +44,7 @@ public class TimeFieldFragment extends Fragment {
 
     private LinearLayout linearLayout;
 
+    private String keyToSetValue;
     private String label;
 
 
@@ -59,6 +61,7 @@ public class TimeFieldFragment extends Fragment {
 
         Bundle params = getArguments();
 
+        keyToSetValue = params.getString("key");
         boolean allDayFlag = params.getBoolean("allDayFlag");
         label = params.getString("label");
 
@@ -155,6 +158,11 @@ public class TimeFieldFragment extends Fragment {
             startTime =  ((hour > 12) ? hour % 12 : hour) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + ((hour >= 12) ? "PM" : "AM");
             btnStartTime.setText(startTime);
 
+            FragmentManager fm = getFragmentManager();
+            AddEventFormFragment dynamicFormFragment = (AddEventFormFragment)fm.findFragmentById(R.id.fragment_container);
+
+            dynamicFormFragment.setValueInputField(keyToSetValue, startTime);
+
             try {
                 Date timeStart = new SimpleDateFormat("hh:mm a").parse(startTime);
                 Integer h = timeStart.getHours() + 1;
@@ -165,7 +173,48 @@ public class TimeFieldFragment extends Fragment {
                 e.printStackTrace();
             }
 
+        }
+    };
 
+    private TimePickerDialog.OnTimeSetListener onTimeEnd = new TimePickerDialog.OnTimeSetListener() {
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        @Override
+        public void onTimeSet(final TimePicker view, final int hour, final int minute) {
+
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.HOUR_OF_DAY,hour);
+            c.set(Calendar.MINUTE, minute);
+
+            FragmentManager fm = getFragmentManager();
+            AddEventFormFragment dynamicFormFragment = (AddEventFormFragment)fm.findFragmentById(R.id.fragment_container);
+
+            endTime =  ((hour > 12) ? hour % 12 : hour) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + ((hour >= 12) ? "PM" : "AM");
+            btnEndTime.setText(endTime);
+
+            dynamicFormFragment.setValueInputField(keyToSetValue, startTime + "-" + endTime);
+
+            if(!Utils.isEmptyOrBlank(startTime) && !Utils.isEmptyOrBlank(endTime)) {
+                try {
+                    Date timeS = new SimpleDateFormat("hh:mm a").parse(startTime);
+                    Date timeE = new SimpleDateFormat("hh:mm a").parse(endTime);
+                    Log.d(".AddEventFormFragment", timeS.toString());
+                    Log.d(".AddEventFormFragment", timeE.toString());
+                    if (timeE.getTime() < timeS.getTime()) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                        builder.setMessage("Check your schedules!\nThe end is expected before the start of your event");
+                        builder.setCancelable(false);
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                } catch (ParseException parseException) {
+                    parseException.printStackTrace();
+                }
+            }
         }
     };
 
@@ -203,43 +252,6 @@ public class TimeFieldFragment extends Fragment {
         });
     }
 
-    private TimePickerDialog.OnTimeSetListener onTimeEnd = new TimePickerDialog.OnTimeSetListener() {
-        @RequiresApi(api = Build.VERSION_CODES.N)
-        @Override
-        public void onTimeSet(final TimePicker view, final int hour, final int minute) {
-
-            Calendar c = Calendar.getInstance();
-            c.set(Calendar.HOUR_OF_DAY,hour);
-            c.set(Calendar.MINUTE, minute);
-
-            endTime =  ((hour > 12) ? hour % 12 : hour) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + ((hour >= 12) ? "PM" : "AM");
-            btnEndTime.setText(endTime);
-
-            if(!Utils.isEmptyOrBlank(startTime) && !Utils.isEmptyOrBlank(endTime)) {
-                try {
-                    Date timeS = new SimpleDateFormat("hh:mm a").parse(startTime);
-                    Date timeE = new SimpleDateFormat("hh:mm a").parse(endTime);
-                    Log.d(".AddEventFormFragment", timeS.toString());
-                    Log.d(".AddEventFormFragment", timeE.toString());
-                    if (timeE.getTime() < timeS.getTime()) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                        builder.setMessage("Check your schedules!\nThe end is expected before the start of your event");
-                        builder.setCancelable(false);
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                        AlertDialog alert = builder.create();
-                        alert.show();
-                    }
-                } catch (ParseException parseException) {
-                    parseException.printStackTrace();
-                }
-            }
-        }
-    };
-
     public void addTimePickersDialog() {
 
         LinearLayout layout = new LinearLayout(this.getContext());
@@ -276,7 +288,11 @@ public class TimeFieldFragment extends Fragment {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
                 if (isChecked) {
+                    FragmentManager fm = getFragmentManager();
+                    AddEventFormFragment dynamicFormFragment = (AddEventFormFragment)fm.findFragmentById(R.id.fragment_container);
+                    dynamicFormFragment.setValueInputField(keyToSetValue, "allday");
                     btnStartTime.setEnabled(false);
                     btnEndTime.setEnabled(false);
                 } else {
