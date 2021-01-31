@@ -145,7 +145,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
+        Fragment fragmentInFrame = (Fragment) getSupportFragmentManager()
+                .findFragmentByTag(EventDetailsFragment.class.getName());
+
+
         switch (item.getItemId()) {
             case R.id.home_calendar:
                 addFragment(new CalendarFragment(), createParamsEventsFragment());
@@ -153,7 +156,17 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
                 break;
             case R.id.edit_event:
                 //TODO: go to form add event
-                Toast.makeText(this.getApplicationContext(),"Go to Form Add Event",Toast.LENGTH_SHORT).show();
+                if(fragmentInFrame != null) {
+                    Intent intent = new Intent(fragmentInFrame.getContext(), AddEventActivity.class);
+                    Bundle b = new Bundle();
+                    Log.d(".MainActivity", "event selected: " + eventSelected.toString());
+                    b.putSerializable("eventEditable", eventSelected);
+                    intent.putExtras(b);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(this.getApplicationContext(),"No selectable event",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.delete_event:
                 //TODO: integrate pop-up to confirm
@@ -215,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setIcon(null);
         invalidateOptionsMenu();
+        eventSelected = e;
         addFragment(new EventDetailsFragment(), createParamsFragment(e));
     }
 

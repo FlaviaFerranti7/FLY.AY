@@ -10,13 +10,14 @@ import com.flam.flyay.util.Utils;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StudyPlan {
+public class StudyPlan implements Serializable {
     @Nullable
     private Date endStudy;
 

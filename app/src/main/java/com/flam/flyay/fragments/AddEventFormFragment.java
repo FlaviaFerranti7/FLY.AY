@@ -91,6 +91,7 @@ import java.util.Map;
         linearLayout = view.findViewById(R.id.touchInterceptorFormFragment);
         dynamicForm = view.findViewById(R.id.dynamic_form);
 
+
         save = view.findViewById(R.id.button_save);
         cancel = view.findViewById(R.id.button_cancel);
 

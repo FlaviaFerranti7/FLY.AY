@@ -8,12 +8,13 @@ import com.flam.flyay.util.Utils;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TeacherInfo {
+public class TeacherInfo implements Serializable {
     @Nullable
     private String name;
 

@@ -35,6 +35,8 @@ public class AddEventActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBar ab;
 
+    private Event eventEditable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,14 @@ public class AddEventActivity extends AppCompatActivity {
 
         RelativeLayout touchInterceptor = (RelativeLayout) findViewById(R.id.touchInterceptorAddEvent);
         touchInterceptor.setOnTouchListener(new TouchInterceptor(this));
+
+        Bundle arguments = getIntent().getExtras();
+        if(arguments != null)
+            eventEditable = (Event) arguments.getSerializable("eventEditable");
+        else
+            Log.d(".AddEventActivity", "no parameters");
+
+        Log.d(".AddEventActivity", "event editable: " + eventEditable);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
