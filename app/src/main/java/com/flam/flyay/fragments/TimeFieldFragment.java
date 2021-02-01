@@ -45,6 +45,7 @@ public class TimeFieldFragment extends Fragment {
     private LinearLayout linearLayout;
 
     private String keyToSetValue;
+    private String initialValue;
     private String label;
 
 
@@ -64,6 +65,7 @@ public class TimeFieldFragment extends Fragment {
         keyToSetValue = params.getString("key");
         boolean allDayFlag = params.getBoolean("allDayFlag");
         label = params.getString("label");
+        initialValue = params.getString("initialValue");
 
         addTimePickersDialog();
 
@@ -122,6 +124,15 @@ public class TimeFieldFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
+
+        if(initialValue != null) {
+            String[] time = initialValue.split("-");
+            String tmp = time[0].split(":")[0];
+            hour = Integer.parseInt(tmp);
+            tmp = time[0].split(":")[1];
+            minute = Integer.parseInt(tmp.substring(0, tmp.length()-1));
+        }
+
         String time = ((hour > 12) ? hour % 12 : hour) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + ((hour >= 12) ? "PM" : "AM");
 
         addTextView(layout, "Start:", 32, 16);
@@ -227,6 +238,15 @@ public class TimeFieldFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
+
+        if(initialValue != null) {
+            String[] time = initialValue.split("-");
+            String tmp = time[1].split(":")[0];
+            hour = Integer.parseInt(tmp.substring(1));
+            tmp = time[1].split(":")[1];
+            minute = Integer.parseInt(tmp);
+        }
+
         String time = (((hour+1) > 12) ? (hour+1) % 12 : (hour+1)) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + (((hour+1) >= 12) ? "PM" : "AM");
 
         addTextView(layout, "End:", 32, 4);

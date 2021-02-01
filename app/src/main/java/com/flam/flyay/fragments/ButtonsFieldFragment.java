@@ -58,7 +58,8 @@ public class ButtonsFieldFragment extends Fragment {
         keyToSetValue = arguments.getString("key");
         initialValues = (List<String>) arguments.getStringArrayList("initialValues");
 
-        Log.d(".ButtonField", "initialValues: " + initialValues);
+        if(initialValues != null)
+            Log.d(".ButtonField", "initialValues: " + initialValues);
 
         activeButtons = new ArrayList<>();
 

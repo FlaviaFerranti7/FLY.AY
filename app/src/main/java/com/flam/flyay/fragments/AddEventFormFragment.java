@@ -304,11 +304,12 @@ import java.util.Map;
         return params;
     }
 
-    private Bundle createParamsTime(boolean flag, String key, String label) {
+    private Bundle createParamsTime(boolean flag, String key, String label, String initialValue) {
         Bundle bundle = new Bundle();
         bundle.putBoolean("allDayFlag", flag);
         bundle.putString("key", key);
         bundle.putString("label", label);
+        bundle.putString("initialValue", initialValue);
         return bundle;
     }
 
@@ -451,7 +452,7 @@ import java.util.Map;
                             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     childLayout.setLayoutParams(paramsLayout);
                     TimeFieldFragment f = new TimeFieldFragment();
-                    f.setArguments(createParamsTime(true, input.getName(), input.getLabelName()));
+                    f.setArguments(createParamsTime(true, input.getName(), input.getLabelName(), eventEditableValues.get("time").toString()));
 
                     childLayout.setTag(input.getName());
                     addElementIntoListMap(viewWithParentId, childLayout, input.getFieldParentId());
@@ -468,7 +469,7 @@ import java.util.Map;
                             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     childLayout.setLayoutParams(paramsLayout);
                     f = new TimeFieldFragment();
-                    f.setArguments(createParamsTime(false, input.getName(), input.getLabelName()));
+                    f.setArguments(createParamsTime(false, input.getName(), input.getLabelName(), eventEditableValues.get("teacherReceiptTime").toString()));
 
                     childLayout.setTag(input.getName());
                     addElementIntoListMap(viewWithParentId, childLayout, input.getFieldParentId());

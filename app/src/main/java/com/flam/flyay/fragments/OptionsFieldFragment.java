@@ -64,7 +64,8 @@ public class OptionsFieldFragment extends Fragment {
 
         initialValues = (List<String>) arguments.getStringArrayList("initialValues");
 
-        Log.d(".OptionsField", "initialsValues: " + initialValues.toString());
+        if(initialValues != null)
+            Log.d(".OptionsField", "initialsValues: " + initialValues.toString());
 
         String titleParam = arguments.getString("title");
         title.setText(titleParam);
