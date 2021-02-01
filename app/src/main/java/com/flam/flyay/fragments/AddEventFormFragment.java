@@ -204,7 +204,7 @@ import java.util.Map;
                         }
                     });
 
-                    alertbox.setIcon(R.drawable.ic_saving);
+                    alertbox.setIcon(R.drawable.ic_warning);
                     alertbox.show();
                 }
                 else {
@@ -441,6 +441,7 @@ import java.util.Map;
 
                     if(eventEditableValues.get(input.getName()) != null) {
                         numberInput.setText(eventEditableValues.get(input.getName()).toString());
+                        input.setValue(eventEditableValues.get(input.getName()));
                     }
 
                     LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -477,6 +478,7 @@ import java.util.Map;
 
                     if(eventEditableValues.get(input.getName()) != null) {
                         textInputEditText.setText(eventEditableValues.get(input.getName()).toString());
+                        input.setValue(eventEditableValues.get(input.getName()));
                     }
 
                     textInputLayout.setHint(input.getLabelName());
@@ -506,10 +508,16 @@ import java.util.Map;
                     dynamicForm.addView(childLayout, input.getFieldOrderId());
                     childLayout.setId(View.generateViewId());
                     DateFieldFragment dateFieldFragment = new DateFieldFragment();
-                    if(eventEditable != null && input.getName().equalsIgnoreCase("date"))
-                        dateFieldFragment.setArguments(createParamsDate(input.getLabelName(), input.getName(), Utils.convertionFromDateToString(eventEditable.getDate())));
-                    else if(eventEditable != null && input.getName().equalsIgnoreCase("endingStudy"))
-                        dateFieldFragment.setArguments(createParamsDate(input.getLabelName(), input.getName(), Utils.convertionFromDateToString(((StudyEvent) eventEditable).getStudyPlan().getEndStudy())));
+                    if(eventEditable != null && input.getName().equalsIgnoreCase("date")) {
+                        dateFieldFragment.setArguments(createParamsDate(input.getLabelName(), input.getName(),
+                                Utils.convertionFromDateToString(eventEditable.getDate())));
+                        input.setValue(eventEditable.getDate());
+                    }
+                    else if(eventEditable != null && input.getName().equalsIgnoreCase("endingStudy")) {
+                        dateFieldFragment.setArguments(createParamsDate(input.getLabelName(), input.getName(),
+                                Utils.convertionFromDateToString(((StudyEvent) eventEditable).getStudyPlan().getEndStudy())));
+                        input.setValue(eventEditable.getDate());
+                    }
                     else
                         dateFieldFragment.setArguments(createParamsDate(input.getLabelName(), input.getName(), null));
                     addFragment(dateFieldFragment, childLayout.getId());
@@ -521,8 +529,11 @@ import java.util.Map;
                             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     childLayout.setLayoutParams(paramsLayout);
                     TimeFieldFragment f = new TimeFieldFragment();
-                    if(eventEditableValues.get("time") != null)
+                    if(eventEditableValues.get("time") != null) {
                         f.setArguments(createParamsTime(true, input.getName(), input.getLabelName(), eventEditableValues.get("time").toString()));
+                        input.setValue(eventEditableValues.get("time"));
+                    }
+
                     else
                         f.setArguments(createParamsTime(true, input.getName(), input.getLabelName(), null));
 
@@ -542,8 +553,10 @@ import java.util.Map;
                     childLayout.setLayoutParams(paramsLayout);
                     f = new TimeFieldFragment();
 
-                    if(eventEditableValues.get("teacherReceiptTime") != null)
+                    if(eventEditableValues.get("teacherReceiptTime") != null) {
                         f.setArguments(createParamsTime(false, input.getName(), input.getLabelName(), eventEditableValues.get("teacherReceiptTime").toString()));
+                        input.setValue(eventEditableValues.get("time"));
+                    }
                     else
                         f.setArguments(createParamsTime(false, input.getName(), input.getLabelName(), null));
 
@@ -565,8 +578,10 @@ import java.util.Map;
                     OptionsFieldFragment optionsFieldFragment = new OptionsFieldFragment();
 
                     StudyEvent studyEvent = null;
-                    if(eventEditable != null)
+                    if(eventEditable != null) {
                         studyEvent = (StudyEvent) eventEditable;
+                        input.setValue("hasValue");
+                    }
 
                     switch (input.getName()) {
                         case "examDifficulty":
@@ -617,9 +632,11 @@ import java.util.Map;
                     ButtonsFieldFragment fragmentB = new ButtonsFieldFragment();
                     if(eventEditable != null && input.getName().equalsIgnoreCase("studyingDays")) {
                         fragmentB.setArguments(createParamsButtonList(input.getLabelName(), input.getName(), "weekDays", colorCategory, ((StudyEvent)eventEditable).getStudyPlan().getStudyingDays()));
+                        input.setValue("hasValue");
                     }
                     else if(eventEditable != null && input.getName().equalsIgnoreCase("officeDay")) {
                         fragmentB.setArguments(createParamsButtonList(input.getLabelName(), input.getName(), "weekDays", colorCategory, ((StudyEvent)eventEditable).getTeacherInfo().getOfficeDay()));
+                        input.setValue("hasValue");
                     }
                     else {
                         fragmentB.setArguments(createParamsButtonList(input.getLabelName(), input.getName(), "weekDays", colorCategory, null));
@@ -681,24 +698,23 @@ import java.util.Map;
                     objectView.put(input, cLayout);
                     dynamicForm.addView(cLayout, input.getFieldOrderId());
 
-                    if(input.getName().equalsIgnoreCase("studyPlanFlag")) {
-                        Log.d(".AddEventForm", "This is a study plan switch");
-                        switchOption.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                Log.d(".AddEventForm", "study plan switch is checked");
-                                input.setValue(isChecked);
-                                if(input.getName().equalsIgnoreCase("studyPlanFlag")) {
-                                    if (isChecked) {
-                                        Utils.listVISIBLE(viewWithParentId.get(input.getId()));
-                                    } else {
-                                        Utils.listGONE(viewWithParentId.get(input.getId()));
-                                        toggleTopicPagesForm("P", false);
-                                        toggleTopicPagesForm("T", false);
-                                    }
+                    Log.d(".AddEventForm", "This is a study plan switch");
+                    switchOption.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            Log.d(".AddEventForm", "study plan switch is checked");
+                            input.setValue(isChecked);
+                            if(input.getName().equalsIgnoreCase("studyPlanFlag")) {
+                                if (isChecked) {
+                                    Utils.listVISIBLE(viewWithParentId.get(input.getId()));
+                                } else {
+                                    Utils.listGONE(viewWithParentId.get(input.getId()));
+                                    toggleTopicPagesForm("P", false);
+                                    toggleTopicPagesForm("T", false);
                                 }
                             }
-                        });
-                    }
+                        }
+                    });
+                    break;
                 default:
                     break;
             }

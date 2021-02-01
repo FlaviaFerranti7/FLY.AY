@@ -323,7 +323,7 @@
         "fieldType": "TOPICSPAGES",
         "fieldOrderId": 16,
         "fieldParentId": 45,
-        "mandatory": true
+        "mandatory": false
       },
       {
         "id": 53,
