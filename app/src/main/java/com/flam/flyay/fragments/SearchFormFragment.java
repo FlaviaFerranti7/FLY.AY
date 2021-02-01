@@ -84,63 +84,11 @@ public class SearchFormFragment extends Fragment {
 
         for (final Object i : categoryList) {
             final Button btn = new Button(this.getContext());
-            Drawable drawable;
 
-            switch (String.valueOf(i)){
-                case "FINANCES":
-                    drawable = view.getResources().getDrawable(R.drawable.ic_category_finances);
-                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-                        DrawableCompat.setTint(drawable, Color.WHITE);
-                    } else {
-                        DrawableCompat.setTint(drawable, Color.BLACK);
-                    }
-                    drawable.setBounds(0,0, 65, 65);
-                    btn.setCompoundDrawables(null, drawable, null, null);
-                    break;
-                case "WELLNESS":
-                    drawable = view.getResources().getDrawable(R.drawable.ic_category_wellness);
-                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-                        DrawableCompat.setTint(drawable, Color.WHITE);
-                    } else {
-                        DrawableCompat.setTint(drawable, Color.BLACK);
-                    }
-                    drawable.setBounds(0,0, 65, 65);
-                    btn.setCompoundDrawables(null, drawable, null, null);
-                    break;
-                case "FESTIVITY":
-                    drawable = view.getResources().getDrawable(R.drawable.ic_category_festivity);
-                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-                        DrawableCompat.setTint(drawable, Color.WHITE);
-                    } else {
-                        DrawableCompat.setTint(drawable, Color.BLACK);
-                    }
-                    drawable.setBounds(0,0, 65, 65);
-                    btn.setCompoundDrawables(null, drawable, null, null);
-                    break;
-                case "STUDY":
-                    drawable = view.getResources().getDrawable(R.drawable.ic_category_study);
-                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-                        DrawableCompat.setTint(drawable, Color.WHITE);
-                    } else {
-                        DrawableCompat.setTint(drawable, Color.BLACK);
-                    }
-                    drawable.setBounds(0,0, 65, 65);
-                    btn.setCompoundDrawables(null, drawable, null, null);
-                    break;
-                case "FREE_TIME":
-                    drawable = view.getResources().getDrawable(R.drawable.ic_category_freetime);
-                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-                        DrawableCompat.setTint(drawable, Color.WHITE);
-                    } else {
-                        DrawableCompat.setTint(drawable, Color.BLACK);
-                    }
-                    drawable.setBounds(0,0, 65, 65);
-                    btn.setCompoundDrawables(null, drawable, null, null);
-                    break;
-            }
+            btn.setText(String.valueOf(i));
             buttons.add(btn);
             LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
-                    Utils.convertDpToPixel(55),
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
             );
             btnparams.setMargins(Utils.convertDpToPixel(8), Utils.convertDpToPixel(8), 0, 0);
