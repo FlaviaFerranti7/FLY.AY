@@ -21,6 +21,8 @@ import com.flam.flyay.R;
 import com.flam.flyay.SearchActivity;
 import com.flam.flyay.adapter.EventFilteredAdapter;
 import com.flam.flyay.model.Event;
+import com.flam.flyay.model.subevent.FestivityEvent;
+import com.flam.flyay.model.subevent.FinancesEvent;
 import com.flam.flyay.model.subevent.FreeTimeEvent;
 import com.flam.flyay.model.subevent.StudyEvent;
 import com.flam.flyay.model.subevent.WellnessEvent;
@@ -127,13 +129,6 @@ public class SearchResultsFragment extends Fragment {
                         }
                     }
                     else if(e.getClass() == WellnessEvent.class && !Utils.isEmptyOrBlank(searchPlace) && ((WellnessEvent) e).getPlace().toLowerCase().contains(searchPlace)){
-                        Log.d(".SearchResultsFragment", e.toString());
-                        Log.d(".SearchResultsFragment",  " eventsFiltered: " + eventsFiltered.toString());
-                        if (!(eventsFiltered.contains(e))) {
-                            eventsFiltered.add(e);
-                        }
-                    }
-                    else {
                         Log.d(".SearchResultsFragment", e.toString());
                         Log.d(".SearchResultsFragment",  " eventsFiltered: " + eventsFiltered.toString());
                         if (!(eventsFiltered.contains(e))) {
