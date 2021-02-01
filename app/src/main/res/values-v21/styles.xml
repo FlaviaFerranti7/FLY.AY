@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:itemBackground">@android:color/white</item>
+        <item name="android:itemTextAppearance">@style/menuTextStyle</item>
+        <item name="navigationIconTint">@drawable/selector</item>
+        <item name="android:navigationIcon">@style/NavigationTheme</item>
+    </style>
+</resources>

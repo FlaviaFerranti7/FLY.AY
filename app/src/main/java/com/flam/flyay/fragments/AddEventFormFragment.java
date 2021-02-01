@@ -154,6 +154,9 @@ import java.util.Map;
 
                 List<String> errors = new ArrayList<>();
 
+                if(title.getText() == null || title.getText().toString().length() == 0)
+                    errors.add("- TITLE cannot be blank");
+
                 for(InputField input : object) {
                     if(objectView.get(input).getVisibility() == View.VISIBLE && input.isMandatory() && input.getValue() == null) {
                         errors.add("- " + input.getName().toUpperCase() + " cannot be blank");
@@ -327,6 +330,11 @@ import java.util.Map;
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void activeDynamicForm(String subcategoryName, String category, final int colorCategory) {
         final JSONObject params = getParams(subcategoryName);
+
+        if(eventEditable != null && !eventEditable.getCategory().equalsIgnoreCase(category)) {
+            eventEditable = null;
+            eventEditableValues = new HashMap<>();
+        }
 
         service.getInputFieldBySubcategory(params, category.toLowerCase(), new ServerCallback() {
             @RequiresApi(api = Build.VERSION_CODES.P)
