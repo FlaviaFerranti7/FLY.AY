@@ -133,13 +133,6 @@ public class SearchResultsFragment extends Fragment {
                             eventsFiltered.add(e);
                         }
                     }
-                    else {
-                        Log.d(".SearchResultsFragment", e.toString());
-                        Log.d(".SearchResultsFragment",  " eventsFiltered: " + eventsFiltered.toString());
-                        if (!(eventsFiltered.contains(e))) {
-                            eventsFiltered.add(e);
-                        }
-                    }
                 }
 
                 Log.d(".SearchResultsFragment",  " eventsFiltered: " + eventsFiltered.toString());
