@@ -1,5 +1,6 @@
 package com.flam.flyay;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -145,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Fragment fragmentInFrame = (Fragment) getSupportFragmentManager()
+        final Fragment fragmentInFrame = (Fragment) getSupportFragmentManager()
                 .findFragmentByTag(EventDetailsFragment.class.getName());
 
 
@@ -169,8 +171,24 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
                 }
                 break;
             case R.id.delete_event:
-                //TODO: integrate pop-up to confirm
-                Toast.makeText(this.getApplicationContext(),"Pop-up to Confirm",Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
+                alertbox.setTitle("Delete event");
+                alertbox.setMessage("Do you want to delete the new event?");
+
+                alertbox.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(fragmentInFrame.getContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                alertbox.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                alertbox.setIcon(R.drawable.ic_delete);
+                alertbox.show();
                 break;
             default:
                 return super.onOptionsItemSelected(item);

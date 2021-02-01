@@ -1,10 +1,12 @@
 package com.flam.flyay.fragments;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -63,7 +65,7 @@ public class HomeFragment extends Fragment {
         this.service = new EventService(this.getContext());
         this.converterFromJsonToModel = new ConverterFromJsonToModel();
         this.events = new ArrayList<>();
-        String currentDate = arguments.getString("currentDate");
+        final String currentDate = arguments.getString("currentDate");
 
         ((MainActivity) getActivity()).getSupportActionBar().setTitle("      " + currentDate);
         ((MainActivity) getActivity()).getSupportActionBar().setIcon(R.drawable.ic_home_page);
@@ -73,12 +75,20 @@ public class HomeFragment extends Fragment {
         Log.d(".EventsListFragment", "parameters: [currentDate = '" + currentDate + "']");
 
         service.getEventsByDay(params, new ServerCallback() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSuccess(Object result) {
                 events = (List<Event>) result;
                 Log.d(".EventsListFragment", events.toString());
 
-                EventAdapter eventAdapter = new EventAdapter(events, onEventsListListener);
+                List<Event> currentEvents = new ArrayList<>();
+                for(Event e : events) {
+                    if(e.getValueEvent().get("date") != null && e.getValueEvent().get("date").toString().equalsIgnoreCase(currentDate)) {
+                        currentEvents.add(e);
+                    }
+                }
+
+                EventAdapter eventAdapter = new EventAdapter(currentEvents, onEventsListListener);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 listRecyclerView.setAdapter(eventAdapter);
                 listRecyclerView.setLayoutManager(layoutManager);
