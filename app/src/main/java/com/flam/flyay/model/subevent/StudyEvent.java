@@ -101,11 +101,9 @@ public class StudyEvent extends Event {
             valueEvent.put("time", Utils.convertionFromDoubleToTime(this.startingTime != null ? this.startingTime : this.endTime, ':'));
 
 
-        assert this.studyPlan != null;
-        valueEvent.putAll(this.studyPlan.getValueEvent());
+        if(this.studyPlan != null) valueEvent.putAll(this.studyPlan.getValueEvent());
 
-        assert this.teacherInfo != null;
-        valueEvent.putAll(this.teacherInfo.getValueEvent());
+        if(this.teacherInfo != null) valueEvent.putAll(this.teacherInfo.getValueEvent());
 
         return valueEvent;
     }

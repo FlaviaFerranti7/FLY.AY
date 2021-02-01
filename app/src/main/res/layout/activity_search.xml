@@ -33,7 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav_menu"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/colorPrimary"
+        app:labelVisibilityMode="labeled"/>
 
 </RelativeLayout>
 
