@@ -521,7 +521,7 @@ import java.util.Map;
                                 Utils.convertionFromDateToString(eventEditable.getDate())));
                         input.setValue(eventEditable.getDate());
                     }
-                    else if(eventEditable != null && input.getName().equalsIgnoreCase("endingStudy")) {
+                    else if(eventEditable != null && ((StudyEvent)eventEditable).getStudyPlan()!=null && input.getName().equalsIgnoreCase("endingStudy")) {
                         dateFieldFragment.setArguments(createParamsDate(input.getLabelName(), input.getName(),
                                 Utils.convertionFromDateToString(((StudyEvent) eventEditable).getStudyPlan().getEndStudy())));
                         input.setValue(eventEditable.getDate());
@@ -616,7 +616,7 @@ import java.util.Map;
 
                     switch (input.getName()) {
                         case "examDifficulty":
-                            if(studyEvent != null) {
+                            if(studyEvent != null && studyEvent.getStudyPlan()!=null) {
                                 optionsFieldFragment.setArguments(createParamsCheckbox(input.getLabelName(), input.getName(), "EXAM_DIFFICULTY", Arrays.asList(studyEvent.getStudyPlan().getExamDifficulty())));
                             }
                             else {
@@ -625,7 +625,7 @@ import java.util.Map;
 
                             break;
                         case "overRange":
-                            if(studyEvent != null) {
+                            if(studyEvent != null && studyEvent.getStudyPlan()!=null ) {
                                 optionsFieldFragment.setArguments(createParamsCheckbox(input.getLabelName(), input.getName(), "OVER_RANGE", studyEvent.getStudyPlan().getOverRange()));
                             }
                             else{
@@ -661,11 +661,11 @@ import java.util.Map;
                     dynamicForm.addView(childLayout, input.getFieldOrderId());
                     childLayout.setId(View.generateViewId());
                     ButtonsFieldFragment fragmentB = new ButtonsFieldFragment();
-                    if(eventEditable != null && input.getName().equalsIgnoreCase("studyingDays")) {
+                    if(eventEditable != null && ((StudyEvent)eventEditable).getStudyPlan()!=null && input.getName().equalsIgnoreCase("studyingDays")) {
                         fragmentB.setArguments(createParamsButtonList(input.getLabelName(), input.getName(), "weekDays", colorCategory, ((StudyEvent)eventEditable).getStudyPlan().getStudyingDays()));
                         input.setValue("hasValue");
                     }
-                    else if(eventEditable != null && input.getName().equalsIgnoreCase("officeDay")) {
+                    else if(eventEditable != null && ((StudyEvent)eventEditable).getTeacherInfo()!=null && input.getName().equalsIgnoreCase("officeDay")) {
                         fragmentB.setArguments(createParamsButtonList(input.getLabelName(), input.getName(), "weekDays", colorCategory, ((StudyEvent)eventEditable).getTeacherInfo().getOfficeDay()));
                         input.setValue("hasValue");
                     }

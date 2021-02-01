@@ -400,7 +400,7 @@
         "fieldType": "SWITCH",
         "fieldOrderId": 22,
         "fieldParentId": 53,
-        "mandatory": true
+        "mandatory": false
       },
       {
         "id": 58,
@@ -409,7 +409,7 @@
         "fieldType": "SWITCH",
         "fieldOrderId": 23,
         "fieldParentId": 53,
-        "mandatory": true
+        "mandatory": false
       }
     ]
   },
@@ -637,7 +637,7 @@
         "id": 237,
         "title": "Dinner with friends",
         "category": "FREE_TIME",
-        "subcategory": "WELFARE",
+        "subcategory": "FRIENDS",
         "date": "07/01/2021",
         "startingTime": 21.00,
         "endTime": 23.00,
@@ -646,10 +646,10 @@
       },
       {
         "id": 238,
-        "title": "Bithday of Maria",
-        "category": "FREE_TIME",
-        "subcategory": "WELFARE",
-        "date": "15/01/2021",
+        "title": "Birthday of Francesco",
+        "category": "FESTIVITY",
+        "subcategory": "BIRTHDAY",
+        "date": "8/02/2021",
         "startingTime": 20.00,
         "endTime": 24.00,
         "place": "Via spa 2",
@@ -659,7 +659,7 @@
         "id": 240,
         "title": "Dinner with friends",
         "category": "FREE_TIME",
-        "subcategory": "WELFARE",
+        "subcategory": "FRIENDS",
         "date": "29/01/2021",
         "startingTime": 21.00,
         "endTime": 23.00,
@@ -670,7 +670,7 @@
         "id": 237,
         "title": "Dinner with friends",
         "category": "FREE_TIME",
-        "subcategory": "WELFARE",
+        "subcategory": "FRIENDS",
         "date": "07/01/2021",
         "startingTime": 21.00,
         "endTime": 23.00,
@@ -679,10 +679,10 @@
       },
       {
         "id": 238,
-        "title": "Bithday of Maria",
-        "category": "FREE_TIME",
-        "subcategory": "WELFARE",
-        "date": "15/01/2021",
+        "title": "Birthday of Giuseppe",
+        "category": "FESTIVITY",
+        "subcategory": "BIRTHDAY",
+        "date": "28/02/2021",
         "startingTime": 20.00,
         "endTime": 24.00,
         "place": "Via spa 2",
@@ -692,12 +692,65 @@
         "id": 240,
         "title": "Dinner with friends",
         "category": "FREE_TIME",
-        "subcategory": "WELFARE",
+        "subcategory": "FRIENDS",
         "date": "29/01/2021",
         "startingTime": 21.00,
         "endTime": 23.00,
         "place": "Via spa 2",
         "note": ""
+      },
+      {
+        "id": 241,
+        "title": "Dinner with friends",
+        "category": "FREE_TIME",
+        "subcategory": "FRIENDS",
+        "date": "17/02/2021",
+        "startingTime": 19.00,
+        "endTime": 24.00,
+        "place": "Via spa 2",
+        "note": ""
+      },
+      {
+        "id": 3000,
+        "title": "AD exam",
+        "category": "STUDY",
+        "subcategory": "EXAM",
+        "date": "16/02/2021",
+        "startingTime": 10.00,
+        "endTime": 13.00,
+        "place": "Via scarpa 1",
+        "room": "DIAG B2",
+        "teacherInfo": {
+          "name": "Leonardi",
+          "email": "leonardi@uniroma1.docenti.it",
+          "officeDay": ["Mon", "Fri"],
+          "receiptStartingTime": 10.00,
+          "receiptEndingTime": 12.00,
+          "receiptRoom": "Via scarpa stanza 41"
+        },
+        "studyPlan": {
+          "endStudy": "11/02/2021",
+          "studyingDays": ["Mon","Tue","Fri"],
+          "overRange": ["afternoon", "evening"],
+          "startingOverRangeTime": 14.00,
+          "endOverRangeTime": 17.00,
+          "minStudyHours": 1.30,
+          "maxStudyHours": 4.30,
+          "minBreakHours": 1.00,
+          "examDifficulty": "difficult",
+          "safeDays": "7"
+        },
+        "note": "Orale difficile"
+      },
+      {
+        "id": 3001,
+        "title": "AD Study",
+        "category": "STUDY",
+        "subcategory": "STUDY_TIME",
+        "date": "10/02/2021",
+        "startingTime": 10.00,
+        "endTime": 13.00,
+        "note": "Finisci capitolo 10"
       }
     ]
   },
