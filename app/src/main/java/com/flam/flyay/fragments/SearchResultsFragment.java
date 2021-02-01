@@ -112,7 +112,7 @@ public class SearchResultsFragment extends Fragment {
                             eventsFiltered.add(e);
                         }
                     }
-                    if (checkedCategory.contains(e.getCategory())){
+                    if (!Utils.isEmptyOrBlank(checkedCategory) && checkedCategory.equals(e.getCategory())){
                         Log.d(".SearchResultsFragment", e.toString());
                         Log.d(".SearchResultsFragment",  " eventsFilteredPerCategories: " + eventsFiltered.toString());
                         if (!(eventsFiltered.contains(e))) {
@@ -133,7 +133,7 @@ public class SearchResultsFragment extends Fragment {
                             eventsFiltered.add(e);
                         }
                     }
-                    else if(e.getClass() == StudyEvent.class && !Utils.isEmptyOrBlank(searchPlace) && ((StudyEvent) e).getPlace().toLowerCase().contains(searchPlace)){
+                    else {
                         Log.d(".SearchResultsFragment", e.toString());
                         Log.d(".SearchResultsFragment",  " eventsFiltered: " + eventsFiltered.toString());
                         if (!(eventsFiltered.contains(e))) {
