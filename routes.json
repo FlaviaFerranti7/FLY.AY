@@ -4,5 +4,6 @@
   "/subcategory/:endpoint": "/subcategory:endpoint",
   "/user/:endpoint": "/user:endpoint",
   "/list/:endpoint": "/list:endpoint",
-  "/modelList/:endpoint": "/modelList:endpoint"
+  "/modelList/:endpoint": "/modelList:endpoint",
+  "/item/:endpoint": "/item:endpoint"
 }

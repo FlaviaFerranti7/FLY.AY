@@ -60,9 +60,9 @@ public class EventService {
         });
     }
 
-    public void getInputFieldBySubcategory(JSONObject params, final ServerCallback callback) {
+    public void getInputFieldBySubcategory(JSONObject params, String addCategory, final ServerCallback callback) {
         Log.d(".EventService", "POST - SubcategoryItems");
-        AppRequest.jsonObjectPOSTRequest(context, MockServerUrl.SUBCATEGORY_ITEMS.url, params, new ServerCallback() {
+        AppRequest.jsonObjectPOSTRequest(context, MockServerUrl.SUBCATEGORY_ITEMS.url + "/" + addCategory, params, new ServerCallback() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSuccess(Object result) {

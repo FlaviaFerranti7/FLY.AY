@@ -69,7 +69,103 @@
       ]
     }
   },
-  "subcategoryItems": {
+  "itemWellness": {
+    "return" : [
+      {
+        "id": 36,
+        "name": "date",
+        "labelName": "When?",
+        "fieldType": "DATE",
+        "fieldOrderId": 0,
+        "mandatory": true
+      },
+      {
+      "id": 37,
+      "name": "time",
+      "labelName": "At what time?",
+      "fieldType": "TIME",
+      "fieldOrderId": 1,
+      "mandatory": true
+      },
+      {
+      "id": 38,
+      "name": "place",
+      "labelName": "Where?",
+      "fieldType": "TEXT",
+      "fieldOrderId": 2,
+      "mandatory": false
+      }
+    ]
+  },
+  "itemFestivity": {
+    "return" : [
+      {
+        "id": 36,
+        "name": "date",
+        "labelName": "When?",
+        "fieldType": "DATE",
+        "fieldOrderId": 0,
+        "mandatory": true
+      },
+      {
+        "id": 37,
+        "name": "time",
+        "labelName": "At what time?",
+        "fieldType": "TIME",
+        "fieldOrderId": 1,
+        "mandatory": true
+      }
+    ]
+  },
+  "itemFree_time": {
+    "return" : [
+      {
+        "id": 36,
+        "name": "date",
+        "labelName": "When?",
+        "fieldType": "DATE",
+        "fieldOrderId": 0,
+        "mandatory": true
+      },
+      {
+        "id": 37,
+        "name": "time",
+        "labelName": "At what time?",
+        "fieldType": "TIME",
+        "fieldOrderId": 1,
+        "mandatory": true
+      },
+      {
+        "id": 38,
+        "name": "place",
+        "labelName": "Where?",
+        "fieldType": "TEXT",
+        "fieldOrderId": 2,
+        "mandatory": false
+      }
+    ]
+  },
+  "itemFinances": {
+    "return" : [
+      {
+        "id": 37,
+        "name": "price",
+        "labelName": "price",
+        "fieldType": "NUMBER",
+        "fieldOrderId": 0,
+        "mandatory": true
+      },
+      {
+        "id": 38,
+        "name": "place",
+        "labelName": "Where?",
+        "fieldType": "TEXT",
+        "fieldOrderId": 1,
+        "mandatory": false
+      }
+    ]
+  },
+  "itemStudy": {
     "return": [
       {
         "id": 36,

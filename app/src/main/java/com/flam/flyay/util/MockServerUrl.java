@@ -7,7 +7,7 @@ public enum MockServerUrl {
     EVENT_DAY("http://10.0.2.2:3000/event/day"),
     PROFILE_USER("http://10.0.2.2:3000/user"),
     LIST("http://10.0.2.2:3000/list"),
-    SUBCATEGORY_ITEMS("http://10.0.2.2:3000/subcategory/items"),
+    SUBCATEGORY_ITEMS("http://10.0.2.2:3000/item"),
     ITEMS("http://10.0.2.2:3000/list/item");
 
     public final String url;

@@ -24,6 +24,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.util.Util;
@@ -198,19 +199,19 @@ import java.util.Map;
             /* Open dynamic form */
             switch (eventEditable.getCategory()) {
                 case "FREE_TIME":
-                    activeDynamicForm(eventEditable.getSubcategory(), Color.parseColor(CategoryEnum.FREE_TIME.color));
+                    activeDynamicForm(eventEditable.getSubcategory(), CategoryEnum.FREE_TIME.name, Color.parseColor(CategoryEnum.FREE_TIME.color));
                     break;
                 case "FINANCES":
-                    activeDynamicForm(eventEditable.getSubcategory(), Color.parseColor(CategoryEnum.FINANCES.color));
+                    activeDynamicForm(eventEditable.getSubcategory(), CategoryEnum.FINANCES.name, Color.parseColor(CategoryEnum.FINANCES.color));
                     break;
                 case "WELLNESS":
-                    activeDynamicForm(eventEditable.getSubcategory(), Color.parseColor(CategoryEnum.WELLNESS.color));
+                    activeDynamicForm(eventEditable.getSubcategory(), CategoryEnum.WELLNESS.name, Color.parseColor(CategoryEnum.WELLNESS.color));
                     break;
                 case "STUDY":
-                    activeDynamicForm(eventEditable.getSubcategory(), Color.parseColor(CategoryEnum.STUDY.color));
+                    activeDynamicForm(eventEditable.getSubcategory(), CategoryEnum.STUDY.name, Color.parseColor(CategoryEnum.STUDY.color));
                     break;
                 case "FESTIVITY":
-                    activeDynamicForm(eventEditable.getSubcategory(), Color.parseColor(CategoryEnum.FESTIVITY.color));
+                    activeDynamicForm(eventEditable.getSubcategory(), CategoryEnum.FESTIVITY.name, Color.parseColor(CategoryEnum.FESTIVITY.color));
                     break;
             }
         }
@@ -256,10 +257,10 @@ import java.util.Map;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void activeDynamicForm(String subcategoryName, final int colorCategory) {
+    public void activeDynamicForm(String subcategoryName, String category, final int colorCategory) {
         final JSONObject params = getParams(subcategoryName);
 
-        service.getInputFieldBySubcategory(params, new ServerCallback() {
+        service.getInputFieldBySubcategory(params, category.toLowerCase(), new ServerCallback() {
             @RequiresApi(api = Build.VERSION_CODES.P)
             @Override
             public void onSuccess(Object result) {
@@ -452,7 +453,10 @@ import java.util.Map;
                             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     childLayout.setLayoutParams(paramsLayout);
                     TimeFieldFragment f = new TimeFieldFragment();
-                    f.setArguments(createParamsTime(true, input.getName(), input.getLabelName(), eventEditableValues.get("time").toString()));
+                    if(eventEditableValues.get("time") != null)
+                        f.setArguments(createParamsTime(true, input.getName(), input.getLabelName(), eventEditableValues.get("time").toString()));
+                    else
+                        f.setArguments(createParamsTime(true, input.getName(), input.getLabelName(), null));
 
                     childLayout.setTag(input.getName());
                     addElementIntoListMap(viewWithParentId, childLayout, input.getFieldParentId());
@@ -469,7 +473,12 @@ import java.util.Map;
                             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     childLayout.setLayoutParams(paramsLayout);
                     f = new TimeFieldFragment();
-                    f.setArguments(createParamsTime(false, input.getName(), input.getLabelName(), eventEditableValues.get("teacherReceiptTime").toString()));
+
+                    if(eventEditableValues.get("teacherReceiptTime") != null)
+                        f.setArguments(createParamsTime(false, input.getName(), input.getLabelName(), eventEditableValues.get("teacherReceiptTime").toString()));
+                    else
+                        f.setArguments(createParamsTime(false, input.getName(), input.getLabelName(), null));
+
 
                     childLayout.setTag(input.getName());
                     addElementIntoListMap(viewWithParentId, childLayout, input.getFieldParentId());

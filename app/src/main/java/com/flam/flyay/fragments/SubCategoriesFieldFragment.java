@@ -208,7 +208,7 @@ public class SubCategoriesFieldFragment extends Fragment {
 
         if(color == Color.TRANSPARENT) {
             btn.setBackgroundColor(Color.parseColor(categoryEnum.color));
-            dynamicFormFragment.activeDynamicForm(subcategoryName, Color.parseColor(categoryEnum.color));
+            dynamicFormFragment.activeDynamicForm(subcategoryName, categoryEnum.name, Color.parseColor(categoryEnum.color));
         } else {
             btn.setBackgroundColor(Color.TRANSPARENT);
             dynamicFormFragment.clearDynamicForm();

@@ -241,10 +241,12 @@ public class TimeFieldFragment extends Fragment {
 
         if(initialValue != null) {
             String[] time = initialValue.split("-");
-            String tmp = time[1].split(":")[0];
-            hour = Integer.parseInt(tmp.substring(1));
-            tmp = time[1].split(":")[1];
-            minute = Integer.parseInt(tmp);
+            if(time.length == 2) {
+                String tmp = time[1].split(":")[0];
+                hour = Integer.parseInt(tmp.substring(1));
+                tmp = time[1].split(":")[1];
+                minute = Integer.parseInt(tmp);
+            }
         }
 
         String time = (((hour+1) > 12) ? (hour+1) % 12 : (hour+1)) + ":" + (minute < 10 ? ("0" + minute) : minute) + " " + (((hour+1) >= 12) ? "PM" : "AM");
