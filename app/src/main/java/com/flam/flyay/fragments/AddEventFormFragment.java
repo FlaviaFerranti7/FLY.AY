@@ -1,5 +1,6 @@
  package com.flam.flyay.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -20,15 +21,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.util.Util;
 import com.flam.flyay.AddEventActivity;
+import com.flam.flyay.MainActivity;
 import com.flam.flyay.R;
 import com.flam.flyay.model.Event;
 import com.flam.flyay.model.InputField;
@@ -148,7 +152,12 @@ import java.util.Map;
             public void onClick(View v) {
                 Log.d(".AddEventForm", "click on save button");
 
+                List<String> errors = new ArrayList<>();
+
                 for(InputField input : object) {
+                    if(objectView.get(input).getVisibility() == View.VISIBLE && input.isMandatory() && input.getValue() == null) {
+                        errors.add("- " + input.getName().toUpperCase() + " cannot be blank");
+                    }
                     if(objectView.get(input).getVisibility() == View.VISIBLE) {
                         switch (input.getFieldType()) {
                             case "TEXT":
@@ -177,6 +186,49 @@ import java.util.Map;
                         }
                     }
                 }
+
+                if(errors.size() > 0) {
+                    AlertDialog.Builder alertbox = new AlertDialog.Builder(getContext());
+                    alertbox.setTitle("Error validation field");
+
+                    String errorMessage = "Field errors:";
+                    for(int i = 0; i < errors.size(); i ++) {
+                        errorMessage += "\n\t" + errors.get(i);
+                    }
+
+                    alertbox.setMessage(errorMessage);
+                    alertbox.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    alertbox.setIcon(R.drawable.ic_saving);
+                    alertbox.show();
+                }
+                else {
+                    AlertDialog.Builder alertbox = new AlertDialog.Builder(getContext());
+                    alertbox.setTitle("Save changes");
+                    alertbox.setMessage("Do you want to save new event?");
+
+                    alertbox.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                    alertbox.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+
+                    alertbox.setIcon(R.drawable.ic_saving);
+                    alertbox.show();
+                }
+
+                Log.d(".AddEventForm", errors.toString());
             }
         });
 
@@ -185,8 +237,24 @@ import java.util.Map;
             @Override
             public void onClick(View v) {
                 Log.d(".AddEventForm", "click on cancel button");
-                Intent intent = new Intent(getContext(), AddEventActivity.class);
-                startActivity(intent);
+                AlertDialog.Builder alertbox = new AlertDialog.Builder(getContext());
+                alertbox.setTitle("Delete event");
+                alertbox.setMessage("Do you want to delete the new event?");
+
+                alertbox.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getContext(), AddEventActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                alertbox.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                alertbox.setIcon(R.drawable.ic_delete);
+                alertbox.show();
             }
         });
 
