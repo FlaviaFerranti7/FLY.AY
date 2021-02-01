@@ -37,6 +37,8 @@ public class PeriodicOptionsFieldFragment extends Fragment {
     private boolean clickedW;
     private boolean clickedC;
 
+    private int categoryColor;
+
     public PeriodicOptionsFieldFragment() {}
 
     @SuppressLint({"LongLogTag", "ResourceType"})
@@ -50,6 +52,9 @@ public class PeriodicOptionsFieldFragment extends Fragment {
 
         clickedW = false;
         clickedC = false;
+
+        Bundle bundle = getArguments();
+        categoryColor = bundle.getInt("color");
 
         periodicEventList1 = Arrays.asList("every day", "every week");
         addCheckBox(linearLayout1, periodicEventList1);
@@ -134,8 +139,9 @@ public class PeriodicOptionsFieldFragment extends Fragment {
 
     private Bundle createParamsEventsFragment() {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("list", new ArrayList(buttonsValue));
-        Log.d(".OptionsField", buttonsValue.toString());
+        bundle.putSerializable("typeOfList", "weekDays");
+        bundle.putInt("color", categoryColor);
+        bundle.putString("key", "periodicEvent");
         return bundle;
     }
 

@@ -577,6 +577,29 @@ import java.util.Map;
                     childLayout.setId(View.generateViewId());
                     addFragment(f, childLayout.getId());
                     break;
+                case "PERIODIC":
+                    Log.d(".AddEventForm", "periodic field received");
+                    childLayout = new RelativeLayout(getContext());
+                    paramsLayout = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    childLayout.setLayoutParams(paramsLayout);
+
+                    childLayout.setTag(input.getName());
+                    addElementIntoListMap(viewWithParentId, childLayout, input.getFieldParentId());
+
+                    CheckboxFieldFragment checkboxFieldFragment = new CheckboxFieldFragment();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("color", colorCategory);
+
+                    checkboxFieldFragment.setArguments(bundle);
+
+                    objectView.put(input, childLayout);
+                    dynamicForm.addView(childLayout, input.getFieldOrderId());
+                    childLayout.setId(View.generateViewId());
+                    addFragment(checkboxFieldFragment, childLayout.getId());
+
+                    break;
                 case "CHECKBOX":
                     Log.d(".AddEventForm", "checkbox received");
                     childLayout = new RelativeLayout(getContext());

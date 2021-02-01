@@ -88,11 +88,19 @@
       "mandatory": true
       },
       {
-      "id": 38,
+        "id": 38,
+        "name": "periodicEvent",
+        "labelName": "Periodic event",
+        "fieldType": "PERIODIC",
+        "fieldOrderId": 2,
+        "mandatory": false
+      },
+      {
+      "id": 39,
       "name": "place",
       "labelName": "Where?",
       "fieldType": "TEXT",
-      "fieldOrderId": 2,
+      "fieldOrderId": 3,
       "mandatory": false
       }
     ]
@@ -114,6 +122,14 @@
         "fieldType": "TIME",
         "fieldOrderId": 1,
         "mandatory": true
+      },
+      {
+        "id": 38,
+        "name": "periodicEvent",
+        "labelName": "Periodic event",
+        "fieldType": "PERIODIC",
+        "fieldOrderId": 2,
+        "mandatory": false
       }
     ]
   },
@@ -137,10 +153,18 @@
       },
       {
         "id": 38,
+        "name": "periodicEvent",
+        "labelName": "Periodic event",
+        "fieldType": "PERIODIC",
+        "fieldOrderId": 2,
+        "mandatory": false
+      },
+      {
+        "id": 39,
         "name": "place",
         "labelName": "Where?",
         "fieldType": "TEXT",
-        "fieldOrderId": 2,
+        "fieldOrderId": 3,
         "mandatory": false
       }
     ]
@@ -157,10 +181,18 @@
       },
       {
         "id": 38,
+        "name": "periodicEvent",
+        "labelName": "Periodic event",
+        "fieldType": "PERIODIC",
+        "fieldOrderId": 1,
+        "mandatory": false
+      },
+      {
+        "id": 38,
         "name": "place",
         "labelName": "Where?",
         "fieldType": "TEXT",
-        "fieldOrderId": 1,
+        "fieldOrderId": 2,
         "mandatory": false
       }
     ]
@@ -312,7 +344,7 @@
         "name": "safeDays",
         "labelName": "Safe Days:",
         "fieldType": "NUMBER",
-        "fieldOrderId": 15,
+        "fieldOrderId": 16,
         "fieldParentId": 45,
         "mandatory": true
       },
@@ -321,7 +353,7 @@
         "name": "organizedStudyBy",
         "labelName": "Organize study by:",
         "fieldType": "TOPICSPAGES",
-        "fieldOrderId": 16,
+        "fieldOrderId": 17,
         "fieldParentId": 45,
         "mandatory": false
       },
@@ -330,7 +362,7 @@
         "name": "totalPagesP",
         "labelName": "total pages",
         "fieldType": "NUMBER",
-        "fieldOrderId": 17,
+        "fieldOrderId": 18,
         "fieldParentId": 53,
         "mandatory": true
       },
@@ -339,7 +371,7 @@
         "name": "minPagesPerDaysP",
         "labelName": "min pages per days",
         "fieldType": "NUMBER",
-        "fieldOrderId": 18,
+        "fieldOrderId": 19,
         "fieldParentId": 53,
         "mandatory": true
       },
@@ -348,7 +380,7 @@
         "name": "maxPagesPerDaysP",
         "labelName": "max pages per days",
         "fieldType": "NUMBER",
-        "fieldOrderId": 19,
+        "fieldOrderId": 20,
         "fieldParentId": 53,
         "mandatory": true
       },
@@ -357,7 +389,7 @@
         "name": "startingTotalRecapP",
         "labelName": "starting total recap",
         "fieldType": "DATE",
-        "fieldOrderId": 20,
+        "fieldOrderId": 21,
         "fieldParentId": 53,
         "mandatory": true
       },
@@ -366,7 +398,7 @@
         "name": "exercisesP",
         "labelName": "exercises",
         "fieldType": "SWITCH",
-        "fieldOrderId": 21,
+        "fieldOrderId": 22,
         "fieldParentId": 53,
         "mandatory": true
       },
@@ -375,7 +407,7 @@
         "name": "projectP",
         "labelName": "project",
         "fieldType": "SWITCH",
-        "fieldOrderId": 22,
+        "fieldOrderId": 23,
         "fieldParentId": 53,
         "mandatory": true
       }

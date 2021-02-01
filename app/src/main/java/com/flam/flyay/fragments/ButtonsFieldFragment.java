@@ -86,7 +86,6 @@ public class ButtonsFieldFragment extends Fragment {
         return view;
     }
 
-
     public void horizontalScrollView(LinearLayout scrollableLayout) {
 
         HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this.getContext());

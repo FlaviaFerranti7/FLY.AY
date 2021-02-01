@@ -29,8 +29,7 @@ public class CheckboxFieldFragment extends Fragment {
     private LinearLayout linearLayout;
 
     private String periodicEvent;
-
-
+    private int categoryColor;
 
     public CheckboxFieldFragment() {
     }
@@ -43,6 +42,10 @@ public class CheckboxFieldFragment extends Fragment {
         final View view = inflater.inflate(R.layout.checkbox_field_fragment, container, false);
 
         linearLayout = view.findViewById(R.id.checkbox_field_fragment);
+
+        Bundle params = getArguments();
+
+        categoryColor = params.getInt("color");
 
         periodicEvent = getActivity().getString(R.string.periodic_event);
 
@@ -84,6 +87,11 @@ public class CheckboxFieldFragment extends Fragment {
     private void addOptionsFragment() {
         Fragment fragment = new PeriodicOptionsFieldFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("color", categoryColor);
+
+        fragment.setArguments(bundle);
 
         transaction.replace(linearLayout.getId(), fragment, fragment.getClass().getName());
         transaction.addToBackStack(null);
