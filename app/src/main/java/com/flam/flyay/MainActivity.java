@@ -1,5 +1,6 @@
 package com.flam.flyay;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -145,7 +147,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
+        final Fragment fragmentInFrame = (Fragment) getSupportFragmentManager()
+                .findFragmentByTag(EventDetailsFragment.class.getName());
+
+
         switch (item.getItemId()) {
             case R.id.home_calendar:
                 addFragment(new CalendarFragment(), createParamsEventsFragment());
@@ -153,11 +158,37 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
                 break;
             case R.id.edit_event:
                 //TODO: go to form add event
-                Toast.makeText(this.getApplicationContext(),"Go to Form Add Event",Toast.LENGTH_SHORT).show();
+                if(fragmentInFrame != null) {
+                    Intent intent = new Intent(fragmentInFrame.getContext(), AddEventActivity.class);
+                    Bundle b = new Bundle();
+                    Log.d(".MainActivity", "event selected: " + eventSelected.toString());
+                    b.putSerializable("eventEditable", eventSelected);
+                    intent.putExtras(b);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(this.getApplicationContext(),"No selectable event",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.delete_event:
-                //TODO: integrate pop-up to confirm
-                Toast.makeText(this.getApplicationContext(),"Pop-up to Confirm",Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
+                alertbox.setTitle("Delete event");
+                alertbox.setMessage("Do you want to delete the new event?");
+
+                alertbox.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(fragmentInFrame.getContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                alertbox.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                alertbox.setIcon(R.drawable.ic_delete);
+                alertbox.show();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -215,6 +246,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnEv
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setIcon(null);
         invalidateOptionsMenu();
+        eventSelected = e;
         addFragment(new EventDetailsFragment(), createParamsFragment(e));
     }
 

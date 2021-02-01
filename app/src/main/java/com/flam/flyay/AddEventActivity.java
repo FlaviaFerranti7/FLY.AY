@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.flam.flyay.fragments.AddEventFormFragment;
@@ -26,6 +27,8 @@ import com.flam.flyay.model.Event;
 import com.flam.flyay.util.TouchInterceptor;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Objects;
+
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.WHITE;
 
@@ -34,6 +37,9 @@ public class AddEventActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBar ab;
 
+    private Event eventEditable;
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +50,19 @@ public class AddEventActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_add_event);
 
-        RelativeLayout touchInterceptor = (RelativeLayout) findViewById(R.id.touchInterceptor);
+        RelativeLayout touchInterceptor = (RelativeLayout) findViewById(R.id.touchInterceptorAddEvent);
         touchInterceptor.setOnTouchListener(new TouchInterceptor(this));
+
+        Bundle arguments = getIntent().getExtras();
+        if(arguments != null)
+            eventEditable = (Event) arguments.getSerializable("eventEditable");
+        else
+            Log.d(".AddEventActivity", "no parameters");
+
+        Log.d(".AddEventActivity", "event editable: " + eventEditable);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -92,7 +109,17 @@ public class AddEventActivity extends AppCompatActivity {
             }
         });
 
-        addFragment(new AddEventFormFragment(), null);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("eventEditable", eventEditable);
+
+        if(eventEditable != null) {
+            Log.d("TESTEEE", getSupportActionBar().getTitle().toString());
+            Objects.requireNonNull(getSupportActionBar()).setTitle("Edit " + eventEditable.getTitle() + " event");
+            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        }
+
+
+        addFragment(new AddEventFormFragment(), bundle);
     }
 
     @Override
@@ -124,4 +151,5 @@ public class AddEventActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
 }

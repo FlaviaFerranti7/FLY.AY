@@ -5,6 +5,7 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.RequiresApi;
 
@@ -205,6 +206,20 @@ public class Utils {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static String convertionFromDateToString(Date date) {
         return new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date);
+    }
+
+    public static void listGONE(List<View> listView) {
+        if(listView != null) {
+            for(View view : listView)
+                view.setVisibility(View.GONE);
+        }
+    }
+
+    public static void listVISIBLE(List<View> listView) {
+        if(listView != null) {
+            for(View view : listView)
+                view.setVisibility(View.VISIBLE);
+        }
     }
 
 }

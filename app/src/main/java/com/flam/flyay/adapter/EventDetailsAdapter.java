@@ -1,12 +1,10 @@
 package com.flam.flyay.adapter;
 
-import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,7 +17,6 @@ import com.flam.flyay.R;
 import com.flam.flyay.model.TeacherInfo;
 import com.flam.flyay.util.Utils;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -97,7 +94,9 @@ public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapte
 
                 items.put("name", info.getName());
                 items.put("email", info.getEmail());
-                items.put("receipt date", info.getReceiptDate());
+                items.put("office day", info.getOfficeDay().toString());
+                items.put("receipt time",
+                        Utils.getTimeToString(info.getReceiptStartingTime(), info.getReceiptEndingTime()));
                 items.put("receipt room", info.getReceiptRoom());
 
                 EventDetailsAdapter adapter = new EventDetailsAdapter(Arrays.asList(items.keySet().toArray(new String[0])), items);
@@ -107,6 +106,7 @@ public class EventDetailsAdapter extends RecyclerView.Adapter<EventDetailsAdapte
                 layoutType = 2;
                 break;
             case "studyingDays":
+            case "overRange":
                 List<String> days = (List<String>) valueList.get(keyList.get(position));
                 List<String> keySetSorted = new ArrayList<>();
                 items = new HashMap<>();

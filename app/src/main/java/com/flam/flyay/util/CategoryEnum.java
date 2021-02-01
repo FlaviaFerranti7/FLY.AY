@@ -1,11 +1,11 @@
 package com.flam.flyay.util;
 
 public enum CategoryEnum {
-    WELLNESS("WELLNESS", "#9400D3"),
-    FINANCES("FINANCES", "#FFCF05"),
-    FREE_TIME("FREE_TIME", "#FF3612"),
-    STUDY("STUDY", "#0C49B6"),
-    FESTIVITY("FESTIVITY", "#FF8100");
+    WELLNESS("WELLNESS", "#9966CC"),
+    FINANCES("FINANCES", "#F7D917"),
+    FREE_TIME("FREE_TIME", "#E06060"),
+    STUDY("STUDY", "#2271B3"),
+    FESTIVITY("FESTIVITY", "#FFA500");
 
     public String name;
     public String color;

@@ -1,5 +1,9 @@
 package com.flam.flyay.fragments;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,27 +11,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.flam.flyay.R;
 import com.flam.flyay.SearchActivity;
-import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.flam.flyay.util.CategoryEnum;
+import com.flam.flyay.util.Utils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
-import static com.flam.flyay.util.CategoryEnum.FESTIVITY;
-import static com.flam.flyay.util.CategoryEnum.FINANCES;
-import static com.flam.flyay.util.CategoryEnum.FREE_TIME;
-import static com.flam.flyay.util.CategoryEnum.STUDY;
-import static com.flam.flyay.util.CategoryEnum.WELLNESS;
 
 
 public class SearchFormFragment extends Fragment {
@@ -37,18 +40,22 @@ public class SearchFormFragment extends Fragment {
     private TextInputLayout eventPlaceLayout;
     private TextInputEditText eventPlaceTextField;
 
-    private Button searchButton;
+    private LinearLayout buttonsGroup;
 
-    private MaterialButtonToggleGroup toggleCategories;
+    private Button searchButton;
 
     private String searchName;
     private String searchPlace;
 
+    private Boolean clicked;
+
     private String checkedCategory;
-    private List<String> checkedCategoryList;
+
+    private List<String> categoryList;
 
     public SearchFormFragment() {}
 
+    @SuppressLint({"ResourceType", "UseCompatLoadingForDrawables"})
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,7 +65,7 @@ public class SearchFormFragment extends Fragment {
         ((SearchActivity) getActivity()).getSupportActionBar().setIcon(R.drawable.ic_search);
         ((SearchActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        this.checkedCategoryList = new ArrayList<>();
+        clicked = false;
 
         this.eventNameLayout = (TextInputLayout) view.findViewById(R.id.whichEventLayout);
         this.eventNameTextField = (TextInputEditText) view.findViewById(R.id.whichEvent);
@@ -66,43 +73,116 @@ public class SearchFormFragment extends Fragment {
         this.eventPlaceLayout = (TextInputLayout) view.findViewById(R.id.whereEventLayout);
         this.eventPlaceTextField = (TextInputEditText) view.findViewById(R.id.whereEvent);
 
-        this.toggleCategories = view.findViewById(R.id.toggleButtonCategories);
+        this.buttonsGroup = view.findViewById(R.id.buttonCategoriesGroups);
 
         this.searchButton = view.findViewById(R.id.buttonSearch);
 
-        this.toggleCategories.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
-            @Override
-            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
-                if (isChecked) {
-                    if(checkedId == R.id.festivityCategoryButton) {
-                        checkedCategory = FESTIVITY.name;
-                        checkedCategoryList.add(checkedCategory);
-                        Log.d(".SearchFormFragment", "selected category: " + checkedCategory);
-                        Log.d(".SearchFormFragment", "selected category: " + checkedCategoryList);
-                    } else if(checkedId == R.id.financesCategoryButton) {
-                        checkedCategory = FINANCES.name;
-                        checkedCategoryList.add(checkedCategory);
-                        Log.d(".SearchFormFragment", "selected category: " + checkedCategory);
-                        Log.d(".SearchFormFragment", "selected category: " + checkedCategoryList);
-                    } else if(checkedId == R.id.freeTimeCategoryButton) {
-                        checkedCategory = FREE_TIME.name;
-                        checkedCategoryList.add(checkedCategory);
-                        Log.d(".SearchFormFragment", "selected category: " + checkedCategory);
-                        Log.d(".SearchFormFragment", "selected category: " + checkedCategoryList);
-                    } else if(checkedId == R.id.studyCategoryButton) {
-                        checkedCategory = STUDY.name;
-                        checkedCategoryList.add(checkedCategory);
-                        Log.d(".SearchFormFragment", "selected category: " + checkedCategory);
-                        Log.d(".SearchFormFragment", "selected category: " + checkedCategoryList);
-                    } else if(checkedId == R.id.wellnessCategoryButton) {
-                        checkedCategory = WELLNESS.name;
-                        checkedCategoryList.add(checkedCategory);
-                        Log.d(".SearchFormFragment", "selected category: " + checkedCategory);
-                        Log.d(".SearchFormFragment", "selected category: " + checkedCategoryList);
+        categoryList = Arrays.asList(CategoryEnum.FREE_TIME.name, CategoryEnum.STUDY.name, CategoryEnum.WELLNESS.name,
+                CategoryEnum.FESTIVITY.name, CategoryEnum.FINANCES.name);
+
+        final List<Button> buttons = new ArrayList<>();
+
+        for (final Object i : categoryList) {
+            final Button btn = new Button(this.getContext());
+            Drawable drawable;
+
+            switch (String.valueOf(i)){
+                case "FINANCES":
+                    drawable = view.getResources().getDrawable(R.drawable.ic_category_finances);
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                        DrawableCompat.setTint(drawable, Color.WHITE);
+                    } else {
+                        DrawableCompat.setTint(drawable, Color.BLACK);
+                    }
+                    drawable.setBounds(0,0, 65, 65);
+                    btn.setCompoundDrawables(null, drawable, null, null);
+                    break;
+                case "WELLNESS":
+                    drawable = view.getResources().getDrawable(R.drawable.ic_category_wellness);
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                        DrawableCompat.setTint(drawable, Color.WHITE);
+                    } else {
+                        DrawableCompat.setTint(drawable, Color.BLACK);
+                    }
+                    drawable.setBounds(0,0, 65, 65);
+                    btn.setCompoundDrawables(null, drawable, null, null);
+                    break;
+                case "FESTIVITY":
+                    drawable = view.getResources().getDrawable(R.drawable.ic_category_festivity);
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                        DrawableCompat.setTint(drawable, Color.WHITE);
+                    } else {
+                        DrawableCompat.setTint(drawable, Color.BLACK);
+                    }
+                    drawable.setBounds(0,0, 65, 65);
+                    btn.setCompoundDrawables(null, drawable, null, null);
+                    break;
+                case "STUDY":
+                    drawable = view.getResources().getDrawable(R.drawable.ic_category_study);
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                        DrawableCompat.setTint(drawable, Color.WHITE);
+                    } else {
+                        DrawableCompat.setTint(drawable, Color.BLACK);
+                    }
+                    drawable.setBounds(0,0, 65, 65);
+                    btn.setCompoundDrawables(null, drawable, null, null);
+                    break;
+                case "FREE_TIME":
+                    drawable = view.getResources().getDrawable(R.drawable.ic_category_freetime);
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                        DrawableCompat.setTint(drawable, Color.WHITE);
+                    } else {
+                        DrawableCompat.setTint(drawable, Color.BLACK);
+                    }
+                    drawable.setBounds(0,0, 65, 65);
+                    btn.setCompoundDrawables(null, drawable, null, null);
+                    break;
+            }
+            buttons.add(btn);
+            LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(
+                    Utils.convertDpToPixel(55),
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            btnparams.setMargins(Utils.convertDpToPixel(8), Utils.convertDpToPixel(8), 0, 0);
+            btn.setLayoutParams(btnparams);
+            btn.setBackgroundColor(Color.TRANSPARENT);
+            btn.setClickable(true);
+            buttonsGroup.addView(btn);
+
+
+            btn.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("ResourceAsColor")
+                public void onClick(View view) {
+                    String categoryName = String.valueOf(i);
+
+                    Drawable background = btn.getBackground();
+                    int color = Color.TRANSPARENT;
+
+                    if(background instanceof ColorDrawable)
+                        color = ((ColorDrawable) background).getColor();
+
+                    clearOtherButtonBackground(buttons, btn);
+                    switch(categoryName) {
+                        case "FINANCES":
+                            selectCategory(color, btn, CategoryEnum.FINANCES);
+                            break;
+                        case "WELLNESS":
+                            selectCategory(color, btn, CategoryEnum.WELLNESS);
+                            break;
+                        case "FESTIVITY":
+                            selectCategory(color, btn, CategoryEnum.FESTIVITY);
+                            break;
+                        case "STUDY":
+                            selectCategory(color, btn, CategoryEnum.STUDY);
+                            break;
+                        case "FREE_TIME":
+                            selectCategory(color, btn, CategoryEnum.FREE_TIME);
+                            break;
                     }
                 }
-            }
-        });
+            });
+        }
+
 
         this.searchButton.setOnClickListener(new View.OnClickListener() {
 
@@ -122,6 +202,25 @@ public class SearchFormFragment extends Fragment {
         return view;
     }
 
+    private void selectCategory(int color, Button btn, CategoryEnum categoryEnum) {
+        if(color == Color.TRANSPARENT) {
+            btn.setBackgroundColor(Color.parseColor(categoryEnum.color));
+            checkedCategory = categoryEnum.name;
+        } else {
+            btn.setBackgroundColor(Color.TRANSPARENT);
+            checkedCategory = "";
+        }
+        Log.d(".SearchFormFragment", "selected category: " + checkedCategory);
+    }
+
+    private void clearOtherButtonBackground(List<Button> buttons, Button excluding) {
+        for(Button btn: buttons){
+            if(btn != excluding)
+                btn.setBackgroundColor(Color.TRANSPARENT);
+        }
+    }
+
+
     public void substituteFragment(Fragment fragment){
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -135,7 +234,7 @@ public class SearchFormFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString("searchParamsName", searchName);
         bundle.putString("searchParamsPlace", searchPlace);
-        bundle.putString("checkedCategory", checkedCategoryList.toString());
+        bundle.putString("checkedCategory", checkedCategory);
         return bundle;
     }
 

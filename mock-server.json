@@ -69,245 +69,317 @@
       ]
     }
   },
-  "subcategoryItems": {
-    "return": {
-      "itemsBySubcategory": [
-        {
-          "id": 45,
-          "name": "teacherName",
-          "labelName": "Teacher name",
-          "fieldType": "STRING",
-          "fieldOrderId": 1,
-          "min": 5,
-          "max": 25,
-          "mandatory": false
-        },
-        {
-          "id": 46,
-          "name": "teacherEmail",
-          "labelName": "Teacher email",
-          "fieldType": "EMAIL",
-          "fieldOrderId": 2,
-          "min": 5,
-          "max": 25,
-          "mandatory": false
-        },
-        {
-          "id": 47,
-          "name": "teacherReceiptDate",
-          "labelName": "date receipt",
-          "fieldType": "DATE",
-          "fieldOrderId": 3,
-          "mandatory": false
-        },
-        {
-          "id": 48,
-          "name": "teacherRoom",
-          "labelName": "teacher room",
-          "fieldType": "STRING",
-          "fieldOrderId": 4,
-          "mandatory": false
-        },
-        {
-          "id": 50,
-          "name": "endingStudying",
-          "labelName": "Ending studying",
-          "fieldType": "DATE",
-          "fieldOrderId": 6,
-          "mandatory": true
-        },
-        {
-          "id": 1,
-          "name": "studyingDays",
-          "labelName": "Studying days",
-          "fieldType": "WEEK",
-          "fieldOrderId": 7,
-          "min": "1",
-          "max": "7",
-          "mandatory": true
-        },
-        {
-          "id": 2,
-          "name": "overRange",
-          "labelName": "Over range",
-          "fieldType": "DAYPHASES",
-          "fieldOrderId": 8,
-          "min": "1",
-          "max": "3",
-          "mandatory": true
-        },
-        {
-          "id": 3,
-          "name": "startingOverRangeTimeM",
-          "labelName": "",
-          "fieldType": "TIME",
-          "fieldOrderId": 9,
-          "mandatory": false
-        },
-        {
-          "id": 4,
-          "name": "endingOverRangeTimeM",
-          "labelName": "",
-          "fieldType": "TIME",
-          "fieldOrderId": 10,
-          "mandatory": false
-        },
-        {
-          "id": 3,
-          "name": "startingOverRangeTimeA",
-          "labelName": "",
-          "fieldType": "TIME",
-          "fieldOrderId": 9,
-          "mandatory": false
-        },
-        {
-          "id": 4,
-          "name": "endingOverRangeTimeA",
-          "labelName": "",
-          "fieldType": "TIME",
-          "fieldOrderId": 10,
-          "mandatory": false
-        },
-        {
-          "id": 3,
-          "name": "startingOverRangeTimeE",
-          "labelName": "",
-          "fieldType": "TIME",
-          "fieldOrderId": 9,
-          "mandatory": false
-        },
-        {
-          "id": 4,
-          "name": "endingOverRangeTimeE",
-          "labelName": "",
-          "fieldType": "TIME",
-          "fieldOrderId": 10,
-          "mandatory": false
-        },
-        {
-          "id": 5,
-          "name": "minStudyHours",
-          "labelName": "Min study hours per days",
-          "fieldType": "DECIMAL",
-          "fieldOrderId": 11,
-          "min": "1",
-          "max": "20",
-          "mandatory": false
-        },
-        {
-          "id": 6,
-          "name": "minStudyForBreak",
-          "labelName": "Min study hours before break",
-          "fieldType": "DECIMAL",
-          "fieldOrderId": 12,
-          "min": "1",
-          "max": "5",
-          "mandatory": false
-        },
-        {
-          "id": 58,
-          "name": "breakTime",
-          "labelName": "Minute per break",
-          "fieldType": "DECIMAL",
-          "fieldOrderId": 13,
-          "min": "1",
-          "max": "5",
-          "mandatory": false
-        },
-        {
-          "id": 7,
-          "name": "safeDays",
-          "labelName": "Flexibility days",
-          "fieldType": "INTEGER",
-          "fieldOrderId": 13,
-          "min": "1",
-          "max": "40",
-          "mandatory": false
-        },
-        {
-          "id": 8,
-          "name": "examDif",
-          "labelName": "Exam difficulty",
-          "fieldType": "DIFFICULTY",
-          "fieldOrderId": 14,
-          "min": "1",
-          "max": "3",
-          "mandatory": true
-        },
-        {
-          "id": 10,
-          "name": "totalPages",
-          "labelName": "Total pages",
-          "fieldType": "INTEGER",
-          "fieldOrderId": 16,
-          "min": "1",
-          "max": "3000",
-          "mandatory": true
-        },
-        {
-          "id": 11,
-          "name": "minPages",
-          "labelName": "Min pages per days",
-          "fieldType": "INTEGER",
-          "fieldOrderId": 17,
-          "min": "1",
-          "max": "300",
-          "mandatory": false
-        },
-        {
-          "id": 12,
-          "name": "maxPages",
-          "labelName": "Max pages per days",
-          "fieldType": "INTEGER",
-          "fieldOrderId": 18,
-          "min": "1",
-          "max": "300",
-          "mandatory": false
-        },
-        {
-          "id": 13,
-          "name": "intervalPagesRecapT",
-          "labelName": "Interval pages recap",
-          "fieldType": "INTEGER",
-          "fieldOrderId": 19,
-          "min": "1",
-          "max": "300",
-          "mandatory": false
-        },
-        {
-          "id": 15,
-          "name": "topics",
-          "labelName": "Topics",
-          "fieldType": "TOPIC",
-          "fieldOrderId": 22,
-          "mandatory": false
-        },
-        {
-          "id": 13,
-          "name": "startTotalRecapT",
-          "labelName": "Start total recap",
-          "fieldType": "DATE",
-          "fieldOrderId": 20,
-          "mandatory": false
-        },
-        {
-          "id": 59,
-          "name": "startTotalRecapT",
-          "labelName": "Start total recap",
-          "fieldType": "DATE",
-          "fieldOrderId": 20,
-          "mandatory": false
-        },
-        {
-          "id": 60,
-          "name": "startTotalE",
-          "labelName": "Start total recap",
-          "fieldType": "DATE",
-          "fieldOrderId": 20,
-          "mandatory": false
-        }
-      ]
-    }
+  "itemWellness": {
+    "return" : [
+      {
+        "id": 36,
+        "name": "date",
+        "labelName": "When?",
+        "fieldType": "DATE",
+        "fieldOrderId": 0,
+        "mandatory": true
+      },
+      {
+      "id": 37,
+      "name": "time",
+      "labelName": "At what time?",
+      "fieldType": "TIME",
+      "fieldOrderId": 1,
+      "mandatory": true
+      },
+      {
+      "id": 38,
+      "name": "place",
+      "labelName": "Where?",
+      "fieldType": "TEXT",
+      "fieldOrderId": 2,
+      "mandatory": false
+      }
+    ]
+  },
+  "itemFestivity": {
+    "return" : [
+      {
+        "id": 36,
+        "name": "date",
+        "labelName": "When?",
+        "fieldType": "DATE",
+        "fieldOrderId": 0,
+        "mandatory": true
+      },
+      {
+        "id": 37,
+        "name": "time",
+        "labelName": "At what time?",
+        "fieldType": "TIME",
+        "fieldOrderId": 1,
+        "mandatory": true
+      }
+    ]
+  },
+  "itemFree_time": {
+    "return" : [
+      {
+        "id": 36,
+        "name": "date",
+        "labelName": "When?",
+        "fieldType": "DATE",
+        "fieldOrderId": 0,
+        "mandatory": true
+      },
+      {
+        "id": 37,
+        "name": "time",
+        "labelName": "At what time?",
+        "fieldType": "TIME",
+        "fieldOrderId": 1,
+        "mandatory": true
+      },
+      {
+        "id": 38,
+        "name": "place",
+        "labelName": "Where?",
+        "fieldType": "TEXT",
+        "fieldOrderId": 2,
+        "mandatory": false
+      }
+    ]
+  },
+  "itemFinances": {
+    "return" : [
+      {
+        "id": 37,
+        "name": "price",
+        "labelName": "price",
+        "fieldType": "NUMBER",
+        "fieldOrderId": 0,
+        "mandatory": true
+      },
+      {
+        "id": 38,
+        "name": "place",
+        "labelName": "Where?",
+        "fieldType": "TEXT",
+        "fieldOrderId": 1,
+        "mandatory": false
+      }
+    ]
+  },
+  "itemStudy": {
+    "return": [
+      {
+        "id": 36,
+        "name": "date",
+        "labelName": "When?",
+        "fieldType": "DATE",
+        "fieldOrderId": 0,
+        "mandatory": true
+      },
+      {
+        "id": 37,
+        "name": "time",
+        "labelName": "At what time?",
+        "fieldType": "TIME",
+        "fieldOrderId": 1,
+        "mandatory": true
+      },
+      {
+        "id": 38,
+        "name": "place",
+        "labelName": "Where?",
+        "fieldType": "TEXT",
+        "fieldOrderId": 2,
+        "mandatory": false
+      },
+      {
+        "id": 39,
+        "name": "room",
+        "labelName": "Room:",
+        "fieldType": "TEXT",
+        "fieldOrderId": 3,
+        "mandatory": false
+      },
+      {
+        "id": 40,
+        "name": "teacherName",
+        "labelName": "Teacher name:",
+        "fieldType": "TEXT",
+        "fieldOrderId": 4,
+        "min": 2,
+        "max": 20,
+        "mandatory": false
+      },
+      {
+        "id": 41,
+        "name": "teacherEmail",
+        "labelName": "Teacher email:",
+        "fieldType": "EMAIL",
+        "fieldOrderId": 5,
+        "min": 2,
+        "max": 20,
+        "mandatory": false
+      },
+      {
+        "id": 42,
+        "name": "officeDay",
+        "labelName": "Office day:",
+        "fieldType": "OFFICEDAY",
+        "fieldOrderId": 6,
+        "mandatory": false
+      },
+      {
+        "id": 43,
+        "name": "teacherReceiptTime",
+        "labelName": "Office time:",
+        "fieldType": "TIMEWITHOUTALLDAY",
+        "fieldOrderId": 7,
+        "mandatory": false
+      },
+      {
+        "id": 44,
+        "name": "teacherReceiptRoom",
+        "labelName": "Teacher's room:",
+        "fieldType": "TEXT",
+        "fieldOrderId": 8,
+        "min": 2,
+        "max": 20,
+        "mandatory": false
+      },
+      {
+        "id": 45,
+        "name": "studyPlanFlag",
+        "labelName": "Study plan",
+        "fieldType": "SWITCH",
+        "fieldOrderId": 9,
+        "mandatory": false
+      },
+      {
+        "id": 46,
+        "name": "endingStudy",
+        "labelName": "Scheduled study end:",
+        "fieldType": "DATE",
+        "fieldOrderId": 10,
+        "fieldParentId": 45,
+        "mandatory": true
+      },
+      {
+        "id": 47,
+        "name": "studyingDays",
+        "labelName": "Studying days:",
+        "fieldType": "OFFICEDAY",
+        "fieldOrderId": 11,
+        "fieldParentId": 45,
+        "mandatory": true
+      },
+      {
+        "id": 48,
+        "name": "overRange",
+        "labelName": "Over range:",
+        "fieldType": "CHECKBOX",
+        "fieldOrderId": 12,
+        "fieldParentId": 45,
+        "mandatory": true
+      },
+      {
+        "id": 49,
+        "name": "minStudyHours",
+        "labelName": "Min hours per day:",
+        "fieldType": "NUMBER",
+        "fieldOrderId": 13,
+        "fieldParentId": 45,
+        "mandatory": true
+      },
+      {
+        "id": 50,
+        "name": "maxStudyHours",
+        "labelName": "Max hours per day:",
+        "fieldType": "NUMBER",
+        "fieldOrderId": 14,
+        "fieldParentId": 45,
+        "mandatory": true
+      },
+      {
+        "id": 51,
+        "name": "examDifficulty",
+        "labelName": "Exam difficulty:",
+        "fieldType": "CHECKBOX",
+        "fieldOrderId": 15,
+        "fieldParentId": 45,
+        "mandatory": true
+      },
+      {
+        "id": 52,
+        "name": "safeDays",
+        "labelName": "Safe Days:",
+        "fieldType": "NUMBER",
+        "fieldOrderId": 15,
+        "fieldParentId": 45,
+        "mandatory": true
+      },
+      {
+        "id": 53,
+        "name": "organizedStudyBy",
+        "labelName": "Organize study by:",
+        "fieldType": "TOPICSPAGES",
+        "fieldOrderId": 16,
+        "fieldParentId": 45,
+        "mandatory": false
+      },
+      {
+        "id": 53,
+        "name": "totalPagesP",
+        "labelName": "total pages",
+        "fieldType": "NUMBER",
+        "fieldOrderId": 17,
+        "fieldParentId": 53,
+        "mandatory": true
+      },
+      {
+        "id": 54,
+        "name": "minPagesPerDaysP",
+        "labelName": "min pages per days",
+        "fieldType": "NUMBER",
+        "fieldOrderId": 18,
+        "fieldParentId": 53,
+        "mandatory": true
+      },
+      {
+        "id": 55,
+        "name": "maxPagesPerDaysP",
+        "labelName": "max pages per days",
+        "fieldType": "NUMBER",
+        "fieldOrderId": 19,
+        "fieldParentId": 53,
+        "mandatory": true
+      },
+      {
+        "id": 56,
+        "name": "startingTotalRecapP",
+        "labelName": "starting total recap",
+        "fieldType": "DATE",
+        "fieldOrderId": 20,
+        "fieldParentId": 53,
+        "mandatory": true
+      },
+      {
+        "id": 57,
+        "name": "exercisesP",
+        "labelName": "exercises",
+        "fieldType": "SWITCH",
+        "fieldOrderId": 21,
+        "fieldParentId": 53,
+        "mandatory": true
+      },
+      {
+        "id": 58,
+        "name": "projectP",
+        "labelName": "project",
+        "fieldType": "SWITCH",
+        "fieldOrderId": 22,
+        "fieldParentId": 53,
+        "mandatory": true
+      }
+    ]
   },
   "userSigninOK": {
     "return": {
@@ -396,18 +468,18 @@
         "id": 108,
         "title": "Barber",
         "category": "WELLNESS",
-        "subcategory": "BARBER",
-        "date": "30/01/2021",
+        "subcategory": "BODY_CARE",
+        "date": "01/02/2021",
         "startingTime": 10.00,
         "endTime": 10.30,
         "place": "Via Asdrubale 45",
-        "note": ""
+        "note": "Arrivare puntuale"
       },
       {
         "id": 115,
         "title": "University tax",
         "category": "FINANCES",
-        "subcategory": "TAX",
+        "subcategory": "OUTFLOW",
         "date": "30/01/2021",
         "deadline": "31/01/2021",
         "price": 294.0,
@@ -417,8 +489,8 @@
         "id": 116,
         "title": "room rental",
         "category": "FINANCES",
-        "subcategory": "TAX",
-        "date": "30/01/2021",
+        "subcategory": "OUTFLOW",
+        "date": "01/02/2021",
         "deadline": "31/01/2021",
         "price": 236.0,
         "note": "Sbrigateee2"
@@ -427,8 +499,8 @@
         "id": 298,
         "title": "Fitness",
         "category": "FREE_TIME",
-        "subcategory": "FITNESS",
-        "date": "30/01/2021",
+        "subcategory": "SPORT",
+        "date": "01/02/2021",
         "startingTime": 11.00,
         "endTime": 13.00,
         "place": "Via mi alleno 145",
@@ -438,7 +510,7 @@
         "id": 167,
         "title": "Massage",
         "category": "WELLNESS",
-        "subcategory": "WELFARE",
+        "subcategory": "OTHER",
         "date": "30/01/2021",
         "startingTime": 16.00,
         "endTime": 17.00,
@@ -449,7 +521,7 @@
         "id": 253,
         "title": "San Gennaro da monte Bianco",
         "category": "FESTIVITY",
-        "subcategory": "HOLY",
+        "subcategory": "BIRTHDAY",
         "date": "30/01/2021",
         "note": "Onomastico Gennaro"
       },
@@ -457,8 +529,8 @@
         "id": 234,
         "title": "Dinner with friends",
         "category": "FREE_TIME",
-        "subcategory": "WELFARE",
-        "date": "30/01/2021",
+        "subcategory": "FRIENDS",
+        "date": "01/02/2021",
         "startingTime": 21.00,
         "endTime": 23.00,
         "place": "Via spa 2",
@@ -469,27 +541,97 @@
         "title": "HCI exam",
         "category": "STUDY",
         "subcategory": "EXAM",
-        "date": "21/01/2021",
+        "date": "01/02/2021",
         "startingTime": 10.00,
         "endTime": 13.00,
         "place": "Via scarpa 1",
         "room": "DIAG B2",
         "teacherInfo": {
-          "name": "Beraldi",
-          "email": "beraldi@uniroma1.docenti.it",
-          "receiptDate": "Mon 11:00",
+          "name": "Catarci",
+          "email": "catarci@uniroma1.docenti.it",
+          "officeDay": ["Mon", "Fri"],
+          "receiptStartingTime": 10.00,
+          "receiptEndingTime": 12.00,
           "receiptRoom": "Via scarpa stanza 41"
         },
         "studyPlan": {
           "endStudy": "14/01/2021",
           "studyingDays": ["Mon","Tue","Wed","Thu","Fri"],
-          "overRange": "afternoon",
+          "overRange": ["afternoon", "evening"],
           "startingOverRangeTime": 14.00,
           "endOverRangeTime": 17.00,
           "minStudyHours": 1.30,
+          "maxStudyHours": 4.30,
           "minBreakHours": 1.00,
+          "examDifficulty": "medium",
           "safeDays": "7"
         },
+        "note": "Orale difficile"
+      },
+      {
+        "id": 237,
+        "title": "Dinner with friends",
+        "category": "FREE_TIME",
+        "subcategory": "FRIENDS",
+        "date": "07/01/2021",
+        "startingTime": 21.00,
+        "endTime": 23.00,
+        "place": "Via spa 2",
+        "note": ""
+      },
+      {
+        "id": 238,
+        "title": "Birthday of Maria",
+        "category": "FESTIVITY",
+        "subcategory": "BIRTHDAY",
+        "date": "15/01/2021",
+        "startingTime": 20.00,
+        "endTime": 24.00,
+        "place": "Via spa 2",
+        "note": ""
+      },
+      {
+        "id": 240,
+        "title": "Dinner with friends",
+        "category": "FREE_TIME",
+        "subcategory": "FRIENDS",
+        "date": "29/01/2021",
+        "startingTime": 21.00,
+        "endTime": 23.00,
+        "place": "Via spa 2",
+        "note": ""
+      },
+      {
+        "id": 237,
+        "title": "Dinner with friends",
+        "category": "FREE_TIME",
+        "subcategory": "WELFARE",
+        "date": "07/01/2021",
+        "startingTime": 21.00,
+        "endTime": 23.00,
+        "place": "Via spa 2",
+        "note": ""
+      },
+      {
+        "id": 238,
+        "title": "Bithday of Maria",
+        "category": "FREE_TIME",
+        "subcategory": "WELFARE",
+        "date": "15/01/2021",
+        "startingTime": 20.00,
+        "endTime": 24.00,
+        "place": "Via spa 2",
+        "note": ""
+      },
+      {
+        "id": 240,
+        "title": "Dinner with friends",
+        "category": "FREE_TIME",
+        "subcategory": "WELFARE",
+        "date": "29/01/2021",
+        "startingTime": 21.00,
+        "endTime": 23.00,
+        "place": "Via spa 2",
         "note": ""
       },
       {
