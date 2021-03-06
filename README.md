@@ -3,7 +3,7 @@
 FLY.AY is an android app created for the course of Human Computer Interaction of Sapienza University.
 
 A  very detailed description of the project has been produced [here](HCI_report_finale.pdf).
-<br>But if you are in a hurry, [there is the short version.](HCI_ppt_FINALE.pdf) 
+<br>But if you are in a hurry, [there is the short version.](HCI-ppt-FINALE.pdf) 
 
 ## Authors 
 
@@ -18,9 +18,9 @@ Flavia Ferranti [<img src="https://cdn4.iconfinder.com/data/icons/social-messagi
 
 
 ## Snapshots
-<img src = "https://raw.githubusercontent.com/FlaviaFerranti7/FLY.AY/main/snapshots/Home.png" width="100%" height="100%">
-<img src = "https://raw.githubusercontent.com/FlaviaFerranti7/FLY.AY/main/snapshots/Calendar2.png" width="100%" height="100%">
-<img src = "https://raw.githubusercontent.com/FlaviaFerranti7/FLY.AY/main/snapshots/Search1.png" width="100%" height="100%">
-<img src = "https://raw.githubusercontent.com/FlaviaFerranti7/FLY.AY/main/snapshots/AddEvent4.png" width="100%" height="100%">
-<img src = "https://raw.githubusercontent.com/FlaviaFerranti7/FLY.AY/main/snapshots/ToDo.png" width="100%" height="100%">
-<img src = "https://raw.githubusercontent.com/FlaviaFerranti7/FLY.AY/main/snapshots/profile2.png" width="100%" height="100%">
+<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/Home.png" width="100%" height="100%">
+<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/Calendar2.png" width="100%" height="100%">
+<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/Search1.png" width="100%" height="100%">
+<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/AddEvent4.png" width="100%" height="100%">
+<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/ToDo.png" width="100%" height="100%">
+<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/profile2.png" width="100%" height="100%">
