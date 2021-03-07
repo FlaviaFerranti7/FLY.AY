@@ -18,9 +18,9 @@ Flavia Ferranti [<img src="https://cdn4.iconfinder.com/data/icons/social-messagi
 
 
 ## Snapshots
-<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/Home.png" width="20%" height="40%">
-<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/Calendar2.png" width="20%" height="40%">
-<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/Search1.png" width="20%" height="40%">
-<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/AddEvent4.png" width="20%" height="40%">
-<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/ToDo.png" width="20%" height="40%">
-<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/profile2.png" width="20%" height="40%">
+<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/Home.png" width="30%" height="50%">
+<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/Calendar2.png" width="30%" height="50%">
+<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/Search1.png" width="30%" height="50%">
+<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/AddEvent4.png" width="30%" height="50%">
+<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/ToDo.png" width="30%" height="50%">
+<img src = "https://github.com/FlaviaFerranti7/FLY.AY/blob/main/snapshots/profile2.png" width="30%" height="50%">
